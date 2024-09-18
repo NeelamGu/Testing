@@ -359,7 +359,8 @@ class VendorController extends Controller
             abort(404);
         }
         $plans = Plan::where('status',1)->get()->toArray();
-        return view('front.vendors.plans')->with(compact('plans','code'));
+        $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
+        return view('front.vendors.plans')->with(compact('plans','code','countries'));
     }
 
     public function displayPlans(){
