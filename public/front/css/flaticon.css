@@ -1,0 +1,85 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 15/08/2016 06:52
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("../fonts/Flaticon.eot");
+  src: url("../fonts/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/Flaticon.woff") format("woff"),
+       url("../fonts/Flaticon.ttf") format("truetype"),
+       url("../fonts/Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+@font-face {
+ font-weight: normal;
+ font-style: normal;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-style: normal;
+  color: #e78002;
+}
+
+.flaticon-balloons:before { content: "\f100"; }
+.flaticon-balloons-1:before { content: "\f101"; }
+.flaticon-balloons-2:before { content: "\f102"; }
+.flaticon-balloons-3:before { content: "\f103"; }
+.flaticon-balloons-4:before { content: "\f104"; }
+.flaticon-balloons-with-star:before { content: "\f105"; }
+.flaticon-bouquet:before { content: "\f106"; }
+.flaticon-bouquet-of-flowers:before { content: "\f107"; }
+.flaticon-bunch-of-flowers:before { content: "\f108"; }
+.flaticon-bunch-of-flowers-1:before { content: "\f109"; }
+.flaticon-bunch-of-flowers-2:before { content: "\f10a"; }
+.flaticon-bunch-of-flowers-3:before { content: "\f10b"; }
+.flaticon-bunch-of-flowers-4:before { content: "\f10c"; }
+.flaticon-car:before { content: "\f10d"; }
+.flaticon-cross-of-fork-and-knife-on-a-plate-to-not-eat:before { content: "\f10e"; }
+.flaticon-curtains:before { content: "\f10f"; }
+.flaticon-cutlery:before { content: "\f110"; }
+.flaticon-dish:before { content: "\f111"; }
+.flaticon-dish-knife-and-fork:before { content: "\f112"; }
+.flaticon-floating-balloons:before { content: "\f113"; }
+.flaticon-flower-bouquet:before { content: "\f114"; }
+.flaticon-flower-bouquet-1:before { content: "\f115"; }
+.flaticon-flower-bouquet-2:before { content: "\f116"; }
+.flaticon-food:before { content: "\f117"; }
+.flaticon-holiday:before { content: "\f118"; }
+.flaticon-knife-fork-and-plate:before { content: "\f119"; }
+.flaticon-love-letter:before { content: "\f11a"; }
+.flaticon-plate-fork-and-knife:before { content: "\f11b"; }
+.flaticon-plate-with-fork-and-knife-eating-set-tools-from-top-view:before { content: "\f11c"; }
+.flaticon-restaurant-icon:before { content: "\f11d"; }
+.flaticon-roses-bouquet:before { content: "\f11e"; }
+.flaticon-wedding:before { content: "\f11f"; }
+.flaticon-wedding-arch:before { content: "\f120"; }
+.flaticon-wedding-cake:before { content: "\f121"; }
+.flaticon-wedding-cake-1:before { content: "\f122"; }
+.flaticon-wedding-cake-2:before { content: "\f123"; }
+.flaticon-wedding-cake-3:before { content: "\f124"; }
+.flaticon-wedding-cake-decorated-with-a-heart:before { content: "\f125"; }
+.flaticon-wedding-cake-decorated-with-a-heart-1:before { content: "\f126"; }
+.flaticon-wedding-cake-with-heart:before { content: "\f127"; }
+.flaticon-wedding-car:before { content: "\f128"; }
+.flaticon-wedding-car-1:before { content: "\f129"; }
+.flaticon-wedding-invitation:before { content: "\f12a"; }
+.flaticon-wedding-invitation-1:before { content: "\f12b"; }
+.flaticon-wedding-invitation-2:before { content: "\f12c"; }
+.flaticon-wedding-invitation-3:before { content: "\f12d"; }
+.flaticon-wedding-video:before { content: "\f12e"; }
+.flaticon-wedding-video-1:before { content: "\f12f"; }
+.flaticon-wild-flower-bouquet:before { content: "\f130"; }
+.flaticon-bride-dress:before { content: "\f100"; }
+.flaticon-wedding-dress:before { content: "\f101"; }
