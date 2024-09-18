@@ -497,7 +497,8 @@ class AdminController extends Controller
         $email = base64_decode($code);
         $plans = Plan::where('status',1)->get()->toArray();
         $currentPlan = Vendor::select('plan_id')->where('email',$email)->first()->toArray();
-        return view('front.vendors.plan_upgrade')->with(compact('plans','code','currentPlan'));
+        $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
+        return view('front.vendors.plan_upgrade')->with(compact('plans','code','currentPlan','countries'));
     }
 
     public function upgradeSelectedPlan(Request $request){
