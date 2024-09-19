@@ -452,7 +452,8 @@ class UserController extends Controller
         }
         $allcategories = array_unique($allcategories);
         /*dd($enquiries);*/
-        return view('front.users.enquiries')->with(compact('enquiries','allcategories'));    
+        $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
+        return view('front.users.enquiries')->with(compact('enquiries','allcategories','countries'));    
     }
 
     public function getUserEnquiries(Request $request){
