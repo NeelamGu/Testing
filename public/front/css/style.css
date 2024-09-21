@@ -22032,10 +22032,10 @@ small.smLoc{
 
 
 details > summary {
-    padding: 4px;
-    border: none;
-    cursor: pointer;
     color: #000;
+    width: 100% !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 details > summary span {
