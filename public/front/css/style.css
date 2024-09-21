@@ -22029,3 +22029,15 @@ small.smLoc{
     font-size: 1.3rem;
 }
 /*git testing  */
+
+details > summary {
+    padding: 4px;
+    border: none;
+    cursor: pointer;
+    color: #000;
+}
+
+details > summary span {
+    float: right;
+    color: #e46f01;
+}

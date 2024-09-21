@@ -471,7 +471,8 @@ class ProductsController extends Controller
 
             DB::Commit();
             
-            return redirect('admin/products')->with('success_message',$message);
+            //return redirect('admin/products')->with('success_message',$message);
+            return redirect('admin/add-images/'.$product_id)->with('success_message',$message);
         }
 
         /*echo "<pre>"; print_r(Auth::guard('admin')->user()->vendor_id); die;*/
@@ -835,10 +836,81 @@ class ProductsController extends Controller
 
     public function addImages($id, Request $request){
         Session::put('page','products');
-        $product = Product::select('id','product_name','product_code','product_price','product_image')->with('images')->find($id); 
+        $product = Product::select('id','product_name','product_code','product_price','product_image','product_video','product_banner')->with('images')->find($id); 
 
         if($request->isMethod('post')){
             $data = $request->all();
+
+            $rules = [
+                'product_image'  => 'max:20000|mimes:jpeg,bmp,png',
+                'product_banner'  => 'max:20000|mimes:jpeg,bmp,png',
+                'product_video'  => 'max:50000|mimes:mp4,mov',
+                'images.*'  => 'max:20000|mimes:jpeg,bmp,png'
+                /*'product_price' => 'required|numeric',*/
+            ];
+
+            $customMessages = [
+                
+            ];
+
+            $this->validate($request,$rules,$customMessages);
+
+            // Upload Product Image after Resize small: 250x250 medium: 500x500 large: 1000x1000
+            if($request->hasFile('product_image')){
+                $image_tmp = $request->file('product_image');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageName = rand(1111,999999).'.'.$extension;
+                    $largeImagePath = 'front/images/product_images/large/'.$imageName;
+                    $mediumImagePath = 'front/images/product_images/medium/'.$imageName;
+                    $smallImagePath = 'front/images/product_images/small/'.$imageName;
+                    // Upload the Large, Medium and Small Images after Resize
+                    //Image::make($image_tmp)->resize(1000,500)->save($largeImagePath, 50);
+                    Image::make($image_tmp)->save($largeImagePath, 50);
+                    Image::make($image_tmp)->resize(500,250)->save($mediumImagePath, 50);
+                    Image::make($image_tmp)->resize(250,125)->save($smallImagePath, 50);
+                    // Insert Image Name in products table
+                    /*$product->product_image = $imageName;*/
+                }
+            }else if(!empty($data['current_product_image'])){
+                $imageName = $data['current_product_image'];
+            }else{
+                $imageName = "";
+            }
+            // Update Image Name in products table
+            Product::where('id',$id)->update(['product_image'=>$imageName]);
+
+            // Upload Product Video
+            if($request->hasFile('product_video')){
+                $video_tmp = $request->file('product_video');
+                if($video_tmp->isValid()){
+                    // Upload Video in videos folder
+                    $extension = $video_tmp->getClientOriginalExtension();
+                    $videoName = rand(111,99999).'.'.$extension;
+                    $videoPath = 'front/videos/product_videos/';
+                    $video_tmp->move($videoPath,$videoName);
+                    // Update Video name in products table
+                    Product::where('id',$id)->update(['product_video'=>$videoName]);
+                }
+            }
+
+            // Upload Product Banner
+            if($request->hasFile('product_banner')){
+                $image_tmp = $request->file('product_banner');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageName = rand(111,99999).'.'.$extension;
+                    $imagePath = 'front/images/product_banners/'.$imageName;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath, 50);
+                    // Update Product Banner name in products table
+                    Product::where('id',$id)->update(['product_banner'=>$imageName]);
+                }
+            }
             
             // Upload Alt Images
             if($request->hasFile('images')){

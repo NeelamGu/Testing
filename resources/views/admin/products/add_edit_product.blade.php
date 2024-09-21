@@ -346,7 +346,7 @@ a.label:hover {
                       <label for="group_code">Group Code</label>
                       <input type="text" class="form-control" id="group_code" placeholder="Enter Group Code" name="group_code" @if(!empty($product['group_code'])) value="{{ $product['group_code'] }}" @else value="{{ old('group_code') }}" @endif>
                     </div> -->
-                    <div class="form-group">
+                    <?php /* <div class="form-group">
                       <label for="product_image">Hovedbilde</label>
                       <!-- <label for="product_image">Hovedbilde (Anbefalt størrelse: 1000*500). Maks 2 MB</label> -->
                       
@@ -356,7 +356,7 @@ a.label:hover {
                         <a href="javascript:void(0)" class="confirmDelete" module="product-image" moduleid="{{ $product['id'] }}">Slett bilde</a>
                         <input type="hidden" name="current_product_image" value="{{ $product['product_image'] }}">
                       @endif
-                    </div>
+                    </div> */ ?>
                     <?php /* <div class="form-group">
                       <!-- <label for="images">Bilde-galleri (Anbefalt størrelse: 1000*500). Maks 2 MB</label> -->
                       <label for="images">Bilde-galleri <span class="orangeDim">(Maks 10MB pr opplastning)</span></label>
@@ -377,7 +377,7 @@ a.label:hover {
                       @endforeach
                     </div>
                     @endif */ ?>
-                    <div class="form-group">
+                    <?php /* <div class="form-group">
                       <!-- <label for="product_video" style="float:left;">Video-galleri (Anbefalt størrelse:  Maks 5 MB)</label> -->
                       <label for="product_video" style="float:left;">Video-galleri  <span class="orangeDim">(Maks 5MB)</span></label>
                       <input type="file" class="form-control" id="product_video" name="product_video" accept="video/*">
@@ -394,7 +394,7 @@ a.label:hover {
                         <a href="javascript:void(0)" class="confirmDelete" module="product-banner" moduleid="{{ $product['id'] }}">Slett Banner-bilde</a>
                         <input type="hidden" name="current_product_banner" value="{{ $product['product_banner'] }}">
                       @endif
-                    </div>
+                    </div> */ ?>
                     <div class="form-group">
                       <label for="product_discount">Beskrivelse av tjenesten</label>
                       @if(empty($product['id']))

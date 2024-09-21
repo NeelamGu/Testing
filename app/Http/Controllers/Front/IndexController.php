@@ -39,10 +39,11 @@ class IndexController extends Controller
         //$popularItems = Product::where(['is_popular'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
         //dd($popularItems);
         $popularItems = array();
-        if(count($popularProductIds)>0){
+        /*if(count($popularProductIds)>0){
             $ids_ordered = implode(',', $popularProductIds);
             $popularItems = Product::where(['status'=>1])->wherein('id',$popularProductIds)->orderByRaw("FIELD(products.id, $ids_ordered)")->get()->toArray();    
-        }
+        }*/
+        $popularItems = Product::where(['status'=>1])->where('is_delete',0)->orderBy('count','Desc')->get()->toArray();    
 
         $featuredItems = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
         //$newItems = Product::where(['is_new'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();

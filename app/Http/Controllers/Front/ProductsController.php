@@ -672,6 +672,9 @@ class ProductsController extends Controller
         if($productCount==0){
             abort(404);
         }
+
+        // Update Product Count
+        Product::where('id',$id)->increment('count');
         
         $productDetails = Product::with(['section','category','brand','attributes'=>function($query){
             $query->where('stock','>',0)->where('status',1);
