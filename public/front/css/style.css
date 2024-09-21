@@ -22030,6 +22030,7 @@ small.smLoc{
 }
 /*git testing  */
 
+
 details > summary {
     padding: 4px;
     border: none;
@@ -22041,3 +22042,4 @@ details > summary span {
     float: right;
     color: #e46f01;
 }
+
