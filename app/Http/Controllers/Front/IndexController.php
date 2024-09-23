@@ -47,8 +47,9 @@ class IndexController extends Controller
 
         $featuredItems = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
         //$newItems = Product::where(['is_new'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
-        $newItems = Product::where(['status'=>1])->orderBy('id','Desc')->limit(8)->get()->toArray();
-        /*dd($newItems);*/
+        $back_date = date('Y-m-d', strtotime('-7 days'));
+        $newItems = Product::where(['status'=>1])->where('created_at','<',$back_date)->orderBy('id','Desc')->limit(10)->get()->toArray();
+        //dd($newItems);
         $categories = Section::with('categories')->where('id',1)->get()->toArray();
         $popularCategories = Category::where(['status'=>1,'is_popular'=>'Yes'])->get()->toArray();
         $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
