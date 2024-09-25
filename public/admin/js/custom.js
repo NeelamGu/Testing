@@ -776,8 +776,8 @@ $(document).ready(function(){
 		}).then((result) => {
 		  if (result.isConfirmed) {
 		    Swal.fire(
-		      'Deleted!',
-		      'Your file has been deleted.',
+		      'Success',
+		      'Bildet er slettet.',
 		      'success'
 		    )
 		    window.location = "/admin/delete-"+module+"/"+moduleid;

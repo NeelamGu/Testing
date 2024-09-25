@@ -184,6 +184,27 @@ a.label:hover {
                   
                   <form class="forms-sample" action="{{ url('admin/add-images/'.$product['id']) }}" method="post" enctype="multipart/form-data">@csrf
                     
+                  
+                    <div class="form-group">
+                      <label for="product_banner">Banner-bilde (Anbefalt størrelse: 1900x400)</label>
+                      <input type="file" class="form-control" id="product_banner" name="product_banner" accept="image/*">
+                      @if(!empty($product['product_banner']))
+                        <a target="_blank" href="{{ url('front/images/product_banners/'.$product['product_banner']) }}">Se Banner-bilde</a>&nbsp;|&nbsp;
+                        <a href="javascript:void(0)" class="confirmDelete" module="product-banner" moduleid="{{ $product['id'] }}">Slett Banner-bilde</a>
+                        <input type="hidden" name="current_product_banner" value="{{ $product['product_banner'] }}">
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label for="product_image">Hovedbilde</label>
+                      <!-- <label for="product_image">Hovedbilde (Anbefalt størrelse: 1000*500). Maks 2 MB</label> -->
+                      
+                      <input type="file" class="form-control" id="product_image" name="product_image" accept="image/*">
+                      @if(!empty($product['product_image']))
+                        <a target="_blank" href="{{ url('front/images/product_images/large/'.$product['product_image']) }}">Vis bilde</a>&nbsp;|&nbsp;
+                        <a href="javascript:void(0)" class="confirmDelete" module="product-image" moduleid="{{ $product['id'] }}">Slett bilde</a>
+                        <input type="hidden" name="current_product_image" value="{{ $product['product_image'] }}">
+                      @endif
+                    </div>
                     <div class="form-group">
                       <!-- <label for="images">Bilde-galleri (Anbefalt størrelse: 1000*500). Maks 2 MB</label> -->
                       <label for="images">Bilde-galleri <span class="orangeDim">(Maks 10MB pr opplastning)</span></label>
@@ -198,27 +219,14 @@ a.label:hover {
                         <span style="float:left; width:110px; padding: 5px; margin: 5px;">
                           <a target="_blank" href="{{ url('front/images/product_images/large/'.$image['image']) }}"><img style="width:100px;" src="{{ url('front/images/product_images/small/'.$image['image']) }}"></a><br>
                           <input type="hidden" name="image[]" value="{{ $image['image'] }}">
-                          <input style="width:100px;" type="text" placeholder="Title" name="title[]" value="{{ $image['title'] }}"><br>
+                          <input style="width:100px;" type="text" placeholder="Bildetekst" name="title[]" value="{{ $image['title'] }}"><br>
                           <a href="javascript:void(0)" class="confirmDelete" module="image" moduleid="{{ $image['id'] }}">Slett</a>
                         </span>
                       @endforeach
                     </div>
                     @endif
 
-                    <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Update</button><br><br>
-
-                    <div class="form-group">
-                      <label for="product_image">Hovedbilde</label>
-                      <!-- <label for="product_image">Hovedbilde (Anbefalt størrelse: 1000*500). Maks 2 MB</label> -->
-                      
-                      <input type="file" class="form-control" id="product_image" name="product_image" accept="image/*">
-                      @if(!empty($product['product_image']))
-                        <a target="_blank" href="{{ url('front/images/product_images/large/'.$product['product_image']) }}">Vis bilde</a>&nbsp;|&nbsp;
-                        <a href="javascript:void(0)" class="confirmDelete" module="product-image" moduleid="{{ $product['id'] }}">Slett bilde</a>
-                        <input type="hidden" name="current_product_image" value="{{ $product['product_image'] }}">
-                      @endif
-                    </div>
-
+                    <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Legg til bildetekster</button><br><br>
                     <div class="form-group">
                       <!-- <label for="product_video" style="float:left;">Video-galleri (Anbefalt størrelse:  Maks 5 MB)</label> -->
                       <label for="product_video" style="float:left;">Video-galleri  <span class="orangeDim">(Maks 5MB)</span></label>
@@ -228,15 +236,7 @@ a.label:hover {
                         <a href="javascript:void(0)" class="confirmDelete" module="product-video" moduleid="{{ $product['id'] }}">Delete Video</a>
                       @endif
                     </div>
-                    <div class="form-group">
-                      <label for="product_banner">Banner-bilde (Anbefalt størrelse: 1900x400)</label>
-                      <input type="file" class="form-control" id="product_banner" name="product_banner" accept="image/*">
-                      @if(!empty($product['product_banner']))
-                        <a target="_blank" href="{{ url('front/images/product_banners/'.$product['product_banner']) }}">Se Banner-bilde</a>&nbsp;|&nbsp;
-                        <a href="javascript:void(0)" class="confirmDelete" module="product-banner" moduleid="{{ $product['id'] }}">Slett Banner-bilde</a>
-                        <input type="hidden" name="current_product_banner" value="{{ $product['product_banner'] }}">
-                      @endif
-                    </div>
+                   
                     <button type="submit" class="btn btn-primary mr-2">Lagre</button>
                     <?php /* <button type="reset" class="btn btn-light">Avbryt</button> */ ?>
                     <a href="{{ url('/admin/products')}}" class="btn btn-primary mr-2">

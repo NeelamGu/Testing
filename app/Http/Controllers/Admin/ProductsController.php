@@ -99,7 +99,7 @@ class ProductsController extends Controller
             $product = new Product;
             $message = "Din annonse kontrolleres og du vil snart høre fra oss.";
         }else{
-            $title = "Rediger profil";
+            $title = "Endre annonse";
             $product = Product::find($id);
             /*echo "<pre>"; print_r($product); die;*/
             $message = "Profil-opplysninger endret";

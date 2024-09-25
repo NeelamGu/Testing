@@ -39,16 +39,12 @@
         @if(Auth::guard('admin')->user()->type=="vendor")
         <li class="nav-item">
             <a @if(Session::get('page')=="update_personal_details") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/update-vendor-details/personal') }}">
-            <i class="fa fa-user-o menu-icon"></i>
+            <!-- <i class="fa fa-user-o menu-icon"></i> -->
+            <img src="{{ asset('admin/images/cv.png') }}" alt="icon" width="16px">
             <span class="menu-title">Min konto</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a @if(Session::get('page')=="update_admin_password") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/update-admin-password') }}">
-            <i class="fa fa-user-o menu-icon"></i>
-            <span class="menu-title">Bytt passord</span>
-            </a>
-        </li>
+     
         <?php /* <li class="nav-item">
             <a @if(Session::get('page')=="update_personal_details" || Session::get('page')=="update_business_details" || Session::get('page')=="update_bank_details" || Session::get('page')=="update_admin_password")  style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-vendors" aria-expanded="false" aria-controls="ui-vendors">
             <!-- <i class="icon-layout menu-icon"></i> -->
@@ -86,8 +82,15 @@
         </li> */ ?>
         <li class="nav-item">
             <a @if(Session::get('page')=="products_enquiries") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/products-enquiries') }}">
-            <i class="fa fa-comments-o menu-icon"></i>
-            <span class="menu-title">Oppdrag og meldinger</span>
+            <img src="{{ asset('admin/images/help.png') }}" alt="icon" width="16px">
+            <!-- <span class="menu-title">Oppdrag og meldinger</span> -->
+            <span class="menu-title">Meldinger</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a @if(Session::get('page')=="update_admin_password") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/update-admin-password') }}">
+            <i class="fa fa-unlock-alt menu-icon"></i>
+            <span class="menu-title">Bytt passord</span>
             </a>
         </li>
         <?php /* <li class="nav-item" style="position: relative;">

@@ -540,7 +540,7 @@ class AdminController extends Controller
                 ];
 
                 Mail::send('emails.plan_upgrade',$messageData,function($message)use($email){
-                    $message->to($email)->subject('Godkjent leverandørkonto');
+                    $message->to($email)->subject('Bekreftelse på endring av abonnement');
                 });
 
                 $bcc = array("admin@samling.no");
@@ -553,7 +553,7 @@ class AdminController extends Controller
                 ];
 
                 Mail::send('emails.plan_upgrade',$messageData,function($message)use($bcc){
-                    $message->to($bcc)->subject('Godkjent leverandørkonto');
+                    $message->to($bcc)->subject('Bekreftelse på endring av abonnement');
                 });
 
                 return redirect('admin/dashboard')->with('success_message','Ditt abonnement er endret. Endringen vil snart godkjennes.');

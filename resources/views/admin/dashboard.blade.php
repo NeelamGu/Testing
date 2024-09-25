@@ -117,7 +117,7 @@
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="card card-dark-blue text-center">
                             <a style="color:#fff; text-decoration: none;" href="{{ url('admin/add-edit-product') }}"><div class="card-body">
-                                <img class="profile-img" src="{{ asset('admin/images/user.png') }}" alt="" class="banner">
+                                <img class="profile-img" src="{{ asset('admin/images/plus.png') }}" alt="" class="banner">
                                 <p style="font-weight:bold;" class="mb-2">Lag ny annonse</p>
                                 <p class="fs-30 mb-2">&nbsp;</p>    
                             </div></a>
