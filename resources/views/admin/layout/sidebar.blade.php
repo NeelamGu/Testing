@@ -84,7 +84,7 @@
             <a @if(Session::get('page')=="products_enquiries") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/products-enquiries') }}">
             <img src="{{ asset('admin/images/help.png') }}" alt="icon" width="16px">
             <!-- <span class="menu-title">Oppdrag og meldinger</span> -->
-            <span class="menu-title">Meldinger</span>
+            <span class="menu-title">Oppdrag og meldinger</span>
             </a>
         </li>
         <li class="nav-item">
