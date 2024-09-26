@@ -73,7 +73,7 @@
                         <div class="card card-dark-blue text-center">
                             <a style="color:#fff; text-decoration: none;" href="{{ url('admin/products-enquiries') }}"><div class="card-body">
                                 <img  class="profile-img" src="{{ asset('admin/images/help.png') }}" alt="" class="banner">
-                                <p style="font-weight:bold;" class="mb-2">Meldinger</p>
+                                <p style="font-weight:bold;" class="mb-2">Oppdrag og meldinger</p>
                                 <p class="fs-30 mb-2">{{ $messagesCountVendor }}</p> 
                             </div></a>
                         </div>
