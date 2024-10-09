@@ -709,13 +709,13 @@ class ProductsController extends Controller
 
 
         // Get Recently Viewed Products
-        $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->get()->toArray();
+        $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->where('status',1)->where('is_delete',0)->get()->toArray();
         /*dd($recentlyViewedProducts);*/
 
         // Get Group Products (Product Colors)
         $groupProducts = array();
         if(!empty($productDetails['group_code'])){
-            $groupProducts = Product::select('id','product_image')->where('id','!=',$id)->where(['group_code'=>$productDetails['group_code'],'status'=>1])->get()->toArray();
+            $groupProducts = Product::select('id','product_image')->where('id','!=',$id)->where(['group_code'=>$productDetails['group_code'],'status'=>1])->where('is_delete',0)->get()->toArray();
             /*dd($groupProducts);*/
         }
 
@@ -770,7 +770,7 @@ class ProductsController extends Controller
         Session::put('product_id',$id);
 
         // Get Similar Products
-        $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->limit(4)->inRandomOrder()->get()->toArray();
+        $similarProducts = Product::with('brand')->where('category_id',$productDetails['category']['id'])->where('id','!=',$id)->where('status',1)->where('is_delete',0)->limit(4)->inRandomOrder()->get()->toArray();
         /*dd($similarProducts);*/
 
         // Set Session for Recently Viewed Products
@@ -794,13 +794,13 @@ class ProductsController extends Controller
 
 
         // Get Recently Viewed Products
-        $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->get()->toArray();
+        $recentlyViewedProducts = Product::with('brand')->whereIn('id',$recentProductsIds)->where('status',1)->where('is_delete',0)->get()->toArray();
         /*dd($recentlyViewedProducts);*/
 
         // Get Group Products (Product Colors)
         $groupProducts = array();
         if(!empty($productDetails['group_code'])){
-            $groupProducts = Product::select('id','product_image')->where('id','!=',$id)->where(['group_code'=>$productDetails['group_code'],'status'=>1])->get()->toArray();
+            $groupProducts = Product::select('id','product_image')->where('id','!=',$id)->where(['group_code'=>$productDetails['group_code'],'status'=>1])->where('is_delete',0)->get()->toArray();
             /*dd($groupProducts);*/
         }
 
