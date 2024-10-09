@@ -45,10 +45,10 @@ class IndexController extends Controller
         }*/
         $popularItems = Product::where(['status'=>1])->where('is_delete',0)->orderBy('count','Desc')->get()->toArray();    
 
-        $featuredItems = Product::where(['is_featured'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
+        $featuredItems = Product::where(['is_featured'=>'Yes','status'=>1])->where('is_delete',0)->inRandomOrder()->get()->toArray();
         //$newItems = Product::where(['is_new'=>'Yes','status'=>1])->inRandomOrder()->get()->toArray();
         $back_date = date('Y-m-d', strtotime('-7 days'));
-        $newItems = Product::where(['status'=>1])->where('created_at','<',$back_date)->orderBy('id','Desc')->limit(10)->get()->toArray();
+        $newItems = Product::where(['status'=>1])->where('created_at','<',$back_date)->where('is_delete',0)->orderBy('id','Desc')->limit(10)->get()->toArray();
         //dd($newItems);
         $categories = Section::with('categories')->where('id',1)->get()->toArray();
         $popularCategories = Category::where(['status'=>1,'is_popular'=>'Yes'])->get()->toArray();
