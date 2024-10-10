@@ -9205,7 +9205,15 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
+@media (max-width: 420px) {
+  .dropdown-item{
+    padding: 0.25rem 10px .25rem 0 !important;
+  }
+  .navbar .navbar-menu-wrapper .navbar-nav .nav-item {
+    margin-right: -1rem !important;
+}
 
+}
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px;
@@ -26228,7 +26236,9 @@ body.avgrund-active {
   .dataTables_wrapper .dataTables_info {
     margin-bottom: 1rem;
   }
+  
 }
+
 
 .expandable-table thead tr th {
   background: #e47003;

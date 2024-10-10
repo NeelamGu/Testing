@@ -40,7 +40,7 @@
         <li class="nav-item">
             <a @if(Session::get('page')=="update_personal_details") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/update-vendor-details/personal') }}">
             <!-- <i class="fa fa-user-o menu-icon"></i> -->
-            <img src="{{ asset('admin/images/cv.png') }}" alt="icon" width="16px">
+            <img src="{{ asset('admin/images/user.png') }}" alt="icon" width="16px">
             <span class="menu-title">Min konto</span>
             </a>
         </li>

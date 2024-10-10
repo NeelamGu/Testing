@@ -248,7 +248,26 @@
 
 
     }
-
-
-
+@media (max-width:475px){
+  .navbar .navbar-brand-wrapper .brand-logo-mini img {
+    margin-left: 5px  !important;
+}
+}
+@media (max-width:991px){
+  .navbar .navbar-brand-wrapper .brand-logo-mini img {
+    width: calc(129px - 31px);
+    margin-left: 34px;
+    height: auto;
+}
+.navbar .navbar-menu-wrapper {
+  width: calc(100% - 160px);
+}
+.navbar .navbar-brand-wrapper {
+  width: 160px;
+}
+}
+.actionOrder a {
+  display: inline-block;
+  padding: 10px;
+}
 

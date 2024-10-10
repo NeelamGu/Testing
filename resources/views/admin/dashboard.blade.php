@@ -63,7 +63,7 @@
                         <div class="card card-tale text-center">
 
                             <a style="color:#fff; text-decoration: none;" href="{{ url('admin/products') }}"><div class="card-body">
-                                <img class="profile-img" src="{{ asset('admin/images/user.png') }}" alt="" class="banner">
+                                <img class="profile-img" src="{{ asset('admin/images/cv.png') }}" alt="" class="banner">
                                 <p style="font-weight:bold;" class="mb-2">Mine annonser</p>
                                 <p class="fs-30 mb-2">{{ $productsCount }}</p>
                             </div></a>
@@ -108,8 +108,8 @@
                     <div class="col-md-6 mb-4 stretch-card  transparent">
                         <div class="card card-dark-blue text-center">
                             <a style="color:#fff; text-decoration: none;" href="{{ url('admin/update-vendor-details/personal') }}"><div class="card-body">
-                                <img class="profile-img" src="{{ asset('admin/images/cv.png') }}" alt="" class="banner">
-                                <p style="font-weight:bold;" class="mb-2">Konto-informasjon</p>
+                                <img class="profile-img" src="{{ asset('admin/images/user.png') }}" alt="" class="banner">
+                                <p style="font-weight:bold;" class="mb-2">Min Konto</p>
                                 <p class="fs-30 mb-2">&nbsp;</p>    
                             </div></a>
                         </div>

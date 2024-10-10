@@ -682,7 +682,7 @@ class ProductsController extends Controller
         // Delete Product image from products table
         Product::where('id',$id)->update(['product_image'=>'']);
 
-        $message = "Product Image has been deleted successfully!";
+        $message = "Bildet er slettet";
         return redirect()->back()->with('success_message',$message);
 
     }
@@ -1046,7 +1046,7 @@ class ProductsController extends Controller
         // Delete Product image from products_images table
         ProductsImage::where('id',$id)->delete();
 
-        $message = "Product Image has been deleted successfully!";
+        $message = "Bildet er slettet";
         return redirect()->back()->with('success_message',$message);
 
     }

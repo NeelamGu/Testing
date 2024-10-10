@@ -211,7 +211,8 @@ a.label:hover {
                       <p class="hovedbilde-text"><b>For å legge til flere bilder i galleriet, trykk på “velg filer”, dermed hold inne CTRL tasten samtidig som du trykker på alle bildene du ønsker å legge til. Tilslutt trykk på “åpne” for å legge til bildene</b></p>
                       <input multiple type="file" class="form-control" id="files" name="images[]" accept="image/*">
                       
-                    </div>
+                    </div><br>
+                    <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Legg til bildetekster</button><br>
 
                     @if(count($product['images'])>0)
                     <div class="form-group" style="width: 100%; display: inline-block;">
@@ -226,7 +227,7 @@ a.label:hover {
                     </div>
                     @endif
 
-                    <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Legg til bildetekster</button><br><br>
+                    <!-- <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Legg til bildetekster</button><br><br> -->
                     <div class="form-group">
                       <!-- <label for="product_video" style="float:left;">Video-galleri (Anbefalt størrelse:  Maks 5 MB)</label> -->
                       <label for="product_video" style="float:left;">Video-galleri  <span class="orangeDim">(Maks 5MB)</span></label>

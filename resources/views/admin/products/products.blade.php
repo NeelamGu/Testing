@@ -39,6 +39,10 @@
                             <table id="products" class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>
+                                            Endre annonse
+            
+                                        </th>
                                         @if(Auth::guard('admin')->user()->type!="vendor")
                                         <th>
                                             ID
@@ -71,15 +75,14 @@
                                         </th>
                                         <th>
                                             Status
-                                        </th>
-                                        <th>
-                                            Endre annonse
-
                                         </th>
                                     </tr>
                                 </thead>
                                 <tfoot class="prosearch">
                                     <tr>
+                                        <th class="hideColumn">
+                                            Endre annonse
+                                        </th>
                                         @if(Auth::guard('admin')->user()->type!="vendor")
                                         <th>
                                             ID
@@ -112,9 +115,6 @@
                                         </th>
                                         <th class="hideColumn">
                                             Status
-                                        </th>
-                                        <th class="hideColumn">
-                                            Endre annonse
                                         </th>
                                     </tr>
                                 </tfoot>
@@ -122,6 +122,14 @@
                                   @foreach($products as $product)
                                     
                                     <tr>
+                                        <td class="actionOrder">
+                                            <a title="Endre annonse" href="{{ url('admin/add-edit-product/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-pencil-box"></i></a>
+                                            <a title="Annonsebilder" href="{{ url('admin/add-images/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-library-plus"></i></a>
+                                            <!-- <a title="Add Attributes" href="{{ url('admin/add-edit-attributes/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-plus-box"></i></a> -->
+                                            
+                                            <!-- <a title="Product" class="confirmDelete" href="{{ url('admin/delete-product/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a> -->
+                                            <a title="Slett" href="javascript:void(0)" class="confirmDelete" module="product" moduleid="{{ $product['id'] }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a>
+                                        </td>
                                         @if(Auth::guard('admin')->user()->type!="vendor")
                                         <td>
                                             {{ $product['id'] }}
@@ -185,14 +193,7 @@
                                                 @endif
                                             </td>
                                         @endif
-                                        <td>
-                                            <a title="Edit Profile" href="{{ url('admin/add-edit-product/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-pencil-box"></i></a>
-                                            <a title="Add Images" href="{{ url('admin/add-images/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-library-plus"></i></a>
-                                            <!-- <a title="Add Attributes" href="{{ url('admin/add-edit-attributes/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-plus-box"></i></a> -->
-                                            
-                                            <!-- <a title="Product" class="confirmDelete" href="{{ url('admin/delete-product/'.$product['id']) }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a> -->
-                                            <a href="javascript:void(0)" class="confirmDelete" module="product" moduleid="{{ $product['id'] }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a>
-                                        </td>
+                                    
                                     </tr>
                                    @endforeach 
                                 </tbody>
