@@ -64,7 +64,8 @@
         </li> */ ?>
         <li class="nav-item">
             <a @if(Session::get('page')=="products") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/products') }}">
-            <i class="fa fa-address-book-o menu-icon"></i>
+            <!-- <i class="fa fa-address-book-o menu-icon"></i> -->
+            <img class="profile-img" src="{{ asset('admin/images/cv.png') }}" alt="" width="16px">
             <span class="menu-title">Mine annonser</span>
             </a>
         </li>
