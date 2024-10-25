@@ -22036,6 +22036,7 @@ details > summary {
     width: 100% !important;
     background: transparent !important;
     box-shadow: none !important;
+    font-weight: 600;
 }
 
 details > summary span {

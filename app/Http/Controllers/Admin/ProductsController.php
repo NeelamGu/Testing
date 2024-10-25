@@ -95,7 +95,7 @@ class ProductsController extends Controller
         ini_set('memory_limit','256M');
         Session::put('page','products');
         if($id==""){
-            $title = "Legg til ny profil";
+            $title = "Ny annonse";
             $product = new Product;
             $message = "Din annonse kontrolleres og du vil snart høre fra oss.";
         }else{

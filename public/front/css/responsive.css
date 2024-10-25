@@ -89,7 +89,9 @@
 }
 
 @media only screen and (max-width: 767px) {
-
+    .hovedbilde-text b{
+        display: none;
+    }
     .header-lower .outer-box {
         padding-right: 0px;
     }

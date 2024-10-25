@@ -120,7 +120,10 @@ a.label:hover {
 .orangeDim{
     color: #e46f01;
 }
-
+@media only screen and (max-width: 767px) {
+    .hovedbilde-text b{
+        display: none;
+    }}
 </style>
 <div class="main-panel">
     <div class="content-wrapper">
@@ -212,7 +215,7 @@ a.label:hover {
                       <input multiple type="file" class="form-control" id="files" name="images[]" accept="image/*">
                       
                     </div><br>
-                    <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Legg til bildetekster</button><br>
+                    <button type="submit" class="btn btn-primary mr-2" style="margin:-15px 0 20px 0;">Legg til bildetekster</button><br>
 
                     @if(count($product['images'])>0)
                     <div class="form-group" style="width: 100%; display: inline-block;">

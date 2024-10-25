@@ -38,6 +38,7 @@ details > summary {
   border: none;
   box-shadow: 1px 1px 2px #bbbbbb;
   cursor: pointer;
+  font-weight: 600;
 }
 
 details > p {
