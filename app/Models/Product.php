@@ -102,6 +102,7 @@ class Product extends Model
         $productIds = json_decode(json_encode($productIds),true);
         $cities = Product::select('city')->whereIn('id',$productIds)->where('status',1)->groupby('city')->get();
         $cities = json_decode(json_encode($cities),true);
+        sort($cities);
         $states = array();
         foreach ($cities as $key => $city) {
             $getStateCount = DB::table('cities')->where('city',$city)->count();
@@ -110,6 +111,7 @@ class Product extends Model
                 $states[] = $getState->state; 
             }
         }
+        sort($states);
         $states = array_unique($states);
         return $states;
     }
