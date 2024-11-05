@@ -142,6 +142,7 @@ class Product extends Model
         //dd($productIds);
         $states = ProductsCity::select('state')->whereIn('product_id',$productIds)->get()->pluck('state')->toArray();
         $states = json_decode(json_encode($states),true);
+        sort($states);
         $states = array_unique($states);
         return $states;
     }
