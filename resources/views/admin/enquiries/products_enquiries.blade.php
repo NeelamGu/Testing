@@ -3,6 +3,7 @@
    use App\Models\Enquiry;
    use App\Models\Product; 
    use App\Models\ProductsEnquiry; 
+   use App\Models\EnquiriesResponse; 
    ?>
 @extends('admin.layout.layout')
 @section('content')
@@ -183,6 +184,9 @@
                                  ID
                                  </th> -->
                               <th>
+                                 Dato
+                              </th>   
+                              <th>
                                  Kunde
                               </th>
                               <th>
@@ -238,6 +242,17 @@
                               <!-- <td>
                                  {{ $enquiry['id'] }}
                                  </td> -->
+                                 <td>
+                                    <?php
+                                       $getlastEnquiryDate = EnquiriesResponse::getlastEnquiryDate($enquiry['id']);
+                                       //dd($getlastEnquiryDate);
+                                       if($getlastEnquiryDate!=""){
+                                          echo $newDate = date("d.m.y, H:i", strtotime($getlastEnquiryDate));
+                                       }else{
+                                          echo $newDate = date("d.m.y, H:i", strtotime($enquiry['created_at']));   
+                                       }
+                                    ?>
+                              </td>
                               <td style="line-height:20px;">
                                  <!-- <a style="color: #006699;" target="_blank" href="{{ url('admin/users?email='.$enquiry['user']['email']) }}"> -->
                                  {{ ucfirst($nameArr[0]) }}<!-- <br>
@@ -245,6 +260,7 @@
                                     {{ $enquiry['user']['mobile'] }} -->
                                  <!-- </a> -->
                               </td>
+                              
                               <td>
                                  {{ $enquiry['product']['category']['category_name'] }}
                               </td>

@@ -108,7 +108,7 @@ class EnquiryController extends Controller
     }
 
     public function productsEnquiriesDetail($enqid){
-        Session::put('page','products_enquiries');
+        Session::put('page','products_enquiries_detail');
         $adminType = Auth::guard('admin')->user()->type;
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
         $enquiries = EnquiriesResponse::query();

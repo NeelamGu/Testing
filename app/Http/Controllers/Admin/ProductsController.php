@@ -169,6 +169,8 @@ class ProductsController extends Controller
                 }
             }
 
+            /*
+
             // Upload Product Image after Resize small: 250x250 medium: 500x500 large: 1000x1000
             if($request->hasFile('product_image')){
                 $image_tmp = $request->file('product_image');
@@ -186,7 +188,7 @@ class ProductsController extends Controller
                     Image::make($image_tmp)->resize(500,250)->save($mediumImagePath, 50);
                     Image::make($image_tmp)->resize(250,125)->save($smallImagePath, 50);
                     // Insert Image Name in products table
-                    /*$product->product_image = $imageName;*/
+                    //$product->product_image = $imageName;
                 }
             }else if(!empty($data['current_product_image'])){
                 $imageName = $data['current_product_image'];
@@ -224,6 +226,8 @@ class ProductsController extends Controller
                     $product->product_banner = $imageName;
                 }
             }
+
+            */
 
             // Save Product details in products table
             $categoryDetails = Category::find($data['category_id']);
@@ -332,10 +336,11 @@ class ProductsController extends Controller
                 }*/
             }
 
+            /*
+
             // Upload Alt Images
             if($request->hasFile('images')){
                 $images = $request->file('images');
-                /*echo "<pre>"; print_r($images); die;*/
                 foreach ($images as $key => $image) {
                     // Generate Temp Image
                     $image_tmp = Image::make($image);
@@ -357,9 +362,6 @@ class ProductsController extends Controller
                     $image = new ProductsImage; 
                     $image->image = $imageName;
                     $image->product_id = $product_id;
-                    /*if(isset($data['title'][$key])&&!empty($data['title'][$key])){
-                        $image->title = $data['title'][$key];    
-                    }*/
                     $image->status = 1;
                     $image->save();
                 }
@@ -372,6 +374,8 @@ class ProductsController extends Controller
                     }
                 }
             }
+
+            */ 
 
             if(isset($data['all_norway'])&&$data['all_norway']=="limited"){
                 // Delete earlier States of Product

@@ -164,6 +164,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Plan Upgrade
         Route::get('/vendor/plans/upgrade/{code}','AdminController@planUpgrade');
+
+        // Delete Vendor
+        Route::get('delete-vendor/{id}','AdminController@deleteVendor');
     });
 });
 

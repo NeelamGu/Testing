@@ -86,6 +86,9 @@ use App\Models\Product;
                                             ID
                                         </th>
                                         <th>
+                                         Dato
+                                        </th>
+                                        <th>
                                             Category
                                         </th>
                                         <th>
@@ -104,6 +107,9 @@ use App\Models\Product;
                                             Enquiry<br>Details
                                         </th>
                                         <th>
+                                            Enquiry<br>Type
+                                        </th>
+                                        <th>
                                             Assigned<br>Vendors
                                         </th>
                                     </tr>
@@ -113,6 +119,9 @@ use App\Models\Product;
                                     <tr>
                                         <td>
                                             {{ $enquiry['id'] }}
+                                        </td>
+                                        <td>
+                                            {{ date("d.m.y, H:i", strtotime($enquiry['created_at'])); }}
                                         </td>
                                         <td>
                                             @if($enquiry['category_id']>0)
@@ -143,6 +152,13 @@ use App\Models\Product;
                                         <td style="line-height: 20px;">
                                             <strong>{{ $enquiry['title'] }}</strong><br>
                                             {{ $enquiry['description'] }}
+                                        </td>
+                                        <td style="line-height: 20px;">
+                                            @if($enquiry['address']!="")
+                                                Direct Enquiry
+                                            @else
+                                                Profile Enquiry
+                                            @endif
                                         </td>
                                         <td style="line-height: 20px;">
                                             @php 

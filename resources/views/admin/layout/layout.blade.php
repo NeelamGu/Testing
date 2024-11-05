@@ -440,6 +440,9 @@
   </script>-->
 <script> 
   $(document).ready(function() {
+    @if(Session::get('page')=="products_enquiries_detail")
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    @endif
   if (window.File && window.FileList && window.FileReader) {
     $("#files").on("change", function(e) {
       var files = e.target.files,

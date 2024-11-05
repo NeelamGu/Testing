@@ -349,7 +349,7 @@ class AdminController extends Controller
             $message = "You have no right to access this functionality";
             return redirect('admin/dashboard')->with('error_message',$message);
         }
-        $admins = Admin::query();
+        $admins = Admin::where('is_delete',0);
         if(!empty($type)){
             if($type=="vendor"){
                 $admins = $admins->with('vendorPersonal')->where('type',$type);
@@ -566,6 +566,14 @@ class AdminController extends Controller
     public function logout(){
         Auth::guard('admin')->logout();
         return redirect('admin/login');
+    }
+
+    public function deleteVendor($id){
+        // Delete Vendor
+        // Vendor::where('id',$id)->delete();
+        Admin::where('id',$id)->update(['is_delete'=>1,'status'=>0]);
+        $message = "Vendor has been deleted successfully!";
+        return redirect()->back()->with('success_message',$message);
     }
 
 }

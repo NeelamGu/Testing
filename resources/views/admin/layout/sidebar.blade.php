@@ -82,7 +82,7 @@
             </div>
         </li> */ ?>
         <li class="nav-item">
-            <a @if(Session::get('page')=="products_enquiries") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/products-enquiries') }}">
+            <a @if(Session::get('page')=="products_enquiries" || Session::get('page')=="products_enquiries_detail") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" href="{{ url('admin/products-enquiries') }}">
             <img src="{{ asset('admin/images/help.png') }}" alt="icon" width="16px">
             <!-- <span class="menu-title">Oppdrag og meldinger</span> -->
             <span class="menu-title">Oppdrag og meldinger</span>
@@ -157,7 +157,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a @if(Session::get('page')=="enquiries_responses" || Session::get('page')=="products_enquiries" || Session::get('page')=="enquiries") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-enquiries" aria-expanded="false" aria-controls="ui-enquiries">
+            <a @if(Session::get('page')=="enquiries_responses" || Session::get('page')=="products_enquiries" || Session::get('page')=="products_enquiries_detail" || Session::get('page')=="enquiries") style="background:#e46f01 !important; color: #fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-enquiries" aria-expanded="false" aria-controls="ui-enquiries">
             <i class="icon-paper menu-icon"></i>
             <span class="menu-title">Enquiries Management</span>
             <i class="menu-arrow"></i>

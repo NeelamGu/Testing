@@ -1,6 +1,7 @@
 <?php 
 use App\Models\Enquiry; 
 use App\Models\Product; 
+use App\Models\EnquiriesResponse; 
 ?>
 <style>
    .count-number 
@@ -66,7 +67,13 @@ use App\Models\Product;
          </td>
          <td >
             <?php
-               echo $newDate = date("d.m.y, H:i", strtotime($enquiry['created_at']));
+               $getlastEnquiryDate = EnquiriesResponse::getlastEnquiryDate($enquiry['id']);
+               //dd($getlastEnquiryDate);
+               if($getlastEnquiryDate!=""){
+                  echo $newDate = date("d.m.y, H:i", strtotime($getlastEnquiryDate));
+               }else{
+                  echo $newDate = date("d.m.y, H:i", strtotime($enquiry['created_at']));   
+               }
                ?>
          </td>
          <td>{{ $enquiry['product']['category']['category_name'] }}</td>
