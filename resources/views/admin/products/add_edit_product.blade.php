@@ -462,7 +462,7 @@ a.label:hover {
                       <input type="checkbox" name="is_new" id="is_new" value="Yes" @if(!empty($product['is_new']) && $product['is_new']=="Yes") checked="" @endif>
                     </div>
                     @endif
-                    <div class="form-group">
+                    <?php /* <div class="form-group">
                       <label for="all_norway">Velg leveringsområde</label><br>
                       <input style="display: none;" type="checkbox" id="checkAll"/>&nbsp;
                       @if(empty($product['id']))
@@ -498,7 +498,7 @@ a.label:hover {
                         </li>
                         @endforeach
                       </ul>
-                    </div>
+                    </div> */ ?>
                     <button type="submit" class="btn btn-primary mr-2">Lagre</button>
                     <?php /* <button type="reset" class="btn btn-light">Avbryt</button> */ ?>
                      <a href="{{ url('/admin/products')}}" class="btn btn-primary mr-2">
