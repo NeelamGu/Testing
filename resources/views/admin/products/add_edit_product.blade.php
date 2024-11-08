@@ -478,19 +478,16 @@ a.label:hover {
                         @endif
                       @endif
                       <ul class="allnorway">
-                        @foreach($states as $key => $state)
-                        @php $countState = \App\Models\ProductsState::countState($product['id'],$state) @endphp
+                        @foreach($statesWithCities as $state => $cityinfo)
                         <li>
                           <details>
-                          <input type="checkbox" name="states[]" id="{{$state}}" value="{{$state}}" @if($countState>0 && !empty($product['all_norway']) && $product['all_norway']=="limited") checked @endif>
+                          <input type="checkbox" name="states[]" id="{{$state}}" value="{{$state}}" @if(!empty($product['all_norway']) && $product['all_norway']=="limited" && $cityinfo['state_selected']==1) checked @endif>
                           <summary><label for="{{$state}}">{{$state}}</label></summary>
-                          @php $getCities = \App\Models\City::getCities($state) @endphp
                           <ul>
-                            @foreach($getCities as $keyc => $city)
-                            @php $countCity = \App\Models\ProductsCity::countCity($product['id'],$city) @endphp
+                            @foreach($cityinfo['cities'] as $keyc => $city)
                             <li>
-                              <input type="checkbox" name="cities[]" id="{{$state}}-{{$key}}" value="{{$city}}" @if($countCity>0 && !empty($product['all_norway']) && $product['all_norway']=="limited") checked @endif>
-                              <label for="{{$state}}-{{$key}}">{{$city}}</label>
+                              <input type="checkbox" name="cities[]" id="{{$state}}-{{$keyc}}" value="{{$city['city']}}" @if(!empty($product['all_norway']) && $product['all_norway']=="limited" && $city['city_selected']==1) checked @endif>
+                              <label for="{{$state}}-{{$keyc}}">{{$city['city']}}</label>
                             </li>
                             @endforeach
                           </ul>

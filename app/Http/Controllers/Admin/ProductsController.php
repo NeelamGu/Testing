@@ -494,6 +494,26 @@ class ProductsController extends Controller
         }
         
 
+        $states = DB::table('cities')->select('state','city')->groupby('state','city')->orderby('state','ASC')->orderby('city','ASC')->get();
+        $states = json_decode(json_encode($states),true);
+        $selStates = \App\Models\ProductsState::where('product_id',$id)->pluck('state')->toArray();
+        $selCities = \App\Models\ProductsCity::where('product_id',$id)->pluck('city')->toArray();
+        $statesWithCities = [];
+        $index = 0;
+        foreach($states as $row){
+            $statesWithCities[$row['state']]['state_selected'] = false;
+            if(in_array($row['state'],$selStates)){
+                $statesWithCities[$row['state']]['state_selected'] = true;
+            }
+            $statesWithCities[$row['state']]['cities'][$index]['city'] = $row['city'];
+            $statesWithCities[$row['state']]['cities'][$index]['city_selected'] = false;
+            if(in_array($row['city'],$selCities)){
+                $statesWithCities[$row['state']]['cities'][$index]['city_selected'] = true;
+            }
+            $index++;
+        }
+        //echo "<pre>"; print_r($statesWithCities); die;
+
         // Get All Brands
         $brands = Brand::where('status',1)->get()->toArray();
         $cities = DB::table('cities')->select('city')->where('status',1)->groupby('city')->pluck('city');
@@ -507,7 +527,7 @@ class ProductsController extends Controller
             $getPlanDetails = array();  
         }
         //dd($states);
-        return view('admin.products.add_edit_product')->with(compact('title','categories','brands','product','cities','states','vendorDetails','getPlanDetails'));
+        return view('admin.products.add_edit_product')->with(compact('title','categories','brands','product','cities','states','vendorDetails','getPlanDetails','statesWithCities'));
     }
 
     public function addEditReusedProduct(Request $request, $id=null){
