@@ -528,6 +528,7 @@ class UserController extends Controller
     }
 
     public function userEnquiriesDetail($enqid){
+        Session::put('page','user_enquiries_detail');
         $enquiries = EnquiriesResponse::query();
         $enquiries = $enquiries->where('enquiry_id',$enqid);
         $enquiries = $enquiries->with(['enquiry'])->get()->toArray();

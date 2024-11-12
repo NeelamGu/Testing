@@ -171,7 +171,7 @@
                                         </td>
                                         <td>
                                             @if($admin['type']=="vendor")
-                                              <a href="{{ url('admin/view-vendor-details/'.$admin['id']) }}"><i style="font-size:25px;" class="mdi mdi-file-document"></i></a>
+                                              <a href="{{ url('admin/view-vendor-details/'.$admin['id']) }}"><i style="font-size:25px;" class="mdi mdi-file-document"></i></a>&nbsp;&nbsp;&nbsp;
                                               <a title="Slett" href="javascript:void(0)" class="confirmDelete" module="vendor" moduleid="{{ $admin['id'] }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a>
                                             @endif
                                         </td>

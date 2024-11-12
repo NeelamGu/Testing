@@ -37,7 +37,7 @@ class EnquiryController extends Controller
         Session::put('page','products_enquiries');
         $adminType = Auth::guard('admin')->user()->type;
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
-        $enquiries = ProductsEnquiry::query();
+        $enquiries = ProductsEnquiry::orderby('created_at','Desc');
         $enquiriesCatAll = ProductsEnquiry::query();
         if($adminType=="vendor"){
             $vendorStatus = Auth::guard('admin')->user()->status;
@@ -77,7 +77,7 @@ class EnquiryController extends Controller
             $enquiries = $enquiries->with(['product','user','vendor']);   
         }
         $enquiries = $enquiries->get()->toArray();  
-        /*dd($enquiries);*/
+        //dd($enquiries);
         foreach ($enquiries as $key => $enquiry) {
             $responseCount = EnquiriesResponse::where(['enquiry_id'=>$enquiry['id'],'sender_type'=>'Customer'])->count();
             if($responseCount>0){

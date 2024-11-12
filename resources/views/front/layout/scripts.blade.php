@@ -9,6 +9,8 @@
 <script src="{{ url('front/js/custom.js') }}"></script>
 <script src="{{ url('front/js/jquery.fancybox.min.js') }}"></script>
 
+
+
 <!-- Confirm deletion -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Appointment Form Validation-->
@@ -68,15 +70,21 @@
 </script>
 <script>
    $(document).ready(function () {
-     $("#shipform").hide();
-       $('#shipadd').click(function () {
+
+    @if(Session::get('page')=="user_enquiries_detail")
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    @endif
+
+
+    $("#shipform").hide();
+        $('#shipadd').click(function () {
            $('#shipform').slideToggle(500);
-       });
-   });
+        });
+    });
    
-   $(".checkbox-close").click(function(){
-   $("#shipform").hide();
-   });
+    $(".checkbox-close").click(function(){
+        $("#shipform").hide();
+    });
    
    var searchToggle = $(".search-toggle");
    var searchWrap = $(".header-search-wrap");

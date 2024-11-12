@@ -155,9 +155,9 @@ use App\Models\Product;
                                         </td>
                                         <td style="line-height: 20px;">
                                             @if($enquiry['address']!="")
-                                                Direct Enquiry
+                                                Oppdrag
                                             @else
-                                                Profile Enquiry
+                                                Direkte melding
                                             @endif
                                         </td>
                                         <td style="line-height: 20px;">
