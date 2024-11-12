@@ -130,9 +130,9 @@
                                             <?php $getProductURL = Product::productURL($product['product_name']); ?>
                                             {{ $product['product_name'] }}<br><br>
                                             @if($product['status']==1)
-                                                <a target="_blank" href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">Vis annonse </a>
+                                                <a class="btn btn-block profile-btn-area btn-primary" target="_blank" href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">Vis annonse </a>
                                             @else
-                                                <a target="_blank" href="{{ url('product-review/'.$getProductURL.'/'.$product['id']) }}">Vis annonse</a>
+                                                <a class="btn btn-block profile-btn-area btn-primary" target="_blank" href="{{ url('product-review/'.$getProductURL.'/'.$product['id']) }}">Vis annonse</a>
                                             @endif
                                         </td>
                                         <!-- <td>
