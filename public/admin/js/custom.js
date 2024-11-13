@@ -181,6 +181,14 @@ $(document).ready(function(){
       "order": [[ 0, "desc" ]], //or asc
       "bDestroy": true 
     });
+    $("#products_enquiries_all").DataTable({
+      "order": [[ 0, "desc" ]], //or asc
+      "bDestroy": true 
+    });
+    $("#all_enquiries").DataTable({
+      "order": [[ 0, "desc" ]], //or asc
+      "bDestroy": true 
+    });
     $("#events").DataTable({
       "order": [[ 0, "desc" ]], //or asc 
       "bDestroy": true

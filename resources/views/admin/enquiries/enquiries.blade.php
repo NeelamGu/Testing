@@ -79,7 +79,7 @@ use App\Models\Product;
                           </div>
                         @endif
                         <div class="table-responsive pt-3">
-                            <table id="products_enquiries" class="enquiries-table table table-bordered">
+                            <table id="all_enquiries" class="enquiries-table table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>
