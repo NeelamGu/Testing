@@ -270,4 +270,53 @@
   display: inline-block;
   padding: 10px;
 }
-
+.slab {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 1rem 0;
+}
+.slabEnd.topper{
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+}
+.iconWrap{
+  display: flex;
+  flex-direction: column;
+}
+.profileOuter {
+  background: #fff;
+  box-shadow: 0px 8px 54px 0px rgba(171, 171, 171, 0.25);
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  border-radius: 10px;
+  margin-top: 75px;
+}
+.slabEnd {
+  display: flex;
+  gap: 10px;
+  text-align: center;
+  justify-content: end;
+}
+.iconWrap img{
+  width: 60px;
+}
+.slabImg {
+  position: relative;
+}
+.slabImg img{
+  position: absolute;
+  top: -70px;
+  left: -75px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+.userGridInner{
+  padding: 1rem;
+}
+@media only screen and (max-width: 479px) {
+  .slabOne h5{
+      font-size: 16px;
+  }
+}
