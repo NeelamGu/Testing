@@ -41,6 +41,7 @@
                         </div>
                         @endif
 
+                        @if(Auth::guard('admin')->user()->type!="vendor")
                         <div class="table-responsive pt-3">
                             <table id="products" class="table table-bordered">
                                 <thead>
@@ -218,43 +219,66 @@
                                 </tbody>
                             </table>
                         </div>
+                        @endif
                     </div>
+
+
+                    @if(Auth::guard('admin')->user()->type=="vendor")
+
                     <div class="userListGrid">
                         <div class="userGridInner">
                             <div class="row">
+                                @foreach($products as $product)
                                 <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-412">
                                     <div class="profileOuter">
                                         <div class="slab">
                                             <div class="slabOne">
+                                                <?php $getProductURL = Product::productURL($product['product_name']); ?>
                                                 <span class="miniHead">Annonse</span>
-                                                <h5>Blomsterstudio</h5>
-                                                <a class="btn btn-block profile-btn-area btn-primary" target="_blank"
-                                                    href="">Vis annonse</a>
+                                                <h5>{{ $product['product_name'] }}</h5>
+                                                @if($product['status']==1)
+                                                    <a class="btn btn-block profile-btn-area btn-primary" target="_blank"
+                                                    href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">Vis annonse</a>
+                                                @else
+                                                    <a class="btn btn-block profile-btn-area btn-primary" target="_blank"
+                                                    href="{{ url('product-review/'.$getProductURL.'/'.$product['id']) }}">Vis annonse</a>
+                                                @endif    
                                             </div>
                                             <div class="slabImg">
-                                                <img src="{{asset('front/images/icons/profileImg.jpg')}}" alt="profile image">
+                                                @if(!empty($product['product_image']))
+                                                    <img src="{{ asset('front/images/product_images/small/'.$product['product_image']) }}">
+                                                @else
+                                                    <img src="{{ asset('front/images/no-image.png') }}">
+                                                @endif
                                             </div>
                                             <div class="slabEnd topper">
                                                 <span class="miniHead">
                                                     Lagt til
                                                 </span>
-                                                <h5>22.04.24 <br>
-                                                    10:36</h5>
+                                                <h5>{{ date("d.m.y", strtotime($product['created_at'])); }} <br>
+                                                    {{ date("H:i", strtotime($product['created_at'])); }}</h5>
                                             </div>
                                         </div>
                                         <div class="slab">
                                             <div class="slabOne">
                                                 <span class="miniHead">Kategori</span>
-                                                <h5>Mussik</h5>
+                                                <h5>@if(isset($product['category']['category_name']))
+                                                        {{ $product['category']['category_name'] }}
+                                                    @endif
+                                                </h5>
                                             </div>
                                             <div class="slabEnd">
                                                 <div class="iconWrap">
                                                     <span class="miniHead">
                                                         Status
                                                     </span>
-                                                    <a href="#" class="icon">
-                                                        <img src="{{ asset('front/images/icons/save.png')}}" alt="icon">
-                                                    </a>
+                                                    @if($product['status']==1)
+                                                    <i style="font-size:25px;" class="mdi mdi-bookmark-check"
+                                                        status="Active"></i>
+                                                    @else
+                                                    <i style="font-size:25px;" class="mdi mdi-bookmark-outline"
+                                                        status="Inactive"></i>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -267,7 +291,7 @@
                                                     <span class="miniHead">
                                                         Rediger
                                                     </span>
-                                                    <a href="#"  class="icon">
+                                                    <a href="{{ url('admin/add-edit-product/'.$product['id']) }}" class="icon">
                                                         <img src="{{ asset('front/images/icons/edit.png')}}" alt="icon">
                                                     </a>
                                                 </div>
@@ -275,7 +299,7 @@
                                                     <span class="miniHead">
                                                         Annonsebilder
                                                     </span>
-                                                    <a href="#"  class="icon">
+                                                    <a href="{{ url('admin/add-images/'.$product['id']) }}" class="icon">
                                                         <img src="{{ asset('front/images/icons/imgAdd.png')}}" alt="icon">
                                                     </a>
                                                 </div>
@@ -283,7 +307,7 @@
                                                     <span class="miniHead">
                                                         Slett
                                                     </span>
-                                                    <a href="#"  class="icon">
+                                                    <a href="javascript:void(0)" class="icon confirmDelete" module="product" moduleid="{{ $product['id'] }}">
                                                         <img src="{{ asset('front/images/icons/cancel.png')}}" alt="icon">
                                                     </a>
                                                 </div>
@@ -291,147 +315,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-412">
-                                    <div class="profileOuter">
-                                        <div class="slab">
-                                            <div class="slabOne">
-                                                <span class="miniHead">Annonse</span>
-                                                <h5>Blomsterstudio</h5>
-                                                <a class="btn btn-block profile-btn-area btn-primary" target="_blank"
-                                                    href="">Vis annonse</a>
-                                            </div>
-                                            <div class="slabImg">
-                                                <img src="{{asset('front/images/icons/profileImg.jpg')}}" alt="profile image">
-                                            </div>
-                                            <div class="slabEnd topper">
-                                                <span class="miniHead">
-                                                    Lagt til
-                                                </span>
-                                                <h5>22.04.24 <br>
-                                                    10:36</h5>
-                                            </div>
-                                        </div>
-                                        <div class="slab">
-                                            <div class="slabOne">
-                                                <span class="miniHead">Kategori</span>
-                                                <h5>Mussik</h5>
-                                            </div>
-                                            <div class="slabEnd">
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Status
-                                                    </span>
-                                                    <a href="#" class="icon">
-                                                        <img src="{{ asset('front/images/icons/save.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="slab">
-                                            <div class="slabOne">
-                                                <h5>Endre Annonse</h5>
-                                            </div>
-                                            <div class="slabEnd">
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Rediger
-                                                    </span>
-                                                    <a href="#"  class="icon">
-                                                        <img src="{{ asset('front/images/icons/edit.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Annonsebilder
-                                                    </span>
-                                                    <a href="#"  class="icon">
-                                                        <img src="{{ asset('front/images/icons/imgAdd.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Slett
-                                                    </span>
-                                                    <a href="#"  class="icon">
-                                                        <img src="{{ asset('front/images/icons/cancel.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-412">
-                                    <div class="profileOuter">
-                                        <div class="slab">
-                                            <div class="slabOne">
-                                                <span class="miniHead">Annonse</span>
-                                                <h5>Blomsterstudio</h5>
-                                                <a class="btn btn-block profile-btn-area btn-primary" target="_blank"
-                                                    href="">Vis annonse</a>
-                                            </div>
-                                            <div class="slabImg">
-                                                <img src="{{asset('front/images/icons/profileImg.jpg')}}" alt="profile image">
-                                            </div>
-                                            <div class="slabEnd topper">
-                                                <span class="miniHead">
-                                                    Lagt til
-                                                </span>
-                                                <h5>22.04.24 <br>
-                                                    10:36</h5>
-                                            </div>
-                                        </div>
-                                        <div class="slab">
-                                            <div class="slabOne">
-                                                <span class="miniHead">Kategori</span>
-                                                <h5>Mussik</h5>
-                                            </div>
-                                            <div class="slabEnd">
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Status
-                                                    </span>
-                                                    <a href="#" class="icon">
-                                                        <img src="{{ asset('front/images/icons/save.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="slab">
-                                            <div class="slabOne">
-                                                <h5>Endre Annonse</h5>
-                                            </div>
-                                            <div class="slabEnd">
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Rediger
-                                                    </span>
-                                                    <a href="#"  class="icon">
-                                                        <img src="{{ asset('front/images/icons/edit.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Annonsebilder
-                                                    </span>
-                                                    <a href="#"  class="icon">
-                                                        <img src="{{ asset('front/images/icons/imgAdd.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                                <div class="iconWrap">
-                                                    <span class="miniHead">
-                                                        Slett
-                                                    </span>
-                                                    <a href="#"  class="icon">
-                                                        <img src="{{ asset('front/images/icons/cancel.png')}}" alt="icon">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
+
+                    @endif
+
                 </div>
             </div>
         </div>

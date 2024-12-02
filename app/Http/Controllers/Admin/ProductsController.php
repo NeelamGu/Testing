@@ -46,7 +46,12 @@ class ProductsController extends Controller
         $products = $products->where('admin_type','!=','user');
         $products = $products->where('section_id','!=',2);
         $products = $products->where('is_delete',0);
-        $products = $products->get()->toArray();
+        if($adminType=="vendor"){
+            $products = $products->orderby('id','Desc')->get()->toArray();
+        }else{
+            $products = $products->get()->toArray();    
+        }
+        
         /*dd($products);*/
         /*echo "<pre>"; print_r($products); die;*/
         return view('admin.products.products')->with(compact('products'));
