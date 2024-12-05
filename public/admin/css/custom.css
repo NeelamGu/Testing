@@ -327,11 +327,22 @@ span.miniHead {
 }
 span.miniHead + h5{
   font-size: 16px;
+  max-width: 100px;
 }
 .profileOuter a.btn.btn-block.profile-btn-area.btn-primary {
   font-size: 12px;
   padding: 1px 1px 5px;
   width: 85px;
 }
-
+.profileOuter{
+  margin-top: 95px;
+}
+.slabImg img {
+  position: absolute;
+  top: -70px;
+  left: -55px;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+};
 }
