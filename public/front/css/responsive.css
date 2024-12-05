@@ -382,7 +382,10 @@
 
 @media only screen and (max-width: 479px) {
 
-
+    .main-header .header-top .top-right {
+        float: none;
+        margin-top: 40px;
+    }
 
     .main-header.fixed-header .header-lower {
         position: relative !important;

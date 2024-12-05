@@ -56,8 +56,8 @@ details > p {
                     <a href=""><i class="fa fa-chevron-left left-aarow-icon"></i></a>FILTRE
                 </h2>
                 <div class="filter-text-area">
-                    <a href="" class="apply-filter-text" onclick="closeBtn()">Søke om</a>
-                    <a href="" class="clear-all-link ">Rydd alt</a>
+                    <a href="" class="apply-filter-text" onclick="closeBtn()">Vis resultater</a>
+                    <a href="" class="clear-all-link ">Nullstill</a>
                 </div>
             </div>
             <ul class="filter ul-reset">
