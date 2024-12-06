@@ -291,6 +291,7 @@
   padding: 0 1.5rem 1.5rem 1.5rem;
   border-radius: 10px;
   margin-top: 75px;
+  position: relative;
 }
 .slabEnd {
   display: flex;
@@ -302,12 +303,12 @@
   width: 60px;
 }
 .slabImg {
-  position: relative;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .slabImg img{
-  position: absolute;
-  top: -70px;
-  left: -75px;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -327,7 +328,7 @@ span.miniHead {
 }
 span.miniHead + h5{
   font-size: 16px;
-  max-width: 100px;
+  /* max-width: 100px; */
 }
 .profileOuter a.btn.btn-block.profile-btn-area.btn-primary {
   font-size: 12px;
@@ -338,9 +339,6 @@ span.miniHead + h5{
   margin-top: 95px;
 }
 .slabImg img {
-  position: absolute;
-  top: -70px;
-  left: -55px;
   border-radius: 50%;
   width: 80px;
   height: 80px;

@@ -26,8 +26,7 @@
                 <div class="card">
                     <div class="card-body d-flex justify-content-between">
                         <h4 class="card-title">Mine annonser</h4>
-                        <a style="max-width: 150px;"
-                            href="{{ url('admin/add-edit-product') }}"
+                        <a style="max-width: 150px;" href="{{ url('admin/add-edit-product') }}"
                             class="btn btn-block profile-btn-area btn-primary">Lag ny annonse</a>
                         @if(Session::has('success_message'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
