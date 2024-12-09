@@ -187,7 +187,7 @@
       <div class="auto-container">
          <div class="banner-text">
             <h2>Gjør det <br> uforglemmelig!</h2>
-            <p>Send inn et oppdrag og få leverandører til å kontakte deg.<br> Helt gratis og uforpliktende!</p>
+            <p>Beskriv dine ønsker og få leverandører fra hele landet til å kontakte deg.<br> Helt gratis og uforpliktende!</p>
             @if(!isset(Auth::guard('admin')->user()->type))<a class="banner-enquery-btn" href="{{ url('/enquire-us')}}">Legg ut oppdrag</a>@endif
          </div>
       </div>
