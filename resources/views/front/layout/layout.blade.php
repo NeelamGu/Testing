@@ -3,6 +3,10 @@
    <head>
       <meta charset="utf-8">
       <meta name="csrf-token" content="{{ csrf_token() }}" />
+      <title>@if(!empty($meta_title)){{ $meta_title }} @else Samling @endif</title>
+      @if(!empty($meta_description))<meta name="description" content="{{ $meta_description }}">@endif
+    
+      @if(!empty($meta_keywords))<meta name="keywords" content="{{ $meta_keywords }}">@endif
       <link rel="icon" type="image/png" href="{{ asset('front/images/fav-icon.png') }}">
       <!-- Stylesheets -->
       <link href="{{ url('front/css/bootstrap.min.css') }}" rel="stylesheet">

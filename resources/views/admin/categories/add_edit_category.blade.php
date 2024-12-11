@@ -102,8 +102,8 @@
                       <input type="text" class="form-control" id="meta_title" placeholder="Enter Meta Title" name="meta_title" @if(!empty($category['meta_title'])) value="{{ $category['meta_title'] }}" @else value="{{ old('meta_title') }}" @endif>
                     </div>
                     <div class="form-group">
-                      <label for="  meta_description">Meta Description</label>
-                      <input type="text" class="form-control" id="  meta_description" placeholder="Enter Meta Description" name="  meta_description" @if(!empty($category['   meta_description'])) value="{{ $category['  meta_description'] }}" @else value="{{ old('   meta_description') }}" @endif>
+                      <label for="meta_description">Meta Description</label>
+                      <input type="text" class="form-control" id="meta_description" placeholder="Enter Meta Description" name="meta_description" @if(!empty($category['meta_description'])) value="{{ $category['meta_description'] }}" @else value="{{ old('meta_description') }}" @endif>
                     </div>
                     <div class="form-group">
                       <label for="meta_keywords">Meta Keywords</label>

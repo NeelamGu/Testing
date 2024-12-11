@@ -656,10 +656,16 @@ class ProductsController extends Controller
 
                 $categoryProducts = $categoryProducts->paginate(18);
                 /*$categoryProducts = $categoryProducts->get()->toArray();*/
-                /*dd($categoryProducts);*/
+
+                /*dd($categoryDetails);*/
+
+                $meta_title = $categoryDetails['categoryDetails']['meta_title'];
+                $meta_description = $categoryDetails['categoryDetails']['meta_description'];
+                $meta_keywords = $categoryDetails['categoryDetails']['meta_keywords'];
+
                 /*echo "Category exists"; die;*/
                 $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
-                return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url','countries'));
+                return view('front.products.listing')->with(compact('categoryDetails','categoryProducts','url','countries','meta_title','meta_description','meta_keywords'));
             }else{
                 abort(404);
             }
