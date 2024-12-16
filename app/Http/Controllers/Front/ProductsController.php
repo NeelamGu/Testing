@@ -836,7 +836,13 @@ class ProductsController extends Controller
 
         $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
 
-        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','reviews','avgRating','avgStarRating','ratingCount','countries'));
+        $productStates = DB::table('products_states')->select('state')->where('product_id',$id)->get()->pluck('state'); 
+        //dd($productStates);
+        $productCities = DB::table('products_cities')->where('product_id',$id)->whereNotin('state',$productStates)->get()->toArray();
+        $productCities = json_decode(json_encode($productCities),true);
+        //dd($productCities);
+
+        return view('front.products.detail')->with(compact('productDetails','categoryDetails','totalStock','similarProducts','recentlyViewedProducts','groupProducts','reviews','avgRating','avgStarRating','ratingCount','countries','productStates','productCities'));
     }
 
     public function selectCategory(){

@@ -218,7 +218,7 @@
                      <!-- new col add here -->
                      <div class="form-group col-sm-6 col-12">
                         <label>Fødselsdato</label>
-                        <input type="date" class="form-control" placeholder="" name="birth_date" id="user-birth_date">
+                        <input <?php /* type="date" */ ?> type="text" class="form-control" placeholder="YYYY-MM-DD" name="birth_date" id="user-birth_date">
                            <p id="register-birth_date"></p>
                      </div>
                      <!-- end here -->

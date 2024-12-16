@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
-                    <div class="card-body d-flex justify-content-between">
+                    <div @if(Auth::guard('admin')->user()->type=="vendor") class="card-body d-flex justify-content-between" @else class="card-body" @endif>
                         <h4 class="card-title">Mine annonser</h4>
                         <a style="max-width: 150px;" href="{{ url('admin/add-edit-product') }}"
                             class="btn btn-block profile-btn-area btn-primary">Lag ny annonse</a>

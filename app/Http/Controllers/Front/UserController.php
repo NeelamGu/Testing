@@ -24,6 +24,7 @@ use Validator;
 use Session;
 use Hash;
 use DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -82,6 +83,7 @@ class UserController extends Controller
                 'last_name' => 'required|string|max:100',
                 /*'gender' => 'required|string|max:100',*/
                 /*'birth_date' => 'required|string|max:100',*/
+                'birth_date' => 'date_format:Y-m-d',
                 'country' => 'required',
                 'mobile' => 'required',
                 'email' => 'required|email|max:150|unique:users',
@@ -205,6 +207,10 @@ class UserController extends Controller
                 $response->sender_type = 'Customer';
                 $response->message = $data['message'];
                 $response->save();
+
+                // Update updated_at date in enquiries table
+                $updated_at = Carbon::now();
+                ProductsEnquiry::where('id',$enquiryDetails->id)->update(['updated_at'=>$updated_at]);
 
                 // Send Enquiry Email to User
                 $email = Auth::user()->email;
@@ -417,6 +423,7 @@ class UserController extends Controller
     public function userEnquiries(){
         $enquiries = ProductsEnquiry::query();
         $enquiries = $enquiries->where('user_id',Auth::user()->id);
+
         if(isset($_GET['cat'])&&$_GET['cat']!=""){
             $catIds = Category::select('id')->where('category_name',$_GET['cat'])->get()->pluck('id');
             /*dd($catIds);*/
@@ -424,12 +431,11 @@ class UserController extends Controller
             /*dd($productIds);*/
             $enquiries = $enquiries->with(['product'=>function($query)use($productIds){
                 $query->whereIn('id',$productIds);
-            },'user','vendor'])->orderBy('id','Desc')->get()->toArray();
+            },'user','vendor'])->orderBy('updated_at','Desc')->get()->toArray();
         }else{
-            $enquiries = $enquiries->with(['product','user','vendor'])->orderBy('id','Desc')->get()->toArray();
-            /*dd($enquiries);*/
+            $enquiries = $enquiries->with(['product','user','vendor'])->orderBy('updated_at','Desc')->get()->toArray();
+            //dd($enquiries);
         }
-        
         
         foreach ($enquiries as $key => $enquiry) {
             $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
@@ -462,7 +468,7 @@ class UserController extends Controller
             /*echo "<pre>"; print_r($data); die;*/
 
             $enquiries = ProductsEnquiry::query();
-            $enquiries = $enquiries->where('user_id',Auth::user()->id);
+            $enquiries = $enquiries->where('user_id',Auth::user()->id)->orderBy('updated_at','Desc');
 
             // Get Pin/Unpin User Enquiries
             if(isset($data['pin_unpin'])&&$data['pin_unpin']!=""){
@@ -608,6 +614,10 @@ class UserController extends Controller
                 }
 
                 $response->save();
+
+                // Update updated_at date in enquiries table
+                $updated_at = Carbon::now();
+                ProductsEnquiry::where('id',$data['enquiry_id'])->update(['updated_at'=>$updated_at]);
 
                 $message = 'Meldingen er sendt';
                 return redirect()->back()->with('success_message',$message);
