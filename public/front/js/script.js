@@ -1628,3 +1628,15 @@
 
 
 })(window.jQuery);
+
+
+
+
+window.addEventListener("scroll", function() {
+   var button = document.getElementById("enqueryForm");
+   if (window.scrollY > 300) {
+      button.style.display = "block"; // Show the button
+   } else {
+      button.style.display = "none"; // Hide the button
+   }
+});

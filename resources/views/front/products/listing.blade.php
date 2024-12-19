@@ -144,7 +144,14 @@
    margin-right:10px;
    background-color: #E78002;
     color: #fff;
-    padding: 5px 10px;
+    /* padding: 5px 10px; */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 999999;
+    left: 0;
+    text-align: center;
+    padding: 1.2rem 0;
 }
 .sidebar-heading
 {
@@ -337,7 +344,7 @@ padding:0px 20px;
 @stop
 @section('javascript')
 @parent
-<script>
+<!-- <script>
     /////// j
     
     //// filter accordion
@@ -360,6 +367,25 @@ padding:0px 20px;
     {
       $(".sidebar").toggle();
     });
+</script> -->
+<script>
+  $(document).ready(function () {
+   // Monitor sidebar visibility
+   $(".filter-btn").click(function () {
+      // Toggle the sidebar visibility
+      $(".sidebar").toggle();
+
+      // Check if the sidebar is visible
+      if ($(".sidebar").css("display") === "block") {
+         // Remove the z-index from .filter-mobile
+         $(".filter-mobile").css("z-index", "auto");
+      } else {
+         // Reset the z-index for .filter-mobile
+         $(".filter-mobile").css("z-index", "999999");
+      }
+   });
+});
+
 </script>
 <script type="text/javascript">
    jQuery(document).ready(function($){

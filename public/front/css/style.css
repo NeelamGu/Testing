@@ -7856,22 +7856,22 @@ div#appendProductListing .event-item
 .home-banner
 {
     position:relative;
+    max-height: 500px;
+    overflow: hidden;
+    width: 100%;
 }
-.banner-text h2
-{
-    font-size: 60px;
-    line-height: 72px;
+.banner-text h2 {
+    font-size: 55px;
+    line-height: 62px;
     margin-bottom: 20px;
-    font-weight:bold;
-        
-}       
+    font-weight: bold;
+}
 
-.banner-text
-{
-    position:absolute;
-    top:12%;
-    color:#fff;
-    padding:100px 0px;
+.banner-text {
+    position: absolute;
+    top: 50%;
+    color: #fff;
+    transform: translateY(-50%);
 }
 .banner-enquery-btn
 {
@@ -8120,6 +8120,8 @@ a.readmore-text:hover, .readmore-text:focus
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
     z-index: 999999;
+    display: none;
+    transition: display .3s ease;
 }
 
 .enquery-form a
@@ -10270,7 +10272,7 @@ div#appendProductListing
 .banner-text
 {
     padding:50px 20px;
-    top:-6px;
+    /* top:-6px; */
     /*height:100%;*/
     width:100%;
     height:100%;

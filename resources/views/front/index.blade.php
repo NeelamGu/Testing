@@ -179,11 +179,11 @@
       </section>
       <br><br><br> -->
    <section class="home-banner">
-      <!-- <img class="desktop-banner" src="{{ asset('front/images/banner-bg.jpg') }}">
-      <img class="mobile-banner" src="{{ asset('front/images/mobile-banner.jpg') }}"> -->
-      <video src="{{ asset('front/videos/video.mp4') }}" muted="" autoplay="true" preload="auto" loop="" height="630px" width="100%" id="VideoHomePage1" class="videoHome" data-videoheighter="true" style="object-fit: cover; object-position: center;">
+      <img class="desktop-banner" src="{{ asset('front/videos/video.png') }}">
+      <img class="mobile-banner" src="{{ asset('front/videos/videoMob.png') }}">
+      <!-- <video src="{{ asset('front/videos/video.mp4') }}" muted="" autoplay="true" preload="auto" loop="" height="630px" width="100%" id="VideoHomePage1" class="videoHome" data-videoheighter="true" style="object-fit: cover; object-position: center;">
                <source type="video/mp4" src="{{ asset('front/videos/video.mp4') }}">
-            </video>
+            </video> -->
       <div class="auto-container">
          <div class="banner-text">
             <h2>Trenger du noe  <br> til ditt neste arrangement?</h2>
@@ -868,7 +868,7 @@
       </div>
    </section> -->
 
-   <section class="home-contact">
+   <!-- <section class="home-contact">
       <div class="container">
          <div class="row">
             <div class="col-sm-6">
@@ -941,11 +941,11 @@
             </div>
          </div>
       </div>
-   </section>
+   </section> -->
 
    
 @if(!isset(Auth::guard('admin')->user()->type))
-<div class="enquery-form">
+<div class="enquery-form" id="enqueryForm">
    <a class="enquery-btn-area"  href="{{ url('enquire-us') }}">Legg ut oppdrag</a>
 </div>
 @endif
