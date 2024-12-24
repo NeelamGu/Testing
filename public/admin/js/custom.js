@@ -132,6 +132,15 @@ $(document).ready(function(){
 	$('#ratings').DataTable();
 	$('#plans').DataTable();
 	$('#subscribers').DataTable();
+	$('#products_enquiries_all').DataTable({
+        /*// Define default sorting
+        order: [[0, 'desc']], // First column (index 0), descending order
+        columnDefs: [
+            { type: 'updated_at', targets: 0 } // Specify the type as 'date' for the first column
+        ]*/
+				// Disable initial sorting
+				order: []
+    });
 
 	$("#admins").DataTable({
       "order": [[ 0, "desc" ]], //or asc 
@@ -181,10 +190,10 @@ $(document).ready(function(){
       "order": [[ 0, "desc" ]], //or asc
       "bDestroy": true 
     });
-    $("#products_enquiries_all").DataTable({
+    /*$("#products_enquiries_all").DataTable({
       "order": [[ 0, "desc" ]], //or asc
       "bDestroy": true 
-    });
+    });*/
     $("#all_enquiries").DataTable({
       "order": [[ 0, "desc" ]], //or asc
       "bDestroy": true 
