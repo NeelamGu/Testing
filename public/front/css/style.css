@@ -7860,6 +7860,16 @@ div#appendProductListing .event-item
     overflow: hidden;
     width: 100%;
 }
+.home-banner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Places the layer above the banner */
+}
 .banner-text h2 {
     font-size: 55px;
     line-height: 62px;
@@ -7872,6 +7882,7 @@ div#appendProductListing .event-item
     top: 50%;
     color: #fff;
     transform: translateY(-50%);
+    z-index: 9;
 }
 .banner-enquery-btn
 {
@@ -10883,8 +10894,26 @@ div#appendProductListing
   .w-md-90 {
     width: 90% !important;
   }
+  .banner-text {
+    padding: 2rem;
 }
 
+}
+@media only screen and (max-width: 768px) and (min-width: 480px) {
+    .banner-text h2 {
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 12px;
+    }
+    .banner-text p {
+        font-size: 15px;
+    }
+    .banner-enquery-btn {
+        padding: 10px 20px;
+        margin-top: 10px;
+        font-size: 15px;
+    }
+}
 @media (min-width: 992px) {
   .w-lg-25 {
     width: 25% !important;
