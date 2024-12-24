@@ -7860,6 +7860,16 @@ div#appendProductListing .event-item
     overflow: hidden;
     width: 100%;
 }
+.home-banner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Places the layer above the banner */
+}
 .banner-text h2 {
     font-size: 55px;
     line-height: 62px;
@@ -7872,6 +7882,7 @@ div#appendProductListing .event-item
     top: 50%;
     color: #fff;
     transform: translateY(-50%);
+    z-index: 9;
 }
 .banner-enquery-btn
 {
@@ -10245,6 +10256,7 @@ div#appendProductListing
 {
     font-size: 16px;
     padding: 10px 27px;
+    margin-top: 10px;
 }
 .enquery-form
 {
@@ -10271,12 +10283,14 @@ div#appendProductListing
 
 .banner-text
 {
-    padding:50px 20px;
+    /* padding:50px 20px; */
+    padding:20px;
     /* top:-6px; */
     /*height:100%;*/
-    width:100%;
+    /* width:100%;
     height:100%;
-    box-shadow: inset 0 0 0 2000px rgb(0 0 0 / 50%);
+    box-shadow: inset 0 0 0 2000px rgb(0 0 0 / 50%); */
+    z-index: 9;
 }
 .main-header .header-top .top-right
 {
@@ -10319,7 +10333,22 @@ div#appendProductListing
 .mobile-banner
 {
     display:block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
 }
+.home-banner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Places the layer above the banner */
+}
+
 .text-area-about .sec-title h2
 {
     margin-bottom:15px;
@@ -10483,9 +10512,10 @@ div#appendProductListing
 }
 .banner-text h2
 {
-    font-size:28px;
+    font-size:24px;
     line-height:normal;
     text-shadow: 2px 1px #000000;
+    margin-bottom: 10px;
 }
 .banner-text p
 {
@@ -10769,6 +10799,7 @@ div#appendProductListing
 }
 
 @media (min-width: 576px) {
+   
   .w-sm-25 {
     width: 25% !important;
   }
@@ -10814,6 +10845,7 @@ div#appendProductListing
   .w-sm-90 {
     width: 90% !important;
   }
+
 }
 
 @media (min-width: 768px) {
@@ -10862,8 +10894,26 @@ div#appendProductListing
   .w-md-90 {
     width: 90% !important;
   }
+  .banner-text {
+    padding: 2rem;
 }
 
+}
+@media only screen and (max-width: 768px) and (min-width: 480px) {
+    .banner-text h2 {
+        font-size: 40px;
+        line-height: 50px;
+        margin-bottom: 12px;
+    }
+    .banner-text p {
+        font-size: 15px;
+    }
+    .banner-enquery-btn {
+        padding: 10px 20px;
+        margin-top: 10px;
+        font-size: 15px;
+    }
+}
 @media (min-width: 992px) {
   .w-lg-25 {
     width: 25% !important;

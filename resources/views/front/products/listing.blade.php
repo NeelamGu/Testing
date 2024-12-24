@@ -145,7 +145,7 @@
    background-color: #E78002;
     color: #fff;
     /* padding: 5px 10px; */
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     z-index: 999999;
