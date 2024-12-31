@@ -145,7 +145,7 @@ class EnquiryController extends Controller
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
             /*$validator = Validator::make($request->all(), [
-                    'message' => 'required|string|max:100',
+                    'message' => 'required|string|max:2000',
                     'images.*' => 'mimes:jpeg,jpg,png|max:1024',
                 ]
             );*/
@@ -156,7 +156,7 @@ class EnquiryController extends Controller
                 $countImages = count($data['images']);
 
                 $rules = [
-                    'message' => 'required|string|max:100',
+                    'message' => 'required|string|max:2000',
                     'images.*' => 'mimes:jpeg,jpg,png|max:1024',
                 ];
 
@@ -176,7 +176,7 @@ class EnquiryController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                    'message' => 'required|string|max:100',
+                    'message' => 'required|string|max:2000',
                 ]
             );
 

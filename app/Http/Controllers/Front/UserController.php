@@ -560,7 +560,7 @@ class UserController extends Controller
                 $countImages = count($data['images']);
 
                 $rules = [
-                    'message' => 'required|string|max:100',
+                    'message' => 'required|string|max:2000',
                     'images.*' => 'mimes:jpeg,jpg,png|max:1024',
                 ];
 
@@ -580,7 +580,7 @@ class UserController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                    'message' => 'required|string|max:100',
+                    'message' => 'required|string|max:2000',
                 ]
             );
 

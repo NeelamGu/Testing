@@ -283,7 +283,7 @@ a.label:hover {
                     </div>
 
                     <div class="form-group @if($product['category_id']!=6 && $product['category_id']!=7) itemCity" @endif>
-                      <label for="norway_radius">Kan levere innen (radius i km)</label>
+                      <label for="norway_radius">Vil se oppdrag innen (radius i km)</label>
                       @if(empty($product['id']))
                       <input type="number" class="form-control radiusAll" id="norway_radius" placeholder="radius i km" name="radius" @if(!empty(Session::get('radius'))) value="{{ Session::get('radius') }}" @endif required>
                       <input id="deliverToAll" name="deliverToAll" type="checkbox" value="Yes" />
