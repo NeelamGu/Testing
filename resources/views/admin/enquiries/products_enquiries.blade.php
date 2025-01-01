@@ -177,7 +177,7 @@
                      </select>
                   </form>
                   <div class="table-responsive pt-3">
-                     <table id="products_enquiries_all" class="enquiries-table table table-bordered">
+                     <table <?php /* id="products_enquiries_all" */ ?> class="enquiries-table table table-bordered">
                         <thead>
                            <tr>
                               <!-- <th>

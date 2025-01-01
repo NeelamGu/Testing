@@ -37,7 +37,7 @@ class EnquiryController extends Controller
         Session::put('page','products_enquiries');
         $adminType = Auth::guard('admin')->user()->type;
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
-        $enquiries = ProductsEnquiry::orderby('created_at','Desc');
+        $enquiries = ProductsEnquiry::orderby('updated_at','Desc');
         $enquiriesCatAll = ProductsEnquiry::query();
         if($adminType=="vendor"){
             $vendorStatus = Auth::guard('admin')->user()->status;
