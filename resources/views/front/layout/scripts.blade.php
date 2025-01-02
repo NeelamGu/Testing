@@ -71,9 +71,24 @@
 <script>
    $(document).ready(function () {
 
-    @if(Session::get('page')=="user_enquiries_detail")
+    /* @if(Session::get('page')=="user_enquiries_detail")
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    @else
+        $("html, body").animate({ scrollTop: 0 }, 0);
+    @endif
+
+    @if(Session::get('page')=="user_account")
+    alert("account");
+        $("html, body").animate({ scrollTop: 0 }, 0);
+    @else
         $("html, body").animate({ scrollTop: $(document).height() }, 1000);
     @endif
+
+    @if(Session::get('page')=="user_enquiries")
+        $("html, body").animate({ scrollTop: 0 }, 0);
+    @else
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    @endif */
 
 
     $("#shipform").hide();

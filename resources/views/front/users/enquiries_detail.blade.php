@@ -176,3 +176,17 @@ window.setTimeout(function(){ document.location.reload(true); }, 60000);
 </div>
 </div>
 @endsection
+
+@section('javascript')
+
+<script>
+    $(document).ready(function () {
+        @if(Session::get('page') == "user_enquiries_detail")
+            $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        @else
+            $("html, body").animate({ scrollTop: 0 }, 0);
+        @endif
+    });
+</script>
+@yield('javascript')
+@endsection         

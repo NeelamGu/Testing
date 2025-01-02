@@ -194,6 +194,7 @@ class UserController extends Controller
     }
 
     public function userEnquiry(Request $request){
+        Session::put('page','user_enquiry');
         if($request->ajax()){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
@@ -368,6 +369,7 @@ class UserController extends Controller
     }
 
     public function userAccount(Request $request){
+        Session::put('page','user_account');
         if($request->ajax()){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
@@ -421,6 +423,7 @@ class UserController extends Controller
     }
 
     public function userEnquiries(){
+        Session::put('page','user_enquiries');
         $enquiries = ProductsEnquiry::query();
         $enquiries = $enquiries->where('user_id',Auth::user()->id);
 
@@ -463,6 +466,7 @@ class UserController extends Controller
     }
 
     public function getUserEnquiries(Request $request){
+        Session::put('page','user_enquiries');
         if($request->ajax()){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
@@ -546,6 +550,7 @@ class UserController extends Controller
     }
 
     public function userEnquiryResponse(Request $request){
+        Session::put('page','user_enquiries_response');
         if($request->isMethod('post')){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
@@ -629,6 +634,7 @@ class UserController extends Controller
     }
 
     public function userUpdatePassword(Request $request){
+        Session::put('page','user_update_password');
         if($request->ajax()){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
@@ -673,6 +679,7 @@ class UserController extends Controller
     }
 
     public function forgotPassword(Request $request){
+        Session::put('page','user_forgot_password');
         if($request->ajax()){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
