@@ -16,6 +16,7 @@ use Validator;
 use Session;
 use Image;
 use Auth;
+use Carbon\Carbon;
 
 class EnquiryController extends Controller
 {
@@ -181,6 +182,12 @@ class EnquiryController extends Controller
             );
 
             if($validator->passes()){
+
+                /*echo "<pre>"; print_r($data); die;*/
+
+                // Update updated_at date in enquiries table
+                $updated_at = Carbon::now();
+                ProductsEnquiry::where('id',$data['enquiry_id'])->update(['updated_at'=>$updated_at]);
 
                 $enquiryStatus = ProductsEnquiry::enquiryStatus($data['enquiry_id']);
                 if($enquiryStatus==0){
