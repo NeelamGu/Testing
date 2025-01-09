@@ -7799,7 +7799,7 @@ div#appendProductListing .event-item
 }
 .detail-area h4
 {
-    text-transform:capitalize;
+    text-transform:unset;
     font-size:26px;
     margin-right:120px;
     font-family: 'Cardo', sans-serif;
@@ -7845,8 +7845,8 @@ div#appendProductListing .event-item
     /*border: 1px solid #bfbfbf;*/
     height:320px;
     border-radius:10px;
-    /* object-fit: cover; */
-    object-fit: contain;
+    object-fit: cover;
+    /* object-fit: contain; */
 }
 .image-detail-area
 {
@@ -8612,16 +8612,28 @@ body.modal-open
     color:#000;
     font-size:15px;
 }
-.event-details h4
+/* .event-details h4
 {
     display:block;
     color:#000;
     font-weight:600;
     font-size:20px;
-    text-transform:math-auto;
+    text-transform: unset;
     margin-top:10px;
     text-align:left;
     
+} */
+.event-details h4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; /* Ensures multi-line text */
+    word-break: break-word; /* Breaks long words */
+    line-height: 1.4; /* Adjust for better spacing */
+    max-height: calc(1.4em * 2); /* Ensures the height matches 2 lines */
+    min-height: calc(1.4em * 2); /* Ensures the height matches 2 lines */
 }
 
 .event-details .fa-calendar
@@ -9040,6 +9052,38 @@ body.modal-open
     text-align:left;
     font-size:16px;
 }
+/* deatil read more */
+
+#product-description.d-detail-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show only 3 lines initially */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.5; 
+    max-height: calc(1.5em * 3); 
+    transition: all 3s ease-in-out;
+}
+
+#product-description.d-detail-text.expanded {
+    -webkit-line-clamp: unset; 
+    max-height: none; 
+}
+
+.btn-read-more {
+    margin-top: 10px;
+    background-color: transparent;
+    color: #e46f01;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* deatil read more */
 .g-video-tabs .active
 {
     color:red;
@@ -22096,4 +22140,5 @@ details > summary span {
     float: right;
     color: #e46f01;
 }
+
 

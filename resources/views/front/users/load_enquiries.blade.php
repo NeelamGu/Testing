@@ -26,7 +26,7 @@ use App\Models\EnquiriesResponse;
       <tr class="">
          <!-- <td>ID</td> -->
          <td>Leverandør</td>
-         <td>Opprettet den</td>
+         <td>Dato</td>
          <td>Kategori<br>
             <select id="selcatenq" class="seluserenquiries"> <?php /* onchange="document.location.href = '/user/enquiries?cat=' + this.value" */ ?>>
                <option value="">Select</option>

@@ -1640,3 +1640,19 @@ window.addEventListener("scroll", function() {
       button.style.display = "none"; // Hide the button
    }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+   const description = document.getElementById("product-description");
+   const readMoreBtn = document.getElementById("read-more-btn");
+
+   readMoreBtn.addEventListener("click", function () {
+       if (description.classList.contains("expanded")) {
+           description.classList.remove("expanded");
+           readMoreBtn.textContent = "Read More";
+       } else {
+           description.classList.add("expanded");
+           readMoreBtn.textContent = "Read Less";
+       }
+   });
+});

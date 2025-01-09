@@ -371,8 +371,9 @@
                      @endforeach
                      @endif
                   </ul>
-                  <p class="d-detail-text"><?php echo nl2br($productDetails['description']); ?>
+                  <p class="d-detail-text" id="product-description"><?php echo nl2br($productDetails['description']); ?>
                   </p>
+                  <button id="read-more-btn" class="btn-read-more">Read More</button>
                </div>
             </div>
          </div>
