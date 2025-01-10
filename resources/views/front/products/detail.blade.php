@@ -373,7 +373,7 @@
                   </ul>
                   <p class="d-detail-text" id="product-description"><?php echo nl2br($productDetails['description']); ?>
                   </p>
-                  <button id="read-more-btn" class="btn-read-more">Read More</button>
+                  <button id="read-more-btn" class="btn-read-more">Les mer</button>
                </div>
             </div>
          </div>

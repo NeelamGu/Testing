@@ -1629,9 +1629,6 @@
 
 })(window.jQuery);
 
-
-
-
 window.addEventListener("scroll", function() {
    var button = document.getElementById("enqueryForm");
    if (window.scrollY > 300) {
@@ -1649,10 +1646,10 @@ document.addEventListener("DOMContentLoaded", function () {
    readMoreBtn.addEventListener("click", function () {
        if (description.classList.contains("expanded")) {
            description.classList.remove("expanded");
-           readMoreBtn.textContent = "Read More";
+           readMoreBtn.textContent = "Les mer";
        } else {
            description.classList.add("expanded");
-           readMoreBtn.textContent = "Read Less";
+           readMoreBtn.textContent = "Les mindre";
        }
    });
 });
