@@ -19,7 +19,7 @@ use App\Models\Category;
       <div class="event-details p-20">
          <div class="product-heading">
             <a href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">
-               <h4 class="text-thm pb-5 font-weight-700">{{ ucfirst(strtolower($product['product_name'])) }}     
+               <h4 class="text-thm pb-5 font-weight-700">{{ $product['product_name'] }}     
                </h4>
             </a>
          </div>

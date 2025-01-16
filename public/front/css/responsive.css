@@ -86,7 +86,12 @@
     .couple-bird img {
         margin: 0 auto !important;
     }
+    #product-description.d-detail-text {
+        display: block; /* Show full content on larger screens */
+        max-height: none;
+    }
 }
+
 
 @media only screen and (max-width: 767px) {
     .hovedbilde-text b{
@@ -99,7 +104,9 @@
     .header-lower .outer-box .search-box-btn {
         display: none;
     }
-    
+    #read-more-btn{
+        display: block;
+    }
 
     .main-menu {
         margin-right: -130px;

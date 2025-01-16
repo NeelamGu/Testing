@@ -173,7 +173,7 @@
 
 div#appendProductListing .event-item 
 {
-    height: 457px;
+    height: 400px !important;
     overflow-x:hidden;
     overflow-y: hidden;
 }

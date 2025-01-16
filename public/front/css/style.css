@@ -7291,7 +7291,7 @@ a.login-btns
 
 div#appendProductListing .event-item
 {
-    height:auto !important;
+    /* height:auto !important; */
 }
 .event-details
 {
@@ -22141,5 +22141,4 @@ details > summary span {
     float: right;
     color: #e46f01;
 }
-
 

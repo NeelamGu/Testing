@@ -1643,13 +1643,44 @@ document.addEventListener("DOMContentLoaded", function () {
    const description = document.getElementById("product-description");
    const readMoreBtn = document.getElementById("read-more-btn");
 
-   readMoreBtn.addEventListener("click", function () {
-       if (description.classList.contains("expanded")) {
-           description.classList.remove("expanded");
-           readMoreBtn.textContent = "Les mer";
-       } else {
+   function toggleReadMore() {
+       if (window.innerWidth <= 767) { // Apply the functionality for screens smaller than 767px
+           if (description.classList.contains("expanded")) {
+               description.classList.remove("expanded");
+               readMoreBtn.textContent = "Les mer";
+               description.style.maxHeight = "calc(1.5em * 3)";
+           } else {
+               description.classList.add("expanded");
+               readMoreBtn.textContent = "Les mindre";
+               description.style.maxHeight = "none";
+           }
+       }
+   }
+
+   // Attach the click listener
+   readMoreBtn.addEventListener("click", toggleReadMore);
+
+   // On window resize, ensure full content is shown on larger screens
+   window.addEventListener("resize", function () {
+       if (window.innerWidth > 767) {
            description.classList.add("expanded");
-           readMoreBtn.textContent = "Les mindre";
+           description.style.maxHeight = "none";
+           readMoreBtn.style.display = "none"; // Hide the button on larger screens
+       } else {
+           description.classList.remove("expanded");
+           description.style.maxHeight = "calc(1.5em * 3)";
+           readMoreBtn.style.display = "inline-block"; // Show the button on smaller screens
        }
    });
+
+   // Initial check to set up the UI correctly
+   if (window.innerWidth > 767) {
+       description.classList.add("expanded");
+       description.style.maxHeight = "none";
+       readMoreBtn.style.display = "none";
+   } else {
+       description.style.maxHeight = "calc(1.5em * 3)";
+       readMoreBtn.style.display = "inline-block";
+   }
 });
+
