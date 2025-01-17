@@ -897,9 +897,9 @@ class ProductsController extends Controller
                     $smallImagePath = 'front/images/product_images/small/'.$imageName;
                     // Upload the Large, Medium and Small Images after Resize
                     //Image::make($image_tmp)->resize(1000,500)->save($largeImagePath, 50);
-                    Image::make($image_tmp)->save($largeImagePath, 50);
-                    Image::make($image_tmp)->resize(500,250)->save($mediumImagePath, 50);
-                    Image::make($image_tmp)->resize(250,125)->save($smallImagePath, 50);
+                    Image::make($image_tmp)->save($largeImagePath, 70);
+                    Image::make($image_tmp)->resize(500,250)->save($mediumImagePath, 70);
+                    Image::make($image_tmp)->resize(250,125)->save($smallImagePath, 70);
                     // Insert Image Name in products table
                     /*$product->product_image = $imageName;*/
                 }
@@ -935,7 +935,7 @@ class ProductsController extends Controller
                     $imageName = rand(111,99999).'.'.$extension;
                     $imagePath = 'front/images/product_banners/'.$imageName;
                     // Upload the Image
-                    Image::make($image_tmp)->save($imagePath, 50);
+                    Image::make($image_tmp)->save($imagePath, 70);
                     // Update Product Banner name in products table
                     Product::where('id',$id)->update(['product_banner'=>$imageName]);
                 }
@@ -959,9 +959,9 @@ class ProductsController extends Controller
                     $smallImagePath = 'front/images/product_images/small/'.$imageName;
                     // Upload the Large, Medium and Small Images after Resize
                     // Image::make($image_tmp)->resize(1000,500)->save($largeImagePath, 50);
-                    Image::make($image_tmp)->save($largeImagePath, 50);
-                    Image::make($image_tmp)->resize(500,250)->save($mediumImagePath, 50);
-                    Image::make($image_tmp)->resize(250,125)->save($smallImagePath, 50);
+                    Image::make($image_tmp)->save($largeImagePath, 70);
+                    Image::make($image_tmp)->resize(500,250)->save($mediumImagePath, 70);
+                    Image::make($image_tmp)->resize(250,125)->save($smallImagePath, 70);
                     // Insert Image Name in products table
                     $image = new ProductsImage; 
                     $image->image = $imageName;
