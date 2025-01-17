@@ -9062,7 +9062,7 @@ body.modal-open
     text-overflow: ellipsis;
     white-space: normal;
     line-height: 1.5; 
-    max-height: calc(1.5em * 3); 
+    max-height: calc(1.5em * 6); 
     transition: all 3s ease-in-out;
 }
 
