@@ -1668,7 +1668,7 @@ document.addEventListener("DOMContentLoaded", function () {
            readMoreBtn.style.display = "none"; // Hide the button on larger screens
        } else {
            description.classList.remove("expanded");
-           description.style.maxHeight = "calc(1.5em * 3)";
+           description.style.maxHeight = "calc(1.5em * 6)";
            readMoreBtn.style.display = "inline-block"; // Show the button on smaller screens
        }
    });
@@ -1679,7 +1679,7 @@ document.addEventListener("DOMContentLoaded", function () {
        description.style.maxHeight = "none";
        readMoreBtn.style.display = "none";
    } else {
-       description.style.maxHeight = "calc(1.5em * 3)";
+       description.style.maxHeight = "calc(1.5em * 6)";
        readMoreBtn.style.display = "inline-block";
    }
 });

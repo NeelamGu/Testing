@@ -9056,7 +9056,7 @@ body.modal-open
 
 #product-description.d-detail-text {
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Show only 3 lines initially */
+    -webkit-line-clamp: 6; /* Show only 3 lines initially */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
