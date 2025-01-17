@@ -22142,3 +22142,10 @@ details > summary span {
     color: #e46f01;
 }
 
+.fancybox-skin {
+    background: transparent !important;
+}
+.fancybox-opened .fancybox-skin{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
