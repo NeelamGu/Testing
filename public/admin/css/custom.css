@@ -344,3 +344,8 @@ span.miniHead + h5{
   height: 80px;
 };
 }
+
+.cityMarker::marker {
+  font-size: 22px;
+  line-height: 22px;
+}

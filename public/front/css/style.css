@@ -7469,7 +7469,7 @@ div#appendProductListing .event-item
 {
     height:200px;
     border-radius:10px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .sort-by-list
@@ -9062,7 +9062,7 @@ body.modal-open
     text-overflow: ellipsis;
     white-space: normal;
     line-height: 1.5; 
-    max-height: calc(1.5em * 3); 
+    max-height: calc(1.5em * 6); 
     transition: all 3s ease-in-out;
 }
 
@@ -22142,3 +22142,10 @@ details > summary span {
     color: #e46f01;
 }
 
+.fancybox-skin {
+    background: transparent !important;
+}
+.fancybox-opened .fancybox-skin{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}

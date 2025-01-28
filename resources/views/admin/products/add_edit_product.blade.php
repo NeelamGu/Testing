@@ -482,7 +482,7 @@ a.label:hover {
                         <li>
                           <details>
                           <input type="checkbox" name="states[]" id="{{$state}}" value="{{$state}}" @if(!empty($product['all_norway']) && $product['all_norway']=="limited" && $cityinfo['state_selected']==1) checked @endif>
-                          <summary><label for="{{$state}}">{{$state}}</label></summary>
+                          <summary class="cityMarker"><label for="{{$state}}">{{$state}}</label></summary>
                           <ul>
                             @foreach($cityinfo['cities'] as $keyc => $city)
                             <li>
