@@ -732,36 +732,4 @@ class UserController extends Controller
         Session::flush();
         return redirect('/');
     }
-
-    <?php
-function clearBrowserCacheAndReset() {
-    // Clear browser cache
-    header("Expires: Tue, 01 Jan 2000 00:00:00 GMT"); // Date in the past
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // Always modified
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0"); // HTTP 1.1
-    header("Cache-Control: post-check=0, pre-check=0", false); // HTTP 1.1 (additional for backward compatibility)
-    header("Pragma: no-cache"); // HTTP 1.0
-
-    // Reset cookies
-    if (isset($_SERVER['HTTP_COOKIE'])) {
-        $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
-        foreach ($cookies as $cookie) {
-            $parts = explode('=', $cookie);
-            $name = trim($parts[0]);
-            setcookie($name, '', time() - 3600, '/'); // Expire the cookie
-            setcookie($name, '', time() - 3600, '/', $_SERVER['HTTP_HOST']); // Expire with domain
-        }
-    }
-
-    // Destroy session
-    session_start(); // Start the session if not already started
-    session_unset(); // Unset all session variables
-    session_destroy(); // Destroy the session
-    session_write_close(); // Ensure the session file is closed
-    setcookie(session_name(), '', time() - 3600, '/'); // Expire session cookie
-}
-
-// Usage
-clearBrowserCacheAndReset();
-?>
 }

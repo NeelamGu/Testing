@@ -506,22 +506,27 @@ function getCookie(cname) {
         // Delete the cookie by setting its expiry to the past
         document.cookie = key + '=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     }
+    function isMobileDevice() {
+        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
     function resetGoogleTranslate() {
         // Clear the `googtrans` cookie completely
         deleteCookie('googtrans');
 
-        // Reset the Google Translate iframe and state
-        const translateElement = document.getElementById('google_translate_element');
-        if (translateElement) {
-            translateElement.innerHTML = ''; // Clear the widget content
-            googleTranslateElementInit(); // Reinitialize the widget
+        // Force a fresh reload with cache bypass if on mobile
+        if (isMobileDevice()) {
+            const currentUrl = window.location.href.split('?')[0]; // Remove existing query parameters
+            const newUrl = `${currentUrl}?cache_bust=${new Date().getTime()}`; // Append a timestamp
+            window.location.href = newUrl; // Force reload with cache bypass
+        } else {
+            // For non-mobile devices, reset and reinitialize
+            const translateElement = document.getElementById('google_translate_element');
+            if (translateElement) {
+                translateElement.innerHTML = ''; // Clear the widget content
+                googleTranslateElementInit(); // Reinitialize the widget
+            }
+            window.location.reload(); // Reload the page
         }
-
-        // Force reload to ensure proper reset for mobile browsers
-        setTimeout(() => {
-            window.location.reload();
-            window.location.reload();
-        }, 100); // Short delay to ensure widget clears before reload
     }
 </script>
 <script>
