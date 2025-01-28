@@ -489,31 +489,38 @@ function getCookie(cname) {
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script type="text/javascript">
     function googleTranslateElementInit() {
-        setCookie('googtrans', '/en/no/', 1);
+        // Ensure the correct initial translation state
+        setCookie('googtrans', '/en/no/', 1); // Default language setting (Norwegian)
         new google.translate.TranslateElement({
-            pageLanguage: 'no',
-            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, includedLanguages: 'en'
+            pageLanguage: 'no', // Original language (Norwegian)
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+            includedLanguages: 'en' // Include English as a translation option
         }, 'google_translate_element');
     }
     function setCookie(key, value, expiry) {
         var expires = new Date();
         expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
-        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+        document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
+    }
+    function deleteCookie(key) {
+        // Delete the cookie by setting its expiry to the past
+        document.cookie = key + '=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     }
     function resetGoogleTranslate() {
-        // Clear the `googtrans` cookie
-        setCookie('googtrans', '', -1); // Expire the cookie immediately
+        // Clear the `googtrans` cookie completely
+        deleteCookie('googtrans');
 
-        // Force reload of Google Translate widget after resetting
+        // Reset the Google Translate iframe and state
         const translateElement = document.getElementById('google_translate_element');
         if (translateElement) {
-            translateElement.innerHTML = ''; // Clear the widget
+            translateElement.innerHTML = ''; // Clear the widget content
             googleTranslateElementInit(); // Reinitialize the widget
         }
 
-        // Optionally reload the page to ensure a clean state
-        window.location.reload();
-        window.location.reload();
+        // Force reload to ensure proper reset for mobile browsers
+        setTimeout(() => {
+            window.location.reload();
+        }, 100); // Short delay to ensure widget clears before reload
     }
 </script>
 <script>
