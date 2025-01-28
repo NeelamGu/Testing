@@ -520,6 +520,7 @@ function getCookie(cname) {
         // Force reload to ensure proper reset for mobile browsers
         setTimeout(() => {
             window.location.reload();
+            window.location.reload();
         }, 100); // Short delay to ensure widget clears before reload
     }
 </script>
