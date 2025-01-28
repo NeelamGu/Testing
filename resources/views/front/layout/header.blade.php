@@ -9,9 +9,9 @@
 <!-- Main Header -->
 <header class="main-header" id="main-header">
 <div id="translator" style="background-color:#fff !important; position: relative; top:0; z-index: 9;">   
-   <div id="google_translate_element" style=" position: absolute; z-index: 9;">
-      
-   </div>
+    <div id="google_translate_element" style="position: absolute; z-index: 9;">
+        <!-- Google Translate will load here -->
+    </div>
 </div>
 
    @if(isset(Auth::guard('admin')->user()->type))

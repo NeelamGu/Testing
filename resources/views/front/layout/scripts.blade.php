@@ -489,44 +489,64 @@ function getCookie(cname) {
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script type="text/javascript">
     function googleTranslateElementInit() {
-        // Ensure the correct initial translation state
-        setCookie('googtrans', '/en/no/', 1); // Default language setting (Norwegian)
+        // Ensure the correct translation state is set on initialization
+        const cookieValue = getCookie('googtrans') || '/no/no/'; // Default to original Norwegian
+        if (cookieValue === '/no/no/') {
+            setCookie('googtrans', '/no/no/', 1); // Ensure Norwegian is the default
+        }
         new google.translate.TranslateElement({
-            pageLanguage: 'no', // Original language (Norwegian)
+            pageLanguage: 'no', // Original language: Norwegian
             layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-            includedLanguages: 'en' // Include English as a translation option
+            includedLanguages: 'en', // Include English as a translation option
         }, 'google_translate_element');
     }
+
     function setCookie(key, value, expiry) {
-        var expires = new Date();
+        const expires = new Date();
         expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
-        document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
+        document.cookie = `${key}=${value};path=/;expires=${expires.toUTCString()}`;
     }
+
+    function getCookie(key) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.indexOf(`${key}=`) === 0) {
+                return cookie.substring(key.length + 1);
+            }
+        }
+        return null;
+    }
+
     function deleteCookie(key) {
-        // Delete the cookie by setting its expiry to the past
-        document.cookie = key + '=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        document.cookie = `${key}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     }
-    function isMobileDevice() {
-        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
+
     function resetGoogleTranslate() {
-        // Clear the `googtrans` cookie completely
+        // Clear the `googtrans` cookie
         deleteCookie('googtrans');
 
-        // Force a fresh reload with cache bypass if on mobile
-        if (isMobileDevice()) {
-            const currentUrl = window.location.href.split('?')[0]; // Remove existing query parameters
-            const newUrl = `${currentUrl}?cache_bust=${new Date().getTime()}`; // Append a timestamp
-            window.location.href = newUrl; // Force reload with cache bypass
-        } else {
-            // For non-mobile devices, reset and reinitialize
-            const translateElement = document.getElementById('google_translate_element');
-            if (translateElement) {
-                translateElement.innerHTML = ''; // Clear the widget content
-                googleTranslateElementInit(); // Reinitialize the widget
-            }
-            window.location.reload(); // Reload the page
+        // Clear the widget container to ensure it's re-rendered
+        const translateElement = document.getElementById('google_translate_element');
+        if (translateElement) {
+            translateElement.innerHTML = ''; // Remove the widget content
         }
+
+        // Reload the script dynamically to reinitialize Google Translate
+        const existingScript = document.querySelector('script[src*="translate_a/element.js"]');
+        if (existingScript) {
+            existingScript.remove(); // Remove the existing script
+        }
+
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.body.appendChild(script);
+
+        // Optionally reload the page to ensure proper reset
+        setTimeout(() => {
+            window.location.reload();
+        }, 100);
     }
 </script>
 <script>
