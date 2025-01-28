@@ -500,6 +500,21 @@ function getCookie(cname) {
         expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
         document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
     }
+    function resetGoogleTranslate() {
+        // Clear the `googtrans` cookie
+        setCookie('googtrans', '', -1); // Expire the cookie immediately
+
+        // Force reload of Google Translate widget after resetting
+        const translateElement = document.getElementById('google_translate_element');
+        if (translateElement) {
+            translateElement.innerHTML = ''; // Clear the widget
+            googleTranslateElementInit(); // Reinitialize the widget
+        }
+
+        // Optionally reload the page to ensure a clean state
+        window.location.reload();
+        window.location.reload();
+    }
 </script>
 <script>
         $(document).ready(function() {
@@ -523,5 +538,6 @@ function getCookie(cname) {
                 reorderDivs();
             });
         });
+
     </script>
 @yield('javascript')

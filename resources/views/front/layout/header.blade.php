@@ -87,7 +87,7 @@
          <div class="outer-box">
             <!-- Logo -->
             <div class="logo">
-               <a href="{{ url('/')}}"><img class="img-responsive" src="{{ asset('front/images/logo5.png') }}"
+               <a onclick="resetGoogleTranslate()"><img class="img-responsive" src="{{ asset('front/images/logo5.png') }}"
                   alt="garnen-help"></a>
             </div>
             <nav class="main-menu">
