@@ -489,64 +489,42 @@ function getCookie(cname) {
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script type="text/javascript">
     function googleTranslateElementInit() {
-        // Ensure the correct translation state is set on initialization
-        const cookieValue = getCookie('googtrans') || '/no/no/'; // Default to original Norwegian
-        if (cookieValue === '/no/no/') {
-            setCookie('googtrans', '/no/no/', 1); // Ensure Norwegian is the default
-        }
+        // Ensure the correct initial translation state
+        setCookie('googtrans', '/en/no/', 1); // Default language setting (Norwegian)
         new google.translate.TranslateElement({
-            pageLanguage: 'no', // Original language: Norwegian
+            pageLanguage: 'no', // Original language (Norwegian)
             layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-            includedLanguages: 'en', // Include English as a translation option
+            includedLanguages: 'en' // Include English as a translation option
         }, 'google_translate_element');
     }
-
     function setCookie(key, value, expiry) {
-        const expires = new Date();
+        var expires = new Date();
         expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
-        document.cookie = `${key}=${value};path=/;expires=${expires.toUTCString()}`;
+        document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
     }
-
-    function getCookie(key) {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.indexOf(`${key}=`) === 0) {
-                return cookie.substring(key.length + 1);
-            }
-        }
-        return null;
-    }
-
     function deleteCookie(key) {
-        document.cookie = `${key}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        // Delete the cookie by setting its expiry to the past
+        document.cookie = key + '=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
     }
-
+    function isMobileDevice() {
+        return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    }
     function resetGoogleTranslate() {
-        // Clear the `googtrans` cookie
+        // Clear the `googtrans` cookie completely
         deleteCookie('googtrans');
 
-        // Clear the widget container to ensure it's re-rendered
+        // Reset the Google Translate iframe and state
         const translateElement = document.getElementById('google_translate_element');
         if (translateElement) {
-            translateElement.innerHTML = ''; // Remove the widget content
+            translateElement.innerHTML = ''; // Clear the widget content
+            googleTranslateElementInit(); // Reinitialize the widget
         }
 
-        // Reload the script dynamically to reinitialize Google Translate
-        const existingScript = document.querySelector('script[src*="translate_a/element.js"]');
-        if (existingScript) {
-            existingScript.remove(); // Remove the existing script
-        }
-
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.body.appendChild(script);
-
-        // Optionally reload the page to ensure proper reset
+        // Force reload to ensure proper reset for mobile browsers
         setTimeout(() => {
             window.location.reload();
-        }, 100);
+            window.location.reload();
+        }, 100); // Short delay to ensure widget clears before reload
     }
 </script>
 <script>

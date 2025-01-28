@@ -390,8 +390,16 @@
 @media only screen and (max-width: 479px) {
 
     .main-header .header-top .top-right {
-        float: none;
-        margin-top: 40px;
+        float: right;
+        margin-top: 0px;
+    }
+
+    header.main-header#main-header #google_translate_element select {
+        font-size: 12px;
+    }
+
+    .main-header .header-top ul li a{
+        font-size: 12px;
     }
 
     .main-header.fixed-header .header-lower {
