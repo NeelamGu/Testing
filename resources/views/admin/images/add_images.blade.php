@@ -128,9 +128,9 @@ a.label:hover {
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
-            <div class="col-md-12 grid-margin">
+            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                    <div class="col-12 col-xl-8 mb-2 mb-xl-0">
                         <h4 class="card-title">Galleri</h4>
                     </div>
                     <div class="col-12 col-xl-4">

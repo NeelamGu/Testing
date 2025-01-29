@@ -521,6 +521,7 @@ function getCookie(cname) {
         }, 100); // Short delay to ensure widget clears before reload
     }
 </script>
+
 <script>
         $(document).ready(function() {
             function reorderDivs() {

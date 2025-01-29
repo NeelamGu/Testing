@@ -22184,6 +22184,12 @@ details > summary span {
     .s-slider-area .item img{
         height: 300px;
     }
+    #video-sec video
+{
+    width: 100%;
+    max-width:100%;
+    max-height: 400px;
+}
 
 }
 
