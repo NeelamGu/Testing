@@ -8,6 +8,7 @@
 <script src="{{ url('front/js/jquery.fancybox.min.js') }}"></script>
 <script src="{{ url('front/js/custom.js') }}"></script>
 <script src="{{ url('front/js/jquery.fancybox.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
 
 
@@ -166,41 +167,34 @@ owl.owlCarousel({
 });
 
 
-  var owl = $('.sponsored-slider');
-owl.owlCarousel({
-    items:3, 
-    nav:true,
-    
-  // items change number for slider display on desktop  
-  
-    loop:false,
-
-
-    margin:10,
-    arrows: true,
-    autoplay:true,
-    autoplayTimeout:3000,
-    autoplayHoverPause:true,
-     nav: true,
-    navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-    ],
-
-      responsive: {
-      0: {
-        items: 1
-      },
-      767: {
-        items: 2
-      },
-      1170: {
-        items: 4
-      }
-    }
-      
-               
+$(document).ready(function() {
+    var owl = $('.sponsored-slider');
+    owl.owlCarousel({
+        items: 3, 
+        nav: true,
+        loop: true,  // Set to true for continuous scrolling
+        margin: 10,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        navText: [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
+        responsive: {
+            0: {
+                items: 1
+            },
+            767: {
+                items: 2
+            },
+            1170: {
+                items: 4
+            }
+        }
+    });
 });
+
 
 
 
@@ -550,5 +544,10 @@ function getCookie(cname) {
             });
         });
 
+    </script>
+    <script>
+        const lightbox = GLightbox({
+        selector: '.glightbox'
+    });
     </script>
 @yield('javascript')

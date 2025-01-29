@@ -1668,7 +1668,7 @@ img
 }
  .event-item .event-details {
      position: relative;
-     padding: 15px;
+     padding: 15px !important;
      padding-left: 0 !important;
 }
  .event-day {
@@ -22160,15 +22160,22 @@ details > summary span {
 #sponsored-slider.owl-carousel .owl-item img{
     object-fit: cover;
 }
-
+.fancybox-nav.fancybox-prev, .fancybox-nav.fancybox-next{
+    opacity: 0;
+}
 @media  (max-width: 575px) {
     .list-group.gallery.six-images{
         display: grid;
         grid-template-columns: repeat(2,1fr);
       }
       .list-group.gallery .img-responsive {
-        height: 264px;
+        height: 180px;
+        width: 180px;
         object-fit: cover;
+    }
+    .relate-prodduct .event-item .event-thumb img {
+        height: 250px;
+        width: 100% !important;
     }
     .event-item img {
         height: 210px;
