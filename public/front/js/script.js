@@ -1644,7 +1644,7 @@ document.addEventListener("DOMContentLoaded", function () {
    const readMoreBtn = document.getElementById("read-more-btn");
 
    function toggleReadMore() {
-       if (window.innerWidth <= 767) { // Apply the functionality for screens smaller than 767px
+       if (window.innerWidth <= 767) { // Apply only for mobile screens
            if (description.classList.contains("expanded")) {
                description.classList.remove("expanded");
                readMoreBtn.textContent = "Les mer";
@@ -1660,8 +1660,8 @@ document.addEventListener("DOMContentLoaded", function () {
    // Attach the click listener
    readMoreBtn.addEventListener("click", toggleReadMore);
 
-   // On window resize, ensure full content is shown on larger screens
-   window.addEventListener("resize", function () {
+   // On window resize or scroll, ensure content resets properly
+   function updateUI() {
        if (window.innerWidth > 767) {
            description.classList.add("expanded");
            description.style.maxHeight = "none";
@@ -1669,18 +1669,16 @@ document.addEventListener("DOMContentLoaded", function () {
        } else {
            description.classList.remove("expanded");
            description.style.maxHeight = "calc(1.5em * 6)";
-           readMoreBtn.style.display = "inline-block"; // Show the button on smaller screens
+           readMoreBtn.style.display = "inline-block";
+           readMoreBtn.textContent = "Les mer"; // Ensure button text resets
        }
-   });
-
-   // Initial check to set up the UI correctly
-   if (window.innerWidth > 767) {
-       description.classList.add("expanded");
-       description.style.maxHeight = "none";
-       readMoreBtn.style.display = "none";
-   } else {
-       description.style.maxHeight = "calc(1.5em * 6)";
-       readMoreBtn.style.display = "inline-block";
    }
+
+   // Listen for resize and scroll events
+   window.addEventListener("resize", updateUI);
+   window.addEventListener("scroll", updateUI);
+
+   // Initial setup
+   updateUI();
 });
 
