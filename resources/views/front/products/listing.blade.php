@@ -181,7 +181,7 @@ div#appendProductListing .event-item
 @media only screen and (max-width: 768px) {
   #appendProductListing
 {
-padding:0px 20px;
+padding:0px 10px 0 20px;
 }  
   .sidebar
   {
