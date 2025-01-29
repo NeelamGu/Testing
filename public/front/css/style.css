@@ -10667,7 +10667,7 @@ div#appendProductListing
 }
 .main-header .header-top
 {
-    height:auto !important;
+    /* height:auto !important; */
     margin-top:0;
 }
 .detail-row-area
@@ -22181,4 +22181,13 @@ details > summary span {
         height: 210px;
         width: 210px !important;
     }
+    .s-slider-area .item img{
+        height: 300px;
+    }
+}
+
+@media  (max-width: 450px) {
+.mobHidText{
+    display: none;
+}
 }

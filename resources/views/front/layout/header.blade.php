@@ -47,16 +47,16 @@
                   <li><a href="{{ url('user/add-event') }}"><span class="fa fa-calendar"></span>Ny begivenhet</a></li> -->
                   <li>
                      <a href="{{ url('user/enquiries') }}">
-                        <span class="fa fa-comment"></span>Meldinger
+                        <span class="fa fa-comment"></span> <span class="mobHidText">Meldinger</span>
                         @if($messagesCountCustomer>0)<span class="count-number">{{$messagesCountCustomer}}</span>@endif
                      </a>
                   </li>
                   <li>
                      <a href="{{ url('user/wishlist') }}">
-                        <span class="fa fa-heart"></span>Favoritter
+                        <span class="fa fa-heart"></span><span class="mobHidText">Favoritter</span>
                      </a>
                   </li>
-                  <li><a href="{{ url('user/account') }}"><span class="fa fa-user"></span>Min side</a></li>
+                  <li><a href="{{ url('user/account') }}"><span class="fa fa-user"></span><span class="mobHidText">Min side</span></a></li>
                  <!--  <li><a href="{{ url('user/logout') }}"><span class="fa fa-sign-out"></span>Logg ut</a></li> -->
                   @else
 
