@@ -31,14 +31,14 @@
             @if(count($wishlists) >0)
             @foreach($wishlists as $wishlist)
                <!-- loop starts here -->
-               <div class="col-sm-4">
+               <div class="col-lg-3 col-sm-6">
                   <div class="wlist-area">
                      <div class="event-item">
                         <div class="event-thumb">
                            @php $getProductURL = Product::productURL($wishlist['product']['product_name']) @endphp
                            <?php $product_image_path = 'front/images/product_images/small/'.$wishlist['product']['product_image']; ?>
                            @if(!empty($wishlist['product']['product_image']) && file_exists($product_image_path))
-                              <a href="{{ url('product/'.$getProductURL.'/'.$wishlist['product']['id']) }}"><img class="img-responsive img-fullwidth" src="{{ asset('front/images/product_images/small/'.$wishlist['product']['product_image']) }}"></a>
+                              <a href="{{ url('product/'.$getProductURL.'/'.$wishlist['product']['id']) }}"><img class="img-responsive img-fullwidth" src="{{ asset('front/images/product_images/large/'.$wishlist['product']['product_image']) }}"></a>
                            @else
                               <a href="{{ url('product/'.$getProductURL.'/'.$wishlist['product']['id']) }}"><img class="img-responsive img-fullwidth" src="{{ asset('front/images/product_images/small/no-image.png') }}"></a>
                            @endif

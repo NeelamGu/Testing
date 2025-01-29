@@ -287,11 +287,11 @@ a.label:hover {
                       @if(empty($product['id']))
                       <input type="number" class="form-control radiusAll" id="norway_radius" placeholder="radius i km" name="radius" @if(!empty(Session::get('radius'))) value="{{ Session::get('radius') }}" @endif required>
                       <input id="deliverToAll" name="deliverToAll" type="checkbox" value="Yes" />
-                      <label for="checkbox"><span class="reg-checkbox-text">Leverer til hele Norge (km)</span></label>
+                      <label for="checkbox"><span class="reg-checkbox-text">Se oppdrag fra hele Norge (km)</span></label>
                       @else
                       <input type="number" class="form-control radiusAll" id="norway_radius" placeholder="radius i km" name="radius" @if(!empty($product['radius'])) value="{{ $product['radius'] }}" @else value="{{ old('radius') }}" @endif required>
                       <input id="deliverToAll" name="deliverToAll" type="checkbox" value="Yes" />
-                      <label for="checkbox"><span class="reg-checkbox-text">Leverer til hele Norge (km)</span></label>
+                      <label for="checkbox"><span class="reg-checkbox-text">Se oppdrag fra hele Norge (km)</span></label>
                       @endif
                     </div>
                     
