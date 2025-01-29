@@ -419,16 +419,6 @@
                            <div class="row">
                               <div class='list-group gallery six-images'>
                                  @foreach($productDetails['images'] as $key => $image)
-                                 <!-- <div class=''>
-                                    <a class="thumbnail fancybox" rel="ligthbox"
-                                       href="{{ asset('front/images/product_images/large/'.$image['image']) }}">
-                                       <img class="img-responsive" alt=""
-                                          src="{{ asset('front/images/product_images/large/'.$image['image']) }}" />
-                                       <div class='text-left galleryimg-title'>
-                                          <small class='text-muted'>{{ucfirst(strtolower($image['title']))}}</small>
-                                       </div>
-                                    </a>
-                                 </div> -->
                                  <div class="gslidebox">
                                     <a class="glightbox" data-gallery="gallery1"
                                        href="{{ asset('front/images/product_images/large/'.$image['image']) }}">
@@ -674,37 +664,37 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 <script>
-   $(document).ready(function () {
-      $(".fancybox").fancybox({
-         openEffect: "none",
-         closeEffect: "none",
-         loop: true,
-         helpers: {
-            title: {
-               type: 'inside'
-            },
-            overlay: {
-               css: {
-                  'background': 'rgba(0, 0, 0, 1)'
-               }
-            },
-            buttons: {}
-         }
-      });
-   });
+  $(document).ready(function() {
+    $(".fancybox").fancybox({
+      openEffect: "none", 
+      closeEffect: "none", 
+      loop: true,            
+      helpers: {
+        title : {
+          type : 'inside'
+        },
+        overlay : {
+          css : {
+            'background' : 'rgba(0, 0, 0, 1)'
+          }
+        },
+        buttons : {}
+      }
+    });
+  });
 </script>
 <script>
-   <? php if (Auth:: check()) { ?>
+   <?php if(Auth::check()){ ?>
       $(".detail-enquire-form").show();
-   <? php } ?>
-      /*  $(".close-e-form").click(function(){
-      $(".detail-enquire-form").hide();
-      });*/
-
-      $(".detail-eform").click(function () {
-         $(".detail-enquire-form").toggle();
-      });
-
+   <?php } ?>
+   /*  $(".close-e-form").click(function(){
+   $(".detail-enquire-form").hide();
+   });*/
+   
+    $(".detail-eform").click(function(){
+   $(".detail-enquire-form").toggle();
+   });
+   
    //  $(document).ready(function(){
    //  //FANCYBOX
    //  //https://github.com/fancyapps/fancyBox
@@ -713,13 +703,13 @@
    //      closeEffect: "none"
    //  });
    // });
-
-
-   $(".write-review-area").click(function () {
-      $(".review-form-area").show();
+   
+   
+   $(".write-review-area").click(function(){
+   $(".review-form-area").show();
    });
-
-
-
+   
+   
+   
 </script>
 @stop
