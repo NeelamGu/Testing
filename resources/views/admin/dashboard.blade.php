@@ -38,8 +38,8 @@
                         <div class="justify-content-end dashboard-date-area d-flex">
                             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                                 <!-- <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> -->
-                                <i class="mdi mdi-calendar"></i> Idag (
-                                <?php echo date('d.m.y');?>)
+                                <!-- <i class="mdi mdi-calendar"></i> Idag (
+                                <?php echo date('d.m.y');?>) -->
                                 <!-- </button> -->
                                 <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
                                     <a class="dropdown-item" href="#">January - March</a>

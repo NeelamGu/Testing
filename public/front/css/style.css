@@ -22144,12 +22144,10 @@ details > summary {
     box-shadow: none !important;
     font-weight: 600;
 }
-
 details > summary span {
     float: right;
     color: #e46f01;
 }
-
 .fancybox-skin {
     background: transparent !important;
 }
@@ -22190,7 +22188,12 @@ details > summary span {
     max-width:100%;
     max-height: 400px;
 }
-
+.main-header .header-top ul li .fa {
+    position: relative;
+    top: 6px;
+    font-size: 19px;
+    padding-right: 12px;
+}
 }
 
 @media  (max-width: 450px) {
