@@ -263,19 +263,29 @@ $(document).ready(function(){
 	} );
 
 	// Initialize DataTable with default sorting on the first column (Admin ID) in descending order
-	var protable = $('#adminss').DataTable({
-	    "order": [[0, "desc"]] // Column index 0 (Admin ID) sorted in descending order
-	});
+    var protable = $('#adminss').DataTable({
+        "order": [[0, "desc"]],      // Set initial sorting
+        "pageLength": 10,            // Optional: Set default page length
+        "lengthChange": true,        // Optional: Show length change option
+        "searching": true,           // Optional: Enable search
+        "autoWidth": false,          // Prevent DataTable from auto-adjusting column widths
+        "stateSave": false           // Disable state saving if enabled elsewhere
+    });
 
-		// Apply search filter on table columns
-		protable.columns().every(function () {
-		    var that = this;
-		    $('input', this.footer()).on('keyup change', function () {
-		        if (that.search() !== this.value) {
-		            that.search(this.value).draw();
-		        }
-		    });
-		});
+    // Reapply the descending order after a slight delay
+    setTimeout(function() {
+        protable.order([0, 'desc']).draw();
+    }, 500); // 500ms delay to ensure the order is maintained
+
+    // Apply search filter on table columns
+    protable.columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+            if (that.search() !== this.value) {
+                that.search(this.value).draw();
+            }
+        });
+    });
 
 	 ///////////////////////
 
