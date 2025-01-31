@@ -275,7 +275,7 @@ $(document).ready(function(){
     // Reapply the descending order after DataTable is fully initialized
     setTimeout(function() {
         protable.order([0, 'desc']).draw();
-    }, 1000); // 1000ms delay ensures sorting is maintained
+    }, 5000); // 5000ms delay ensures sorting is maintained
 
     // Apply search filter on table columns
     protable.columns().every(function() {
