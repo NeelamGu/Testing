@@ -256,31 +256,31 @@ $(document).ready(function(){
 
 	///////////////////////
 
-	// Setup - add a text input to each footer cell
-	$('#adminss tfoot th').each( function () {
-	    var title = $(this).text();
-	    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-	} );
+		// Setup - add a text input to each footer cell before DataTable initializes
+    $('#adminss tfoot th').each(function() {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
 
-	// Initialize DataTable with default sorting on the first column (Admin ID) in descending order
+    // Initialize DataTable with default sorting on the first column (Admin ID) in descending order
     var protable = $('#adminss').DataTable({
         "order": [[0, "desc"]],      // Set initial sorting
         "pageLength": 10,            // Optional: Set default page length
         "lengthChange": true,        // Optional: Show length change option
-        "searching": true,           // Optional: Enable search
+        "searching": true,           // Enable search
         "autoWidth": false,          // Prevent DataTable from auto-adjusting column widths
         "stateSave": false           // Disable state saving if enabled elsewhere
     });
 
-    // Reapply the descending order after a slight delay
+    // Reapply the descending order after DataTable is fully initialized
     setTimeout(function() {
         protable.order([0, 'desc']).draw();
-    }, 500); // 500ms delay to ensure the order is maintained
+    }, 500); // 500ms delay ensures sorting is maintained
 
     // Apply search filter on table columns
-    protable.columns().every(function () {
+    protable.columns().every(function() {
         var that = this;
-        $('input', this.footer()).on('keyup change', function () {
+        $('input', this.footer()).on('keyup change', function() {
             if (that.search() !== this.value) {
                 that.search(this.value).draw();
             }
