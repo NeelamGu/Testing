@@ -263,19 +263,19 @@ $(document).ready(function(){
 	} );
 
 	// Initialize DataTable with default sorting on the first column (Admin ID) in descending order
-var protable = $('#adminss').DataTable({
-    "order": [[0, "desc"]] // Column index 0 (Admin ID) sorted in descending order
-});
-
-	// Apply search filter on table columns
-	protable.columns().every(function () {
-	    var that = this;
-	    $('input', this.footer()).on('keyup change', function () {
-	        if (that.search() !== this.value) {
-	            that.search(this.value).draw();
-	        }
-	    });
+	var protable = $('#adminss').DataTable({
+	    "order": [[0, "desc"]] // Column index 0 (Admin ID) sorted in descending order
 	});
+
+		// Apply search filter on table columns
+		protable.columns().every(function () {
+		    var that = this;
+		    $('input', this.footer()).on('keyup change', function () {
+		        if (that.search() !== this.value) {
+		            that.search(this.value).draw();
+		        }
+		    });
+		});
 
 	 ///////////////////////
 
