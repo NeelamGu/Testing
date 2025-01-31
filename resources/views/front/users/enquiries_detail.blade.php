@@ -181,12 +181,33 @@ window.setTimeout(function(){ document.location.reload(true); }, 60000);
 
 <script>
     $(document).ready(function () {
-        @if(Session::get('page') == "user_enquiries_detail")
-            $("html, body").animate({ scrollTop: $(document).height() }, 1000);
-        @else
-            $("html, body").animate({ scrollTop: 0 }, 0);
-        @endif
-    });
+       $("#replyEnquiryForm").submit(function (event) {
+           event.preventDefault(); // Prevent default form submission
+
+           var form = $(this);
+           var formData = new FormData(this);
+
+           $.ajax({
+               url: form.attr("action"),
+               type: form.attr("method"),
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function (response) {
+                   // Scroll back to the form after submission
+                   $("html, body").animate({ 
+                       scrollTop: $(".send-reply").offset().top - 100 // Adjusting for footer height
+                   }, 1000);
+
+                   // Optionally, reset the form
+                   form[0].reset();
+               },
+               error: function () {
+                   alert("Something went wrong. Please try again.");
+               }
+           });
+       });
+   });
 </script>
 @yield('javascript')
 @endsection         
