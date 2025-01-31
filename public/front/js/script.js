@@ -1644,14 +1644,14 @@ document.addEventListener("DOMContentLoaded", function () {
    const readMoreBtn = document.getElementById("read-more-btn");
 
    function toggleReadMore() {
-       if (window.innerWidth <= 767) { // Apply the functionality for screens smaller than 767px
+       if (window.innerWidth <= 767) { // Apply only for mobile screens
            if (description.classList.contains("expanded")) {
                description.classList.remove("expanded");
-               readMoreBtn.textContent = "Les mer";
+               readMoreBtn.textContent = "Les mer"; // Update text correctly
                description.style.maxHeight = "calc(1.5em * 3)";
            } else {
                description.classList.add("expanded");
-               readMoreBtn.textContent = "Les mindre";
+               readMoreBtn.textContent = "Les mindre"; // Update text correctly
                description.style.maxHeight = "none";
            }
        }
@@ -1660,27 +1660,29 @@ document.addEventListener("DOMContentLoaded", function () {
    // Attach the click listener
    readMoreBtn.addEventListener("click", toggleReadMore);
 
-   // On window resize, ensure full content is shown on larger screens
+   // Ensure correct UI on window resize
    window.addEventListener("resize", function () {
        if (window.innerWidth > 767) {
            description.classList.add("expanded");
            description.style.maxHeight = "none";
-           readMoreBtn.style.display = "none"; // Hide the button on larger screens
+           readMoreBtn.style.display = "none"; // Hide button on large screens
        } else {
            description.classList.remove("expanded");
-           description.style.maxHeight = "calc(1.5em * 6)";
-           readMoreBtn.style.display = "inline-block"; // Show the button on smaller screens
+           description.style.maxHeight = "calc(1.5em * 3)";
+           readMoreBtn.style.display = "inline-block"; // Show button on small screens
+           readMoreBtn.textContent = "Les mer"; // Reset text when resizing
        }
    });
 
-   // Initial check to set up the UI correctly
+   // Initial setup (when page loads)
    if (window.innerWidth > 767) {
        description.classList.add("expanded");
        description.style.maxHeight = "none";
        readMoreBtn.style.display = "none";
    } else {
-       description.style.maxHeight = "calc(1.5em * 6)";
+       description.classList.remove("expanded");
+       description.style.maxHeight = "calc(1.5em * 3)";
        readMoreBtn.style.display = "inline-block";
+       readMoreBtn.textContent = "Les mer";
    }
 });
-

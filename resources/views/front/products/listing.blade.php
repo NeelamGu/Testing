@@ -173,7 +173,7 @@
 
 div#appendProductListing .event-item 
 {
-    height: 400px !important;
+    height: 430px !important;
     overflow-x:hidden;
     overflow-y: hidden;
 }
@@ -181,7 +181,7 @@ div#appendProductListing .event-item
 @media only screen and (max-width: 768px) {
   #appendProductListing
 {
-padding:0px 20px;
+padding:0px 10px 0 20px;
 }  
   .sidebar
   {

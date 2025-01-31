@@ -132,7 +132,7 @@
 /*admin custom media query start here*/
 
  @media only screen and (max-width: 600px) {
-        
+
         .col-12.col-xl-4 .justify-content-end
         {
             justify-content: start !important;
@@ -242,7 +242,7 @@
         }
         .content-wrapper .card-title
         {
-          margin-bottom: 27px;
+          margin-bottom: 15px;
           display: inline-block;
         }
 
@@ -348,4 +348,10 @@ span.miniHead + h5{
 .cityMarker::marker {
   font-size: 22px;
   line-height: 22px;
+  position: relative;
 }
+.cityMarker::marker::before {
+  content: '';
+  
+}
+

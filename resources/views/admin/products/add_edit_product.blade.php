@@ -141,7 +141,7 @@ a.label:hover {
                         <div class="">
                             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                                 <!-- <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> -->
-                                <i class="mdi mdi-calendar"></i> Today (<?php echo date('d.m.y');?>)
+                                <!-- <i class="mdi mdi-calendar"></i> Today (<?php echo date('d.m.y');?>) -->
                                 <!-- </button> -->
                                 <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
                                     <a class="dropdown-item" href="#">January - March</a>
@@ -287,11 +287,11 @@ a.label:hover {
                       @if(empty($product['id']))
                       <input type="number" class="form-control radiusAll" id="norway_radius" placeholder="radius i km" name="radius" @if(!empty(Session::get('radius'))) value="{{ Session::get('radius') }}" @endif required>
                       <input id="deliverToAll" name="deliverToAll" type="checkbox" value="Yes" />
-                      <label for="checkbox"><span class="reg-checkbox-text">Leverer til hele Norge (km)</span></label>
+                      <label for="checkbox"><span class="reg-checkbox-text">Se oppdrag fra hele Norge (km)</span></label>
                       @else
                       <input type="number" class="form-control radiusAll" id="norway_radius" placeholder="radius i km" name="radius" @if(!empty($product['radius'])) value="{{ $product['radius'] }}" @else value="{{ old('radius') }}" @endif required>
                       <input id="deliverToAll" name="deliverToAll" type="checkbox" value="Yes" />
-                      <label for="checkbox"><span class="reg-checkbox-text">Leverer til hele Norge (km)</span></label>
+                      <label for="checkbox"><span class="reg-checkbox-text">Se oppdrag fra hele Norge (km)</span></label>
                       @endif
                     </div>
                     

@@ -916,3 +916,12 @@ $(".toggle-password-three").click(function() {
     input.attr("type", "password");
   }
 });
+
+
+document.querySelectorAll(".cityMarker").forEach((summary) => {
+    summary.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default toggle behavior
+        let details = this.parentElement;
+        details.open = !details.open;
+    });
+});

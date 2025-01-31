@@ -7,50 +7,51 @@
 @extends('front.layout.layout')
 @section('content')
 <style>
-   .detail-enquire-form input,   .detail-enquire-form textarea 
-   {
-   border: 1px solid #e4e5e6;
-   padding: 10px;
-   width: 100%;
+   .detail-enquire-form input,
+   .detail-enquire-form textarea {
+      border: 1px solid #e4e5e6;
+      padding: 10px;
+      width: 100%;
    }
-   .enquire-form-title
-   {
-   font-size: 25px;
-   text-transform: uppercase;
-   text-align: center;
-   color: #E78002;
-   margin-top:0px;
-   margin-bottom:10px;
+
+   .enquire-form-title {
+      font-size: 25px;
+      text-transform: uppercase;
+      text-align: center;
+      color: #E78002;
+      margin-top: 0px;
+      margin-bottom: 10px;
    }
-   .detail-enquire-form
-   {
-   background-color:#fff;
-   padding:20px;
-   margin-top:30px;
+
+   .detail-enquire-form {
+      background-color: #fff;
+      padding: 20px;
+      margin-top: 30px;
    }
-   .detail-enquire-form
-   {
-   position:relative;
-   }  
-   .detail-enquire-form .close-e-form
-   {
-   position: absolute;
-   top: 8px;
-   right: 20px;
-   font-size: 30px;
-   color: #000;
-   cursor:pointer;
+
+   .detail-enquire-form {
+      position: relative;
+   }
+
+   .detail-enquire-form .close-e-form {
+      position: absolute;
+      top: 8px;
+      right: 20px;
+      font-size: 30px;
+      color: #000;
+      cursor: pointer;
    }
 </style>
 <div class="enquire-form">
    <!--Enquire Form Modal  Start Here-->
-   <div class="modal fade" id="enquire-form" tabindex="-1" role="dialog" aria-labelledby="enquire-form" aria-hidden="true">
+   <div class="modal fade" id="enquire-form" tabindex="-1" role="dialog" aria-labelledby="enquire-form"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
          <div class="modal-content">
             <div class="modal-header">
                <h5 class="modal-title" id="enquire-form-title">SEND MELDING</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Lukk">
-               <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;</span>
                </button>
             </div>
             <div class="modal-body">
@@ -66,7 +67,7 @@
                         <input type="text" name="phone" value="" placeholder="Telefon *" required="">
                      </div>
                      <div class="col-md-6 col-sm-6 col-xs-12 form-group">
-                        <input type="text"  name="subject" value="" placeholder="Emne *" required="">
+                        <input type="text" name="subject" value="" placeholder="Emne *" required="">
                      </div>
                      <div class="col-md-12 col-sm-12 col-xs-12 form-group">
                         <textarea placeholder="Forespørsel *" required=""></textarea>
@@ -87,9 +88,11 @@
    <section class="main-slider default-banner">
       <div id="default-slider" class="carousel" data-ride="carousel" data-interval="7000" data-pause="false"
          data-wrap="true">
-         @if(!empty($productDetails['product_banner']) && file_exists('front/images/product_banners/'.$productDetails['product_banner']))
+         @if(!empty($productDetails['product_banner']) &&
+         file_exists('front/images/product_banners/'.$productDetails['product_banner']))
          <div class="carousel-inner bg-none" role="listbox">
-            <img class="detail-bg-banner" src="{{ asset('front/images/product_banners/'.$productDetails['product_banner']) }}" alt="">
+            <img class="detail-bg-banner"
+               src="{{ asset('front/images/product_banners/'.$productDetails['product_banner']) }}" alt="">
          </div>
          @else
          <div class="carousel-inner bg-none" role="listbox">
@@ -110,13 +113,13 @@
    <section class="detail-bg">
       <div class="detail-top-area home-top-border">
          <div class="container p-0">
-            @if(Session::has('success_message'))       
+            @if(Session::has('success_message'))
             <div class="alert alert-success alert-dismissible" style="margin-top: 30px; margin-bottom: -10px;">
                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                <strong>Suksess!</strong> {{ Session::get('success_message')}}
             </div>
             @endif
-            @if(Session::has('error_message'))       
+            @if(Session::has('error_message'))
             <div class="alert alert-danger alert-dismissible" style="margin-top: 30px; margin-bottom: -10px;">
                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                <strong>Feil!</strong> {{ Session::get('error_message')}}
@@ -135,46 +138,55 @@
                      <div class="col-sm-7">
                         <div class="image-detail-area">
                            <div class="d-image">
-                              @if(!empty($productDetails['product_image']) && file_exists('front/images/product_images/large/'.$productDetails['product_image']))
-                              <img class="img-responsive" src="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}">
+                              @if(!empty($productDetails['product_image']) &&
+                              file_exists('front/images/product_images/large/'.$productDetails['product_image']))
+                              <img class="img-responsive"
+                                 src="{{ asset('front/images/product_images/large/'.$productDetails['product_image']) }}">
                               @else
-                              <img class="img-responsive img-fullwidth" style="width: 300px;" src="{{ asset('front/images/no-image.jpg') }}">
+                              <img class="img-responsive img-fullwidth" style="width: 300px;"
+                                 src="{{ asset('front/images/no-image.jpg') }}">
                               @endif
                            </div>
                            @if($productDetails['vendor_id']>0)
-                              @php $getVendorDetails = Vendor::getVendorDetails($productDetails['vendor_id']); @endphp
-                              @if($getVendorDetails['plan_id']>1)
-                              <div class="detail-social-links">
-                                 <ul>
-                                    @if($getVendorDetails['facebook']!="")
-                                    <li><a target="_blank" href="{{ $getVendorDetails['facebook'] }}"><span class="fa fa-facebook-f"></span></a></li>
-                                    @endif
-                                    @if($getVendorDetails['instagram']!="")
-                                    <li><a target="_blank" href="{{ $getVendorDetails['instagram'] }}"><span class="fa fa-instagram"></span></a></li>
-                                    @endif
-                                    @if($getVendorDetails['tiktok']!="")
-                                    <li>
-                                       <a target="_blank" href="{{ $getVendorDetails['tiktok'] }}">
-                                          <img class="tiktok-icon" src="{{ asset('front/images/icons/tiktok-icon.png') }}">
-                                       </a>
-                                    </li>
-                                    @endif
-                                    @if($getVendorDetails['youtube']!="")
-                                       <li><a target="_blank" href="{{ $getVendorDetails['youtube'] }}"><span class="fa fa-youtube-play"></span></a></li>
-                                    @endif
-                                       @if($getVendorDetails['website']!="")
-                                       <li><a target="_blank" href="{{ $getVendorDetails['website'] }}"><span class="fa fa-globe"></span></a></li>
-                                    @endif
-                                 </ul>
-                              </div>
-                              @endif
+                           @php $getVendorDetails = Vendor::getVendorDetails($productDetails['vendor_id']); @endphp
+                           @if($getVendorDetails['plan_id']>1)
+                           <div class="detail-social-links">
+                              <ul>
+                                 @if($getVendorDetails['facebook']!="")
+                                 <li><a target="_blank" href="{{ $getVendorDetails['facebook'] }}"><span
+                                          class="fa fa-facebook-f"></span></a></li>
+                                 @endif
+                                 @if($getVendorDetails['instagram']!="")
+                                 <li><a target="_blank" href="{{ $getVendorDetails['instagram'] }}"><span
+                                          class="fa fa-instagram"></span></a></li>
+                                 @endif
+                                 @if($getVendorDetails['tiktok']!="")
+                                 <li>
+                                    <a target="_blank" href="{{ $getVendorDetails['tiktok'] }}">
+                                       <img class="tiktok-icon" src="{{ asset('front/images/icons/tiktok-icon.png') }}">
+                                    </a>
+                                 </li>
+                                 @endif
+                                 @if($getVendorDetails['youtube']!="")
+                                 <li><a target="_blank" href="{{ $getVendorDetails['youtube'] }}"><span
+                                          class="fa fa-youtube-play"></span></a></li>
+                                 @endif
+                                 @if($getVendorDetails['website']!="")
+                                 <li><a target="_blank" href="{{ $getVendorDetails['website'] }}"><span
+                                          class="fa fa-globe"></span></a></li>
+                                 @endif
+                              </ul>
+                           </div>
+                           @endif
                            @endif
                            <div class="share-detail-items">
                               <ul>
-                                 <li >
+                                 <li>
                                     <a class="gallery-area" href="#gallery">
-                                    <i class="fa fa-picture-o" aria-hidden="true"></i><span>{{count($productDetails['images'])}} Bilder</span>
-                                 </a>
+                                       <i class="fa fa-picture-o"
+                                          aria-hidden="true"></i><span>{{count($productDetails['images'])}}
+                                          Bilder</span>
+                                    </a>
                                  </li>
                                  <li class="shortlist-icon">
                                     <?php $checkwish =0; ?>
@@ -182,13 +194,17 @@
                                     <?php $checkwish = Wishlist::checkwishlist($productDetails['id']); ?>
                                     @endif
                                     @if($checkwish > 0)
-                                    <a href="javascript:void(0);" data-productid="{{$productDetails['id']}}" class="wishlist addWishList"><span><i class="fa fa-heart fill-heart" aria-hidden="true"></i></span></a>
+                                    <a href="javascript:void(0);" data-productid="{{$productDetails['id']}}"
+                                       class="wishlist addWishList"><span><i class="fa fa-heart fill-heart"
+                                             aria-hidden="true"></i></span></a>
                                     @else
-                                    <a href="javascript:void(0);" data-productid="{{$productDetails['id']}}" class="wishlist addWishList"><span><i class="fa fa-heart-o" aria-hidden="true"></i></span></a>
+                                    <a href="javascript:void(0);" data-productid="{{$productDetails['id']}}"
+                                       class="wishlist addWishList"><span><i class="fa fa-heart-o"
+                                             aria-hidden="true"></i></span></a>
                                     @endif
                                     <span>Favoritt</span>
                                  </li>
-                                <!--  @if(!isset(Auth::guard('admin')->user()->type))
+                                 <!--  @if(!isset(Auth::guard('admin')->user()->type))
                                  <li>
                                     <a class="write-review-area" href="#review-section"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Gi en vurdering </a>
                                  </li>
@@ -230,7 +246,7 @@
                                  <div class="price-d-area">
                                     <span class="price-dark">$$$</span>
                                  </div>
-                                 @endif 
+                                 @endif
                                  @else
                                  <div class="price-d-area">
                                     <span>$$$</span>
@@ -240,54 +256,60 @@
                            </div>
                            <div class="detail-location-area">
                               <div class="p-location">
-                                 <i class="fa fa-map-marker font-18 mt-5"></i><span class="pl-5 mt-0"><!-- {{ $productDetails['city'] }} -->
-                                 {{ ucfirst(strtolower($productDetails['city'])) }}</span>
+                                 <i class="fa fa-map-marker font-18 mt-5"></i><span
+                                    class="pl-5 mt-0"><!-- {{ $productDetails['city'] }} -->
+                                    {{ ucfirst(strtolower($productDetails['city'])) }}</span>
                               </div>
                            </div>
                            <?php /* @if(!isset(Auth::guard('admin')->user()->type)) */ ?>
                            <div class="detail-mobile-area">
-                               @if($productDetails['vendor_id']>0)
+                              @if($productDetails['vendor_id']>0)
                               @if(Auth::check())
                               <a class="asknow-btn ask-detail-btn">SEND MELDING</a>
                               @else
                               <a class="asknow-btn" data-toggle="modal" data-target="#loginModal">
-                              <i class="fa fa-envelope-o" style="font-size:20px;margin-right:10px"></i> SEND MELDING</a>
+                                 <i class="fa fa-envelope-o" style="font-size:20px;margin-right:10px"></i> SEND
+                                 MELDING</a>
                               @endif
                               @endif
-                              
+
                               @if($productDetails['vendor_id']>0)
                               @php
-                                 $getVendorDetails = Vendor::getVendorDetails($productDetails['vendor_id']);
+                              $getVendorDetails = Vendor::getVendorDetails($productDetails['vendor_id']);
                               @endphp
-                                 @if($getVendorDetails['plan_id']==4)
-                                    @if(Auth::check())
-                                    <div class="d-mobile-sec">
-                                       <?php /* <i class="fa fa-phone font-18 mt-5"></i><span class="pl-5 mt-0">{{ substr($productDetails['vendor']['mobile'],0,4) }}******</span> */ ?>
-                                       <i class="fa fa-phone font-18 mt-5"></i><span class="pl-5 mt-0"><a href="tel:{{ $productDetails['vendor']['mobile'] }}">{{ $productDetails['vendor']['mobile'] }}</a></span>
-                                    </div>
-                                    @else
-                                    <a href="#" class="d-mobile-sec" data-toggle="modal"  data-target="#loginModal">
-                                       <i class="fa fa-phone font-18 mt-5"></i><span class="pl-5 mt-0">{{ substr($productDetails['vendor']['mobile'],0,4) }}******</span>                                       
-                                    </a>
-                                    @endif
-                                 @endif
+                              @if($getVendorDetails['plan_id']==4)
+                              @if(Auth::check())
+                              <div class="d-mobile-sec">
+                                 <?php /* <i class="fa fa-phone font-18 mt-5"></i><span class="pl-5 mt-0">{{ substr($productDetails['vendor']['mobile'],0,4) }}******</span> */ ?>
+                                 <i class="fa fa-phone font-18 mt-5"></i><span class="pl-5 mt-0"><a
+                                       href="tel:{{ $productDetails['vendor']['mobile'] }}">{{
+                                       $productDetails['vendor']['mobile'] }}</a></span>
+                              </div>
+                              @else
+                              <a href="#" class="d-mobile-sec" data-toggle="modal" data-target="#loginModal">
+                                 <i class="fa fa-phone font-18 mt-5"></i><span class="pl-5 mt-0">{{
+                                    substr($productDetails['vendor']['mobile'],0,4) }}******</span>
+                              </a>
+                              @endif
+                              @endif
                               @endif
                               <div class="locMarker">
-                              <h4 class="text-thm pb-5 font-weight-700">Leverer til:</h4>
-                              <h4 class="text-thm pb-5 font-weight-700"></h4>
+                                 <h4 class="text-thm pb-5 font-weight-700">Leverer til:</h4>
+                                 <h4 class="text-thm pb-5 font-weight-700"></h4>
                                  @if(isset($productDetails['all_norway'])&&$productDetails['all_norway']=="all")
-                                    <span class="location"> <i class="fa fa-map-marker"></i>Hele Norge</span>
+                                 <span class="location"> <i class="fa fa-map-marker"></i>Hele Norge</span>
                                  @else
-                                    @if(isset($productStates))
-                                       @foreach($productStates as $state)
-                                          <span class="location"> <i class="fa fa-map-marker"></i>{{$state}}</span>
-                                       @endforeach
-                                    @endif
-                                    @if(isset($productCities))
-                                       @foreach($productCities as $city)
-                                          <span class="location"> <i class="fa fa-map-marker"></i>{{$city['city']}}, {{$city['state']}}</span>
-                                       @endforeach
-                                    @endif
+                                 @if(isset($productStates))
+                                 @foreach($productStates as $state)
+                                 <span class="location"> <i class="fa fa-map-marker"></i>{{$state}}</span>
+                                 @endforeach
+                                 @endif
+                                 @if(isset($productCities))
+                                 @foreach($productCities as $city)
+                                 <span class="location"> <i class="fa fa-map-marker"></i>{{$city['city']}},
+                                    {{$city['state']}}</span>
+                                 @endforeach
+                                 @endif
                                  @endif
                               </div>
                            </div>
@@ -343,7 +365,8 @@
                            <input type="text" name="subject" value="" placeholder="Subject *" required="">
                            </div> -->
                         <div class="col-md-12 col-sm-12 col-xs-12 form-group">
-                           <textarea maxlength="300" rows="5" id="message" name="message" placeholder="Melding *" required=""></textarea>
+                           <textarea maxlength="300" rows="5" id="message" name="message" placeholder="Melding *"
+                              required=""></textarea>
                         </div>
                         <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 form-group text-center">
                            <button type="submit" class="theme-btn normal-btn">SEND</button>
@@ -358,20 +381,20 @@
       </div>
       <div class="detail-products home-top-border">
          <div class="auto-container detail-products-area">
-            <div class="" id=""
-               style="display: block; ">
+            <div class="" id="" style="display: block; ">
                <div class="about-detail-area">
                   <h3 class="profile-title-area mb-0">Om {{ $productDetails['product_name'] }}</h3>
                   <ul class="badge-detail-area">
                      @if($productDetails['keywords']!="")
                      @php $keywords = explode(",",$productDetails['keywords']) @endphp
-                     
+
                      @foreach($keywords as $keyword)
                      <li><span class="badge">{{$keyword}}</span></li>
                      @endforeach
                      @endif
                   </ul>
-                  <p class="d-detail-text" id="product-description"><?php echo nl2br($productDetails['description']); ?>
+                  <p class="d-detail-text" id="product-description">
+                     <?php echo nl2br($productDetails['description']); ?>
                   </p>
                   <button id="read-more-btn" class="btn-read-more">Les mer</button>
                </div>
@@ -380,8 +403,7 @@
       </div>
       <div id="gallery" class="product-details-tab-title  home-top-border row7 gallery-section">
          <div class="auto-container">
-            <div class="col-lg-12 m-10"
-               style="display: block;">
+            <div class="col-lg-12 m-10" style="display: block;">
                <div class="card gallery-tabs detail-tabs">
                   <div class="card-body g-video-tabs">
                      <h3 class="profile-title-area gallery-title">Galleri</h3>
@@ -393,19 +415,21 @@
                                     class="detail-img">
                                  <span>{{$image['title']}}</span>
                               </div>
-                              @endforeach   --> 
+                              @endforeach   -->
                            <div class="row">
                               <div class='list-group gallery six-images'>
                                  @foreach($productDetails['images'] as $key => $image)
-                                 <div class=''>
-                                    <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('front/images/product_images/large/'.$image['image']) }}">
-                                       <img class="img-responsive" alt="" src="{{ asset('front/images/product_images/large/'.$image['image']) }}" />
-                                       <div class='text-left galleryimg-title'>
-                                          <small class='text-muted'>{{ucfirst(strtolower($image['title']))}}</small>
+                                 <div class="gslidebox">
+                                    <a class="glightbox" data-gallery="gallery1"
+                                       href="{{ asset('front/images/product_images/large/'.$image['image']) }}">
+                                       <img class="img-responsive" alt=""
+                                          src="{{ asset('front/images/product_images/large/'.$image['image']) }}" />
+                                       <div class="text-left galleryimg-title">
+                                          <small class="text-muted">{{ ucfirst(strtolower($image['title'])) }}</small>
                                        </div>
                                     </a>
                                  </div>
-                                 @endforeach  
+                                 @endforeach
                               </div>
                            </div>
                         </div>
@@ -415,7 +439,7 @@
             </div>
          </div>
       </div>
-      
+
       @if($productDetails['product_video'])
       <div class="video-section-area home-top-border">
          <div class="container">
@@ -424,7 +448,8 @@
                <br>
                @if($productDetails['product_video'])
                <video width="100%" controls>
-                  <source src="{{ url('front/videos/product_videos/'.$productDetails['product_video']) }}" type="video/mp4">
+                  <source src="{{ url('front/videos/product_videos/'.$productDetails['product_video']) }}"
+                     type="video/mp4">
                </video>
                @else
                Produktvideo finnes ikke
@@ -556,18 +581,22 @@
                            <div class="event-thumb">
                               <?php $getProductURL = Product::productURL($product['product_name']); ?>
                               <a href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">
-                              <?php $product_image_path = 'front/images/product_images/large/'.$product['product_image']; ?>
-                              @if(!empty($product['product_image']) && file_exists($product_image_path))
-                              <img class="img-responsive img-fullwidth" src="{{ asset($product_image_path) }}" alt="Product">
-                              @else
-                              <img class="img-responsive img-fullwidth" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
-                              @endif
+                                 <?php $product_image_path = 'front/images/product_images/large/'.$product['product_image']; ?>
+                                 @if(!empty($product['product_image']) && file_exists($product_image_path))
+                                 <img class="img-responsive img-fullwidth" src="{{ asset($product_image_path) }}"
+                                    alt="Product">
+                                 @else
+                                 <img class="img-responsive img-fullwidth"
+                                    src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
+                                 @endif
                               </a>
                            </div>
                            <div class="event-details p-14">
                               <div class="" style="display: flex; justify-content:space-between;">
-                                 <h4 class="text-thm pb-5 font-weight-700"> 
-                                    <a class="p-url-link" href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">{{ $product['product_name'] }}</a>
+                                 <h4 class="text-thm pb-5 font-weight-700">
+                                    <a class="p-url-link"
+                                       href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">{{
+                                       $product['product_name'] }}</a>
                                  </h4>
                                  <!-- <p class=""><i class="fa fa-star"></i>4.0</p> -->
                               </div>
@@ -587,7 +616,7 @@
                                  <div class="price-d-area">
                                     <span class="price-dark">$$$</span>
                                  </div>
-                                 @endif 
+                                 @endif
                                  @else
                                  <div class="price-d-area">
                                     <span>$$$</span>
@@ -595,20 +624,22 @@
                                  @endif
                               </div>
                               <address class="text-dark font-14 mb-10 detail-adress">
-                                 <i class="fa fa-map-marker text-thm"></i><span class="pl-5">{{ ucfirst(strtolower($product['city'])) }}, Norge&nbsp;&nbsp;</span>
+                                 <i class="fa fa-map-marker text-thm"></i><span class="pl-5">{{
+                                    ucfirst(strtolower($product['city'])) }}, Norge&nbsp;&nbsp;</span>
                                  <!-- <span class="hall-area">
                                  <i class="fa fa-list text-thm" aria-hidden="true"></i><span class="pl-5">{{ $categoryDetails['categoryDetails']['name'] }}</span>
                                  </span> -->
                                  <?php $getCategoryImage = Category::getCategoryImage($product['category_id']); ?>
-                              <div class="p-detail-category">
-                                 @if($getCategoryImage!="")
-                                 <img class="category-img-icon" src="{{ asset('front/images/category_images/'.$getCategoryImage) }}">
-                                 @else
-                                 <img class="category-img-icon" src="{{ asset('front/images/icons/curtains.png') }}">
-                                 @endif
-                                 @php $getCategoryName = Category::getCategoryName($product['category_id']) @endphp
-                                 <span>{{$getCategoryName}}</span>
-                              </div>
+                                 <div class="p-detail-category">
+                                    @if($getCategoryImage!="")
+                                    <img class="category-img-icon"
+                                       src="{{ asset('front/images/category_images/'.$getCategoryImage) }}">
+                                    @else
+                                    <img class="category-img-icon" src="{{ asset('front/images/icons/curtains.png') }}">
+                                    @endif
+                                    @php $getCategoryName = Category::getCategoryName($product['category_id']) @endphp
+                                    <span>{{$getCategoryName}}</span>
+                                 </div>
                               </address>
                               <!-- <div class="d-price-area" style="display: flex; justify-content:;">
                                  <p class="price">

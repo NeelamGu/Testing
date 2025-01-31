@@ -23,6 +23,7 @@
       <link href="{{ url('front/css/bootstrap-margin-padding.css') }}" rel="stylesheet">
       <link href="{{ url('front/css/responsive.css') }}" rel="stylesheet">
       <link href="{{ url('front/css/custom.css') }}" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
       <style>
          .VIpgJd-ZVi9od-ORHb-OEVmcd{
             display: none !important;
