@@ -194,6 +194,33 @@ $(document).ready(function() {
         }
     });
 });
+$(document).ready(function() {
+    var owl = $('.similar-slider');
+    owl.owlCarousel({
+        items: 3, 
+        nav: true,
+        loop: false,  // Set to true for continuous scrolling
+        margin: 10,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        navText: [
+            '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+            '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+        ],
+        responsive: {
+            0: {
+                items: 1
+            },
+            767: {
+                items: 2
+            },
+            1170: {
+                items: 4
+            }
+        }
+    });
+});
 
 
 

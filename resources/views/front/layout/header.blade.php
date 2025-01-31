@@ -23,10 +23,10 @@
             <div class="top-right">
                <ul class="clearfix">
                   
-                  <li><a href="{{ url('admin/dashboard') }}"><span class="fa fa-user"></span>Min side</a></li>
+                  <li><a href="{{ url('admin/dashboard') }}"><span class="fa fa-user"></span><span class='mobHidText'>Min side</span></a></li>
                   <!-- <li><a href="{{ url('admin/update-admin-details') }}"><span class="fa fa-user"></span>Regnskap</a></li> -->
-                   <li><a href="{{ url('admin/products-enquiries') }}"></span><i class="fa fa-comment-o" aria-hidden="true"></i>Meldinger</a></li>
-                  <li><a href="{{ url('admin/logout') }}"><span class="fa fa-sign-out"></span>Logg ut</a></li>
+                   <li><a href="{{ url('admin/products-enquiries') }}"></span><i class="fa fa-comment-o" aria-hidden="true"></i><span class='mobHidText'>Meldinger</span></a></li>
+                  <li><a href="{{ url('admin/logout') }}"><span class="fa fa-sign-out"></span><span class='mobHidText'>Logg ut</span></a></li>
                   
                </ul>
             </div>

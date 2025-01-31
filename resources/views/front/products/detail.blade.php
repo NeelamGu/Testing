@@ -570,10 +570,10 @@
          <div class="container temp-container  detail-o-product relate-prodduct">
             <div class="row">
                <div class="sec-title detail-sec-title style-three">
-                  <h2 class="text-left other-p-title">Lignende profiler</h2>
+                  <h2 class="text-left other-p-title">Lignende Annonser</h2>
                   <div class="line mt-0 mb-5"></div>
                </div>
-               <div class="owl-carousel Sponsored-vendors other-p-products sponsored-slider owl-theme">
+               <div class="owl-carousel Sponsored-vendors other-p-products similar-slider owl-theme">
                   @foreach($similarProducts as $product)
                   <div class="item">
                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

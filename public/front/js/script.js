@@ -1638,7 +1638,6 @@ window.addEventListener("scroll", function() {
    }
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
    const description = document.getElementById("product-description");
    const readMoreBtn = document.getElementById("read-more-btn");
@@ -1647,11 +1646,11 @@ document.addEventListener("DOMContentLoaded", function () {
        if (window.innerWidth <= 767) { // Apply only for mobile screens
            if (description.classList.contains("expanded")) {
                description.classList.remove("expanded");
-               readMoreBtn.textContent = "Les mer"; // Update text correctly
+               readMoreBtn.textContent = "Les mer";
                description.style.maxHeight = "calc(1.5em * 3)";
            } else {
                description.classList.add("expanded");
-               readMoreBtn.textContent = "Les mindre"; // Update text correctly
+               readMoreBtn.textContent = "Les mindre";
                description.style.maxHeight = "none";
            }
        }
@@ -1660,29 +1659,83 @@ document.addEventListener("DOMContentLoaded", function () {
    // Attach the click listener
    readMoreBtn.addEventListener("click", toggleReadMore);
 
-   // Ensure correct UI on window resize
-   window.addEventListener("resize", function () {
-       if (window.innerWidth > 767) {
-           description.classList.add("expanded");
-           description.style.maxHeight = "none";
-           readMoreBtn.style.display = "none"; // Hide button on large screens
-       } else {
-           description.classList.remove("expanded");
-           description.style.maxHeight = "calc(1.5em * 3)";
-           readMoreBtn.style.display = "inline-block"; // Show button on small screens
-           readMoreBtn.textContent = "Les mer"; // Reset text when resizing
+   let lastWidth = window.innerWidth;
+
+   function handleResize() {
+       let newWidth = window.innerWidth;
+       
+       // Only apply changes if there's a significant resize (avoid scroll-related resets)
+       if (Math.abs(newWidth - lastWidth) > 50) {  
+           lastWidth = newWidth;
+
+           if (newWidth > 767) {
+               description.classList.add("expanded");
+               description.style.maxHeight = "none";
+               readMoreBtn.style.display = "none"; // Hide button on large screens
+           } else {
+               description.classList.remove("expanded");
+               description.style.maxHeight = "calc(1.5em * 3)";
+               readMoreBtn.style.display = "inline-block";
+               readMoreBtn.textContent = "Les mer";
+           }
        }
+   }
+
+   // Ensure correct UI on resize, but debounce rapid changes
+   let resizeTimeout;
+   window.addEventListener("resize", function () {
+       clearTimeout(resizeTimeout);
+       resizeTimeout = setTimeout(handleResize, 200); // Debounce to avoid unnecessary re-renders
    });
 
    // Initial setup (when page loads)
-   if (window.innerWidth > 767) {
-       description.classList.add("expanded");
-       description.style.maxHeight = "none";
-       readMoreBtn.style.display = "none";
-   } else {
-       description.classList.remove("expanded");
-       description.style.maxHeight = "calc(1.5em * 3)";
-       readMoreBtn.style.display = "inline-block";
-       readMoreBtn.textContent = "Les mer";
-   }
+   handleResize();
 });
+
+// document.addEventListener("DOMContentLoaded", function () {
+//    const description = document.getElementById("product-description");
+//    const readMoreBtn = document.getElementById("read-more-btn");
+
+//    function toggleReadMore() {
+//        if (window.innerWidth <= 767) { // Apply only for mobile screens
+//            if (description.classList.contains("expanded")) {
+//                description.classList.remove("expanded");
+//                readMoreBtn.textContent = "Les mer"; // Update text correctly
+//                description.style.maxHeight = "calc(1.5em * 3)";
+//            } else {
+//                description.classList.add("expanded");
+//                readMoreBtn.textContent = "Les mindre"; // Update text correctly
+//                description.style.maxHeight = "none";
+//            }
+//        }
+//    }
+
+//    // Attach the click listener
+//    readMoreBtn.addEventListener("click", toggleReadMore);
+
+//    // Ensure correct UI on window resize
+//    window.addEventListener("resize", function () {
+//        if (window.innerWidth > 767) {
+//            description.classList.add("expanded");
+//            description.style.maxHeight = "none";
+//            readMoreBtn.style.display = "none"; // Hide button on large screens
+//        } else {
+//            description.classList.remove("expanded");
+//            description.style.maxHeight = "calc(1.5em * 3)";
+//            readMoreBtn.style.display = "inline-block"; // Show button on small screens
+//            readMoreBtn.textContent = "Les mer"; // Reset text when resizing
+//        }
+//    });
+
+//    // Initial setup (when page loads)
+//    if (window.innerWidth > 767) {
+//        description.classList.add("expanded");
+//        description.style.maxHeight = "none";
+//        readMoreBtn.style.display = "none";
+//    } else {
+//        description.classList.remove("expanded");
+//        description.style.maxHeight = "calc(1.5em * 3)";
+//        readMoreBtn.style.display = "inline-block";
+//        readMoreBtn.textContent = "Les mer";
+//    }
+// });

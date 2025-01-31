@@ -132,10 +132,10 @@
                       </select>
                     </div> -->
                     
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label for="vendor_radius">Leveringsradius</label>
                       <input type="text" class="form-control" id="vendor_radius" placeholder="Tast inn leveringsradius" name="vendor_radius" value="{{ $vendorDetails['radius'] }}">
-                    </div>
+                    </div> -->
                     <div class="form-group">
                       <label for="vendor_mobile">Telefonnummer</label>
                       <input type="text" class="form-control" id="vendor_mobile" placeholder="Tast inn 8 to 10 Digit Mobile Number" name="vendor_mobile" value="{{ Auth::guard('admin')->user()->mobile }}" required="" readonly>
