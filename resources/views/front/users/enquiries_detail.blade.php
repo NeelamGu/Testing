@@ -13,6 +13,26 @@ $messagesCountCustomer = messagesCountCustomer();
 <script type="text/javascript">
 window.setTimeout(function(){ document.location.reload(true); }, 60000);
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function scrollToBottomIfNeeded() {
+            if (window.innerWidth <= 525) {
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: document.body.scrollHeight - window.innerHeight - 200, // Leaves 50px space at the bottom
+                        behavior: "smooth"
+                    });
+                }, 300); // Small delay ensures full page load before scrolling
+            }
+        }
+
+        // Run once when the page loads
+        scrollToBottomIfNeeded();
+    });
+</script>
+
+</script>
+
 <div class="page-wrapper">
    <div class="contact-section account-page">
       <div class="auto-container">

@@ -1669,7 +1669,7 @@ img
  .event-item .event-details {
      position: relative;
      padding: 15px !important;
-     padding-left: 0 !important;
+     padding-left: 5px !important;
 }
  .event-day {
      color: #000;
