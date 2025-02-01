@@ -317,7 +317,7 @@ a.label:hover {
                        @endif 
                     </div>
                     <div class="form-group @if($product['category_id']!=6 && $product['category_id']!=7) itemState" @endif>
-                      <label for="state">fylke</label>
+                      <label for="state">Fylke</label>
                       @if(empty($product['id']))
                       <select name="state" id="load_state" class="form-control text-dark" required>
                           <option value="">Velg fylke</option>
@@ -398,20 +398,20 @@ a.label:hover {
                     <div class="form-group">
                       <label for="product_discount">Beskrivelse av tjenesten</label>
                       @if(empty($product['id']))
-                      <textarea name="description" id="description" class="form-control" rows="3">@if(Session::has('description')) {{ Session::get('description') }}  @endif</textarea>
+                      <textarea oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" name="description" id="description" class="form-control" rows="3">@if(Session::has('description')) {{ Session::get('description') }}  @endif</textarea>
                       @else
-                      <textarea name="description" id="description" class="form-control" rows="3">{{ $product['description'] }}</textarea>
+                      <textarea oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" name="description" id="description" class="form-control" rows="3">{{ $product['description'] }}</textarea>
                       @endif
                     </div>
                     @if($product['keywords']!="")
                     <div class="form-group">
-                      <label for="keywords">søkeord</label><br>
+                      <label for="keywords">Søkeord</label><br>
                       <input name="keywords" id="keywords" type="text" class="form-control tags" value="{{ $product['keywords'] }}">
                     </div>
                     @else
                     <div class="form-group">
                       <label for="keywords">Søkeord</label><br>
-                      <textarea name="keywords" id="keywords" class="form-control tags" rows="3" style="width:400px !important;">
+                      <textarea oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" name="keywords" id="keywords" class="form-control tags" rows="3" style="width:400px !important;">
                         @if(Session::has('keywords')) {{ Session::get('keywords') }}  @endif
                       </textarea>
                     </div>

@@ -570,7 +570,6 @@
          <div class="container temp-container  detail-o-product relate-prodduct">
             <div class="row">
                <div class="sec-title detail-sec-title style-three">
-                  <h2 class="text-left other-p-title">Lignende annonser</h2>
                   <div class="line mt-0 mb-5"></div>
                </div>
                <div class="owl-carousel Sponsored-vendors other-p-products similar-slider owl-theme">

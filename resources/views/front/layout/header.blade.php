@@ -25,7 +25,7 @@
                   
                   <li><a href="{{ url('admin/dashboard') }}"><span class="fa fa-user"></span><span class='mobHidText'>Min side</span></a></li>
                   <!-- <li><a href="{{ url('admin/update-admin-details') }}"><span class="fa fa-user"></span>Regnskap</a></li> -->
-                   <li><a href="{{ url('admin/products-enquiries') }}"></span><i class="fa fa-comment-o" aria-hidden="true"></i><span class='mobHidText'>Meldinger</span></a></li>
+                   <li><a href="{{ url('admin/products-enquiries') }}"></span><i class="fa fa-comment" aria-hidden="true"></i><span class='mobHidText'>Meldinger</span></a></li>
                   <li><a href="{{ url('admin/logout') }}"><span class="fa fa-sign-out"></span><span class='mobHidText'>Logg ut</span></a></li>
                   
                </ul>
@@ -45,6 +45,7 @@
                   @if(Auth::check())
                  <!--  <li><a href="{{ url('user/select-category') }}"><span class="fa fa-plus"></span>Ny annonse</a></li>
                   <li><a href="{{ url('user/add-event') }}"><span class="fa fa-calendar"></span>Ny begivenhet</a></li> -->
+                  <li><a href="{{ url('user/account') }}"><span class="fa fa-user"></span><span class="mobHidText">Min side</span></a></li>
                   <li>
                      <a href="{{ url('user/enquiries') }}">
                         <span class="fa fa-comment"></span> <span class="mobHidText">Meldinger</span>
@@ -56,7 +57,6 @@
                         <span class="fa fa-heart"></span><span class="mobHidText">Favoritter</span>
                      </a>
                   </li>
-                  <li><a href="{{ url('user/account') }}"><span class="fa fa-user"></span><span class="mobHidText">Min side</span></a></li>
                  <!--  <li><a href="{{ url('user/logout') }}"><span class="fa fa-sign-out"></span>Logg ut</a></li> -->
                   @else
 
