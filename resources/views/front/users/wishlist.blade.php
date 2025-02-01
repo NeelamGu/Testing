@@ -1,5 +1,6 @@
 <?php 
-   use App\Models\Product; 
+use App\Models\Product; 
+use App\Models\Category;
 ?>
 @extends('front.layout.layout')
 @section('content')
@@ -30,6 +31,7 @@
          <div class="row">
             @if(count($wishlists) >0)
             @foreach($wishlists as $wishlist)
+            <?php // echo "<pre>"; print_r($wishlist); die; ?>
             <!-- loop starts here -->
             <div class="col-lg-3 col-sm-6">
                <div class="wlist-area">
@@ -95,11 +97,16 @@
                               <button name="submitbtn" type="button" class="wlist-btn" value="ADD TO CART">View Details</button></a>
                            </div> -->
                         <address class="text-dark font-14 mb-10 detail-adress">
-                           <i class="fa fa-map-marker text-thm"></i><span class="pl-5">Notodden&nbsp;&nbsp;</span>
+                           <i class="fa fa-map-marker text-thm"></i><span class="pl-5">{{ ucfirst(strtolower($wishlist['product']['city'])) }}&nbsp;&nbsp;</span>
+                           <?php $getCategoryImage = Category::getCategoryImage($wishlist['product']['category_id']); ?>
                            <div class="p-detail-category">
-                              <img class="category-img-icon"
-                                 src="http://localhost:8000/front/images/category_images/40991.png">
-                              <span>Desserter</span>
+                              @if($getCategoryImage!="")
+                                 <img class="category-img-icon" src="{{ asset('front/images/category_images/'.$getCategoryImage) }}">
+                              @else
+                                 <img class="category-img-icon" src="{{ asset('front/images/icons/curtains.png') }}">
+                              @endif  
+                              @php $getCategoryName = Category::getCategoryName($wishlist['product']['category_id']) @endphp 
+                              <span>{{$getCategoryName}}</span>
                            </div>
                         </address>
                      </div>
