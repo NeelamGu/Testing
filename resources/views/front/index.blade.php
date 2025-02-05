@@ -459,7 +459,7 @@
    <section class="Sponsored-vendors  home-top-border   s-slider-area  pt-40">
       <div class="auto-container">
          <div class="sec-title style-two">
-            <h2 class="text-thm">Populære <span class="small-title">leverandørerss</span></h2>
+            <h2 class="text-thm">Populære <span class="small-title">leverandører</span></h2>
          </div>
          <div class="owl-carousel sponsored-slider owl-theme" id="sponsored-slider">
             @foreach($popularItems as $item)

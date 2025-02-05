@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12 grid-margin">
                 <div class="row">
-                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                    <div class="col-12 col-xl-8 mb-4">
                         <h3 class="font-weight-bold">Velkommen {{ Auth::guard('admin')->user()->name }}</h3>
 
                         @if(Session::has('success_message'))
