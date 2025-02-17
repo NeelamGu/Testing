@@ -81,18 +81,16 @@
                </ul>
             </div>
             <div class="term-list-area">
-               <h4 class="title-color"><b>Flere profiler</b></h4>
-               <p>Hvis du tilbyr tjenester som omgår flere kategorier kan du velge en pakke med flereprofiler. Dette vil føre til at profilen din vises under alle de kategoriene du velger, og samtidig vil du se oppdrag fra alle de kategoriene.</p>
+               <h4 class="title-color"><b>Flere annonser</b></h4>
+               <p>Hvis du tilbyr tjenester innen flere kategorier, kan du velge en pakke med flere annonser. Dette fører til at dine annonser vises under de ulike kategoriene du velger, og samtidig vil du se oppdrag fra alle de kategoriene.</p>
             </div>
             <div class="term-list-area">
                <h4 class="title-color"><b>Klipp</b></h4>
-               <p>Klipp er antall oppdrag og forespørsler du svarer på per mnd.</p>
+               <p>Klipp er antall oppdrag og forespørsler du svarer på per måned.</p>
             </div>
             <div class="term-list-area">
                <h4 class="title-color"><b>Sponsing</b></h4>
-               <p>Hvis du ønsker å synliggjøre bedriften din ekstra, kan du velge å sponse. Når du
-                  sponser, vil profilen din vises på forsiden til Samling.no under «Sponsede
-                  leverandører».
+               <p>Hvis du ønsker å synliggjøre bedriften din ekstra, kan du velge å sponse. Når du sponser, vil profilen din vises på forsiden av Samling.no under «Sponsede leverandører».
                </p>
             </div>
             <div class="term-list-area">
@@ -100,7 +98,7 @@
                   Prøvepakken
                   </b>
                </h4>
-               <p>Prøvepakken er pakken for deg som ønsker å utforske Samling.no. Om du er usikker på om denne nettsiden er noe for deg og din bedrift, kan du prøve denne pakken for å se hvordan nettsiden fungerer. Du vil ha en enkel profil og vil se oppdrag og forespørsler som blir sendt til deg, men du vil ikke kunne svare til du eventuelt oppgraderer til en høyere pakke.</p>
+               <p>Prøvepakken er for deg som ønsker å utforske Samling.no. Om du er usikker på om denne nettsiden er noe for deg og din bedrift, kan du prøve denne pakken for å se hvordan nettsiden fungerer. Du vil ha en enkel annonse og se forespørsler og oppdrag som er relevante for deg, men du vil ikke kunne svare før du eventuelt oppgraderer til en høyere pakke. En oppgradering  kan du enkelt gjøre på Min konto.</p>
             </div>
          </div>
       </div>

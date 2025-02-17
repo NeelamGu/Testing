@@ -397,6 +397,7 @@ a.label:hover {
                     </div> */ ?>
                     <div class="form-group">
                       <label for="product_discount">Beskrivelse av tjenesten</label>
+                      <p style="color: #e46f01; margin-bottom: 5px;">Beskrivelsen skal ikke inneholde kontaktinformasjon.</p>
                       @if(empty($product['id']))
                       <textarea oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" name="description" id="description" class="form-control" rows="3">@if(Session::has('description')) {{ Session::get('description') }}  @endif</textarea>
                       @else
