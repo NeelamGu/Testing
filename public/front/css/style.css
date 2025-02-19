@@ -22176,6 +22176,17 @@ details > summary span {
     margin-bottom: 1rem;
     font-weight: 700;
 }
+.page-wrapper.detailBlog h2 span {
+    color: #111;
+    line-height: 130%;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.page-wrapper.detailBlog p {
+    color: #111;
+    font-weight: 500;
+    font-size: 16px;
+}
 .blog-page-section.detail .sec-content .row{
     display: flex;
     align-items: center;
@@ -22204,6 +22215,8 @@ details > summary span {
     list-style: disc;
     font-weight: 500;
     margin-bottom: 7px;
+    color: #111;
+    font-size: 16px;
 }
 .packageDetailImg {
     margin: 3rem 0;
@@ -22213,6 +22226,10 @@ details > summary span {
 }
 .packageDetailImg img{
     width: 80%;
+    margin: 0 auto;
+}
+.packageDetailImg.vertical img{
+    width: 60%;
     margin: 0 auto;
 }
 .package{

@@ -121,7 +121,7 @@
                </div>
             </div>
             <div class="col-12">
-               <div class="packageDetailImg">
+               <div class="packageDetailImg vertical">
                   <div class="row">
                      <div class="col-lg-6 col-sm-12">
                         <img src="{{ asset('front/images/verticalImg_1.png') }}" alt="">
