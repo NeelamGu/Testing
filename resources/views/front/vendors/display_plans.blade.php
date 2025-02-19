@@ -53,7 +53,7 @@
         </div>
          <div class="plans-detail-area">
             <h3>Alle priser er ekskl. mva.</h3>
-            <h2>Profiler</h2>
+            <!-- <h2>Profiler</h2>
             <div class="term-list-area">
                <h4><b>Enkel profil</b></h4>
                <ul>
@@ -69,8 +69,8 @@
                   <li>Kan legge til søkeord slik at kunder enklere kan finne deg </li>
                   <li>Kunder kan legge deg til favorittlisten sin</li>
                </ul>
-            </div>
-            <div class="term-list-area">
+            </div> -->
+            <!-- <div class="term-list-area">
                <h4><b>Premium profil</b></h4>
                <ul>
                   <li>En mer attraktiv profilside som inneholder alt du trenger for å vise frem bedriften din</li>
@@ -79,7 +79,7 @@
                   <li>Kan legge til søkeord slik at kunder enklere kan finne deg </li>
                   <li>Kunder kan legge deg til favorittlisten sin</li>
                </ul>
-            </div>
+            </div> -->
             <div class="term-list-area">
                <h4 class="title-color"><b>Flere annonser</b></h4>
                <p>Hvis du tilbyr tjenester innen flere kategorier, kan du velge en pakke med flere annonser. Dette fører til at dine annonser vises under de ulike kategoriene du velger, og samtidig vil du se oppdrag fra alle de kategoriene.</p>

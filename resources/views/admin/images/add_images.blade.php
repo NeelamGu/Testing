@@ -156,7 +156,7 @@ a.label:hover {
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title" style="margin-bottom: 7px;">Legg til bilder for {{ $product['product_name'] }}</h4>
-                  <p  style="color: #e46f01; margin-bottom: 5px;">Bilder skal ikke inneholde kontaktinformasjon.</p>
+                  <p  style="color:rgb(112, 112, 112); margin-bottom: 5px;font-size:12px;">Bilder skal ikke inneholde kontaktinformasjon.</p>
                   @if(Session::has('error_message'))
                       <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <strong> </strong> {{ Session::get('error_message')}}
