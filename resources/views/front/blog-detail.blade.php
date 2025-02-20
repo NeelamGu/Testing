@@ -43,54 +43,48 @@
    </section>
    <section class="package">
       <div class="auto-container pb-35">
-         <div class="row">
-            <div class="col-12">
-               <div class="packageDetail">
-                  <h2>Prisnivåer for bryllupsfotografering og videografi</h2>
-                  <div class="packList">
-                     <div class="packItem">
-                        <h4>1. 5.000 - 15.000 kr</h4>
-                        <ul>
-                           <li>Nyere fotografer eller hobbyfotografer/videografer</li>
-                           <li>Enkel dekning av seremonien eller noen timer</li>
-                           <li>Færre redigerte bilder/videoer</li>
-                           <li>Ingen eller begrenset album/utskrifter</li>
-                        </ul>
-                     </div>
-                     <div class="packItem">
-                        <h4>2. 15.000 - 30.000 kr</h4>
-                        <ul>
-                           <li>Valg mellom en nyoppstartet/hobbyfotograf for heldagsfotografering eller en erfaren
-                              fotograf for halvdag</li>
-                           <li>Vielse + portretter med produkter fra en erfaren fotograf</li>
-                           <li>Profesjonell redigering og utvalg av bilder/videoer</li>
-                           <li>Enkel dronevideo kan være inkludert eller tilbys som tillegg</li>
-                        </ul>
-                     </div>
-                     <div class="packItem">
-                        <h4>3. 30.000 - 60.000+ kr</h4>
-                        <ul>
-                           <li>Erfaren fotograf/videograf for heldagsdekning</li>
-                           <li>Høyt anerkjent fotograf/videograf med unik stil</li>
-                           <li>Tjenester som forlovelsesfotografering og highlight-video</li>
-                           <li>Bilder, eksklusive album og kinokvalitet video</li>
-                           <li>Flere fotografer/videografer for ulike vinkler og øyeblikk</li>
-                           <li>Profesjonell dronevideo for spektakulære luftopptak</li>
-                        </ul>
-                     </div>
-                  </div>
+         <div class="packageDetail">
+            <h2>Prisnivåer for bryllupsfotografering og videografi</h2>
+            <div class="packList">
+               <div class="packItem">
+                  <h4>1. 5.000 - 15.000 kr</h4>
+                  <ul>
+                     <li>Nyere fotografer eller hobbyfotografer/videografer</li>
+                     <li>Enkel dekning av seremonien eller noen timer</li>
+                     <li>Færre redigerte bilder/videoer</li>
+                     <li>Ingen eller begrenset album/utskrifter</li>
+                  </ul>
+               </div>
+               <div class="packItem">
+                  <h4>2. 15.000 - 30.000 kr</h4>
+                  <ul>
+                     <li>Valg mellom en nyoppstartet/hobbyfotograf for heldagsfotografering eller en erfaren
+                        fotograf for halvdag</li>
+                     <li>Vielse + portretter med produkter fra en erfaren fotograf</li>
+                     <li>Profesjonell redigering og utvalg av bilder/videoer</li>
+                     <li>Enkel dronevideo kan være inkludert eller tilbys som tillegg</li>
+                  </ul>
+               </div>
+               <div class="packItem">
+                  <h4>3. 30.000 - 60.000+ kr</h4>
+                  <ul>
+                     <li>Erfaren fotograf/videograf for heldagsdekning</li>
+                     <li>Høyt anerkjent fotograf/videograf med unik stil</li>
+                     <li>Tjenester som forlovelsesfotografering og highlight-video</li>
+                     <li>Bilder, eksklusive album og kinokvalitet video</li>
+                     <li>Flere fotografer/videografer for ulike vinkler og øyeblikk</li>
+                     <li>Profesjonell dronevideo for spektakulære luftopptak</li>
+                  </ul>
                </div>
             </div>
-            <div class="col-12">
-               <div class="packageDetailImg">
-                  <div class="row">
-                     <div class="col-lg-6 col-sm-12">
-                        <img src="{{ asset('front/images/museum.png') }}" alt="">
-                     </div>
-                     <div class="col-lg-6 col-sm-12">
-                        <img src="{{ asset('front/images/people.png') }}" alt="">
-                     </div>
-                  </div>
+         </div>
+         <div class="packageDetailImg">
+            <div class="row">
+               <div class="col-lg-6 col-md-6 col-sm-6">
+                  <img src="{{ asset('front/images/museum.png') }}" alt="">
+               </div>
+               <div class="col-lg-6 col-md-6 col-sm-6">
+                  <img src="{{ asset('front/images/people.png') }}" alt="">
                </div>
             </div>
          </div>
@@ -142,8 +136,13 @@
                         <li>Færre redigerte bilder/videoer</li>
                         <li>Ingen eller begrenset album/utskrifter</li>
                      </ul>
-                     <p>En bryllupsfotograf og videograf er en investering i minner for livet. Velg noen som fanger øyeblikkene slik dere ønsker å huske dem!</p>
-                     <p>Under kategori Foto og video på Samling.no finner du et bredt utvalg av fotografer og videografer som kan forevige din store dag. Enten du ser etter en budsjettvennlig løsning eller en prisvinnende ekspert, vil du finne dyktige fagfolk som matcher dine behov.</p>
+                     <p>En bryllupsfotograf og videograf er en investering i minner for livet. Velg noen som fanger
+                        øyeblikkene slik dere ønsker å huske dem!</p>
+                     <p>Under kategori Foto og video på Samling.no finner du et bredt utvalg av fotografer og
+                        videografer
+                        som kan forevige din store dag. Enten du ser etter en budsjettvennlig løsning eller en
+                        prisvinnende
+                        ekspert, vil du finne dyktige fagfolk som matcher dine behov.</p>
                   </div>
                </div>
             </div>

@@ -22235,6 +22235,22 @@ details > summary span {
 .package{
     padding: 2rem 0;
 }
+@media  (max-width: 767px) {
+    .bottomSec, .package, .blog-page-section.detail{
+        padding: 2rem;
+    }
+    .packList {
+    grid-template-columns: repeat(2, 1fr);
+}
+.blog-page-section.detail .sec-content .row{
+    display: block;
+}
+.bottomSec .row{
+    padding: 2rem;
+}
+
+    
+}
 @media  (max-width: 575px) {
     .list-group.gallery.six-images{
         display: grid;
@@ -22262,11 +22278,21 @@ details > summary span {
     max-width:100%;
     max-height: 400px;
 }
+.packList {
+    grid-template-columns: repeat(1, 1fr);
+}
+.packageDetailImg img, .packageDetailImg.vertical img{
+    width: 100%;
+    margin: 10px;
+}
 .main-header .header-top ul li .fa {
     position: relative;
     top: 6px;
     font-size: 19px;
     padding-right: 12px;
+}
+.page-wrapper.detailBlog h2 {
+    font-size: 26px;
 }
 }
 

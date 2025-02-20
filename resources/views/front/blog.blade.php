@@ -37,7 +37,7 @@
             <div class="row">
                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
                   <div class="event-item blogListing">
-                     <a href="javascript::void()">
+                     <a href="{{ url('blog-detail')}}">
                         <div class="event-thumb">
                            <img class="img-responsive img-fullwidth" src="{{ asset('front/images/blog1.jpg') }}" alt="">
                         </div>
