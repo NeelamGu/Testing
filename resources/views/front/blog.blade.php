@@ -24,10 +24,10 @@
       <div class="auto-container pt-20">
          <div class="row clearfix">
             <!--Column-->
-            <div class="col-md-12 col-sm-12 col-xs-12 ">
+            <!-- <div class="col-md-12 col-sm-12 col-xs-12 ">
                <h4 class="title blog-title text-black font-30 text-center font-weight-700">Flerfarget utsmykket Lehengas
                   Det vil <br> Stjel dine hjerter!</h4>
-            </div>
+            </div> -->
          </div>
       </div>
    </section>
@@ -39,7 +39,7 @@
                   <div class="event-item blogListing">
                      <a href="{{ url('blog-detail')}}">
                         <div class="event-thumb">
-                           <img class="img-responsive img-fullwidth" src="{{ asset('front/images/blog1.jpg') }}" alt="">
+                           <img class="img-responsive img-fullwidth" src="{{ asset('front/images/heroRight.png') }}" alt="">
                         </div>
                         <div class="event-details bg-white p-20">
                            <address class="text-dark font-14 mb-10">

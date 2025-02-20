@@ -42,7 +42,7 @@
       </div>
    </section>
    <section class="package">
-      <div class="auto-container pb-35">
+      <div class="auto-container">
          <div class="packageDetail">
             <h2>Prisnivåer for bryllupsfotografering og videografi</h2>
             <div class="packList">
