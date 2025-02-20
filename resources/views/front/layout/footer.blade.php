@@ -26,7 +26,7 @@
                      <li>
                         <!-- <a data-toggle="modal" data-target="#customerlogin" href="javascript:void(0)">Leverandør innlogging</a> -->
                      </li>
-                     <!-- <li><a href="{{ url('/blog')}}">Blogg</a></li> -->
+                     <li><a href="{{ url('/blog')}}">Blogg</a></li>
                      <li><a href="{{ url('/contact')}}">Kundeservice</a></li>
                      <li><a href="{{ url('/privacy-policy')}}">Personvern</a></li>
                      <li><a href="{{ url('/terms-conditions')}}">Vilkår og betingelser for bruker</a></li>
