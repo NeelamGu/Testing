@@ -7,7 +7,7 @@
       <div id="default-slider" class="carousel" data-ride="carousel" data-interval="7000" data-pause="false"
          data-wrap="true">
          <div class="carousel-inner bg-none" role="listbox">
-            <img src="{{ asset('front/images/venue.png') }}" alt="">
+            <img src="{{ asset('front/images/blogMain.png') }}" alt="">
          </div>
          <div class="page-title">
             <div class="auto-container">
@@ -39,19 +39,18 @@
                   <div class="event-item blogListing">
                      <a href="{{ url('blog-detail')}}">
                         <div class="event-thumb">
-                           <img class="img-responsive img-fullwidth" src="{{ asset('front/images/heroRight.png') }}" alt="">
+                           <img class="img-responsive img-fullwidth" src="{{ asset('front/images/blogHero.png') }}" alt="">
                         </div>
                         <div class="event-details bg-white p-20">
                            <address class="text-dark font-14 mb-10">
-                              <span class="">AV Sakshi | 18 Feb, 2025 |</span>
+                              <span class="">18 Feb, 2025 |</span>
                            </address>
                            <div class="">
                               <h4 class="text-thm pb-5 font-weight-700">Hva koster en bryllupsfotograf og videograf?
                               </h4>
                            </div>
                            <div class="">
-                              <p class="">Å finne den rette bryllupsfotografen og videografen er en viktig del av
-                                 planleggingen for den store dagen. Prisene varierer avhengig av erfaring...
+                              <p class="">En guide til priser og hva du får for pengene.
                               </p>
                            </div>
                         </div>

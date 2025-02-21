@@ -397,12 +397,13 @@ a.label:hover {
                     </div> */ ?>
                     <div class="form-group">
                       <label for="product_discount">Beskrivelse av tjenesten</label>
-                      <p style="color:rgb(112, 112, 112); margin-bottom: 5px;font-size:12px;">Beskrivelsen skal ikke inneholde kontaktinformasjon.</p>
                       @if(empty($product['id']))
                       <textarea oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" name="description" id="description" class="form-control" rows="3">@if(Session::has('description')) {{ Session::get('description') }}  @endif</textarea>
                       @else
                       <textarea oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" name="description" id="description" class="form-control" rows="3">{{ $product['description'] }}</textarea>
                       @endif
+                      <p style="color:rgb(112, 112, 112); margin-top: 5px;font-size:12px;">Beskrivelsen skal ikke inneholde kontaktinformasjon.</p>
+
                     </div>
                     @if($product['keywords']!="")
                     <div class="form-group">
