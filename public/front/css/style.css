@@ -22229,7 +22229,7 @@ details > summary span {
     margin: 0 auto;
 }
 .packageDetailImg.vertical img{
-    width: 40%;
+    width: 20%;
     margin: 0 auto;
 }
 .package{
@@ -22286,7 +22286,7 @@ details > summary span {
     margin: 10px;
 }
 .packageDetailImg.vertical img{
-    width: 60%;
+    width: 100%;
     margin: 10px;
 }
 .main-header .header-top ul li .fa {

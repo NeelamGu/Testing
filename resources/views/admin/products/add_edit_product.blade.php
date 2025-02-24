@@ -336,8 +336,7 @@ a.label:hover {
                        </select> 
                        @endif 
                     </div>
-                    
-                    
+                                       
                     <!-- <div class="form-group itemWeight">
                       <label for="product_weight">Item Weight (in grams)</label>
                       <input type="text" class="form-control" id="product_weight" placeholder="Enter Item Weight" name="product_weight" @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}" @else value="{{ old('product_weight') }}" @endif>
@@ -431,8 +430,8 @@ a.label:hover {
                       <input type="text" class="form-control" id="meta_keywords" placeholder="Enter Meta Keywords" name="meta_keywords" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif>
                     </div> -->
                     <div class="form-group">
-                      <label for="price_range" style="float:left;">Prisnivå (lav $-medium $$-høy $$$) 
-</label>               @if(empty($product['id']))
+                      <label for="price_range" style="float:left;">Prisnivå (lav $-medium $$-høy $$$) </label>
+                                     @if(empty($product['id']))
                       <select class="form-control text-dark" name="price_range" required>
                         <option value="">Velg</option>
                         <option value="Low" @if(!empty(Session::get('price_range'))&&Session::get('price_range')=="Low") selected @endif>lav ($)</option>

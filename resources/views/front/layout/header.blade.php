@@ -137,6 +137,7 @@
                      <li class=""><a href="{{ url('/about')}}">Om Samling</a>
                      </li>
                      <li><a href="{{ url('/contact')}}">Kontakt oss</a></li>
+                     <li><a href="{{ url('/blog')}}">Blogg</a></li>
                   </ul>
                </div>
             </nav>

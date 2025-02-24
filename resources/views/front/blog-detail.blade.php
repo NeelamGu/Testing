@@ -47,7 +47,7 @@
             <h2>Prisnivåer for bryllupsfotografering og videografi</h2>
             <div class="packList">
                <div class="packItem">
-                  <h4>1. 5.000 - 15.000 kr</h4>
+                  <h4>5.000 - 15.000 kr</h4>
                   <ul>
                      <li>Nyere fotografer eller hobbyfotografer/videografer</li>
                      <li>Enkel dekning av seremonien eller noen timer</li>
@@ -56,7 +56,7 @@
                   </ul>
                </div>
                <div class="packItem">
-                  <h4>2. 15.000 - 30.000 kr</h4>
+                  <h4>15.000 - 30.000 kr</h4>
                   <ul>
                      <li>Valg mellom en nyoppstartet/hobbyfotograf for heldagsfotografering eller en erfaren
                         fotograf for halvdag</li>
@@ -66,7 +66,7 @@
                   </ul>
                </div>
                <div class="packItem">
-                  <h4>3. 30.000 - 60.000+ kr</h4>
+                  <h4>30.000 - 60.000+ kr</h4>
                   <ul>
                      <li>Erfaren fotograf/videograf for heldagsdekning</li>
                      <li>Høyt anerkjent fotograf/videograf med unik stil</li>
@@ -117,10 +117,8 @@
             <div class="col-12">
                <div class="packageDetailImg vertical">
                   <div class="row">
-                     <div class="col-lg-6 col-sm-12">
+                     <div class="col-12">
                         <img src="{{ asset('front/images/verticalImg_1.png') }}" alt="">
-                     </div>
-                     <div class="col-lg-6 col-sm-12">
                         <img src="{{ asset('front/images/verticalImg_2.png') }}" alt="">
                      </div>
                   </div>
