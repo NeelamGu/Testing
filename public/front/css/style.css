@@ -22230,7 +22230,7 @@ details > summary span {
 }
 .packageDetailImg.vertical img{
     width: 20%;
-    margin: 0 auto;
+    margin: 0 10% 0 0;
 }
 .package{
     padding: 2rem 0;
