@@ -22235,6 +22235,13 @@ details > summary span {
 .package{
     padding: 2rem 0;
 }
+#read-more-btn{
+    display: none;
+}
+.sec-title.detail-sec-title.style-three h3{
+    text-transform: capitalize;
+    text-align: left;
+}
 @media  (max-width: 767px) {
     .bottomSec, .package, .blog-page-section.detail{
         padding: 2rem;

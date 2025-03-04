@@ -569,9 +569,12 @@
       <div class="detail-other-product home-top-border">
          <div class="container temp-container  detail-o-product relate-prodduct">
             <div class="row">
-               <div class="sec-title detail-sec-title style-three">
-                  <div class="line mt-0 mb-5"></div>
+            <div class="sec-title detail-sec-title style-three">
+                  <h3 class="font-24 text-black mb-20 mt-30">Lignenede annonser</h3>
                </div>
+               <!-- <div class="sec-title detail-sec-title style-three">
+                  <div class="line mt-0 mb-5"></div>
+               </div> -->
                <div class="owl-carousel Sponsored-vendors other-p-products similar-slider owl-theme">
                   @foreach($similarProducts as $product)
                   <div class="item">
