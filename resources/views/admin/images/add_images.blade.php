@@ -120,6 +120,9 @@ a.label:hover {
 .orangeDim{
     color: #e46f01;
 }
+input {
+    margin-bottom: 10px;
+}
 @media only screen and (max-width: 767px) {
     .hovedbilde-text b{
         display: none;
@@ -152,7 +155,7 @@ a.label:hover {
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title" style="margin-bottom: 7px;">Legg til bilder for {{ $product['product_name'] }}</h4>

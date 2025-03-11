@@ -22242,6 +22242,7 @@ details > summary span {
     text-transform: capitalize;
     text-align: left;
 }
+
 @media  (max-width: 767px) {
     .bottomSec, .package, .blog-page-section.detail{
         padding: 2rem;
