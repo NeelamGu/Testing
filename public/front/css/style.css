@@ -22313,4 +22313,18 @@ details > summary span {
     display: none;
 }
 }
-
+@media (max-width: 375px) {
+    .banner-text h2 {
+        font-size: 20px;
+        line-height: 26px;
+    }
+    .banner-text p {
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .banner-enquery-btn {
+        font-size: 14px;
+        padding: 8px 19px;
+        margin-top: 4px;
+    }
+}
