@@ -403,7 +403,7 @@ class ProductsController extends Controller
                     ->orWhere('products.description','like','%'.$search_product.'%')
                     ->orWhere('categories.category_name','like','%'.$search_product.'%')
                     ->orWhere('products.keywords','like','%'.$search_product.'%');
-                })->where('products.status',1);
+                })->where('products.status',1)->where('products.is_delete',0);
                 $categoryProducts = $categoryProducts->get();
                 /*$categoryProducts = json_decode(json_encode($categoryProducts),true);
                 echo "<pre>"; print_r($categoryProducts); die;*/
