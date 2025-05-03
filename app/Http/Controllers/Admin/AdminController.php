@@ -569,11 +569,35 @@ class AdminController extends Controller
     }
 
     public function deleteVendor($id){
-        // Delete Vendor
-        // Vendor::where('id',$id)->delete();
-        Admin::where('id',$id)->update(['is_delete'=>1,'status'=>0]);
-        $message = "Vendor has been deleted successfully!";
-        return redirect()->back()->with('success_message',$message);
+        try {
+            DB::beginTransaction();
+
+            // Get Vendor ID first
+            $vendorId = Admin::where('id', $id)->value('vendor_id');
+
+            if (!$vendorId) {
+                throw new \Exception("Vendor ID not found for Admin ID: $id");
+            }
+
+            // Disable Admin
+            Admin::where('id', $id)->update(['is_delete' => 1, 'status' => 0]);
+
+            // Disable Vendor
+            Vendor::where('id', $vendorId)->update(['is_delete' => 1, 'status' => 0]);
+
+            // Disable Profiles
+            Product::where('vendor_id', $vendorId)->update(['is_delete' => 1, 'status' => 0]);
+
+            DB::commit();
+
+            return redirect()->back()->with('success_message', 'Vendor has been deleted successfully!');
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Important to roll back on failure
+            \Log::error("Error deleting vendor: " . $e->getMessage());
+            return redirect()->back()->with('error_message', 'Something went wrong. Please try again later.');
+        }
     }
+
 
 }
