@@ -36,7 +36,7 @@
             <div class="row">
                <div class="col-xs-12 col-sm-8 col-md-8">
                   <div class="blogDetail">
-                     <h2>Planlegg menyen i god tid</h2>
+                     <h2>1. Planlegg menyen i god tid</h2>
                      <!-- <span>En guide til priser og hva du får for pengene</span> -->
                      <p>Gå for noe som kan lages på forhånd, som spekemat, potetsalat, rundstykker eller en
                         stor 17. mai-kake. Husk nok kaffe og is!
@@ -49,7 +49,7 @@
                   <div class="blogDetailImg">
                      <img src="{{ asset('front/images/heroRight_1.png') }}" alt="">
                   </div>
-                  <p style="margin-top: 14px;">Kake fra Jørstads hjemmebakeri</p>
+                  <p style="margin-top: 14px;font-size: 14px;">Kake fra Jørstads hjemmebakeri</p>
                </div>
             </div>
          </div>
@@ -60,13 +60,13 @@
          <div class="row ">
             <div class="col-12">
                <div class="packageDetail">
-                  <h2>Lag en velkomstdrink eller bobler til frokost</h2>
+                  <h2>2. Lag en velkomstdrink eller bobler til frokost</h2>
                <p>Et glass med prosecco eller en frisk alkoholfri drikk setter stemningen med én gang.</p>
                </div>
             </div>
             <div class="col-12">
                <div class="packageDetail">
-                  <h2>Be gjestene ta med en matrett</h2>
+                  <h2>3. Be gjestene ta med en matrett</h2>
                <p>Det gjør planleggingen enklere, og alle får bidra med noe godt til bordet. Koordiner gjerne på forhånd!</p>
                </div>
             </div>
@@ -77,13 +77,13 @@
                         <img src="{{ asset('front/images/12.png') }}" alt="">
                         <img src="{{ asset('front/images/13.png') }}" alt="">
                      </div>
-                     <p style="margin-top: 14px;">Bordkort, kaketopper og kvistpynt laget av KK familyart.</p>
+                     <p style="margin-top: 14px;font-size: 14px;">Bord pyntet av If a table could talk. </p>
                   </div>
                </div>
             </div>
             <div class="col-12">
                <div class="packageDetail">
-                  <h2>Pynt enkelt og stemningsfullt</h2>
+                  <h2>4. Pynt enkelt og stemningsfullt</h2>
                   <p>Bruk flagg, ballonger og blomster i rødt, hvitt og blått. En liten bukett på bordet og servietter i
                      nasjonalfargene gjør mye.</p>
                   <p>Eller bestill dekorering her: <a href="https://samling.no/Blomster-og-dekor"
@@ -97,13 +97,13 @@
                         <img src="{{ asset('front/images/14.png') }}" alt="">
                         <img src="{{ asset('front/images/15.png') }}" alt="">
                      </div>
-                     <p style="margin-top: 14px;">Bordkort, kaketopper og kvistpynt laget av KK familyart.</p>
+                     <p style="margin-top: 14px;font-size: 14px;">Bordkort, kaketopper og kvistpynt laget av KK familyart.</p>
                   </div>
                </div>
             </div>
             <div class="col-12">
                <div class="packageDetail">
-                  <h2>Lag en tidsplan for dagen</h2>
+                  <h2>5. Lag en tidsplan for dagen</h2>
                   <div class="bottomList">
                      <p>Spesielt viktig hvis dere skal rekke barnetog, russetog eller TV-sendinger. Del gjerne planen
                         med gjestene!</p>
@@ -112,7 +112,7 @@
             </div>
             <div class="col-12">
                <div class="packageDetail">
-                  <h2>Lag en liten aktivitetsplan for barna</h2>
+                  <h2>6. Lag en liten aktivitetsplan for barna</h2>
                   <div class="bottomList">
                      <p>Hagespill, 17. mai-quiz eller skattejakt med flagg som premie – det holder barna engasjert og
                         glade.</p>
@@ -121,7 +121,7 @@
             </div>
             <div class="col-12">
                <div class="packageDetail">
-                  <h2>Slapp av og nyt dagen</h2>
+                  <h2>7. Slapp av og nyt dagen</h2>
                   <div class="bottomList">
                      <p>Ingen forventer et perfekt opplegg – det viktigste er god stemning og hyggelig selskap!</p>
                   </div>
