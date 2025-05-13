@@ -44,7 +44,7 @@
                         </div>
                         <div class="event-details bg-white p-20">
                            <address class="text-dark font-14 mb-10">
-                              <span class="">18 Feb, 2025 |</span>
+                              <span class="">18. feb 2025</span>
                            </address>
                            <div class="">
                               <h4 class="text-thm pb-5 font-weight-700">Hva koster en bryllupsfotograf og videograf?
@@ -67,7 +67,7 @@
                         </div>
                         <div class="event-details bg-white p-20">
                            <address class="text-dark font-14 mb-10">
-                              <span class="">12 May, 2025</span>
+                              <span class="">12. mai 2025</span>
                            </address>
                            <div class="">
                               <h4 class="text-thm pb-5 font-weight-700">7 tips til deg som får gjester på 17. mai</h4>

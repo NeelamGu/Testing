@@ -19,23 +19,16 @@
          </div>
       </div>
    </section>
-   <section class="blog-page-section detail">
-      <div class="auto-container pb-35 pt-35">
-         <div class="sec-content">
-            <div class="blogDetail">
-               <h2>7 tips til deg som får gjester på 17. mai</h2>
-               <p>Skal du være vert på nasjonaldagen? Her er noen enkle tips som gjør feiringen både minneverdig og
-                  stressfri!</p>
-            </div>
-         </div>
-      </div>
-   </section>
+
    <section class="blog-page-section detail">
       <div class="auto-container pb-35">
          <div class="sec-content">
             <div class="row">
-               <div class="col-xs-12 col-sm-8 col-md-8">
+               <div class="col-xs-12 col-sm-6 col-md-6">
                   <div class="blogDetail">
+                      <h2>7 tips til deg som får gjester på 17. mai</h2>
+               <p>Skal du være vert på nasjonaldagen? Her er noen enkle tips som gjør feiringen både minneverdig og
+                  stressfri!</p>
                      <h2>1. Planlegg menyen i god tid</h2>
                      <!-- <span>En guide til priser og hva du får for pengene</span> -->
                      <p>Gå for noe som kan lages på forhånd, som spekemat, potetsalat, rundstykker eller en
@@ -45,11 +38,11 @@
                            target="_blank">https://samling.no/Kaker-og-sotsaker</a></p>
                   </div>
                </div>
-               <div class="col-xs-12 col-sm-4 col-md-4">
+               <div class="col-xs-12 col-sm-6 col-md-6">
                   <div class="blogDetailImg">
                      <img src="{{ asset('front/images/heroRight_1.png') }}" alt="">
                   </div>
-                  <p style="margin-top: 14px;font-size: 14px;">Kake fra Jørstads hjemmebakeri</p>
+                  <p style="margin-top: 14px;font-size: 14px;">Dessert fra Jørstad`s hjemmebakeri</p>
                </div>
             </div>
          </div>
