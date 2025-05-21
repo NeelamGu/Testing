@@ -7873,11 +7873,12 @@ div#appendProductListing .event-item
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
     z-index: 1; /* Places the layer above the banner */
 }
-.banner-text h2 {
+.banner-text h1 {
     font-size: 55px;
     line-height: 62px;
     margin-bottom: 20px;
     font-weight: bold;
+    color: #fff
 }
 
 .banner-text {
@@ -10562,7 +10563,7 @@ div#appendProductListing
     line-height:40px  !important;
         padding: 0px 9px;
 }
-.banner-text h2
+.banner-text h1
 {
     font-size:24px;
     line-height:normal;
@@ -10952,7 +10953,7 @@ div#appendProductListing
 
 }
 @media only screen and (max-width: 768px) and (min-width: 480px) {
-    .banner-text h2 {
+    .banner-text h1 {
         font-size: 40px;
         line-height: 50px;
         margin-bottom: 12px;
@@ -22314,7 +22315,7 @@ details > summary span {
 }
 }
 @media (max-width: 375px) {
-    .banner-text h2 {
+    .banner-text h1 {
         font-size: 20px;
         line-height: 26px;
     }
