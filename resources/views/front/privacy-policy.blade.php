@@ -3,14 +3,14 @@
 <div class="page-wrapper">
    <!--End Main Header -->
    <!-- Static Banner Parallax Background-->
-   <div class="terms-conditions-text">
+   <div class="">
       <div class="auto-container">
          <div class="row">
             <div class="col-sm-12">
-               <div class="text-area-about">
-                  <div class="sec-title style-two">
-                     <h2 class="text-thm">PERSONVERNERKLÆRING</h2>
-                  </div>
+               <div class="sec-title style-two">
+                  <h1 class="text-thm">PERSONVERNERKLÆRING</h1>
+               </div>
+               <div class="text-area-about  terms-conditions-text ">
                   <h4>Sist endret: 11.09.2024</h4>
                   <ul class="number-ul-list">
                      <li><b>BEHANDLINGSANSVARLIG:</b> Daglig leder er på vegne av Samling.no ansvarlig for selskapets behandling av personopplysninger.

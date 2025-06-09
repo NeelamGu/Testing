@@ -27,7 +27,7 @@
             <!--Content Side-->
             <div class="col-md-8 col-sm-7 col-xs-12 column pull-left">
                <div class="sec-title">
-                  <h3 class="font-20 text-black mb-10">Kontakt oss</h3>
+                  <h1 class="font-20 text-black mb-10">Kontakt oss</h1>
                </div>
                <div class="form-box p-xs-15">
                   <form id="SaveContact" method="post" action="javascript:;">@csrf
