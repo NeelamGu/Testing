@@ -56,7 +56,10 @@ class IndexController extends Controller
         $categories = Section::with('categories')->where('id',1)->get()->toArray();
         $popularCategories = Category::where(['status'=>1,'is_popular'=>'Yes'])->get()->toArray();
         $countries = DB::table('countrycode')->select('name')->where('enable','yes')->groupby('name')->pluck('name');
-        return view('front.index')->with(compact('popularItems','featuredItems','newItems','categories','popularCategories','countries'));
+        $meta_title = "Samling.no - Catering, tjenester og lokaler i Oslo og hele Norge!";
+        $meta_description = "Ute etter catering, kake, underholdning eller fotograf til ditt bryllup eller event i Oslo eller Norge? Vi har leverandører som vil hjelpe deg!";
+        $meta_keywords = "";
+        return view('front.index')->with(compact('popularItems','featuredItems','newItems','categories','popularCategories','countries','meta_title','meta_description','meta_keywords'));
     }
 
     public function login(){
