@@ -186,7 +186,7 @@
             </video> -->
       <div class="auto-container">
          <div class="banner-text">
-            <h2>Trenger du noe  <br> til ditt neste arrangement?</h2>
+            <h1>Trenger du noe  <br> til ditt neste arrangement?</h1>
             <p>Beskriv dine ønsker og få leverandører fra hele landet til å kontakte deg.<br> Helt gratis og uforpliktende!</p>
             @if(!isset(Auth::guard('admin')->user()->type))<a class="banner-enquery-btn" href="{{ url('/enquire-us')}}">Legg ut oppdrag</a>@endif
          </div>

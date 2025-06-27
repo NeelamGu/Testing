@@ -18,7 +18,7 @@
             <div class="col-sm-12">
                <div class="text-area-about">
                   <div class="sec-title style-two">
-                     <h2 class="text-thm">About Us</h2>
+                     <h1 class="text-thm">About Us</h1>
                   </div>
                   <h4>GJØR DET UFORGLEMMELIG</h4>
                   <p>

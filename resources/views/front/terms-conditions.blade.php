@@ -3,14 +3,14 @@
 <div class="page-wrapper">
    <!--End Main Header -->
    <!-- Static Banner Parallax Background-->
-   <div class="terms-conditions-text">
+   <div class="">
       <div class="auto-container">
          <div class="row">
             <div class="col-sm-12">
-               <div class="text-area-about">
-                  <div class="sec-title style-two">
-                     <h2 class="text-thm">VILKÅR OG BETINGELSER</h2>
-                  </div>
+               <div class="sec-title style-two">
+                  <h1 class="text-thm">VILKÅR OG BETINGELSER</h1>
+               </div>
+               <div class="text-area-about terms-conditions-text">
                   <h4>Sist endret: 11.09.2024</h4>
                   <p>
                      Aksept av vilkår: Ved å få tilgang til og bruke Samling.no godtar man å følge disse vilkårene for bruk, samt eventuelle tilleggs retningslinjer eller -policyer som er postet på nettsiden.

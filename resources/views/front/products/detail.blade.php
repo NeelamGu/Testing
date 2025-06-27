@@ -221,7 +221,7 @@
                      <div class="col-sm-5">
                         <div class="detail-text-area">
                            <div class="detail-area">
-                              <h4 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h4>
+                              <h1 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h1>
                               <!-- <div class="review-detail">
                                  <div class="review-star">
                                     <span class="review-rating">

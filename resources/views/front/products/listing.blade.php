@@ -275,7 +275,7 @@ padding:0px 10px 0 20px;
          <div class="row clearfix">
             <!--Column-->
             <div class="col-md-8 col-sm-8 col-6 col-w-mobile">
-               <h4 class="title text-black font-weight-700">{{ $categoryDetails['categoryDetails']['name'] }}</h4>
+               <h1 class="font-20 title text-black font-weight-700">{{ $categoryDetails['categoryDetails']['name'] }}</h1>
                <p class="details pt-5 text-black">Viser <span id="UpdateProCount">{{ count($categoryProducts) }}</span> resultater i henhold til søkekriteriene dine.</p>
             </div>
             <div class="col-sm-4 col-6">
