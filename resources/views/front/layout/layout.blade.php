@@ -39,6 +39,14 @@
 
         gtag('config', 'G-JKVN5M7SPW');
       </script>
+      <!-- Event snippet for Avtale bestilt conversion page -->
+      <script>
+        gtag('event', 'conversion', {
+            'send_to': 'AW-16615067647/8drACOOe9-gaEP-f1_I9',
+            'value': 1.0,
+            'currency': 'NOK'
+        });
+      </script>
    </head>
    <body>
       <div class="PleaseWaitDiv" style="display:none;">
