@@ -73,34 +73,34 @@
                               <h4 class="text-thm pb-5 font-weight-700">7 tips til deg som får gjester på 17. mai</h4>
                            </div>
                            <div class="">
-                              <p class="">Skal du være vert på nasjonaldagen?..
+                              <p class="">Skal du være vert på nasjonaldagen?.
                               </p>
                            </div>
                         </div>
                      </a>
                   </div>
                </div>
-               <!-- <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
-                  <div class="event-item">
-                     <div class="event-thumb">
-                        <img class="img-responsive img-fullwidth" src="{{ asset('front/images/blog3.jpg') }}" alt="">
-                     </div>
-                     <div class="event-details bg-white p-20">
-                        <address class="text-dark font-14 mb-10">
-                           <span class="">AV Sakshi | 20 Oct, 2022 | 322 visninger | 7 min lest </span>
-                        </address>
-                        <div class="">
-                           <h4 class="text-thm pb-5 font-weight-700">Fantastisk reisemålsbryllup med A <br> Bruden som rocket blå</h4>
+               <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
+                  <div class="event-item blogListing">
+                      <a href="{{ url('blog-detail_2')}}">
+                        <div class="event-thumb">
+                           <img class="img-responsive img-fullwidth" src="{{ asset('front/images/blog3.jpg') }}" alt="">
                         </div>
-                        <div class="">
-                           <p class="">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam 
-                              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam 
-                              erat, sed diam voluptua. 
-                           </p>
+                        <div class="event-details bg-white p-20">
+                           <address class="text-dark font-14 mb-10">
+                              <span class="">16. juli 2025</span>
+                           </address>
+                           <div class="">
+                              <h4 class="text-thm pb-5 font-weight-700">Hva koster det å være en bryllupsgjest?</h4>
+                           </div>
+                           <div class="">
+                              <p class="">Å være bryllupsgjest er en ære – men det kan også være en betydelig investering.  
+                              </p>
+                           </div>
                         </div>
-                     </div>
+                     </a>
                   </div>
-               </div> -->
+               </div>
             </div>
             <!-- <div class="row">
                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4">

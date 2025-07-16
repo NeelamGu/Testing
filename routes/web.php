@@ -226,6 +226,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/blog','IndexController@blog');
     Route::get('/blog-detail','IndexController@blogDetail');
     Route::get('/blog-detail_1','IndexController@blogDetail_1');
+    Route::get('/blog-detail_2','IndexController@blogDetail_2');
 
     // Contact Us
     Route::get('/contact','IndexController@contact');

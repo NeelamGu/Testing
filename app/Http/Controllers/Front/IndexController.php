@@ -87,6 +87,9 @@ class IndexController extends Controller
     public function blogDetail_1(){
         return view('front.blog-detail_1');
     }
+    public function blogDetail_2(){
+        return view('front.blog-detail_2');
+    }
 
     public function aboutus(){
         return view('front.about');

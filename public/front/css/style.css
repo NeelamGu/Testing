@@ -22329,3 +22329,7 @@ details > summary span {
         margin-top: 4px;
     }
 }
+.blogDetail strong, .bottomSec ul strong{
+    color: #000; 
+    margin-right: 4px;
+}
