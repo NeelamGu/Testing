@@ -327,7 +327,7 @@ window.setTimeout(function(){ document.location.reload(true); }, 60000);
                                Oppdraget er avsluttet av kunden
                            </div>
                         </div>
-                     @elseif($getPlanDetails['responses_limit']>=$enquiriesCount)
+                     @elseif($getPlanDetails['responses_limit']>$enquiriesCount)
                         <div class="send-reply">
                            <div class="form-group">
                               <form id="replyEnquiryForm" method="post" action="{{ url('admin/reply-enquiry') }}" enctype="multipart/form-data">@csrf
