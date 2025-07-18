@@ -45,14 +45,14 @@
                   </div>
                </div>
                <div class="col-xs-12 col-sm-6 col-md-6">
-                  <div class="blogDetail">
+                  <div class="blogDetail ">
                      <h2>Hvor mye gir vi i gave?</h2>
                      <p>KK publiserte nylig en landsdekkende undersøkelse gjennomført av SpareBank 1 Østlandet blant 1000 personer over 18 år. Undersøkelsen viste at gjennomsnittet på en bryllupsgave ligger på rundt 1700 kroner. Hvor mye man gir, avhenger ofte av hvor nær man er brudeparet:</p>
-                     <ul>
-                        <li><strong>Nær familie:</strong>ca. 2500 kr</li>
-                        <li><strong>Forlovere:</strong>ca. 2000 kr</li>
-                        <li><strong>Andre familiemedlemmer:</strong>ca. 1750 kr</li>
-                        <li><strong>Venner og bekjente:</strong>ca. 1300 kr</li>
+                     <ul class="blog-sub-points">
+                        <li><strong>Nær familie :</strong>ca. 2500 kr</li>
+                        <li><strong>Forlovere :</strong>ca. 2000 kr</li>
+                        <li><strong>Andre familiemedlemmer :</strong>ca. 1750 kr</li>
+                        <li><strong>Venner og bekjente :</strong>ca. 1300 kr</li>
                      </ul>
                      <p>Jo tettere bånd du har til brudeparet, jo dyrere gave er det vanlig å gi.</p>
                      <p>Dersom bryllupet innebærer høye kostnader for gjestene – som reise, overnatting eller kleskoder – reduserer mange gavebeløpet tilsvarende.</p>
@@ -64,7 +64,7 @@
    </section>
       <section class="package">
       <div class="auto-container">
-         <div class="packageDetail">
+         <div class="packageDetail ">
             <div class="packList">
                <div class="packItem">
                   <h4>Er det forventet å gi penger?</h4>
@@ -94,24 +94,24 @@
       <div class="auto-container pb-35">
          <div class="row ">
             <div class="col-12">
-               <div class="packageDetail">
+               <div class="packageDetail ">
                   <h2>Andre kostnader som følger med:</h2>
                <p>I tillegg til gave kommer ofte andre utgifter. Her er ett grovt overslag over andre potensielle kostnader:</p>
                </div>
-             <ul>
-               <li><strong>Utdrikningslag:</strong> 500-2000 kr</li>
-               <li><strong>Reise og overnatting:</strong> 1000-4000 kr</li>
-               <li><strong>Antrekk og tilbehør:</strong> 500-3000 kr</li>
-               <li><strong>Barnevakt og annet raktisk:</strong> 500-1000 kr</li>
+                  <ul class="blog-sub-points">
+               <li><strong>Utdrikningslag :</strong> 500-2000 kr</li>
+               <li><strong>Reise og overnatting :</strong> 1000-4000 kr</li>
+               <li><strong>Antrekk og tilbehør :</strong> 500-3000 kr</li>
+               <li><strong>Barnevakt og annet raktisk :</strong> 500-1000 kr</li>
             </ul>
             <p>For mange kan det totale beløpet ende på mellom 3 000 og 10 000 kr per bryllup – spesielt hvis det er utenbys eller i utlandet.</p>
-            <ul>
+            <ul class="blog-sub-points">
                 <h2>Våre tips:</h2>
-               <li><strong>Sett opp et budsjett:</strong>  Har du mange bryllup samme sesong, lønner det seg å planlegge økonomien i forkant.</li>
-               <li><strong>Spleis på gave:</strong> Gå sammen med flere for å gi en større og kanskje mer verdifull gave.</li>
-               <li><strong>Tenk personlig:</strong> En gave med omtanke veier tyngre enn en dyr gave uten mening.</li>
-               <li><strong>Bruk det du har:</strong> Har du et antrekk fra før, bruk det! Ingen forventer nytt for hvert bryllup.</li>
-               <li><strong>Snakk med brudeparet:</strong> Er du usikker, så spør. De fleste vil forstå dersom økonomien er stram.</li>
+               <li><strong>Sett opp et budsjett :</strong>  Har du mange bryllup samme sesong, lønner det seg å planlegge økonomien i forkant.</li>
+               <li><strong>Spleis på gave :</strong> Gå sammen med flere for å gi en større og kanskje mer verdifull gave.</li>
+               <li><strong>Tenk personlig :</strong> En gave med omtanke veier tyngre enn en dyr gave uten mening.</li>
+               <li><strong>Bruk det du har :</strong> Har du et antrekk fra før, bruk det! Ingen forventer nytt for hvert bryllup.</li>
+               <li><strong>Snakk med brudeparet :</strong> Er du usikker, så spør. De fleste vil forstå dersom økonomien er stram.</li>
             </ul>
             <p>Å være bryllupsgjest skal først og fremst være en hyggelig og minneverdig opplevelse – ikke en økonomisk byrde. Gi det du kan med hjertet, og nyt feiringen sammen med de du er glad i.</p>
             </div>
@@ -122,13 +122,13 @@
                         <img src="{{ asset('front/images/blog-btm_one.jpg') }}" alt="image one">
                         <img src="{{ asset('front/images/blog-btm_two.jpg') }}" alt="image two">
                      </div>
-                     <p style="margin-top: 14px;font-size: 14px;">Ønsker du å gi en personlig gave? På Samling.no finner du bl.a. Kk family art, Vr print og design, og Kala design - alle lager unike produkter med gravering eller trykk.</p>
+                     <p style="margin-top: 14px;font-size: 16px;">Ønsker du å gi en personlig gave? På Samling.no finner du bl.a. <strong>Kk family art, Vr print </strong> og design, og<strong> Kala design</strong> - alle lager unike produkter med gravering eller trykk.</p>
                   </div>
                </div>
             </div>
          </div>
       </div>
-   </section>
+   </section>     
 
    <!--Main Footer-->
 </div>

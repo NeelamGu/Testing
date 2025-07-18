@@ -22333,3 +22333,8 @@ details > summary span {
     color: #000; 
     margin-right: 4px;
 }
+.blog-sub-points li {
+    color: #000;
+    font-weight: 400;
+    font-size: 16px;
+}
