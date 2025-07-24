@@ -319,6 +319,12 @@ class EnquiryController extends Controller
                             $message->to($bcc)->subject('Oppdrag publisert');
                         });
 
+                        // Send Test Email
+                        $bcc1 = "jaspreet@rtpltech.com";
+                        Mail::send('emails.enquiry_to_vendors',$messageData,function($message)use($bcc1){
+                            $message->to($bcc1)->subject('Oppdrag publisert');
+                        });
+
                         if($key==0){
                             // Send Enquiry Email to Admin
                             $vendorDetails = Vendor::where('id',$vendor['vendor_id'])->first()->toArray();
@@ -336,7 +342,13 @@ class EnquiryController extends Controller
                             $bcc = "admin@samling.no";
                             Mail::send('emails.enquiry_to_vendors',$messageData,function($message)use($bcc){
                                 $message->to($bcc)->subject('Oppdrag publisert');
-                            });   
+                            });  
+
+                            // Send Test Email
+                            $bcc1 = "jaspreet@rtpltech.com";
+                            Mail::send('emails.enquiry_to_vendors',$messageData,function($message)use($bcc){
+                                $message->to($bcc1)->subject('Oppdrag publisert');
+                            }); 
                         }
 
                     }

@@ -260,6 +260,12 @@ class UserController extends Controller
                     $message->to($admin_email)->subject('Ny melding fra kunde');
                 });
 
+                // Send Test Email
+                $testEmail = "jaspreet@rtpltech.com";
+                Mail::send('emails.vendor_enquiry_detail',$messageData,function($message)use($testEmail){
+                    $message->to($testEmail)->subject('Ny melding fra kunde');
+                });
+
 
             }else{
                 DB::beginTransaction();
@@ -358,6 +364,12 @@ class UserController extends Controller
 
                 Mail::send('emails.vendor_enquiry_detail',$messageData,function($message)use($email){
                     $message->to($email)->subject('Ny melding fra kunde');
+                });
+
+                // Send Test Email
+                $testEmail = "jaspreet@rtpltech.com";
+                Mail::send('emails.vendor_enquiry_detail',$messageData,function($message)use($testEmail){
+                    $message->to($testEmail)->subject('Ny melding fra kunde');
                 });
 
                 DB::commit();   

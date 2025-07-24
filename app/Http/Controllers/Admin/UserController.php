@@ -19,9 +19,9 @@ class UserController extends Controller
         }
         Session::put('page','users');
         if(isset($_GET['email'])){
-            $users = User::where('email',$_GET['email'])->get()->toArray(); 
+            $users = User::where('email',$_GET['email'])->where('is_delete',0)->get()->toArray(); 
         }else{
-            $users = User::get()->toArray();    
+            $users = User::get()->where('is_delete',0)->toArray();    
         }
         /*dd($users);*/
         return view('admin.users.users')->with(compact('users'));

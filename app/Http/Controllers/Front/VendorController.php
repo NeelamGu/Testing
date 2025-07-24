@@ -45,7 +45,7 @@ class VendorController extends Controller
                 "email.required" => "Email is required",
                 "email.unique" => "Email already exists",
                 "mobile.required" => "Mobile is required",
-                "mobile.unique" => "Mobile already exists",
+                /*"mobile.unique" => "Mobile already exists",*/
                 "mobile.between" => "Mobile is not valid",
                 "category_id.required" => "Please select Category",
                 "address.required" => "Please enter Address",
