@@ -17,7 +17,7 @@
                   </div>
                </div>
                </div> -->
-            <div class="col-sm-4 col-xs-12 column">
+            <div class="col-sm-6 col-xs-12 column">
                <div class="footer-widget links">
                   <h2>Nyttige lenker</h2>
                   <ul>
@@ -35,7 +35,7 @@
                   </ul>
                </div>
             </div>
-            <div class=" col-sm-3 col-xs-12 column">
+            <div class=" col-sm-6 col-xs-12 column">
                <div class="footer-widget twitter-feed">
                   <h2>Følg oss</h2>
                   <div class="social-links">
@@ -46,7 +46,7 @@
                   <p class="org-num">Org.nr: 932341956</p>
                </div>
             </div>
-            <div class="col-sm-5 col-xs-12 column">
+            <?php /* <div class="col-sm-5 col-xs-12 column">
                <div class="footer-widget newsletter-widget">
                   <h2>Abonner på vårt nyhetsbrev</h2>
                   <div class="text">
@@ -68,7 +68,7 @@
                      </form>
                   </div>
                </div>
-            </div>
+            </div> */ ?>
          </div>
          <!--  <div class="row">
             <div class="contact-info">

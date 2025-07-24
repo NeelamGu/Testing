@@ -57,6 +57,8 @@
                                             @else
                                               <a class="updateUserStatus" id="user-{{ $user['id'] }}" user_id="{{ $user['id'] }}" href="javascript:void(0)"><i style="font-size:25px;" class="mdi mdi-bookmark-outline" status="Inactive"></i></a>
                                             @endif
+                                            &nbsp;&nbsp;&nbsp;
+                                              <a title="Slett" href="javascript:void(0)" class="confirmDelete" module="user" moduleid="{{ $user['id'] }}"><i style="font-size:25px;" class="mdi mdi-file-excel-box"></i></a>
                                         </td>
                                         
                                     </tr>

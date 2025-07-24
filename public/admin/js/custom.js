@@ -811,6 +811,37 @@ $(document).ready(function(){
 		})
 	})
 
+	
+
+	// Set scroll flag when "Add Captions" button is clicked
+    document.querySelector('.scroll-to-captions')?.addEventListener('click', function () {
+        localStorage.setItem('scrollToCaptions', 'true');
+    });
+
+    // Set scroll flag when delete (only image) is clicked
+    document.addEventListener('click', function (e) {
+        const el = e.target.closest('.confirmDelete');
+        if (el && el.getAttribute('module') === 'image') {
+            localStorage.setItem('scrollToCaptions', 'true');
+        }
+    });
+
+    // Unified scroll handler after reload
+    window.addEventListener('load', function () {
+        if (localStorage.getItem('scrollToCaptions') === 'true') {
+            const el = document.getElementById('image-captions');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // If ID is not found, fallback scroll to bottom
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+            localStorage.removeItem('scrollToCaptions');
+        }
+    });
+
+
+
 	// Append Categories level
 	$("#section_id").change(function(){
 		var section_id = $(this).val();
@@ -935,3 +966,4 @@ document.querySelectorAll(".cityMarker").forEach((summary) => {
         details.open = !details.open;
     });
 });
+

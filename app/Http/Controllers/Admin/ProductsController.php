@@ -985,9 +985,14 @@ class ProductsController extends Controller
             }
 
             if(isset($message)&&$message!=""){
-                return redirect()->back()->with('success_message',$message);    
+                /*return redirect()->back()->with('success_message',$message);  */
+                return redirect()->back()->with([
+                    'success_message' => $message,
+                    'scroll_to' => 'captions'
+                ]);  
             }else{
-                return redirect()->back();
+                /*return redirect()->back();*/
+                return redirect()->back()->with('scroll_to', 'captions');
             }
             
         }

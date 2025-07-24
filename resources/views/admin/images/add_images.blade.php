@@ -218,10 +218,10 @@ input {
                       <input multiple type="file" class="form-control" id="files" name="images[]" accept="image/*">
                       
                     </div><br>
-                    <button type="submit" class="btn btn-primary mr-2" style="margin:-15px 0 20px 0;">Legg til bildetekster</button><br>
+                    <button type="submit" class="btn btn-primary mr-2 scroll-to-captions" style="margin:-15px 0 20px 0;">Legg til bildetekster</button><br>
 
                     @if(count($product['images'])>0)
-                    <div class="form-group" style="width: 100%; display: inline-block;">
+                    <div id="image-captions" class="form-group" style="width: 100%; display: inline-block;">
                       @foreach($product['images'] as $image)
                         <span style="float:left; width:110px; padding: 5px; margin: 5px;">
                           <a target="_blank" href="{{ url('front/images/product_images/large/'.$image['image']) }}"><img style="width:100px;" src="{{ url('front/images/product_images/small/'.$image['image']) }}"></a><br>

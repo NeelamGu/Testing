@@ -29,7 +29,8 @@ class VendorController extends Controller
                 "name" => "required",
                 "email" => "required|email|unique:admins|unique:vendors",
                 /*"mobile" => "required|between:1000000,9999999999|numeric|unique:admins|unique:vendors",*/
-                "mobile" => "required|numeric|unique:admins|unique:vendors",
+                /*"mobile" => "required|numeric|unique:admins|unique:vendors",*/
+                "mobile" => "required|numeric",
                 "category_id" => "required",
                 "address" => "required",
                 /*"birth_date" => "required",*/

@@ -122,7 +122,7 @@
                         <img src="{{ asset('front/images/blog-btm_one.jpg') }}" alt="image one">
                         <img src="{{ asset('front/images/blog-btm_two.jpg') }}" alt="image two">
                      </div>
-                     <p style="margin-top: 14px;font-size: 16px;">Ønsker du å gi en personlig gave? På Samling.no finner du bl.a. <a href="https://samling.no/product/kk-family-art/9">Kk family art</a>, <a href="https://samling.no/product/vrprintogdesign/51">Vr print</a> og design, <a href="https://samling.no/product/kala-design/38">Kala design</a> - alle lager unike produkter med gravering eller trykk.</p>
+                     <p style="margin-top: 14px;font-size: 16px;">Ønsker du å gi en personlig gave? På Samling.no finner du bl.a. <a href="https://samling.no/product/kk-family-art/9">Kk family art</a>, <a href="https://samling.no/product/vrprintogdesign/51">Vr print og design</a>, <a href="https://samling.no/product/kala-design/38">Kala design</a> - alle lager unike produkter med gravering eller trykk.</p>
                   </div>
                </div>
             </div>

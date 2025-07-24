@@ -193,7 +193,7 @@
                                  Kategori
                               </th>
                               <th>
-                                 Profil 
+                                 Annonse 
                               </th>
                               <!-- <th>
                                  Vendor Email

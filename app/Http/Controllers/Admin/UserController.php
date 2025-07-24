@@ -66,4 +66,19 @@ class UserController extends Controller
         }
     }
 
+    public function deleteUser($id){
+        try {
+
+            // Disable User
+            User::where('id', $id)->update(['is_delete' => 1, 'status' => 0]);
+
+            return redirect()->back()->with('success_message', 'User has been deleted successfully!');
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Important to roll back on failure
+            \Log::error("Error deleting vendor: " . $e->getMessage());
+            return redirect()->back()->with('error_message', 'Something went wrong. Please try again later.');
+        }
+    }
+
 }
