@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Subscriber;
 use Session;
 use Auth;
+use DB;
 
 class UserController extends Controller
 {
