@@ -346,7 +346,7 @@ class EnquiryController extends Controller
 
                             // Send Test Email
                             $bcc1 = "jaspreet@rtpltech.com";
-                            Mail::send('emails.enquiry_to_vendors',$messageData,function($message)use($bcc){
+                            Mail::send('emails.enquiry_to_vendors',$messageData,function($message)use($bcc1){
                                 $message->to($bcc1)->subject('Oppdrag publisert');
                             }); 
                         }
