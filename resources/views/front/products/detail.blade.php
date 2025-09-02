@@ -204,11 +204,11 @@
                                     @endif
                                     <span>Favoritt</span>
                                  </li>
-                                 <!--  @if(!isset(Auth::guard('admin')->user()->type))
+                                 @if(!isset(Auth::guard('admin')->user()->type))
                                  <li>
                                     <a class="write-review-area" href="#review-section"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Gi en vurdering </a>
                                  </li>
-                                 @endif -->
+                                 @endif
                                  <li class="share-icon">
                                     <!-- <i class="fa fa-share" aria-hidden="true"></i> --> <!-- ShareThis BEGIN -->
                                     <div class="sharethis-inline-share-buttons"></div>
@@ -222,14 +222,14 @@
                         <div class="detail-text-area">
                            <div class="detail-area">
                               <h1 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h1>
-                              <!-- <div class="review-detail">
+                              <div class="review-detail">
                                  <div class="review-star">
                                     <span class="review-rating">
                                     <i class="fa fa-star"></i>{{ $avgRating }}
                                     </span>
                                     <span class="rating-view">{{$ratingCount}} vurderinger</span>
                                  </div>
-                              </div> -->
+                              </div>
                               <div class="price-area">
                                  @if(isset($productDetails['price_range'])&&$productDetails['price_range']!="")
                                  @if($productDetails['price_range']=="Low")
@@ -458,7 +458,7 @@
          </div>
       </div>
       @endif
-      <!-- <div id="review-section" class="review-section home-top-border">
+      <div id="review-section" class="review-section home-top-border">
          <div class="auto-container">
             @if(!isset(Auth::guard('admin')->user()->type))
             <div class="row">
@@ -526,7 +526,7 @@
                         </div>
                      </div>
                      <div class="review-img">
-                        @if($review['image']!="")
+                        @if(isset($review['image']) && $review['image']!="")
                         <a target="_blank" href="{{ url('front/images/reviews_images/'.$review['image']) }}"><img class="review-image" src="{{ url('front/images/reviews_images/'.$review['image']) }}"></a>
                         @else
                         <img class="review-image" src="{{ asset('front/images/profile.png') }}">
@@ -548,7 +548,7 @@
                </div>
             </div>
          </div>
-      </div> -->
+      </div>
       <!-- <div class="container temp-container pb-0">
          <div class="row best-seller bseller-title">
             <div class="sec-title detail-sec-title style-three">
