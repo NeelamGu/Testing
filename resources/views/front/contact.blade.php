@@ -86,7 +86,7 @@
                <div class="info-box contact-info-box p-xs-15">
                   <ul>
                      <li>
-                        <span class="icon fa fa-phone"></span>
+                        <!-- <span class="icon fa fa-phone"></span> -->
                         <!-- <p>(+064)-342-68382</p>
                         <p>(+064)-342-68383</p> -->
                         <!-- <p>Tlf: +47 973 44 447 (10:00-14:00)</p> -->
