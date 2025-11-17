@@ -45,9 +45,9 @@ Ved eventuelle spørsmål, vennligst ta kontakt.</td><br>
             <tr>
                 <td class='style2' style="padding: 10px;">Epost: hei@samling.no</td>
             </tr>  
-            <tr>
+            /* <tr>
                 <td class='style2' style="padding: 10px;">Tlf: 97344447</td>
-            </tr>   
+            </tr>    */
             <tr>
                 <td class='style2' style="padding: 10px;"></td>
             </tr>

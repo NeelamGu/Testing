@@ -86,7 +86,7 @@
             </tr>  -->
         <tr>
             <td class='style2' style="padding: 10px;">Hvis du har spørsmål eller trenger hjelp, ta gjerne kontakt med
-                vår kundeservice på epost <a href="mailto:hei@samling.no">hei@samling.no</a> eller tlf 973 44 447.
+                vår kundeservice på epost <a href="mailto:hei@samling.no">hei@samling.no</a>
             </td>
         </tr>
         <tr>

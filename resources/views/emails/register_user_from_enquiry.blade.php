@@ -54,7 +54,7 @@
                 <td class='style2' style="padding: 10px;">Takk for at du bruker Samling og lykke til med ditt arrangement! </td>
             </tr>
             <tr>
-                <td class='style2' style="padding: 10px;">Hvis du har spørsmål eller trenger hjelp, ta gjerne kontakt med vår kundeservice på epost hei@samling.no eller tlf 973 44 447.</td>
+                <td class='style2' style="padding: 10px;">Hvis du har spørsmål eller trenger hjelp, ta gjerne kontakt med vår kundeservice på epost hei@samling.no</td>
             </tr>  
             <tr>
                 <td class='style2' style="padding: 10px;">Dine påloggingsdetaljer er som nedenfor :-</td>
