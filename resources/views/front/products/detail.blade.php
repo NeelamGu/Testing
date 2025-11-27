@@ -204,12 +204,11 @@
                                     @endif
                                     <span>Favoritt</span>
                                  </li>
-                                 @if(!isset(Auth::guard('admin')->user()->type))
+                                 <!--  @if(!isset(Auth::guard('admin')->user()->type))
                                  <li>
-                                    <a class="write-review-area" href="#review-section"><i class="fa fa-pencil-square-o"
-                                          aria-hidden="true"></i> Gi en vurdering </a>
+                                    <a class="write-review-area" href="#review-section"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Gi en vurdering </a>
                                  </li>
-                                 @endif
+                                 @endif -->
                                  <li class="share-icon">
                                     <!-- <i class="fa fa-share" aria-hidden="true"></i> --> <!-- ShareThis BEGIN -->
                                     <div class="sharethis-inline-share-buttons"></div>
@@ -222,15 +221,15 @@
                      <div class="col-sm-5">
                         <div class="detail-text-area">
                            <div class="detail-area">
-                              <h1 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h1>
-                              <div class="review-detail">
+                              <h4 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h4>
+                              <!-- <div class="review-detail">
                                  <div class="review-star">
                                     <span class="review-rating">
-                                       <i class="fa fa-star"></i>{{ $avgRating }}
+                                    <i class="fa fa-star"></i>{{ $avgRating }}
                                     </span>
                                     <span class="rating-view">{{$ratingCount}} vurderinger</span>
                                  </div>
-                              </div>
+                              </div> -->
                               <div class="price-area">
                                  @if(isset($productDetails['price_range'])&&$productDetails['price_range']!="")
                                  @if($productDetails['price_range']=="Low")
@@ -459,14 +458,13 @@
          </div>
       </div>
       @endif
-      <div id="review-section" class="review-section home-top-border">
+      <!-- <div id="review-section" class="review-section home-top-border">
          <div class="auto-container">
             @if(!isset(Auth::guard('admin')->user()->type))
             <div class="row">
                <div class="col-sm-12">
                   <div class="review-form-area">
-                     <form method="POST" action="{{ url('/write-a-review') }}" name="frmReview" id="frmReview"
-                        class="text-left comment-from review-form" enctype="multipart/form-data">
+                     <form method="POST" action="{{ url('/write-a-review') }}"  name="frmReview" id="frmReview" class="text-left comment-from review-form" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="fHsqYOpaJh8bD7D5NBXuy5c92kAPClwlMRjijXeI">
                         <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
                         <div class="star-rating rating-box" style="margin-left: -10px;">
@@ -485,15 +483,13 @@
                            <div class="col-sm-12">
                               <div class="mb-3 mt-3">
                                  <label for="comment" class="text-left review-title">GJENNOMGÅ TITTEL *</label>
-                                 <input type="text" class="form-control" rows="5" id="review_title" name="review_title"
-                                    required="">
+                                 <input type="text" class="form-control" rows="5" id="review_title" name="review_title" required="">
                               </div>
                            </div>
                            <div class="col-sm-12">
                               <div class="mb-3 mt-3">
                                  <label for="comment" class="text-left review-title">GJENNOMGANG BESKRIVELSE *</label>
-                                 <textarea class="form-control" rows="5" id="review_description"
-                                    name="review_description"></textarea>
+                                 <textarea class="form-control" rows="5" id="review_description" name="review_description"></textarea>
                               </div>
                            </div>
                            <div class="col-sm-12">
@@ -507,8 +503,7 @@
                            @if(Auth::check())
                            <button type="submit" class="btn buy-btn">SENDE</button>
                            @else
-                           <a class="buy-now-btn buy-btn showLoginModal" data-toggle="modal"
-                              data-target="#loginModal">SENDE INN</a>
+                           <a class="buy-now-btn buy-btn showLoginModal" data-toggle="modal" data-target="#loginModal">SENDE INN</a>
                            @endif
                         </div>
                      </form>
@@ -517,97 +512,32 @@
             </div>
             @endif
             <div class="row">
-               <div class="col-lg-4 col-md-5 col-12">
-                  @php
-                  // manage these values
-                  $average = 4.3;
-                  $total_reviews = 21;
-                  $breakdown = [
-                  5 => 17,
-                  4 => 1,
-                  3 => 3,
-                  2 => 0,
-                  1 => 1
-                  ];
-                  $last_updated = '1 Nov 2025';
-
-                  $total = array_sum($breakdown);
-                  @endphp
-
-                  <div class="rating-summary">
-                     <div class="rating-header">
-                        <div class="rating-box">
-                           <span class="star"><i class="fa fa-star" style="color: #fff;"></i></span>
-                           <span class="rating-value">{{ number_format($average, 1) }}</span>
-                        </div>
-                        <div class="total-reviews">
-                           {{ $total_reviews }} {{ Str::plural('review', $total_reviews) }}
-                        </div>
-                     </div>
-
-                     <h4 class="rating-title">Rating Distribution</h4>
-
-                     @foreach([5,4,3,2,1] as $star)
-                     @php
-                     $count = $breakdown[$star] ?? 0;
-                     $percentage = $total > 0 ? ($count / $total) * 100 : 0;
-                     $barColor = match($star) {
-                     5 => '#4caf50',
-                     4 => '#8bc34a',
-                     3 => '#cddc39',
-                     2 => '#ffc107',
-                     1 => '#f44336',
-                     default => '#ddd'
-                     };
-                     @endphp
-
-                     <div class="rating-bar">
-                        <span>{{ $star }} ★</span>
-                        <div class="bar">
-                           <div class="fill" style="width: {{ $percentage }}%; background: {{ $barColor }}"></div>
-                        </div>
-                        <span>{{ $count }} {{ Str::plural('review', $count) }}</span>
-                     </div>
-                     @endforeach
-
-                     <p class="last-update">Last Review Updated on {{ $last_updated }}</p>
-                  </div>
-               </div>
-
-               <div class="col-lg-8 col-md-7 col-12">
-                  @if(isset($reviews) && count($reviews) )
-                  @foreach($reviews as $review)
+               @if(isset($reviews) && count($reviews) )
+               @foreach($reviews as $review)
+               <div class="col-sm-4">
                   <div class="c-review">
-
-                     <div class="review-img">
-                        <img class="review-image" src="{{ asset('front/images/profile.png') }}">
-                        <div class="">
-                           <h4>{{ $review['user']['name'] }}</h4>
-                           <span class="review-s">{{ $review['star_rating'] }} <i class="fa fa-star"></i></span>
-                        </div>
-                        <p class="review-s date"> ({{ date("j. F Y", strtotime($review['created_at'])); }})</p>
-
-                     </div>
                      <div class="review-col review-col-area">
                         <div class="review-detail">
+                           <span class="review-s">{{ $review['star_rating'] }} <i class="fa fa-star"></i></span>
                            <div class="text-left review">
                               <h4>{{ $review['review_title'] }} </h4>
                               <p>{{ $review['review_description'] }}</p>
                            </div>
-                           <div class="uploadedImg">
-                              @if (!empty($review['image']))
-                              <a target="_blank" href="{{ url('front/images/reviews_images/'.$review['image']) }}">
-                                 <img class="review-image"
-                                    src="{{ url('front/images/reviews_images/'.$review['image']) }}">
-                              </a>
-                              @endif
-                           </div>
                         </div>
                      </div>
+                     <div class="review-img">
+                        @if($review['image']!="")
+                        <a target="_blank" href="{{ url('front/images/reviews_images/'.$review['image']) }}"><img class="review-image" src="{{ url('front/images/reviews_images/'.$review['image']) }}"></a>
+                        @else
+                        <img class="review-image" src="{{ asset('front/images/profile.png') }}">
+                        @endif
+                        <h4>{{ $review['user']['name'] }}</h4>
+                        <p> ({{ date("j. F Y, g:i a", strtotime($review['created_at'])); }})</p>
+                     </div>
                   </div>
-                  @endforeach
-                  @else
                </div>
+               @endforeach
+               @else
                <div class="col-sm-12 no-review-area text-center">
                   <div class="review-detail">
                      <div class="text-left review">
@@ -618,7 +548,7 @@
                </div>
             </div>
          </div>
-      </div>
+      </div> -->
       <!-- <div class="container temp-container pb-0">
          <div class="row best-seller bseller-title">
             <div class="sec-title detail-sec-title style-three">
@@ -639,7 +569,7 @@
       <div class="detail-other-product home-top-border">
          <div class="container temp-container  detail-o-product relate-prodduct">
             <div class="row">
-               <div class="sec-title detail-sec-title style-three">
+            <div class="sec-title detail-sec-title style-three">
                   <h3 class="font-24 text-black mb-20 mt-30">Lignenede annonser</h3>
                </div>
                <!-- <div class="sec-title detail-sec-title style-three">
@@ -736,37 +666,37 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 <script>
-   $(document).ready(function () {
-      $(".fancybox").fancybox({
-         openEffect: "none",
-         closeEffect: "none",
-         loop: true,
-         helpers: {
-            title: {
-               type: 'inside'
-            },
-            overlay: {
-               css: {
-                  'background': 'rgba(0, 0, 0, 1)'
-               }
-            },
-            buttons: {}
-         }
-      });
-   });
+  $(document).ready(function() {
+    $(".fancybox").fancybox({
+      openEffect: "none", 
+      closeEffect: "none", 
+      loop: true,            
+      helpers: {
+        title : {
+          type : 'inside'
+        },
+        overlay : {
+          css : {
+            'background' : 'rgba(0, 0, 0, 1)'
+          }
+        },
+        buttons : {}
+      }
+    });
+  });
 </script>
 <script>
-   <? php if (Auth:: check()) { ?>
+   <?php if(Auth::check()){ ?>
       $(".detail-enquire-form").show();
-   <? php } ?>
-      /*  $(".close-e-form").click(function(){
-      $(".detail-enquire-form").hide();
-      });*/
-
-      $(".detail-eform").click(function () {
-         $(".detail-enquire-form").toggle();
-      });
-
+   <?php } ?>
+   /*  $(".close-e-form").click(function(){
+   $(".detail-enquire-form").hide();
+   });*/
+   
+    $(".detail-eform").click(function(){
+   $(".detail-enquire-form").toggle();
+   });
+   
    //  $(document).ready(function(){
    //  //FANCYBOX
    //  //https://github.com/fancyapps/fancyBox
@@ -775,13 +705,13 @@
    //      closeEffect: "none"
    //  });
    // });
-
-
-   $(".write-review-area").click(function () {
-      $(".review-form-area").show();
+   
+   
+   $(".write-review-area").click(function(){
+   $(".review-form-area").show();
    });
-
-
-
+   
+   
+   
 </script>
 @stop
