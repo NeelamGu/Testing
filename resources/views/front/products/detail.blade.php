@@ -223,14 +223,14 @@
                         <div class="detail-text-area">
                            <div class="detail-area">
                               <h1 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h1>
-                              <?php /* <div class="review-detail">
+                              <div class="review-detail">
                                  <div class="review-star">
                                     <span class="review-rating">
                                        <i class="fa fa-star"></i>{{ $avgRating }}
                                     </span>
                                     <span class="rating-view">{{$ratingCount}} vurderinger</span>
                                  </div>
-                              </div> */ ?>
+                              </div>
                               <div class="price-area">
                                  @if(isset($productDetails['price_range'])&&$productDetails['price_range']!="")
                                  @if($productDetails['price_range']=="Low")
