@@ -459,7 +459,7 @@
          </div>
       </div>
       @endif
-      <?php /* <div id="review-section" class="review-section home-top-border">
+      <!-- <div id="review-section" class="review-section home-top-border">
          <div class="auto-container">
             @if(!isset(Auth::guard('admin')->user()->type))
             <div class="row">
@@ -618,7 +618,7 @@
                </div>
             </div>
          </div>
-      </div> */ ?>
+      </div> -->
       <!-- <div class="container temp-container pb-0">
          <div class="row best-seller bseller-title">
             <div class="sec-title detail-sec-title style-three">
