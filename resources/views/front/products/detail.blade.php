@@ -205,10 +205,10 @@
                                     <span>Favoritt</span>
                                  </li>
                                  @if(!isset(Auth::guard('admin')->user()->type))
-                                 <li>
+                                 <!-- <li>
                                     <a class="write-review-area" href="#review-section"><i class="fa fa-pencil-square-o"
                                           aria-hidden="true"></i> Gi en vurdering </a>
-                                 </li>
+                                 </li> -->
                                  @endif
                                  <li class="share-icon">
                                     <!-- <i class="fa fa-share" aria-hidden="true"></i> --> <!-- ShareThis BEGIN -->
@@ -224,12 +224,12 @@
                            <div class="detail-area">
                               <h1 class="text-thm pb-5 font-weight-700">{{ $productDetails['product_name'] }}</h1>
                               <div class="review-detail">
-                                 <div class="review-star">
+                                 <!-- <div class="review-star">
                                     <span class="review-rating">
                                        <i class="fa fa-star"></i>{{ $avgRating }}
                                     </span>
                                     <span class="rating-view">{{$ratingCount}} vurderinger</span>
-                                 </div>
+                                 </div> -->
                               </div>
                               <div class="price-area">
                                  @if(isset($productDetails['price_range'])&&$productDetails['price_range']!="")
@@ -516,10 +516,9 @@
                </div>
             </div>
             @endif
-            <div class="row">
+            <!-- <div class="row">
                <div class="col-lg-4 col-md-5 col-12">
                   @php
-                  // manage these values
                   $average = 4.3;
                   $total_reviews = 21;
                   $breakdown = [
@@ -616,7 +615,7 @@
                   </div>
                   @endif
                </div>
-            </div>
+            </div> -->
          </div>
       </div>
       <!-- <div class="container temp-container pb-0">
