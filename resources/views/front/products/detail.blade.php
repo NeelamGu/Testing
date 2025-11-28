@@ -755,9 +755,9 @@
    });
 </script>
 <script>
-   <? php if (Auth:: check()) { ?>
+   <?php if (Auth:: check()) { ?>
       $(".detail-enquire-form").show();
-   <? php } ?>
+   <?php } ?>
       /*  $(".close-e-form").click(function(){
       $(".detail-enquire-form").hide();
       });*/
