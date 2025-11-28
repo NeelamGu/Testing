@@ -459,7 +459,7 @@
          </div>
       </div>
       @endif
-      <div id="review-section" class="review-section home-top-border">
+      <div id="review-section" class="review-section">
          <div class="auto-container">
             @if(!isset(Auth::guard('admin')->user()->type))
             <div class="row">
