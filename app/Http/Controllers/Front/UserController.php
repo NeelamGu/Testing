@@ -224,11 +224,11 @@ class UserController extends Controller
                     $message->to($email)->subject('Forespørsel sendt');
                 });*/
 
-                $bcc = array("admin@samling.no");
+                /*$bcc = array("admin@samling.no");
                 $messageData = ['name'=>$user->name,'email'=>$email];
                 Mail::send('emails.customer_enquiry_detail',$messageData,function($message)use($bcc){
                     $message->to($bcc)->subject('Forespørsel sendt');
-                });
+                });*/
 
                 $productDetails = Product::select('product_name')->where('id',$data['product_id'])->first()->toArray();
 
