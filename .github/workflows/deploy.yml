@@ -11,13 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy via SSH
-        uses: easingthemes/ssh-deploy@v5.1.0
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          REMOTE_PORT: 18765
-          TARGET: /home/neelamg/public_html
-          EXCLUDE: "/.git/, /.github/"
-          ARGS: "-rlgoDzvc --delete"
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 18765 ssh.neelamg.sg-host.com >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p 18765 -o StrictHostKeyChecking=no" \
+            --exclude='.git' \
+            --exclude='.github' \
+            ./ u2842-rygsrjj4ondp@ssh.neelamg.sg-host.com:/home/neelamg/public_html/
