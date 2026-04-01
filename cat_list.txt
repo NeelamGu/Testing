@@ -1,0 +1,39 @@
+ 1 | Kaker og s??tsaker   | wedding-cake.png | EXISTS
+ 2 | Catering             | catering-icon.png | EXISTS
+ 3 | Blomster og dekor    | 13079.png       | EXISTS
+ 4 | Fotograf             | 31925.png       | EXISTS
+ 5 | Kaker                | 62460.png       | EXISTS
+ 6 | Desserter            | 40991.png       | EXISTS
+ 7 | Videograf            | 22969.png       | MISSING
+ 8 | Trykksaker           | 24222.png       | MISSING
+ 9 | Blomster             | 60881.png       | MISSING
+10 | Dekor                | 27728.png       | EXISTS
+11 | Decorations          | 53317.png       | MISSING
+12 | Mobiles              |                 | EXISTS
+13 | Mobile Phones        |                 | EXISTS
+14 | Tablets              |                 | EXISTS
+15 | Foto og video        | 26446.png       | EXISTS
+16 | Sm??retter           | 11225.png       | EXISTS
+17 | Mat                  | 70525.png       | EXISTS
+18 | Drikke               | 25165.png       | MISSING
+19 | Underholdning        | 62823.png       | EXISTS
+20 | Musikk               | 16935.png       | MISSING
+21 | Show                 | 7622.png        | MISSING
+22 | Skj??nnhet           | 26054.png       | EXISTS
+23 | Sminke og h??r       | 10408.png       | EXISTS
+24 | Negler               | 56996.png       | MISSING
+25 | Kl??r og smykker     | 82349.png       | MISSING
+26 | Lokaler og aktiviteter | 9235.png        | EXISTS
+27 | Festlokaler          | 49786.png       | EXISTS
+28 | Opplevelser og aktiviteter | 79509.png       | MISSING
+29 | Planlegger           | 93670.png       | EXISTS
+30 | Bryllupsplanlegger   | 51754.png       | MISSING
+31 | Eventplanlegger      | 42906.png       | MISSING
+32 | Transport            | 95837.png       | MISSING
+33 | Bartender            | 49418.png       | MISSING
+34 | Skredder             | 57050.png       | MISSING
+35 | Sm??jobber           | 27866.png       | EXISTS
+36 | Servit??r            | 30840.png       | MISSING
+37 | Rengj??ring          | 53821.png       | MISSING
+38 | Utleie               | 77701.png       | MISSING
+39 | Gaver                | 30972.png       | MISSING

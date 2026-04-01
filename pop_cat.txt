@@ -1,0 +1,35 @@
+ 1 | Kaker og s??tsaker        | wedding-cake.png | Yes
+ 2 | Catering                  | catering-icon.png | Yes
+ 3 | Blomster og dekor         | 13079.png       | Yes
+ 4 | Fotograf                  | 31925.png       | No
+ 5 | Kaker                     | 62460.png       | No
+ 6 | Desserter                 | 40991.png       | No
+ 7 | Videograf                 | 22969.png       | No
+ 8 | Trykksaker                | 24222.png       | No
+ 9 | Blomster                  | 60881.png       | No
+10 | Dekor                     | 27728.png       | No
+15 | Foto og video             | 26446.png       | Yes
+16 | Sm??retter                | 11225.png       | No
+17 | Mat                       | 70525.png       | No
+18 | Drikke                    | 25165.png       | No
+19 | Underholdning             | 62823.png       | Yes
+20 | Musikk                    | 16935.png       | No
+21 | Show                      | 7622.png        | No
+22 | Skj??nnhet                | 26054.png       | Yes
+23 | Sminke og h??r            | 10408.png       | No
+24 | Negler                    | 56996.png       | No
+25 | Kl??r og smykker          | 82349.png       | No
+26 | Lokaler og aktiviteter    | 9235.png        | Yes
+27 | Festlokaler               | 49786.png       | No
+28 | Opplevelser og aktiviteter | 79509.png       | No
+29 | Planlegger                | 93670.png       | Yes
+30 | Bryllupsplanlegger        | 51754.png       | No
+31 | Eventplanlegger           | 42906.png       | No
+32 | Transport                 | 95837.png       | No
+33 | Bartender                 | 49418.png       | No
+34 | Skredder                  | 57050.png       | No
+35 | Sm??jobber                | 27866.png       | Yes
+36 | Servit??r                 | 30840.png       | No
+37 | Rengj??ring               | 53821.png       | No
+38 | Utleie                    | 77701.png       | No
+39 | Gaver                     | 30972.png       | No

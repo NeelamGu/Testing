@@ -1,0 +1,693 @@
+@extends('front.layout.layout')
+@section('content')
+@include('front.users.partials.topbar', ['activeTopTab' => 'profile'])
+<style>
+   .profile-shell {
+      margin-top: 4px;
+      margin-bottom: 0;
+   }
+   .contact-section.account-page .column.pull-left {
+      overflow: hidden;
+   }
+   .profile-main {
+      background: #f7f3ec;
+      border: 1px solid #e8dbc7;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 14px 26px rgba(49, 37, 20, 0.07);
+      height: calc(100vh - 124px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+   }
+   .profile-heading {
+      margin-bottom: 10px;
+      flex-shrink: 0;
+   }
+   .profile-kicker {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #a27f58;
+      font-weight: 700;
+      margin-bottom: 4px;
+   }
+   .profile-heading h2 {
+      margin: 0;
+      font-size: 46px;
+      line-height: 0.98;
+      color: #1f1d1a;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+   }
+   .profile-heading p {
+      margin: 8px 0 0;
+      color: #5f574d;
+      font-size: 13px;
+      max-width: 680px;
+      line-height: 1.35;
+   }
+   .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
+      gap: 12px;
+      margin-top: 8px;
+      align-items: start;
+      flex: 1;
+      min-height: 0;
+   }
+   .profile-left-stack,
+   .profile-right-stack {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+   }
+   .card-soft {
+      border: 1px solid #e9dcc8;
+      border-radius: 16px;
+      background: #f1ebe2;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+   }
+   .personal-card {
+      margin-bottom: 14px;
+   }
+   .card-icon-title {
+      margin: 0 0 10px;
+      color: #1f1d1a;
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+   }
+   .card-icon-title i {
+      color: #9f620e;
+   }
+   .field-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px 8px;
+   }
+   .field-wrap label {
+      display: block;
+      margin: 0 0 4px;
+      color: #7a6f62;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+   }
+   .field-wrap input {
+      width: 100%;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid #ddd0bb;
+      padding: 7px 10px;
+      background: #f8f4ed;
+      font-size: 12px;
+      color: #312a22;
+   }
+   .field-wrap input:focus {
+      border-color: #b56908;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(181, 105, 8, 0.14);
+   }
+   .field-wrap p {
+      margin: 3px 0 0;
+      min-height: 0;
+      font-size: 11px;
+      line-height: 1.2;
+   }
+   .visual-card {
+      margin-top: 2px;
+   }
+   .visual-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+   }
+   .visual-row strong {
+      font-size: 15px;
+      color: #2b251d;
+   }
+   .visual-row p {
+      margin: 0;
+      color: #5e564c;
+      font-size: 12px;
+   }
+   .color-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+   }
+   .color-row input[type="color"] {
+      width: 36px;
+      height: 36px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px #c8b79f;
+      background: transparent;
+      cursor: pointer;
+   }
+   .preset-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      background: #fff;
+      display: inline-block;
+   }
+   .security-card .field-wrap {
+      margin-bottom: 8px;
+   }
+   .security-card .field-wrap:last-child {
+      margin-bottom: 0;
+   }
+   .security-help {
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a0692c;
+      text-decoration: none;
+      display: inline-block;
+   }
+   .security-help:hover {
+      color: #7f4d12;
+   }
+   .profile-summary {
+      text-align: center;
+      padding: 16px 12px;
+      background: #f8f5ef;
+   }
+   .profile-avatar-wrap {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 10px;
+      position: relative;
+   }
+   .profile-summary img {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 8px 18px rgba(30, 23, 13, 0.2);
+      object-fit: cover;
+   }
+   .profile-edit-dot {
+      position: absolute;
+      right: -2px;
+      bottom: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #a65f03;
+      color: #fff;
+      border: 2px solid #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+   }
+   .profile-edit-dot:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(166, 95, 3, 0.2);
+   }
+   #profile-image-status {
+      margin: 8px 0 0;
+      min-height: 18px;
+      font-size: 12px;
+      color: #7a6f62;
+   }
+   .profile-summary h4 {
+      margin: 0;
+      color: #1f1d1a;
+      font-size: 22px;
+      font-weight: 700;
+   }
+   .profile-summary p {
+      margin: 5px 0 0;
+      color: #7a6f62;
+      font-size: 12px;
+   }
+   .timeline-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #231e17;
+   }
+   .timeline-subtitle {
+      margin: 6px 0 8px;
+      color: #766a5d;
+      font-size: 11px;
+      line-height: 1.35;
+   }
+   .timeline-list {
+      display: grid;
+      gap: 8px;
+   }
+   .timeline-item {
+      position: relative;
+      padding: 8px 10px;
+      min-height: 0;
+      border: 1px solid #e6d8c4;
+      border-radius: 12px;
+      background: #f8f4ed;
+   }
+   .timeline-item:after {
+      display: none;
+   }
+   .timeline-icon {
+      position: static;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      font-size: 10px;
+   }
+   .timeline-icon.new {
+      background: #f8e8cf;
+      color: #8a520a;
+      border-color: #ebc68e;
+   }
+   .timeline-icon.done {
+      background: #edf4ef;
+      color: #547060;
+      border-color: #cfdfd1;
+   }
+   .timeline-icon.neutral {
+      background: #eef1f4;
+      color: #667687;
+      border-color: #d5dde6;
+   }
+   .timeline-item-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+   }
+   .timeline-item-top strong {
+      font-size: 13px;
+      color: #2a241c;
+      font-weight: 700;
+   }
+   .timeline-count {
+      min-width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #ede3d6;
+      color: #7a6a54;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 0 5px;
+   }
+   .timeline-link {
+      display: inline-block;
+      font-size: 13px;
+      color: #2c2419;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1.25;
+      margin-bottom: 0;
+   }
+   .timeline-time {
+      margin: 2px 0 0;
+      color: #9a8a74;
+      font-size: 10px;
+      line-height: 1.35;
+   }
+   .profile-side-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+   }
+   .profile-side-actions .save-btn {
+      border: 0;
+      border-radius: 14px;
+      min-height: 48px;
+      width: auto;
+      min-width: 230px;
+      padding: 0 18px;
+      font-size: 17px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 16px rgba(70, 43, 12, 0.2);
+   }
+   .profile-side-actions .save-btn:hover {
+      filter: brightness(0.96);
+   }
+   .deactivate-link {
+      text-align: left;
+      width: 100%;
+   }
+   .profile-side-actions .deactivate-link a {
+      color: #5f574d;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+   }
+   .profile-side-actions .deactivate-link a:hover {
+      color: #3f372f;
+   }
+   #account-success,
+   #account-error {
+      margin: 0 0 8px;
+      font-size: 12px;
+   }
+   @media (max-width: 1199px) {
+      .profile-heading h2 {
+         font-size: 40px;
+      }
+      .profile-grid {
+         grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
+      }
+      .field-grid {
+      .profile-note {
+         margin: 8px 0 0;
+         color: #6b5d4a;
+         font-size: 14px;
+         font-weight: 600;
+         max-width: 680px;
+         line-height: 1.35;
+      }
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+   }
+   @media (max-width: 991px) {
+      .profile-grid {
+         grid-template-columns: 1fr;
+      }
+      .profile-main {
+         height: auto;
+         overflow: visible;
+      }
+      .field-grid {
+         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .profile-heading h2 {
+         font-size: 34px;
+      }
+   }
+   @media (max-width: 767px) {
+      .profile-main {
+         padding: 10px;
+      }
+      .field-grid {
+         grid-template-columns: 1fr;
+      }
+      .profile-side-actions .save-btn {
+         width: 100%;
+         min-width: 0;
+      }
+      .profile-heading h2 {
+         font-size: 30px;
+      }
+      .timeline-title {
+         font-size: 20px;
+      }
+      .timeline-card.is-mobile-top {
+         margin-bottom: 12px;
+      }
+   }
+</style>
+
+<div class="page-wrapper">
+   <div class="contact-section account-page">
+      <div class="auto-container">
+         <div class="row clearfix">
+            <div class="col-md-3 col-sm-3 col-xs-12 column account-tab-area">
+               @include('front.users.partials.sidebar', ['activeTab' => 'account'])
+            </div>
+            <div class="col-md-9 col-sm-9 col-xs-12 column pull-left">
+               <div class="profile-shell">
+                  <div class="profile-main">
+                     <div class="profile-heading">
+                        <span class="profile-kicker">Innstillinger</span>
+                        <h2>Min Profil</h2>
+                        <p class="profile-note">{{ $profileNoteMessage ?? 'Velkommen tilbake! Klar for å planlegge noe hyggelig?' }}</p>
+                     </div>
+
+                     @if(Session::has('success_message'))
+                        <div class="alert alert-success">{{ Session::get('success_message') }}</div>
+                     @endif
+                     @if(Session::has('error_message'))
+                        <div class="alert alert-danger">{{ Session::get('error_message') }}</div>
+                     @endif
+                     @if($errors->any())
+                        <div class="alert alert-danger">{!! implode('', $errors->all('<div>:message</div>')) !!}</div>
+                     @endif
+
+                     <p id="account-error"></p>
+                     <p id="account-success"></p>
+
+                     <div class="profile-grid">
+                        <div class="profile-left-stack">
+                           <form id="accountForm" action="javascript:;" method="post">@csrf
+                              <div class="card-soft personal-card">
+                                 <h4 class="card-icon-title"><i class="fa fa-user"></i> Personlig Informasjon</h4>
+                                 <div class="field-grid">
+                                    <div class="field-wrap">
+                                       <label>Fullt navn</label>
+                                       <input type="text" id="user-first_name" name="first_name" value="{{ Auth::user()->first_name }}">
+                                       <p id="account-first_name"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>E-postadresse</label>
+                                       <input type="text" value="{{ Auth::user()->email }}" readonly>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Telefon</label>
+                                       <input type="text" id="user-mobile" name="mobile" value="{{ Auth::user()->mobile }}">
+                                       <p id="account-mobile"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Adresse</label>
+                                       <input type="text" id="user-address" name="address" value="{{ Auth::user()->address }}">
+                                       <p id="account-address"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Etternavn</label>
+                                       <input type="text" id="user-last_name" name="last_name" value="{{ Auth::user()->last_name }}">
+                                       <p id="account-last_name"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Poststed</label>
+                                       <input type="text" id="user-city" name="city" value="{{ Auth::user()->city }}">
+                                       <p id="account-city"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Fylke</label>
+                                       <input type="text" id="user-state" name="state" value="{{ Auth::user()->state }}">
+                                       <p id="account-state"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Postnummer</label>
+                                       <input type="text" id="user-pincode" name="pincode" value="{{ Auth::user()->pincode }}">
+                                       <p id="account-pincode"></p>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="card-soft visual-card">
+                                 <h4 class="card-icon-title"><i class="fa fa-paint-brush"></i> Visuelle Preferanser</h4>
+                                 <div class="visual-row">
+                                    <div>
+                                       <strong>Bakgrunnstone</strong>
+                                       <p>Velg en fargetone som passer ditt arbeidsmiljø.</p>
+                                    </div>
+                                    <div class="color-row">
+                                       <input type="color" id="user-panel-bg-color" name="panel_bg_color" value="{{ Auth::user()->panel_bg_color ?: '#f8f4ed' }}">
+                                       <span class="preset-dot" data-target="bg" data-value="#f8f4ed" style="background:#f8f4ed;"></span>
+                                       <span class="preset-dot" data-target="bg" data-value="#e9eef1" style="background:#e9eef1;"></span>
+                                       <span class="preset-dot" data-target="bg" data-value="#1e1d1a" style="background:#1e1d1a;"></span>
+                                    </div>
+                                 </div>
+                                 <div class="visual-row" style="margin-bottom:0;">
+                                    <div>
+                                       <strong>Aksentfarge</strong>
+                                       <p>Hovedfarge for knapper og aktive elementer.</p>
+                                    </div>
+                                    <div class="color-row">
+                                       <input type="color" id="user-panel-accent-color" name="panel_accent_color" value="{{ Auth::user()->panel_accent_color ?: '#e78002' }}">
+                                       <span class="preset-dot" data-target="accent" data-value="#a65f03" style="background:#a65f03;"></span>
+                                       <span class="preset-dot" data-target="accent" data-value="#7aa07d" style="background:#7aa07d;"></span>
+                                       <span class="preset-dot" data-target="accent" data-value="#6e8ea5" style="background:#6e8ea5;"></span>
+                                       <span class="preset-dot" data-target="accent" data-value="#9f6d8d" style="background:#9f6d8d;"></span>
+                                    </div>
+                                 </div>
+                                 <p id="account-panel_bg_color" style="display:none;"></p>
+                                 <p id="account-panel_accent_color" style="display:none;"></p>
+                              </div>
+
+                              <div class="profile-side-actions">
+                                 <button class="save-btn" type="submit"><i class="fa fa-save"></i> Lagre endringer</button>
+                                 <div class="deactivate-link">
+                                    <a href="javascript:void(0)">Deaktiver konto</a>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+
+                        <div class="profile-right-stack">
+                           <div class="card-soft security-card">
+                              <h4 class="card-icon-title"><i class="fa fa-shield"></i> Sikkerhet</h4>
+                              <div class="field-wrap">
+                                 <label>Nåværende passord</label>
+                                 <input type="password" value="********" readonly>
+                              </div>
+                              <div class="field-wrap">
+                                 <label>Nytt passord</label>
+                                 <input type="password" value="" placeholder="Min. 8 tegn" readonly>
+                              </div>
+                              <a class="security-help" href="{{ url('user/update-password') }}">Glemt passord?</a>
+                           </div>
+
+                           <div class="card-soft profile-summary">
+                              @php
+                                 $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
+                                 $profileImageAbsolutePath = public_path($profileImageRelativePath);
+                                 $profileImageUrl = file_exists($profileImageAbsolutePath)
+                                    ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
+                                    : asset('front/images/profile.png');
+                              @endphp
+                              <div class="profile-avatar-wrap">
+                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
+                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
+                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
+                              </div>
+                              <p id="profile-image-status">Trykk på blyanten for å endre bilde.</p>
+                              <h4>{{ Auth::user()->name }}</h4>
+                              <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
+                           </div>
+
+                           <div class="card-soft timeline-card">
+                              <h4 class="timeline-title">Nylige oppdateringer</h4>
+                              <p class="timeline-subtitle">Her vises kun varsler når du har fått ny melding.</p>
+                              @php
+                                 $newMessageUpdates = collect($recentEnquiries ?? [])->filter(function($timeline){
+                                    return (int)($timeline['unread_vendor'] ?? 0) > 0;
+                                 })->take(4);
+                              @endphp
+                              <div class="timeline-list">
+                                 @forelse($newMessageUpdates as $timeline)
+                                    @php
+                                       $timelineName = $timeline['product']['product_name'] ?? 'Oppdrag';
+                                       $timelineDate = !empty($timeline['last_message_at']) ? date('d.m.y H:i', strtotime($timeline['last_message_at'])) : (!empty($timeline['updated_at']) ? date('d.m.y H:i', strtotime($timeline['updated_at'])) : '');
+                                       $timelineUnread = (int)($timeline['unread_vendor'] ?? 0);
+                                    @endphp
+                                    <div class="timeline-item">
+                                       <div class="timeline-item-top">
+                                          <span class="timeline-icon new"><i class="fa fa-commenting-o"></i></span>
+                                          <strong>Ny melding</strong>
+                                          <span class="timeline-count">{{ $timelineUnread }}</span>
+                                       </div>
+                                       <a class="timeline-link" href="{{ url('user/enquiries/'.$timeline['id']) }}">{{ $timelineName }}</a>
+                                       <p class="timeline-time">Mottatt {{ $timelineDate }}</p>
+                                    </div>
+                                 @empty
+                                    <div class="timeline-item">
+                                       <span class="timeline-icon neutral"><i class="fa fa-info"></i></span>
+                                       <div class="timeline-item-top"><strong>Ingen nye meldinger</strong></div>
+                                       <p class="timeline-time">Du får varsel her når leverandører svarer.</p>
+                                    </div>
+                                 @endforelse
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+   (function () {
+      var dots = document.querySelectorAll('.preset-dot');
+      var bgInput = document.getElementById('user-panel-bg-color');
+      var accentInput = document.getElementById('user-panel-accent-color');
+      if (!bgInput || !accentInput) {
+         return;
+      }
+      function applyPanelColors() {
+         document.documentElement.style.setProperty('--customer-panel-bg', bgInput.value || '#f8f4ed');
+         document.documentElement.style.setProperty('--customer-panel-accent', accentInput.value || '#e78002');
+      }
+      bgInput.addEventListener('input', applyPanelColors);
+      accentInput.addEventListener('input', applyPanelColors);
+      bgInput.addEventListener('change', applyPanelColors);
+      accentInput.addEventListener('change', applyPanelColors);
+      applyPanelColors();
+      if (!dots.length) {
+         return;
+      }
+      for (var i = 0; i < dots.length; i++) {
+         dots[i].addEventListener('click', function () {
+            var target = this.getAttribute('data-target');
+            var value = this.getAttribute('data-value');
+            if (target === 'bg' && value) {
+               bgInput.value = value;
+            }
+            if (target === 'accent' && value) {
+               accentInput.value = value;
+            }
+            applyPanelColors();
+         });
+      }
+   })();
+
+   (function () {
+      var timelineCard = document.querySelector('.timeline-card');
+      var leftStack = document.querySelector('.profile-left-stack');
+      var rightStack = document.querySelector('.profile-right-stack');
+
+      if (!timelineCard || !leftStack || !rightStack) {
+         return;
+      }
+
+      function placeTimelineForViewport() {
+         var isMobile = window.matchMedia('(max-width: 767px)').matches;
+         if (isMobile) {
+            if (!timelineCard.classList.contains('is-mobile-top')) {
+               leftStack.insertBefore(timelineCard, leftStack.firstChild);
+               timelineCard.classList.add('is-mobile-top');
+            }
+            return;
+         }
+
+         if (timelineCard.classList.contains('is-mobile-top')) {
+            rightStack.appendChild(timelineCard);
+            timelineCard.classList.remove('is-mobile-top');
+         }
+      }
+
+      placeTimelineForViewport();
+      window.addEventListener('resize', placeTimelineForViewport);
+   })();
+</script>
+@endsection

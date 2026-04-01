@@ -1,0 +1,26 @@
+.loader
+{
+  background: rgba( 255, 255, 255, 0.8 );
+  display: none;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+.loader img
+{
+  left: 50%;
+  margin-left: -32px;
+  margin-top: -32px;
+  position: absolute;
+  top: 50%;
+}
+
+.PleaseWaitDiv img {
+    margin-top: 15%;
+    width: 200px;
+}
+.PleaseWaitDiv{background: #ffffff;color: #666666;position: fixed;height: 100%;width: 100%;z-index: 5000;top: 0;left: 0;float: left;text-align: center;opacity: .80;}
+.PleaseWaitDiv p{margin: 0;}
+.PleaseWaitDiv b{position: absolute; top: 50%; left: 0; width: 100%; text-align: center; display: inline-block; float: left; -webkit-transform: translateY(-50%); -moz-transform: translateY(-50%); -ms-transform: translateY(-50%); -o-transform: translateY(-50%); transform: translateY(-50%);}
