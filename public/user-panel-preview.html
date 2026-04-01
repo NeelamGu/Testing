@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Panel Preview</title>
+  <style>
+    :root {
+      --bg: #f3f5f7;
+      --card: #ffffff;
+      --ink: #15202b;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --accent: #0f766e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .shell {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .menu {
+      padding: 16px;
+    }
+
+    .menu h1 {
+      font-size: 18px;
+      margin: 0 0 14px 0;
+    }
+
+    .menu a {
+      display: block;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+      text-decoration: none;
+      color: var(--ink);
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+
+    .menu a.active {
+      background: #ecfdf5;
+      color: #065f46;
+      border-color: #a7f3d0;
+      font-weight: 600;
+    }
+
+    .main {
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: #ecfeff;
+      color: #0e7490;
+      border: 1px solid #bae6fd;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .metric .value {
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .block {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .block h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+
+    .block p {
+      margin: 0;
+      line-height: 1.5;
+      color: #374151;
+    }
+
+    .top-links {
+      max-width: 1100px;
+      margin: 20px auto 0;
+      padding: 0 16px;
+    }
+
+    .top-links a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+      margin-right: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-links">
+    <a href="/">Back to overview</a>
+    <a href="/preview/translation">Open translation preview</a>
+  </div>
+
+  <div class="shell">
+    <aside class="card menu">
+      <h1>New User Panel</h1>
+      <a class="active" href="#">Dashboard</a>
+      <a href="#">My Enquiries</a>
+      <a href="#">Wishlist</a>
+      <a href="#">Invitations</a>
+      <a href="#">Account Settings</a>
+    </aside>
+
+    <main class="card main">
+      <div class="header">
+        <h2>User Dashboard Preview</h2>
+        <span class="badge">UI changes only</span>
+      </div>
+
+      <div class="grid">
+        <div class="metric">
+          <div class="label">Open Enquiries</div>
+          <div class="value">12</div>
+        </div>
+        <div class="metric">
+          <div class="label">Unread Messages</div>
+          <div class="value">5</div>
+        </div>
+        <div class="metric">
+          <div class="label">Saved Listings</div>
+          <div class="value">9</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>What changed</h3>
+        <p>
+          This preview focuses on the updated user panel structure, cleaner navigation, and the visual hierarchy used in the new dashboard cards.
+        </p>
+      </div>
+
+      <div class="block">
+        <h3>Review scope</h3>
+        <p>
+          This is a dedicated preview build for developer feedback. Data here is mock data and intentionally isolated from backend integrations.
+        </p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

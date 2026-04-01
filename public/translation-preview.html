@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Translation Preview</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --line: #1f2937;
+      --ink: #f9fafb;
+      --muted: #9ca3af;
+      --btn: #0ea5e9;
+      --btn-text: #082f49;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 20%, #1d4ed8 0%, #0f172a 40%, #020617 100%);
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .top a {
+      color: #93c5fd;
+      text-decoration: none;
+      margin-right: 14px;
+      font-weight: 600;
+    }
+
+    .card {
+      margin-top: 18px;
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      margin: 0 0 12px 0;
+      font-size: 30px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 0;
+    }
+
+    .controls {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 12px 0 18px;
+    }
+
+    .controls button {
+      border: 0;
+      padding: 10px 16px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .controls button.active {
+      background: var(--btn);
+      color: var(--btn-text);
+    }
+
+    .sample {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .sample h2 {
+      margin: 0 0 8px 0;
+    }
+
+    .sample ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #d1d5db;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="/">Back to overview</a>
+      <a href="/preview/user-panel">Open user panel preview</a>
+    </div>
+
+    <div class="card">
+      <h1 id="title">Translation Function Preview</h1>
+      <p id="subtitle">
+        This page demonstrates the new language switch behavior used for the updated website experience.
+      </p>
+
+      <div class="controls">
+        <button id="btn-no" class="active" type="button">Norsk</button>
+        <button id="btn-en" type="button">English</button>
+      </div>
+
+      <div class="sample">
+        <h2 id="sampleTitle">Hva er inkludert</h2>
+        <ul>
+          <li id="point1">Forbedret språkbytte i grensesnittet.</li>
+          <li id="point2">Konsistent knappelogikk for valgt språk.</li>
+          <li id="point3">Forutsigbar visning av innhold per språk.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var noBtn = document.getElementById('btn-no');
+      var enBtn = document.getElementById('btn-en');
+
+      var i18n = {
+        no: {
+          title: 'Oversettingsfunksjon - Preview',
+          subtitle: 'Denne siden demonstrerer den nye språkbytte-flyten som brukes i den oppdaterte nettsiden.',
+          sampleTitle: 'Hva er inkludert',
+          point1: 'Forbedret språkbytte i grensesnittet.',
+          point2: 'Konsistent knappelogikk for valgt språk.',
+          point3: 'Forutsigbar visning av innhold per språk.'
+        },
+        en: {
+          title: 'Translation Function Preview',
+          subtitle: 'This page demonstrates the new language switching flow used in the updated website experience.',
+          sampleTitle: 'What is included',
+          point1: 'Improved language switching in the interface.',
+          point2: 'Consistent selected-language button behavior.',
+          point3: 'Predictable content rendering per language.'
+        }
+      };
+
+      function setLanguage(lang) {
+        var t = i18n[lang];
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('subtitle').textContent = t.subtitle;
+        document.getElementById('sampleTitle').textContent = t.sampleTitle;
+        document.getElementById('point1').textContent = t.point1;
+        document.getElementById('point2').textContent = t.point2;
+        document.getElementById('point3').textContent = t.point3;
+
+        noBtn.classList.toggle('active', lang === 'no');
+        enBtn.classList.toggle('active', lang === 'en');
+      }
+
+      noBtn.addEventListener('click', function () { setLanguage('no'); });
+      enBtn.addEventListener('click', function () { setLanguage('en'); });
+      setLanguage('no');
+    })();
+  </script>
+</body>
+</html>
