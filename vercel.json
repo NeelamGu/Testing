@@ -2,7 +2,8 @@
   "version": 2,
   "functions": {
     "api/*.php": {
-      "runtime": "vercel-php@0.7.4"
+      "runtime": "vercel-php@0.7.4",
+      "excludeFiles": "{public/admin/**,public/front/images/**,public/front/videos/**,public/front/fonts/**,public/storage/**,storage/logs/**,tests/**,old/**,database.sql,Default.html,cat_list.txt,pop_cat.txt,prod_list.txt}"
     }
   },
   "routes": [
@@ -11,8 +12,24 @@
       "dest": "/public/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/$",
       "dest": "/api/index.php"
+    },
+    {
+      "src": "/(login|register|home)$",
+      "dest": "/api/index.php"
+    },
+    {
+      "src": "/user(?:/.*)?$",
+      "dest": "/api/index.php"
+    },
+    {
+      "src": "/(get-user-enquiries|update-enquiry-status|delete-enquiry|update-pin-status|get-city|get-city-state|get-countrycode|write-a-review)$",
+      "dest": "/api/index.php"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/preview-only.html"
     }
   ],
   "env": {
