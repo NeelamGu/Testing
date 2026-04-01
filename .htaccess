@@ -1,5 +1,10 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine on
-    RewriteRule    ^$    public/    [L]
-    RewriteRule    (.*) public/$1    [L]
+    RewriteEngine On
+
+    # Route the project root into the Laravel public folder.
+    RewriteRule ^$ public/ [L]
+
+    # Avoid endless /public/public/... rewrites on shared hosting.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
