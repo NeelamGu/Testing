@@ -68,6 +68,9 @@ $messagesCountCustomer = messagesCountCustomer();
    .reply-ref-btn {
       border-radius: 8px;
       font-weight: 600;
+      padding: 8px 13px;
+      font-size: 14px;
+      line-height: 1.1;
       transition: transform 0.2s ease, opacity 0.2s ease;
    }
    .reply-back-btn:hover,
@@ -124,8 +127,8 @@ $messagesCountCustomer = messagesCountCustomer();
    .chat-bubble {
       width: fit-content;
       max-width: min(72%, 700px);
-      border-radius: 16px;
-      padding: 8px 12px 7px;
+      border-radius: 18px;
+      padding: 10px 14px 8px;
       box-shadow: 0 5px 14px rgba(42, 58, 79, 0.12);
       border: 1px solid transparent;
    }
@@ -141,9 +144,9 @@ $messagesCountCustomer = messagesCountCustomer();
    }
    .chat-author {
       display: block;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
       color: #60758f;
       text-transform: uppercase;
       letter-spacing: 0.35px;
@@ -153,8 +156,8 @@ $messagesCountCustomer = messagesCountCustomer();
       text-align: right;
    }
    .chat-text {
-      font-size: 14px;
-      line-height: 1.35;
+      font-size: 16px;
+      line-height: 1.45;
       color: #1d2a38;
       white-space: pre-wrap;
       word-break: break-word;
@@ -167,9 +170,9 @@ $messagesCountCustomer = messagesCountCustomer();
    }
    .chat-time {
       display: block;
-      margin-top: 4px;
+      margin-top: 6px;
       text-align: right;
-      font-size: 11px;
+      font-size: 12px;
       color: #627587;
       font-weight: 600;
    }
@@ -182,15 +185,15 @@ $messagesCountCustomer = messagesCountCustomer();
    .composer-wrap {
       border-top: 1px solid #d6e1ec;
       background: #f8fcff;
-      padding: 8px 10px;
+      padding: 7px 10px;
       flex-shrink: 0;
    }
    .composer-wrap textarea {
       width: 100%;
-      min-height: 54px;
+      min-height: 48px;
       border: 1px solid #c8d6e5;
       border-radius: 16px;
-      padding: 10px 13px;
+      padding: 9px 12px;
       resize: none;
       background: #fff;
    }
@@ -200,11 +203,11 @@ $messagesCountCustomer = messagesCountCustomer();
       box-shadow: 0 0 0 3px rgba(47, 129, 247, 0.12);
    }
    .composer-row {
-      margin-top: 7px;
+      margin-top: 6px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       justify-content: space-between;
    }
    .image-preview-wrap {
@@ -252,10 +255,10 @@ $messagesCountCustomer = messagesCountCustomer();
       margin-left: 0;
       border-radius: 999px;
       font-weight: 700;
-      min-width: 96px;
+      min-width: 84px;
       width: auto !important;
-      height: 38px;
-      padding: 0 16px;
+      height: 34px;
+      padding: 0 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -280,19 +283,20 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .conversation-card {
-         height: calc(100dvh - 176px);
+         height: calc(100dvh - 140px);
          min-height: 0;
-         max-height: calc(100dvh - 176px);
+         max-height: calc(100dvh - 140px);
       }
 
       .conversation-head {
          align-items: flex-start;
          flex-direction: column;
-         padding: 10px 11px;
+         gap: 8px;
+         padding: 8px 10px;
       }
 
       .conversation-title {
-         font-size: 17px;
+         font-size: 18px;
       }
 
       .conversation-actions {
@@ -300,8 +304,10 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .reply-back-btn {
-         width: 100%;
-         justify-content: center;
+         width: auto;
+         padding: 6px 11px;
+         font-size: 13px;
+         justify-content: flex-start;
       }
 
       .chat-area-sec.enquiries-reply-area {
@@ -319,39 +325,39 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .chat-bubble {
-         max-width: 88%;
-         padding: 8px 10px 6px;
+         max-width: 93%;
+         padding: 10px 12px 8px;
       }
 
       .chat-author {
-         font-size: 10px;
-         margin-bottom: 3px;
+         font-size: 11px;
+         margin-bottom: 4px;
       }
 
       .chat-text {
-         font-size: 13px;
-         line-height: 1.32;
+         font-size: 18px;
+         line-height: 1.45;
       }
 
       .chat-time {
-         font-size: 10px;
+         font-size: 12px;
       }
 
       .composer-wrap {
-         padding: 9px;
-         padding-bottom: calc(9px + env(safe-area-inset-bottom));
+         padding: 8px;
+         padding-bottom: calc(8px + env(safe-area-inset-bottom));
       }
 
       .composer-wrap textarea {
-         min-height: 52px;
-         font-size: 13px;
+         min-height: 44px;
+         font-size: 15px;
          border-radius: 14px;
       }
 
       .composer-row {
-         margin-top: 7px;
+         margin-top: 6px;
          gap: 7px;
-         justify-content: stretch;
+         justify-content: space-between;
       }
 
       .image-preview-item {
@@ -365,14 +371,15 @@ $messagesCountCustomer = messagesCountCustomer();
 
       .upload-file-area {
          max-width: 100%;
-         width: 100% !important;
+         width: auto !important;
          font-size: 12px;
       }
 
       .send-reply .r-btn {
          min-width: 0;
-         width: 100% !important;
-         height: 40px;
+         width: auto !important;
+         height: 34px;
+         padding: 0 14px;
       }
    }
 </style>
