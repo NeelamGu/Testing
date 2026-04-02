@@ -11,19 +11,19 @@ $messagesCountCustomer = messagesCountCustomer();
       overflow: hidden;
    }
    .conversation-shell {
-      background: linear-gradient(160deg, rgba(248, 244, 237, 0.86), rgba(244, 249, 255, 0.74));
-      border: 1px solid rgba(224, 204, 173, 0.45);
-      border-radius: 14px;
-      padding: 10px;
-      margin-top: 4px;
-      height: calc(100% - 4px);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+       background: linear-gradient(160deg, rgba(248, 244, 237, 0.88), rgba(244, 249, 255, 0.78));
+       border: none;
+       border-radius: 14px;
+       padding: 10px;
+       margin-top: 4px;
+       height: calc(100% - 4px);
+       box-shadow: none;
    }
    .conversation-card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(252, 254, 255, 0.92));
-      border-radius: 12px;
-      border: 1px solid rgba(232, 221, 202, 0.55);
-      box-shadow: 0 10px 24px rgba(67, 47, 20, 0.06);
+       background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(252, 254, 255, 0.94));
+       border-radius: 12px;
+       border: none;
+       box-shadow: 0 12px 32px rgba(67, 47, 20, 0.08);
       overflow: hidden;
       height: 100%;
       display: flex;
@@ -108,8 +108,8 @@ $messagesCountCustomer = messagesCountCustomer();
       display: inline-block;
       padding: 2px 9px;
       border-radius: 999px;
-      border: 1px solid rgba(186, 199, 214, 0.55);
-      background: rgba(237, 242, 248, 0.72);
+       border: none;
+       background: rgba(237, 242, 248, 0.8);
       color: #66798b;
       font-size: 10px;
       font-weight: 700;
@@ -130,17 +130,17 @@ $messagesCountCustomer = messagesCountCustomer();
       max-width: min(72%, 700px);
       border-radius: 16px;
       padding: 8px 12px 6px;
-      box-shadow: 0 4px 10px rgba(42, 58, 79, 0.08);
-      border: 1px solid transparent;
+      box-shadow: 0 3px 12px rgba(42, 58, 79, 0.12);
+      border: none;
    }
    .chat-item.vendor .chat-bubble {
-      background: rgba(255, 255, 255, 0.92);
-      border-color: rgba(206, 218, 232, 0.58);
+      background: rgba(255, 255, 255, 0.94);
+      border-color: transparent;
       border-top-left-radius: 5px;
    }
    .chat-item.customer .chat-bubble {
-      background: linear-gradient(180deg, rgba(216, 252, 211, 0.92) 0%, rgba(201, 244, 194, 0.9) 100%);
-      border-color: rgba(151, 209, 143, 0.62);
+      background: linear-gradient(180deg, rgba(216, 252, 211, 0.94) 0%, rgba(201, 244, 194, 0.92) 100%);
+      border-color: transparent;
       border-top-right-radius: 5px;
    }
    .chat-author {
@@ -184,8 +184,8 @@ $messagesCountCustomer = messagesCountCustomer();
       display: block;
    }
    .composer-wrap {
-      border-top: 1px solid rgba(206, 220, 234, 0.62);
-      background: linear-gradient(180deg, rgba(248, 252, 255, 0.9), rgba(244, 249, 254, 0.88));
+       border-top: none;
+       background: linear-gradient(180deg, rgba(248, 252, 255, 0.92), rgba(244, 249, 254, 0.9));
       padding: 6px 8px;
       flex-shrink: 0;
       position: relative;
@@ -203,11 +203,12 @@ $messagesCountCustomer = messagesCountCustomer();
       flex: 1;
       min-height: 38px;
       max-height: 112px;
-      border: 1px solid rgba(190, 208, 226, 0.75);
-      border-radius: 16px;
-      padding: 8px 12px;
-      resize: none;
-      background: rgba(255, 255, 255, 0.96);
+       border: none;
+       border-radius: 16px;
+       padding: 8px 12px;
+       resize: none;
+       background: rgba(255, 255, 255, 0.98);
+       box-shadow: 0 2px 8px rgba(42, 58, 79, 0.1);
       overflow-y: auto;
       line-height: 1.35;
    }
@@ -220,9 +221,10 @@ $messagesCountCustomer = messagesCountCustomer();
       width: 36px;
       height: 36px;
       min-height: 0 !important;
-      border: 1px solid rgba(190, 208, 226, 0.8);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.95);
+       border: none;
+       border-radius: 999px;
+       background: rgba(255, 255, 255, 0.97);
+       box-shadow: 0 2px 6px rgba(42, 58, 79, 0.08);
       color: #4f647b;
       display: inline-flex;
       align-items: center;
