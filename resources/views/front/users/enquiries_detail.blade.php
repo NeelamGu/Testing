@@ -11,18 +11,19 @@ $messagesCountCustomer = messagesCountCustomer();
       overflow: hidden;
    }
    .conversation-shell {
-      background: #f8f4ed;
-      border: 1px solid #ecd9bf;
+      background: linear-gradient(160deg, rgba(248, 244, 237, 0.86), rgba(244, 249, 255, 0.74));
+      border: 1px solid rgba(224, 204, 173, 0.45);
       border-radius: 14px;
       padding: 10px;
       margin-top: 4px;
       height: calc(100% - 4px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
    }
    .conversation-card {
-      background: #fff;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(252, 254, 255, 0.92));
       border-radius: 12px;
-      border: 1px solid #efe1ce;
-      box-shadow: 0 12px 28px rgba(67, 47, 20, 0.08);
+      border: 1px solid rgba(232, 221, 202, 0.55);
+      box-shadow: 0 10px 24px rgba(67, 47, 20, 0.06);
       overflow: hidden;
       height: 100%;
       display: flex;
@@ -39,8 +40,8 @@ $messagesCountCustomer = messagesCountCustomer();
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      border-bottom: 1px solid #f0e4d3;
-      background: linear-gradient(120deg, #f2fff4, #f6fbff);
+      border-bottom: 1px solid rgba(225, 214, 196, 0.4);
+      background: linear-gradient(120deg, rgba(242, 255, 244, 0.72), rgba(246, 251, 255, 0.72));
       padding: 12px 16px;
    }
    .conversation-title {
@@ -80,8 +81,8 @@ $messagesCountCustomer = messagesCountCustomer();
    }
    .chat-area-sec.enquiries-reply-area {
       background:
-         radial-gradient(circle at 1px 1px, rgba(72, 96, 123, 0.06) 1px, transparent 0) 0 0/14px 14px,
-         linear-gradient(180deg, #f4f8fc 0%, #eef4fb 100%);
+         radial-gradient(circle at 1px 1px, rgba(72, 96, 123, 0.028) 1px, transparent 0) 0 0/16px 16px,
+         linear-gradient(180deg, rgba(244, 248, 252, 0.85) 0%, rgba(238, 244, 251, 0.8) 100%);
       padding: 10px 12px;
       margin-top: 0;
       flex: 1;
@@ -107,9 +108,9 @@ $messagesCountCustomer = messagesCountCustomer();
       display: inline-block;
       padding: 2px 9px;
       border-radius: 999px;
-      border: 1px solid #d5dde7;
-      background: #edf2f8;
-      color: #627587;
+      border: 1px solid rgba(186, 199, 214, 0.55);
+      background: rgba(237, 242, 248, 0.72);
+      color: #66798b;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.2px;
@@ -129,17 +130,17 @@ $messagesCountCustomer = messagesCountCustomer();
       max-width: min(72%, 700px);
       border-radius: 16px;
       padding: 8px 12px 6px;
-      box-shadow: 0 5px 14px rgba(42, 58, 79, 0.12);
+      box-shadow: 0 4px 10px rgba(42, 58, 79, 0.08);
       border: 1px solid transparent;
    }
    .chat-item.vendor .chat-bubble {
-      background: #fff;
-      border-color: #dbe4ee;
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(206, 218, 232, 0.58);
       border-top-left-radius: 5px;
    }
    .chat-item.customer .chat-bubble {
-      background: linear-gradient(180deg, #d8fcd3 0%, #c9f4c2 100%);
-      border-color: #b6e6b0;
+      background: linear-gradient(180deg, rgba(216, 252, 211, 0.92) 0%, rgba(201, 244, 194, 0.9) 100%);
+      border-color: rgba(151, 209, 143, 0.62);
       border-top-right-radius: 5px;
    }
    .chat-author {
@@ -183,8 +184,8 @@ $messagesCountCustomer = messagesCountCustomer();
       display: block;
    }
    .composer-wrap {
-      border-top: 1px solid #d6e1ec;
-      background: #f8fcff;
+      border-top: 1px solid rgba(206, 220, 234, 0.62);
+      background: linear-gradient(180deg, rgba(248, 252, 255, 0.9), rgba(244, 249, 254, 0.88));
       padding: 6px 8px;
       flex-shrink: 0;
       position: relative;
@@ -202,11 +203,11 @@ $messagesCountCustomer = messagesCountCustomer();
       flex: 1;
       min-height: 38px;
       max-height: 112px;
-      border: 1px solid #c8d6e5;
+      border: 1px solid rgba(190, 208, 226, 0.75);
       border-radius: 16px;
       padding: 8px 12px;
       resize: none;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.96);
       overflow-y: auto;
       line-height: 1.35;
    }
@@ -219,9 +220,9 @@ $messagesCountCustomer = messagesCountCustomer();
       width: 36px;
       height: 36px;
       min-height: 0 !important;
-      border: 1px solid #c8d6e5;
+      border: 1px solid rgba(190, 208, 226, 0.8);
       border-radius: 999px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.95);
       color: #4f647b;
       display: inline-flex;
       align-items: center;
@@ -342,7 +343,7 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .chat-area-sec.enquiries-reply-area {
-         padding: 8px;
+         padding: 7px;
          min-height: 0;
       }
 
