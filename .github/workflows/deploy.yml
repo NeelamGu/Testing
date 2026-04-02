@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   deploy:
@@ -12,46 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          tools: composer:v2
-
-      - name: Install Composer Dependencies
-        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          printf '%s' "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
-          if ! grep -Eq "BEGIN (OPENSSH|RSA|EC|DSA) PRIVATE KEY" ~/.ssh/deploy_key; then
-            echo "::error::SSH_PRIVATE_KEY secret does not look like a private key. Paste the PRIVATE key, not the public key."
-            exit 1
-          fi
-          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p 18765 ssh.neelamg.sg-host.com >> ~/.ssh/known_hosts
 
-      - name: Verify SSH Login
-        run: |
-          ssh -i ~/.ssh/deploy_key -p 18765 \
-            -o BatchMode=yes \
-            -o IdentitiesOnly=yes \
-            -o StrictHostKeyChecking=yes \
-            u2842-rygsrj4ondp@ssh.neelamg.sg-host.com "echo SSH_OK"
-
       - name: Deploy via rsync
         run: |
-          rsync -avz \
-            -e "ssh -i ~/.ssh/deploy_key -p 18765 -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p 18765 -o StrictHostKeyChecking=no" \
             --exclude='.git' \
             --exclude='.github' \
-            --exclude='node_modules' \
-            --exclude='tests' \
-            --exclude='.env' \
-            ./ u2842-rygsrj4ondp@ssh.neelamg.sg-host.com:/home/u2842-rygsrj4ondp/www/neelamg.sg-host.com/public_html/
-
-      - name: Clear Laravel Caches on Server
-        run: |
-          ssh -i ~/.ssh/deploy_key -p 18765 -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes u2842-rygsrj4ondp@ssh.neelamg.sg-host.com "cd /home/u2842-rygsrj4ondp/www/neelamg.sg-host.com/public_html && php artisan optimize:clear || true"
+            ./ u2842-rygsrjj4ondp@ssh.neelamg.sg-host.com:/home/u2842-rygsrjj4ondp/www/neelamg.sg-host.com/public_html/
