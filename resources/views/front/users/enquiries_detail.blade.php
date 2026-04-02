@@ -185,30 +185,55 @@ $messagesCountCustomer = messagesCountCustomer();
    .composer-wrap {
       border-top: 1px solid #d6e1ec;
       background: #f8fcff;
-      padding: 7px 10px;
+      padding: 6px 8px;
       flex-shrink: 0;
+      position: relative;
+      z-index: 2;
    }
-   .composer-wrap textarea {
-      width: 100%;
-      min-height: 48px;
+   .composer-form {
+      margin: 0;
+   }
+   .composer-input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+   }
+   .composer-input {
+      flex: 1;
+      min-height: 38px;
+      max-height: 112px;
       border: 1px solid #c8d6e5;
       border-radius: 16px;
-      padding: 9px 12px;
+      padding: 8px 12px;
       resize: none;
       background: #fff;
+      overflow-y: auto;
+      line-height: 1.35;
    }
-   .composer-wrap textarea:focus {
+   .composer-input:focus {
       outline: none;
       border-color: #2f81f7;
       box-shadow: 0 0 0 3px rgba(47, 129, 247, 0.12);
    }
-   .composer-row {
-      margin-top: 6px;
-      display: flex;
-      flex-wrap: wrap;
+   .composer-attach-btn {
+      width: 36px;
+      height: 36px;
+      min-height: 0 !important;
+      border: 1px solid #c8d6e5;
+      border-radius: 999px;
+      background: #fff;
+      color: #4f647b;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      justify-content: space-between;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
+   }
+   .composer-attach-btn:hover,
+   .composer-attach-btn:focus {
+      color: #2f81f7;
+      border-color: #2f81f7;
+      background: #f8fbff;
    }
    .image-preview-wrap {
       margin-top: 8px;
@@ -246,18 +271,23 @@ $messagesCountCustomer = messagesCountCustomer();
       text-overflow: ellipsis;
    }
    .upload-file-area {
+      position: absolute;
+      width: 1px;
+      height: 1px;
       margin: 0;
-      width: auto;
-      max-width: 100%;
-      display: inline-block !important;
+      padding: 0;
+      border: 0;
+      opacity: 0;
+      pointer-events: none;
    }
    .send-reply .r-btn {
       margin-left: 0;
       border-radius: 999px;
       font-weight: 700;
       min-width: 84px;
+      min-height: 0 !important;
       width: auto !important;
-      height: 34px;
+      height: 36px;
       padding: 0 14px;
       display: inline-flex;
       align-items: center;
@@ -283,30 +313,31 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .conversation-card {
-         height: calc(100dvh - 140px);
+         height: calc(100dvh - 126px);
          min-height: 0;
-         max-height: calc(100dvh - 140px);
+         max-height: calc(100dvh - 126px);
       }
 
       .conversation-head {
-         align-items: flex-start;
-         flex-direction: column;
-         gap: 8px;
-         padding: 8px 10px;
+         align-items: center;
+         flex-direction: row;
+         gap: 6px;
+         padding: 7px 9px;
       }
 
       .conversation-title {
-         font-size: 18px;
+         font-size: 16px;
       }
 
       .conversation-actions {
-         width: 100%;
+         width: auto;
+         flex-shrink: 0;
       }
 
       .reply-back-btn {
          width: auto;
-         padding: 6px 11px;
-         font-size: 13px;
+         padding: 5px 10px;
+         font-size: 12px;
          justify-content: flex-start;
       }
 
@@ -344,20 +375,25 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .composer-wrap {
-         padding: 8px;
-         padding-bottom: calc(8px + env(safe-area-inset-bottom));
+         padding: 6px;
+         padding-bottom: calc(6px + env(safe-area-inset-bottom));
       }
 
-      .composer-wrap textarea {
-         min-height: 44px;
+      .composer-input-row {
+         gap: 6px;
+      }
+
+      .composer-input {
+         min-height: 36px;
+         max-height: 96px;
          font-size: 15px;
          border-radius: 14px;
+         padding: 7px 11px;
       }
 
-      .composer-row {
-         margin-top: 6px;
-         gap: 7px;
-         justify-content: space-between;
+      .composer-attach-btn {
+         width: 34px;
+         height: 34px;
       }
 
       .image-preview-item {
@@ -370,9 +406,7 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .upload-file-area {
-         max-width: 100%;
-         width: auto !important;
-         font-size: 12px;
+         width: 1px !important;
       }
 
       .send-reply .r-btn {
@@ -447,19 +481,20 @@ $messagesCountCustomer = messagesCountCustomer();
                      </div>
                   </div>
                   <div class="send-reply composer-wrap">
-                     <div class="form-group">
-                        <form id="replyEnquiryForm" method="post" action="{{ url('user/enquiry/response') }}" enctype="multipart/form-data">@csrf
-                           <input type="hidden" name="enquiry_id" value="{{ $enquiry_id }}">
-                           <textarea name="message" placeholder="Skriv melding til leverandøren"></textarea>
-                           <div class="image-preview-wrap" id="imagePreviewWrap">
-                              <div class="image-preview-list" id="imagePreviewList"></div>
-                           </div>
-                           <div class="composer-row">
-                              <input class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
-                              <button type="submit" class="r-btn">Send</button>
-                           </div>
-                        </form>
-                     </div>
+                     <form id="replyEnquiryForm" class="composer-form" method="post" action="{{ url('user/enquiry/response') }}" enctype="multipart/form-data">@csrf
+                        <input type="hidden" name="enquiry_id" value="{{ $enquiry_id }}">
+                        <div class="composer-input-row">
+                           <button type="button" id="composerAttachBtn" class="composer-attach-btn" aria-label="Legg til bilder">
+                              <i class="fa fa-image" aria-hidden="true"></i>
+                           </button>
+                           <textarea class="composer-input" name="message" rows="1" placeholder="Skriv melding til leverandøren"></textarea>
+                           <input id="composerFileInput" class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
+                           <button type="submit" class="r-btn">Send</button>
+                        </div>
+                        <div class="image-preview-wrap" id="imagePreviewWrap">
+                           <div class="image-preview-list" id="imagePreviewList"></div>
+                        </div>
+                     </form>
                   </div>
                </div>
             </div>
@@ -482,6 +517,7 @@ $messagesCountCustomer = messagesCountCustomer();
       var $replyForm = $("#replyEnquiryForm");
       var $messageInput = $replyForm.find("textarea[name='message']");
       var $fileInput = $replyForm.find("input[name='images[]']");
+      var $attachBtn = $("#composerAttachBtn");
       var $imagePreviewWrap = $("#imagePreviewWrap");
       var $imagePreviewList = $("#imagePreviewList");
       var previewObjectUrls = [];
@@ -531,6 +567,21 @@ $messagesCountCustomer = messagesCountCustomer();
          if ($imagePreviewList.children().length > 0) {
             $imagePreviewWrap.show();
          }
+      }
+
+      function autoResizeMessageInput() {
+         if (!$messageInput.length) {
+            return;
+         }
+
+         var el = $messageInput.get(0);
+         el.style.height = "auto";
+
+         var maxHeight = window.matchMedia("(max-width: 767px)").matches ? 96 : 112;
+         var nextHeight = Math.min(el.scrollHeight, maxHeight);
+
+         el.style.height = nextHeight + "px";
+         el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
       }
 
       function getDistanceFromBottom() {
@@ -691,6 +742,7 @@ $messagesCountCustomer = messagesCountCustomer();
 
       $(window).on("resize orientationchange", function () {
          sizeConversationCardForViewport();
+         autoResizeMessageInput();
          scrollChatToBottom(true);
       });
 
@@ -700,9 +752,20 @@ $messagesCountCustomer = messagesCountCustomer();
          }
       }, 4000);
 
+       $attachBtn.on("click", function () {
+          $fileInput.trigger("click");
+       });
+
        $fileInput.on("change", function () {
           renderImagePreview();
+          autoResizeMessageInput();
        });
+
+       $messageInput.on("input", function () {
+          autoResizeMessageInput();
+       });
+
+       autoResizeMessageInput();
 
        $replyForm.submit(function (event) {
            event.preventDefault(); // Prevent default form submission
@@ -730,6 +793,7 @@ $messagesCountCustomer = messagesCountCustomer();
                   if (response && response.status) {
                      form[0].reset();
                      clearImagePreview();
+                     autoResizeMessageInput();
                      appendNewMessages(response.message_html || "", response.message_id || lastMessageId);
                      scrollChatToBottom(true);
                   }
