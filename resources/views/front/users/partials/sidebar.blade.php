@@ -121,6 +121,48 @@
    .customer-panel-sidebar .account-sidebar li a:hover {
       border-left: 3px solid var(--customer-panel-accent);
    }
+   .contact-section.account-page .customer-panel-main,
+   .contact-section.account-page .messages-panel,
+   .contact-section.account-page .conversation-card,
+   .contact-section.account-page .message-hub,
+   .contact-section.account-page .status-filter-panel,
+   .contact-section.account-page .message-item,
+   .contact-section.account-page .profile-form-shell,
+   .contact-section.account-page .profile-summary,
+   .contact-section.account-page .message-empty,
+   .contact-section.account-page .info-box {
+      border-color: rgba(222, 206, 181, 0.5) !important;
+      box-shadow: 0 8px 22px rgba(64, 46, 22, 0.06) !important;
+      background: linear-gradient(175deg, rgba(255, 255, 255, 0.9), rgba(250, 252, 255, 0.84)) !important;
+   }
+   .contact-section.account-page .messages-panel-head,
+   .contact-section.account-page .conversation-head,
+   .contact-section.account-page .customer-panel-header {
+      border-bottom-color: rgba(223, 209, 188, 0.46) !important;
+      background: linear-gradient(130deg, rgba(255, 247, 233, 0.66), rgba(246, 251, 255, 0.66)) !important;
+   }
+   .contact-section.account-page .message-item::before {
+      opacity: 0.66;
+   }
+   .contact-section.account-page .message-open-link.view,
+   .contact-section.account-page .status-filter-btn,
+   .contact-section.account-page .status-filter-mobile-select,
+   .contact-section.account-page input,
+   .contact-section.account-page select,
+   .contact-section.account-page textarea {
+      border-color: rgba(197, 181, 158, 0.56) !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+   }
+   .contact-section.account-page .message-vendor-meta,
+   .contact-section.account-page .messages-panel-subtitle,
+   .contact-section.account-page .message-type-note {
+      color: #7f7263 !important;
+   }
+   .contact-section.account-page .message-list,
+   .contact-section.account-page .messages-panel-body,
+   .contact-section.account-page .customer-panel-body {
+      background: linear-gradient(180deg, rgba(251, 253, 255, 0.55), rgba(245, 250, 255, 0.45));
+   }
    @media (max-width: 991px) {
       .customer-panel-shell,
       .messages-shell,
@@ -208,6 +250,13 @@
          padding: 10px;
          border-radius: 14px;
          margin-top: 8px;
+      }
+      .contact-section.account-page .messages-panel,
+      .contact-section.account-page .conversation-card,
+      .contact-section.account-page .message-hub,
+      .contact-section.account-page .status-filter-panel,
+      .contact-section.account-page .message-item {
+         box-shadow: 0 5px 14px rgba(64, 46, 22, 0.05) !important;
       }
       .customer-panel-header,
       .messages-panel-head,

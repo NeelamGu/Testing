@@ -9,8 +9,8 @@
 
 <style>
    .customer-topbar {
-      border-bottom: 1px solid #e9dcc9;
-      background: #f4efe7;
+      border-bottom: 1px solid rgba(223, 206, 181, 0.56);
+      background: linear-gradient(180deg, rgba(244, 239, 231, 0.94), rgba(246, 242, 235, 0.88));
       margin-bottom: 14px;
       position: relative;
       z-index: 40;
@@ -76,7 +76,7 @@
       height: 30px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid #dbc8ad;
+      border: 1px solid rgba(211, 191, 162, 0.72);
    }
    .customer-topbar .profile-menu {
       position: relative;
@@ -99,10 +99,10 @@
       top: calc(100% + 10px);
       right: 0;
       min-width: 130px;
-      border: 1px solid #e8d8c1;
+      border: 1px solid rgba(224, 206, 181, 0.65);
       border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 10px 26px rgba(78, 58, 30, 0.12);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(251, 252, 255, 0.92));
+      box-shadow: 0 8px 20px rgba(78, 58, 30, 0.09);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-4px);
@@ -205,8 +205,8 @@
          position: sticky;
          top: 0;
          margin-bottom: 8px;
-         border-bottom: 1px solid #e4d5be;
-         background: rgba(244, 239, 231, 0.96);
+         border-bottom: 1px solid rgba(223, 204, 176, 0.6);
+         background: rgba(244, 239, 231, 0.9);
          backdrop-filter: blur(8px);
          -webkit-backdrop-filter: blur(8px);
       }
@@ -237,22 +237,22 @@
          min-height: 34px;
          padding: 7px 11px;
          border-radius: 999px;
-         border: 1px solid #e4d6c2;
-         border-bottom: 1px solid #e4d6c2;
-         background: #fffaf4;
+         border: 1px solid rgba(219, 201, 174, 0.58);
+         border-bottom: 1px solid rgba(219, 201, 174, 0.58);
+         background: rgba(255, 250, 244, 0.8);
          font-size: 13px;
          line-height: 1;
       }
 
       .customer-topbar .center-nav a.is-active {
-         border-color: #b26407;
-         background: #b26407;
+         border-color: rgba(178, 100, 7, 0.92);
+         background: linear-gradient(180deg, rgba(190, 118, 35, 0.95), rgba(170, 93, 4, 0.95));
          color: #fff;
       }
 
       .customer-topbar .center-nav a:hover {
          color: #7c4904;
-         border-color: #d8bb94;
+         border-color: rgba(208, 184, 145, 0.72);
       }
 
       .customer-topbar .right-actions {
