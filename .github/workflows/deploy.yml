@@ -4,12 +4,22 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install Composer Dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
       - name: Setup SSH
         run: |
@@ -20,8 +30,15 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete \
+          rsync -avz \
             -e "ssh -i ~/.ssh/deploy_key -p 18765 -o StrictHostKeyChecking=no" \
             --exclude='.git' \
             --exclude='.github' \
-            ./ u2842-rygsrjj4ondp@ssh.neelamg.sg-host.com:/home/u2842-rygsrjj4ondp/www/neelamg.sg-host.com/public_html/
+            --exclude='node_modules' \
+            --exclude='tests' \
+            --exclude='.env' \
+            ./ u2842-rygsrj4ondp@ssh.neelamg.sg-host.com:/home/u2842-rygsrj4ondp/www/neelamg.sg-host.com/public_html/
+
+      - name: Clear Laravel Caches on Server
+        run: |
+          ssh -i ~/.ssh/deploy_key -p 18765 -o StrictHostKeyChecking=no u2842-rygsrj4ondp@ssh.neelamg.sg-host.com "cd /home/u2842-rygsrj4ondp/www/neelamg.sg-host.com/public_html && php artisan optimize:clear || true"
