@@ -95,22 +95,22 @@ $messagesCountCustomer = messagesCountCustomer();
    .chat-messages {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       padding-bottom: 2px;
    }
    .chat-date-separator {
       display: flex;
       justify-content: center;
-      margin: 2px 0;
+      margin: 1px 0;
    }
    .chat-date-separator span {
       display: inline-block;
-      padding: 3px 10px;
+      padding: 2px 9px;
       border-radius: 999px;
       border: 1px solid #d5dde7;
       background: #edf2f8;
       color: #627587;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.2px;
    }
@@ -127,8 +127,8 @@ $messagesCountCustomer = messagesCountCustomer();
    .chat-bubble {
       width: fit-content;
       max-width: min(72%, 700px);
-      border-radius: 18px;
-      padding: 10px 14px 8px;
+      border-radius: 16px;
+      padding: 8px 12px 6px;
       box-shadow: 0 5px 14px rgba(42, 58, 79, 0.12);
       border: 1px solid transparent;
    }
@@ -144,9 +144,9 @@ $messagesCountCustomer = messagesCountCustomer();
    }
    .chat-author {
       display: block;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       color: #60758f;
       text-transform: uppercase;
       letter-spacing: 0.35px;
@@ -156,8 +156,8 @@ $messagesCountCustomer = messagesCountCustomer();
       text-align: right;
    }
    .chat-text {
-      font-size: 16px;
-      line-height: 1.45;
+      font-size: 15px;
+      line-height: 1.33;
       color: #1d2a38;
       white-space: pre-wrap;
       word-break: break-word;
@@ -170,9 +170,9 @@ $messagesCountCustomer = messagesCountCustomer();
    }
    .chat-time {
       display: block;
-      margin-top: 6px;
+      margin-top: 3px;
       text-align: right;
-      font-size: 12px;
+      font-size: 10px;
       color: #627587;
       font-weight: 600;
    }
@@ -347,31 +347,33 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .chat-messages {
-         gap: 7px;
+         gap: 5px;
       }
 
       .chat-date-separator span {
-         font-size: 10px;
-         padding: 2px 9px;
+         font-size: 9px;
+         padding: 1px 8px;
       }
 
       .chat-bubble {
          max-width: 93%;
-         padding: 10px 12px 8px;
+         padding: 7px 10px 5px;
+         border-radius: 14px;
       }
 
       .chat-author {
-         font-size: 11px;
-         margin-bottom: 4px;
+         font-size: 9px;
+         margin-bottom: 2px;
       }
 
       .chat-text {
-         font-size: 18px;
-         line-height: 1.45;
+         font-size: 14px;
+         line-height: 1.3;
       }
 
       .chat-time {
-         font-size: 12px;
+         font-size: 9px;
+         margin-top: 2px;
       }
 
       .composer-wrap {
