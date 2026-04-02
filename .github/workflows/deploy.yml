@@ -26,12 +26,3 @@ jobs:
             --exclude='.github' \
             --exclude='.env' \
             ./ u2842-rygsrjj4ondp@ssh.neelamg.sg-host.com:/home/u2842-rygsrjj4ondp/www/neelamg.sg-host.com/public_html/
-
-      - name: Run Laravel setup
-        run: |
-          ssh -i ~/.ssh/deploy_key -p 18765 -o StrictHostKeyChecking=no \
-            u2842-rygsrjj4ondp@ssh.neelamg.sg-host.com \
-            "cd /home/u2842-rygsrjj4ondp/www/neelamg.sg-host.com/public_html && \
-            php artisan key:generate && \
-            php artisan config:cache && \
-            php artisan migrate --force"
