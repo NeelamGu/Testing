@@ -23,26 +23,60 @@ jobs:
           test -n "$SSH_USER" || { echo "Missing secret: SG_SSH_USER"; exit 1; }
           test -n "$DEPLOY_PATH" || { echo "Missing secret: SG_DEPLOY_PATH"; exit 1; }
 
+      - name: Normalize SSH settings
+        run: |
+          RAW_HOST="$SSH_HOST"
+          CLEAN_HOST="$RAW_HOST"
+          CLEAN_HOST="${CLEAN_HOST#ssh://}"
+          CLEAN_HOST="${CLEAN_HOST#http://}"
+          CLEAN_HOST="${CLEAN_HOST#https://}"
+
+          # If host is provided like user@host, keep host part only.
+          if [[ "$CLEAN_HOST" == *"@"* ]]; then
+            CLEAN_HOST="${CLEAN_HOST##*@}"
+          fi
+
+          # Drop optional path and port fragments.
+          CLEAN_HOST="${CLEAN_HOST%%/*}"
+          CLEAN_HOST="${CLEAN_HOST%%:*}"
+
+          CLEAN_USER="$SSH_USER"
+
+          # Trim optional username prefix if user is accidentally put in SSH_USER.
+          if [[ "$CLEAN_USER" == *"@"* ]]; then
+            CLEAN_USER="${CLEAN_USER%%@*}"
+          fi
+
+          CLEAN_PORT="$SSH_PORT"
+
+          test -n "$CLEAN_HOST" || { echo "Derived SSH host is empty"; exit 1; }
+          test -n "$CLEAN_USER" || { echo "Derived SSH user is empty"; exit 1; }
+          test -n "$CLEAN_PORT" || { echo "Derived SSH port is empty"; exit 1; }
+
+          echo "SSH_HOST_CLEAN=$CLEAN_HOST" >> "$GITHUB_ENV"
+          echo "SSH_USER_CLEAN=$CLEAN_USER" >> "$GITHUB_ENV"
+          echo "SSH_PORT_CLEAN=$CLEAN_PORT" >> "$GITHUB_ENV"
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "$SSH_PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
+          ssh-keyscan -p "$SSH_PORT_CLEAN" "$SSH_HOST_CLEAN" >> ~/.ssh/known_hosts
 
       - name: Deploy via rsync
         run: |
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT -o StrictHostKeyChecking=no" \
+            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT_CLEAN -o StrictHostKeyChecking=no" \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='.env' \
-            ./ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
+            ./ "$SSH_USER_CLEAN@$SSH_HOST_CLEAN:$DEPLOY_PATH/"
 
       - name: Run Composer
         run: |
-          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" -o StrictHostKeyChecking=no \
-            "$SSH_USER@$SSH_HOST" \
+          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT_CLEAN" -o StrictHostKeyChecking=no \
+            "$SSH_USER_CLEAN@$SSH_HOST_CLEAN" \
             "cd $DEPLOY_PATH && \
             php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\" && \
             php composer-setup.php && \
