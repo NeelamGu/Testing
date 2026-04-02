@@ -730,6 +730,10 @@
 
    function prettyPhoto() {
 
+      if (!$.fn.prettyPhoto) {
+         return;
+      }
+
       $("a[data-rel^='prettyPhoto']").prettyPhoto({
 
          hook: 'data-rel',
@@ -1631,6 +1635,9 @@
 
 window.addEventListener("scroll", function() {
    var button = document.getElementById("enqueryForm");
+   if (!button) {
+      return;
+   }
    if (window.scrollY > 300) {
       button.style.display = "block"; // Show the button
    } else {
@@ -1641,6 +1648,10 @@ window.addEventListener("scroll", function() {
 document.addEventListener("DOMContentLoaded", function () {
    const description = document.getElementById("product-description");
    const readMoreBtn = document.getElementById("read-more-btn");
+
+   if (!description || !readMoreBtn) {
+      return;
+   }
 
    function toggleReadMore() {
        if (window.innerWidth <= 767) { // Apply only for mobile screens
