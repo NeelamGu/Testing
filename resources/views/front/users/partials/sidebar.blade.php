@@ -95,7 +95,7 @@
    }
    .contact-section.account-page a,
    .contact-section.account-page .theme-link {
-      color: var(--customer-panel-accent);
+      color: #4f4232;
    }
    .save-btn,
    .favorite-link,

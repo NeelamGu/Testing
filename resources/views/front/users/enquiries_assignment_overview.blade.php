@@ -47,18 +47,19 @@
       font-size: 13px;
    }
    .assignment-back-link {
-      border: 1px solid #e4d6c3;
+      border: 1px solid var(--customer-panel-accent);
       border-radius: 10px;
       padding: 8px 12px;
       font-weight: 700;
-      color: #5d4f3c;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       text-decoration: none !important;
-      background: #faf5ee;
+      background: var(--customer-panel-accent);
       white-space: nowrap;
    }
    .assignment-back-link:hover {
-      background: #f2e7da;
-      color: #4f4232;
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
+      opacity: 0.94;
    }
    .assignment-body {
       padding: 12px;
@@ -188,8 +189,8 @@
       min-width: 20px;
       height: 20px;
       border-radius: 999px;
-      background: #e78002;
-      color: #fff;
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -219,9 +220,9 @@
       min-height: 40px;
       border-radius: 10px;
       padding: 9px 16px;
-      border: 1px solid #c17b1f;
-      background: #c17b1f;
-      color: #fff !important;
+      border: 1px solid var(--customer-panel-accent);
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       text-decoration: none !important;
       font-weight: 700;
       display: inline-flex;

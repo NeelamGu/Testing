@@ -67,9 +67,9 @@ use App\Models\Category;
       width: 100%;
       min-height: 38px;
       border-radius: 11px;
-      border: 1px solid #c9852f;
-      background: #c9852f;
-      color: #fff !important;
+      border: 1px solid var(--customer-panel-accent);
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       text-decoration: none !important;
       font-size: 13px;
       font-weight: 700;
@@ -81,7 +81,7 @@ use App\Models\Category;
       transition: transform 0.14s ease, opacity 0.14s ease;
    }
    .new-assignment-btn:hover {
-      color: #fff !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       transform: translateY(-1px);
       opacity: 0.96;
    }
@@ -104,9 +104,9 @@ use App\Models\Category;
       background: #f1e9de;
    }
    .status-filter-btn.is-active {
-      background: #f1e9de;
-      border-color: #e5d0b2;
-      color: #7b4a04;
+      background: var(--customer-panel-accent) !important;
+      border-color: var(--customer-panel-accent) !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
    }
    .status-filter-btn .count {
       min-width: 22px;
@@ -121,8 +121,8 @@ use App\Models\Category;
       font-weight: 700;
    }
    .status-filter-btn.is-active .count {
-      background: #e9d2b0;
-      color: #7b4a04;
+      background: rgba(255, 255, 255, 0.34);
+      color: var(--customer-panel-accent-contrast, #ffffff);
    }
    .filter-hidden {
       display: none !important;
@@ -268,8 +268,8 @@ use App\Models\Category;
       min-width: 20px;
       height: 20px;
       border-radius: 999px;
-      background: #e78002;
-      color: #fff;
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff);
       font-size: 11px;
       font-weight: 700;
       border: 1px solid #fff;
@@ -297,8 +297,9 @@ use App\Models\Category;
    }
    .message-open-link.assignment,
    .message-open-link.direct {
-      background: #c17b1f;
-      border: 1px solid #c17b1f;
+      background: var(--customer-panel-accent);
+      border: 1px solid var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
    }
    .message-open-link.view {
       background: #ece6dc;
@@ -476,14 +477,14 @@ use App\Models\Category;
       }
 
       .status-filter-btn.is-active {
-         background: #e7f0e5;
-         border-color: #b7ceb6;
-         color: #2f6540;
+         background: var(--customer-panel-accent) !important;
+         border-color: var(--customer-panel-accent) !important;
+         color: var(--customer-panel-accent-contrast, #ffffff) !important;
       }
 
       .status-filter-btn.is-active .count {
-         background: #cfe2cf;
-         color: #2f6540;
+         background: rgba(255, 255, 255, 0.34);
+         color: var(--customer-panel-accent-contrast, #ffffff);
       }
 
       .message-list {
@@ -519,7 +520,7 @@ use App\Models\Category;
       }
 
       .message-item.is-assignment::before {
-         background: #b26e16;
+         background: var(--customer-panel-accent);
       }
 
       .message-item.is-completed::before {
