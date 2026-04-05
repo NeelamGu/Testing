@@ -740,6 +740,8 @@ class UserController extends Controller
         
             foreach ($enquiries as $key => $enquiry) {
                 $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
+                $enquiries[$key]['responseCount'] = $responseCount;
+                $enquiries[$key]['responseCount'] = $responseCount;
                 if($responseCount>0){
                     $enquiryResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->first();
                     $enquiries[$key]['response'] = $enquiryResponse->response;    

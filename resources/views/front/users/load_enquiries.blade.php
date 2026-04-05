@@ -726,7 +726,10 @@ use App\Models\Category;
             $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
             $categoryImage = !empty($enquiry['product']['category_id']) ? Category::getCategoryImage($enquiry['product']['category_id']) : '';
             $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
-            $previewText = !empty($enquiry['response']) ? \Illuminate\Support\Str::limit(strip_tags($enquiry['response']), 95) : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
+            $vendorResponseCount = (int)($enquiry['responseCount'] ?? 0);
+            $previewText = $isAssignment
+               ? ($vendorResponseCount . ' leverandør' . ($vendorResponseCount === 1 ? '' : 'er') . ' har svart på oppdraget')
+               : (!empty($enquiry['response']) ? \Illuminate\Support\Str::limit(strip_tags($enquiry['response']), 95) : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
          @endphp
 
          <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}">
@@ -772,8 +775,6 @@ use App\Models\Category;
                      @if($isAssignment)
                         @if(!empty($enquiry['enquiry_detail_id']))
                            @php $enquiryDetails = Enquiry::enquiryDetails($enquiry['enquiry_detail_id']); @endphp
-                           <a class="message-open-link view" href="javascript:void(0)" data-toggle="modal" data-target="#replymodal{{$key}}">Se oppdrag</a>
-
                            <div class="modal replymodal fade" id="replymodal{{$key}}" tabindex="-1" role="dialog" aria-hidden="true">
                               <div class="modal-dialog">
                                  <div class="modal-content">
@@ -802,13 +803,13 @@ use App\Models\Category;
                               </div>
                            </div>
                         @else
-                           <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Se oppdrag</a>
+                           <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Fullfør oppdrag</a>
                         @endif
                      @endif
 
                      @if($isAssignment)
                         @if($enquiry['status'] == 1)
-                           <a class="message-open-link assignment" href="{{ $assignmentOverviewUrl }}">Åpne oppdrag</a>
+                           <a class="message-open-link assignment" href="javascript:void(0)" data-toggle="modal" data-target="#replymodal{{$key}}">Fullfør oppdrag</a>
                         @else
                            <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Se oppdragshistorikk</a>
                         @endif
