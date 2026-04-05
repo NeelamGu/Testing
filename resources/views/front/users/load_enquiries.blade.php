@@ -786,7 +786,7 @@ use App\Models\Category;
                         <span class="message-status-badge">Ny melding</span>
                      </div>
                   @else
-                     <p class="message-preview">Ingen ny melding</p>
+                     <p class="message-preview">Ingen nye meldinger</p>
                   @endif
                @elseif($isAssignment)
                   <div class="assignment-summary">
