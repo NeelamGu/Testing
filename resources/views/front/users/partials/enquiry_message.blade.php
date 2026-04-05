@@ -6,7 +6,24 @@
    $messageId = (int) data_get($enquiry, 'id');
    $timestamp = $createdAt ? strtotime($createdAt) : time();
    $dayKey = date('Y-m-d', $timestamp);
-   $dayLabel = date('j.n.Y', $timestamp);
+   $weekdayLabels = [
+      1 => 'Mandag',
+      2 => 'Tirsdag',
+      3 => 'Onsdag',
+      4 => 'Torsdag',
+      5 => 'Fredag',
+      6 => 'Lørdag',
+      7 => 'Søndag',
+   ];
+   $todayStart = strtotime(date('Y-m-d'));
+   $messageDayStart = strtotime(date('Y-m-d', $timestamp));
+   $daysAgo = (int) floor(($todayStart - $messageDayStart) / 86400);
+   if($daysAgo >= 0 && $daysAgo < 7){
+      $weekdayNumber = (int) date('N', $timestamp);
+      $dayLabel = $weekdayLabels[$weekdayNumber] ?? date('j.n.Y', $timestamp);
+   }else{
+      $dayLabel = date('j.n.Y', $timestamp);
+   }
    $timeLabel = date('H:i', $timestamp);
    $messageText = trim((string)$message);
    $isCustomer = $senderType === 'Customer';
