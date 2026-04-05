@@ -649,11 +649,22 @@
 
    (function () {
       var timelineCard = document.querySelector('.timeline-card');
+      var personalCard = document.querySelector('.personal-card');
       var leftStack = document.querySelector('.profile-left-stack');
       var rightStack = document.querySelector('.profile-right-stack');
 
       if (!timelineCard || !leftStack || !rightStack) {
          return;
+      }
+
+      function syncRowAlignment() {
+         var isMobile = window.matchMedia('(max-width: 767px)').matches;
+         if (isMobile || !personalCard || timelineCard.parentNode !== rightStack) {
+            timelineCard.style.minHeight = '';
+            return;
+         }
+
+         timelineCard.style.minHeight = Math.ceil(personalCard.getBoundingClientRect().height) + 'px';
       }
 
       function placeTimelineForViewport() {
@@ -670,10 +681,14 @@
             rightStack.appendChild(timelineCard);
             timelineCard.classList.remove('is-mobile-top');
          }
+
+         syncRowAlignment();
       }
 
       placeTimelineForViewport();
       window.addEventListener('resize', placeTimelineForViewport);
+      window.addEventListener('resize', syncRowAlignment);
+      setTimeout(syncRowAlignment, 0);
    })();
 </script>
 @endsection
