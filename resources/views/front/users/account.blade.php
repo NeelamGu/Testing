@@ -55,6 +55,11 @@
       gap: 12px;
       align-content: start;
    }
+   .profile-right-stack {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+   }
    .card-soft {
       border: 1px solid #e9dcc8;
       border-radius: 16px;
@@ -328,7 +333,9 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: auto;
+      margin-left: auto;
+      width: fit-content;
    }
    .profile-side-actions .save-btn {
       border: 0;
@@ -400,6 +407,10 @@
       .profile-side-actions .save-btn {
          width: 100%;
          min-width: 0;
+      }
+      .profile-side-actions {
+         width: 100%;
+         margin-left: 0;
       }
       .profile-heading h2 {
          font-size: 32px;
