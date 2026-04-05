@@ -234,24 +234,28 @@
          display: inline-flex;
          grid-column: 1 / -1;
          width: 100%;
-         gap: 8px;
+         gap: 6px;
          justify-content: center;
-         flex-wrap: wrap;
-         overflow: visible;
-         white-space: normal;
+         flex-wrap: nowrap;
+         overflow: hidden;
+         white-space: nowrap;
          padding-bottom: 0;
       }
 
       .customer-topbar .center-nav a {
+         flex: 1 1 0;
+         min-width: 0;
          min-height: 34px;
-         padding: 7px 11px;
+         padding: 7px 6px;
          border-radius: 999px;
          border: none;
          border-bottom: none;
          background: rgba(255, 250, 244, 0.85);
          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-         font-size: 13px;
+         font-size: 12px;
          line-height: 1;
+         justify-content: center;
+         gap: 4px;
       }
       .customer-topbar .center-nav a i {
          font-size: 12px;

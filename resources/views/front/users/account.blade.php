@@ -241,6 +241,13 @@
       font-size: 21px;
       font-weight: 700;
       color: #000;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+   }
+   .timeline-title i {
+      color: #b26407;
+      font-size: 17px;
    }
    .timeline-subtitle {
       margin: 6px 0 8px;
@@ -536,7 +543,7 @@
 
                         <div class="profile-right-stack">
                            <div class="card-soft timeline-card">
-                              <h4 class="timeline-title">Nylige oppdateringer</h4>
+                              <h4 class="timeline-title"><i class="fa fa-bell" aria-hidden="true"></i>Nylige oppdateringer</h4>
                               <p class="timeline-subtitle">Her vises varsler når du har fått ny melding</p>
                               @php
                                  $newMessageUpdates = collect($recentEnquiries ?? [])->filter(function($timeline){
