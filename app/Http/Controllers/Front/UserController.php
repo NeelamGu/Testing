@@ -613,6 +613,17 @@ class UserController extends Controller
         
         foreach ($enquiries as $key => $enquiry) {
             $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
+            $vendorResponseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                ->where('sender_type','Vendor')
+                ->select('sender_id')
+                ->distinct()
+                ->count('sender_id');
+            $unreadVendorCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                ->where('sender_type','Vendor')
+                ->where('is_unread',1)
+                ->select('sender_id')
+                ->distinct()
+                ->count('sender_id');
             if($responseCount>0){
                 $enquiryResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->first();
                 $enquiries[$key]['response'] = $enquiryResponse->response;    
@@ -623,6 +634,8 @@ class UserController extends Controller
             $enquiries[$key]['hasMessages'] = $totalMessagesCount > 0;
             $unreadCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->where('is_unread',1)->count();
             $enquiries[$key]['unreadCount'] = $unreadCount;
+            $enquiries[$key]['vendorResponseCount'] = $vendorResponseCount;
+            $enquiries[$key]['unreadVendorCount'] = $unreadVendorCount;
 
             $type = "Direkte";
             if(isset($enquiry['enquiry_detail_id']) && $enquiry['enquiry_detail_id']>0){
@@ -740,8 +753,17 @@ class UserController extends Controller
         
             foreach ($enquiries as $key => $enquiry) {
                 $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
-                $enquiries[$key]['responseCount'] = $responseCount;
-                $enquiries[$key]['responseCount'] = $responseCount;
+                $vendorResponseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                    ->where('sender_type','Vendor')
+                    ->select('sender_id')
+                    ->distinct()
+                    ->count('sender_id');
+                $unreadVendorCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                    ->where('sender_type','Vendor')
+                    ->where('is_unread',1)
+                    ->select('sender_id')
+                    ->distinct()
+                    ->count('sender_id');
                 if($responseCount>0){
                     $enquiryResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->first();
                     $enquiries[$key]['response'] = $enquiryResponse->response;    
@@ -752,6 +774,8 @@ class UserController extends Controller
                 $enquiries[$key]['hasMessages'] = $totalMessagesCount > 0;
                 $unreadCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->where('is_unread',1)->count();
                 $enquiries[$key]['unreadCount'] = $unreadCount;
+                $enquiries[$key]['vendorResponseCount'] = $vendorResponseCount;
+                $enquiries[$key]['unreadVendorCount'] = $unreadVendorCount;
 
                 $type = "Direkte";
                 if(isset($enquiry['enquiry_detail_id']) && $enquiry['enquiry_detail_id']>0){

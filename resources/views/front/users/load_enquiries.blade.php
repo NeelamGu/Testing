@@ -217,6 +217,22 @@ use App\Models\Category;
       font-size: 17px;
       line-height: 1.35;
    }
+   .assignment-summary {
+      margin: 0;
+      display: grid;
+      gap: 3px;
+      color: #615443;
+      font-size: 14px;
+      line-height: 1.3;
+   }
+   .assignment-summary strong {
+      color: #2f2516;
+      font-size: 15px;
+   }
+   .assignment-summary span {
+      font-size: 12px;
+      color: #7d6f60;
+   }
    .message-vendor-meta {
       margin-top: 9px;
       color: #988877;
@@ -726,10 +742,9 @@ use App\Models\Category;
             $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
             $categoryImage = !empty($enquiry['product']['category_id']) ? Category::getCategoryImage($enquiry['product']['category_id']) : '';
             $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
-            $vendorResponseCount = (int)($enquiry['responseCount'] ?? 0);
-            $previewText = $isAssignment
-               ? ($vendorResponseCount . ' leverandør' . ($vendorResponseCount === 1 ? '' : 'er') . ' har svart på oppdraget')
-               : (!empty($enquiry['response']) ? \Illuminate\Support\Str::limit(strip_tags($enquiry['response']), 95) : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
+            $previewText = !empty($enquiry['response']) ? \Illuminate\Support\Str::limit(strip_tags($enquiry['response']), 95) : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
+            $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
+            $unreadVendorCount = (int)($enquiry['unreadVendorCount'] ?? 0);
          @endphp
 
          <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}">
@@ -750,7 +765,19 @@ use App\Models\Category;
                      <span class="message-unread">{{ (int)$enquiry['unreadCount'] }}</span>
                   @endif
                </div>
-               <p class="message-preview">{{ $previewText }}</p>
+               @if($isAssignment)
+                  <div class="assignment-summary">
+                     @if($vendorResponseCount > 0)
+                        <strong>{{ $vendorResponseCount }} leverandører har svart</strong>
+                        <span>{{ $unreadVendorCount > 0 ? $unreadVendorCount.' nye leverandører har ikke åpnet samtalen' : 'Ingen nye leverandører venter' }}</span>
+                     @else
+                        <strong>Ingen leverandører har svart ennå</strong>
+                        <span>Når leverandører svarer, vises det her.</span>
+                     @endif
+                  </div>
+               @else
+                  <p class="message-preview">{{ $previewText }}</p>
+               @endif
                <div class="message-vendor-meta"><span><i class="fa fa-tag"></i>{{ $categoryName }}</span><span><i class="fa fa-calendar"></i>{{ $displayDate }}</span></div>
             </div>
 
@@ -773,43 +800,9 @@ use App\Models\Category;
                      <a class="message-open-link assignment" href="{{ $conversationUrl }}">Åpne melding</a>
                   @else
                      @if($isAssignment)
-                        @if(!empty($enquiry['enquiry_detail_id']))
-                           @php $enquiryDetails = Enquiry::enquiryDetails($enquiry['enquiry_detail_id']); @endphp
-                           <div class="modal replymodal fade" id="replymodal{{$key}}" tabindex="-1" role="dialog" aria-hidden="true">
-                              <div class="modal-dialog">
-                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-                                       <h4>Oppdragsinfo</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                       <div class="inquery-info-area">
-                                          <table class="table info-pop-table">
-                                             <tr class="firt-row"><td class="border-zero"><b>Tittel</b></td><td class="border-zero">{{ $enquiryDetails['title'] ?? '-' }}</td></tr>
-                                             <tr><td><b>Navn</b></td><td>{{ $enquiryDetails['name'] ?? '-' }}</td></tr>
-                                             <tr><td><b>Adresse</b></td><td>{{ $enquiryDetails['address'] ?? '-' }}</td></tr>
-                                             <tr><td><b>By</b></td><td>{{ $enquiryDetails['city'] ?? '-' }}</td></tr>
-                                             <tr><td><b>Postnummer</b></td><td>{{ $enquiryDetails['pincode'] ?? '-' }}</td></tr>
-                                             @if(!empty($enquiryDetails['desired_price']) && $enquiryDetails['desired_price'] > 0)
-                                                <tr><td><b>Ønsket pris</b></td><td>{{ $enquiryDetails['desired_price'] }}</td></tr>
-                                             @endif
-                                             @if(!empty($enquiryDetails['assignment_date']))
-                                                <tr><td><b>Oppdragsdato</b></td><td>{{ $enquiryDetails['assignment_date'] }}</td></tr>
-                                             @endif
-                                          </table>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        @else
-                           <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Fullfør oppdrag</a>
-                        @endif
-                     @endif
-
-                     @if($isAssignment)
                         @if($enquiry['status'] == 1)
-                           <a class="message-open-link assignment" href="javascript:void(0)" data-toggle="modal" data-target="#replymodal{{$key}}">Fullfør oppdrag</a>
+                           <a class="updateEnquiryStatus enquiry-complete-btn message-open-link view" id="enquiry-{{ $enquiry['id'] }}" enquiry_id="{{ $enquiry['id'] }}" data-item-label="assignment" href="javascript:void(0)"><i class="status-marker" status="Active"></i><i class="fa fa-check-circle" style="margin-right:7px;"></i>Fullfør oppdrag</a>
+                           <a class="message-open-link assignment" href="{{ $assignmentOverviewUrl }}">Åpne oppdrag</a>
                         @else
                            <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Se oppdragshistorikk</a>
                         @endif
@@ -819,7 +812,7 @@ use App\Models\Category;
                   @endif
                </div>
 
-               @if($showStatusActions)
+               @if($showStatusActions && !$isAssignment)
                   <div class="message-toggles">
                      @if($enquiry['status'] == 1)
                         <a class="updateEnquiryStatus enquiry-complete-btn" id="enquiry-{{ $enquiry['id'] }}" enquiry_id="{{ $enquiry['id'] }}" data-item-label="{{ $isAssignment ? 'assignment' : 'conversation' }}" href="javascript:void(0)"><i class="status-marker" status="Active"></i><i class="fa fa-check-circle" style="margin-right:7px;"></i>{{ $isAssignment ? 'Fullfør oppdrag' : 'Avslutt samtale' }}</a>
