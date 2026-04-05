@@ -2,10 +2,11 @@
 @section('content')
 <style>
    .customer-panel-shell {
+      background: transparent;
       border: none;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 12px;
+      border-radius: 0;
+      padding: 0;
+      margin-top: 4px;
    }
    .customer-panel-main {
       background: #fff;

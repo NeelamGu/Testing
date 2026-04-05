@@ -6,11 +6,11 @@ use App\Models\Category;
 @section('content')
 <style>
    .customer-panel-shell {
-      background: #f8f4ed;
-      border: 1px solid #ecd9bf;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 12px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin-top: 4px;
    }
    .customer-panel-main {
       background: #fff;

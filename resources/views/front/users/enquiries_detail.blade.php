@@ -11,10 +11,10 @@ $messagesCountCustomer = messagesCountCustomer();
       overflow: hidden;
    }
    .conversation-shell {
-       background: linear-gradient(160deg, rgba(248, 244, 237, 0.88), rgba(244, 249, 255, 0.78));
-       border: none;
-       border-radius: 14px;
-       padding: 10px;
+         background: transparent;
+         border: none;
+         border-radius: 0;
+         padding: 0;
        margin-top: 4px;
        height: calc(100% - 4px);
        box-shadow: none;

@@ -7,12 +7,12 @@
       z-index: 999;
    }
    .messages-shell {
-      background: #f8f4ed;
+      background: transparent;
       border: none;
-      border-radius: 14px;
-      padding: 18px;
-      margin-top: 12px;
-      height: calc(100% - 12px);
+      border-radius: 0;
+      padding: 0;
+      margin-top: 4px;
+      height: calc(100% - 4px);
    }
    .messages-panel {
       background: #fff;

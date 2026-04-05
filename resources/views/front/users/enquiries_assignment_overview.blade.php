@@ -2,11 +2,11 @@
 @section('content')
 <style>
    .assignment-shell {
-      background: #f8f4ed;
+      background: transparent;
       border: none;
-      border-radius: 14px;
-      padding: 14px;
-      margin-top: 12px;
+      border-radius: 0;
+      padding: 0;
+      margin-top: 4px;
    }
    .assignment-card {
       background: #fff;
