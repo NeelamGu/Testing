@@ -505,7 +505,7 @@
                                  <div class="visual-row">
                                     <div>
                                        <strong>Bakgrunnstone</strong>
-                                       <p>Velg en fargetone som passer ditt arbeidsmiljø.</p>
+                                       <p>Velg en fargetone som passer ditt arbeidsmiljø</p>
                                     </div>
                                     <div class="color-row">
                                        <input type="color" id="user-panel-bg-color" name="panel_bg_color" value="{{ Auth::user()->panel_bg_color ?: '#f8f4ed' }}">
@@ -517,7 +517,7 @@
                                  <div class="visual-row" style="margin-bottom:0;">
                                     <div>
                                        <strong>Aksentfarge</strong>
-                                       <p>Hovedfarge for knapper og aktive elementer.</p>
+                                       <p>Hovedfarge for knapper og aktive elementer</p>
                                     </div>
                                     <div class="color-row">
                                        <input type="color" id="user-panel-accent-color" name="panel_accent_color" value="{{ Auth::user()->panel_accent_color ?: '#e78002' }}">
@@ -537,7 +537,7 @@
                         <div class="profile-right-stack">
                            <div class="card-soft timeline-card">
                               <h4 class="timeline-title">Nylige oppdateringer</h4>
-                              <p class="timeline-subtitle">Her vises varsler når du har fått ny melding.</p>
+                              <p class="timeline-subtitle">Her vises varsler når du har fått ny melding</p>
                               @php
                                  $newMessageUpdates = collect($recentEnquiries ?? [])->filter(function($timeline){
                                     return (int)($timeline['unread_vendor'] ?? 0) > 0;
@@ -563,7 +563,7 @@
                                     <div class="timeline-item">
                                        <span class="timeline-icon neutral"><i class="fa fa-info"></i></span>
                                        <div class="timeline-item-top"><strong>Ingen nye meldinger</strong></div>
-                                       <p class="timeline-time">Du får varsel her når leverandører svarer.</p>
+                                       <p class="timeline-time">Du får varsel her når leverandører svarer</p>
                                     </div>
                                  @endforelse
                               </div>
