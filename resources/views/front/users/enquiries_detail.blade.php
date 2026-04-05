@@ -156,6 +156,9 @@ $messagesCountCustomer = messagesCountCustomer();
       color: var(--customer-panel-accent-contrast, #ffffff);
       text-align: right;
    }
+   .chat-item.vendor .chat-author {
+      color: #e78002;
+   }
    .chat-item.customer .chat-text {
       color: var(--customer-panel-accent-contrast, #ffffff);
    }

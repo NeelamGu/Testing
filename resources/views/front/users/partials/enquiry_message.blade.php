@@ -19,12 +19,13 @@
    if($vendorNameLabel === ''){
       $vendorNameLabel = 'Leverandør';
    }
-   $roleLabel = $isCustomer ? $customerNameLabel : $vendorNameLabel;
 @endphp
 
 <div class="chat-item {{ $roleClass }}" data-message-id="{{ $messageId }}" data-day-key="{{ $dayKey }}" data-day-label="{{ $dayLabel }}">
    <div class="chat-bubble">
-      <span class="chat-author">{{ $roleLabel }}</span>
+      @if(!$isCustomer)
+         <span class="chat-author">{{ $vendorNameLabel }}</span>
+      @endif
       @if($messageText !== '')
          <div class="chat-text">{{ $message }}</div>
       @endif
