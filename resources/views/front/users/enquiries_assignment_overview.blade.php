@@ -3,7 +3,7 @@
 <style>
    .assignment-shell {
       background: #f8f4ed;
-      border: 1px solid #ecd9bf;
+      border: none;
       border-radius: 14px;
       padding: 14px;
       margin-top: 12px;

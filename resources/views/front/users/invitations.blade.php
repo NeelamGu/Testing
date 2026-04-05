@@ -2,7 +2,7 @@
 @section('content')
 <style>
    .customer-panel-shell {
-      border: 1px solid #ecd9bf;
+      border: none;
       border-radius: 14px;
       padding: 16px;
       margin-top: 12px;
