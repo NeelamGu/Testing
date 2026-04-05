@@ -153,14 +153,14 @@ $messagesCountCustomer = messagesCountCustomer();
       letter-spacing: 0.35px;
    }
    .chat-item.customer .chat-author {
-      color: rgba(255, 255, 255, 0.92);
+      color: var(--customer-panel-accent-contrast, #ffffff);
       text-align: right;
    }
    .chat-item.customer .chat-text {
-      color: #ffffff;
+      color: var(--customer-panel-accent-contrast, #ffffff);
    }
    .chat-item.customer .chat-time {
-      color: rgba(255, 255, 255, 0.86);
+      color: var(--customer-panel-accent-contrast, #ffffff);
    }
    .chat-text {
       font-size: 15px;

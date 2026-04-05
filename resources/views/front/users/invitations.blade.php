@@ -110,7 +110,7 @@
       border-radius: 999px;
       border: 1px solid var(--customer-panel-accent);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.05)), var(--customer-panel-accent);
-      color: #fff !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       font-size: 13px;
       font-weight: 700;
       text-decoration: none !important;
@@ -119,7 +119,7 @@
    }
    .invite-submit-btn:hover,
    .invite-submit-btn:focus {
-      color: #fff !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       text-decoration: none !important;
       transform: translateY(-1px);
       filter: brightness(0.96);

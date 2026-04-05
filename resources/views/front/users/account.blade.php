@@ -634,9 +634,21 @@
       if (!bgInput || !accentInput) {
          return;
       }
+      function getAccentContrastColor(hexColor) {
+         var safeHex = (hexColor || '#e78002').replace('#', '');
+         if (!/^[0-9a-fA-F]{6}$/.test(safeHex)) {
+            safeHex = 'e78002';
+         }
+         var red = parseInt(safeHex.substring(0, 2), 16);
+         var green = parseInt(safeHex.substring(2, 4), 16);
+         var blue = parseInt(safeHex.substring(4, 6), 16);
+         var yiq = ((red * 299) + (green * 587) + (blue * 114)) / 1000;
+         return yiq >= 160 ? '#111111' : '#f8fafc';
+      }
       function applyPanelColors() {
          document.documentElement.style.setProperty('--customer-panel-bg', bgInput.value || '#f8f4ed');
          document.documentElement.style.setProperty('--customer-panel-accent', accentInput.value || '#e78002');
+         document.documentElement.style.setProperty('--customer-panel-accent-contrast', getAccentContrastColor(accentInput.value));
       }
       bgInput.addEventListener('input', applyPanelColors);
       accentInput.addEventListener('input', applyPanelColors);

@@ -3,6 +3,15 @@
    $activeTab = $activeTab ?? '';
    $panelBgColor = Auth::check() && !empty(Auth::user()->panel_bg_color) ? Auth::user()->panel_bg_color : '#f8f4ed';
    $panelAccentColor = Auth::check() && !empty(Auth::user()->panel_accent_color) ? Auth::user()->panel_accent_color : '#e78002';
+   $panelAccentHex = ltrim((string)$panelAccentColor, '#');
+   if(!preg_match('/^[A-Fa-f0-9]{6}$/', $panelAccentHex)){
+      $panelAccentHex = 'e78002';
+   }
+   $accentRed = hexdec(substr($panelAccentHex, 0, 2));
+   $accentGreen = hexdec(substr($panelAccentHex, 2, 2));
+   $accentBlue = hexdec(substr($panelAccentHex, 4, 2));
+   $accentYiq = (($accentRed * 299) + ($accentGreen * 587) + ($accentBlue * 114)) / 1000;
+   $panelAccentContrastColor = $accentYiq >= 160 ? '#111111' : '#f8fafc';
    $assignmentTabActive =
       $activeTab === 'assignments' ||
       request()->is('user/enquiries/*/overview') ||
@@ -16,6 +25,7 @@
    :root {
       --customer-panel-bg: {{ $panelBgColor }};
       --customer-panel-accent: {{ $panelAccentColor }};
+      --customer-panel-accent-contrast: {{ $panelAccentContrastColor }};
    }
    html,
    body {
@@ -97,7 +107,7 @@
    .contact-section.account-page .view-icon {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.04)), var(--customer-panel-accent) !important;
       border-color: var(--customer-panel-accent) !important;
-      color: #fff !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 18px rgba(39, 31, 20, 0.15);
    }
    .contact-section.account-page .profile-form-shell input:focus,
@@ -110,7 +120,7 @@
    .contact-section.account-page .count-number {
       background-color: var(--customer-panel-accent) !important;
       border-color: var(--customer-panel-accent) !important;
-      color: #fff !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
    }
    .conversation-title a,
    .messages-panel-title,
