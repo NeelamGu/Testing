@@ -19,32 +19,24 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      color: #000;
    }
    .profile-heading {
       margin-bottom: 10px;
       flex-shrink: 0;
    }
-   .profile-kicker {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #a27f58;
-      font-weight: 700;
-      margin-bottom: 4px;
-   }
    .profile-heading h2 {
       margin: 0;
-      font-size: 46px;
+      font-size: 48px;
       line-height: 0.98;
-      color: #1f1d1a;
+      color: #000;
       font-weight: 800;
       letter-spacing: -0.5px;
    }
    .profile-heading p {
       margin: 8px 0 0;
-      color: #5f574d;
-      font-size: 13px;
+      color: #000;
+      font-size: 15px;
       max-width: 680px;
       line-height: 1.35;
    }
@@ -70,21 +62,22 @@
       padding: 12px;
       position: relative;
       overflow: hidden;
+      color: #000;
    }
    .personal-card {
       margin-bottom: 14px;
    }
    .card-icon-title {
       margin: 0 0 10px;
-      color: #1f1d1a;
-      font-size: 17px;
+      color: #000;
+      font-size: 18px;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
    }
    .card-icon-title i {
-      color: #9f620e;
+      color: #000;
    }
    .field-grid {
       display: grid;
@@ -94,8 +87,8 @@
    .field-wrap label {
       display: block;
       margin: 0 0 4px;
-      color: #7a6f62;
-      font-size: 9px;
+      color: #000;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-weight: 700;
@@ -107,8 +100,8 @@
       border: 1px solid #ddd0bb;
       padding: 7px 10px;
       background: #f8f4ed;
-      font-size: 12px;
-      color: #312a22;
+      font-size: 13px;
+      color: #000;
    }
    .field-wrap input:focus {
       border-color: #b56908;
@@ -118,8 +111,9 @@
    .field-wrap p {
       margin: 3px 0 0;
       min-height: 0;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.2;
+      color: #000;
    }
    .visual-card {
       margin-top: 2px;
@@ -132,13 +126,13 @@
       margin-bottom: 10px;
    }
    .visual-row strong {
-      font-size: 15px;
-      color: #2b251d;
+      font-size: 16px;
+      color: #000;
    }
    .visual-row p {
       margin: 0;
-      color: #5e564c;
-      font-size: 12px;
+      color: #000;
+      font-size: 13px;
    }
    .color-row {
       display: flex;
@@ -173,16 +167,16 @@
    }
    .security-help {
       margin-top: 6px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #a0692c;
+      color: #000;
       text-decoration: none;
       display: inline-block;
    }
    .security-help:hover {
-      color: #7f4d12;
+      color: #000;
    }
    .profile-summary {
       text-align: center;
@@ -233,25 +227,25 @@
    }
    .profile-summary h4 {
       margin: 0;
-      color: #1f1d1a;
-      font-size: 22px;
+      color: #000;
+      font-size: 23px;
       font-weight: 700;
    }
    .profile-summary p {
       margin: 5px 0 0;
-      color: #7a6f62;
-      font-size: 12px;
+      color: #000;
+      font-size: 13px;
    }
    .timeline-title {
       margin: 0;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 700;
-      color: #231e17;
+      color: #000;
    }
    .timeline-subtitle {
       margin: 6px 0 8px;
-      color: #766a5d;
-      font-size: 11px;
+      color: #000;
+      font-size: 12px;
       line-height: 1.35;
    }
    .timeline-list {
@@ -302,8 +296,8 @@
       margin-bottom: 2px;
    }
    .timeline-item-top strong {
-      font-size: 13px;
-      color: #2a241c;
+      font-size: 14px;
+      color: #000;
       font-weight: 700;
    }
    .timeline-count {
@@ -311,7 +305,7 @@
       height: 18px;
       border-radius: 999px;
       background: #ede3d6;
-      color: #7a6a54;
+      color: #000;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -321,8 +315,8 @@
    }
    .timeline-link {
       display: inline-block;
-      font-size: 13px;
-      color: #2c2419;
+      font-size: 14px;
+      color: #000;
       font-weight: 600;
       text-decoration: none;
       line-height: 1.25;
@@ -330,8 +324,8 @@
    }
    .timeline-time {
       margin: 2px 0 0;
-      color: #9a8a74;
-      font-size: 10px;
+      color: #000;
+      font-size: 11px;
       line-height: 1.35;
    }
    .profile-side-actions {
@@ -364,13 +358,13 @@
       width: 100%;
    }
    .profile-side-actions .deactivate-link a {
-      color: #5f574d;
+      color: #000;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
    }
    .profile-side-actions .deactivate-link a:hover {
-      color: #3f372f;
+      color: #000;
    }
    #account-success,
    #account-error {
@@ -379,7 +373,7 @@
    }
    @media (max-width: 1199px) {
       .profile-heading h2 {
-         font-size: 40px;
+         font-size: 42px;
       }
       .profile-grid {
          grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
@@ -388,7 +382,7 @@
       .profile-note {
          margin: 8px 0 0;
          color: #6b5d4a;
-         font-size: 14px;
+         font-size: 15px;
          font-weight: 600;
          max-width: 680px;
          line-height: 1.35;
@@ -408,12 +402,15 @@
          grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .profile-heading h2 {
-         font-size: 34px;
+         font-size: 36px;
       }
    }
    @media (max-width: 767px) {
       .profile-main {
          padding: 10px;
+      }
+      .profile-heading p {
+         font-size: 14px;
       }
       .field-grid {
          grid-template-columns: 1fr;
@@ -423,10 +420,10 @@
          min-width: 0;
       }
       .profile-heading h2 {
-         font-size: 30px;
+         font-size: 32px;
       }
       .timeline-title {
-         font-size: 20px;
+         font-size: 21px;
       }
       .timeline-card.is-mobile-top {
          margin-bottom: 12px;
@@ -445,7 +442,6 @@
                <div class="profile-shell">
                   <div class="profile-main">
                      <div class="profile-heading">
-                        <span class="profile-kicker">Innstillinger</span>
                         <h2>Min Profil</h2>
                         <p class="profile-note">{{ $profileNoteMessage ?? 'Velkommen tilbake! Klar for å planlegge noe hyggelig?' }}</p>
                      </div>
