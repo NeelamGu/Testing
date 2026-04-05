@@ -683,7 +683,7 @@ use App\Models\Category;
                <div class="status-filter-actions">
                   <a href="{{ url('enquire-us') }}" class="new-assignment-btn">
                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                     Lag nytt oppdrag
+                     Nytt Oppdrag
                   </a>
                </div>
             @endif
