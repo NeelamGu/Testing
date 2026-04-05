@@ -25,10 +25,16 @@
       flex-direction: column;
    }
    .messages-panel-head {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       padding: 16px 18px;
       background: linear-gradient(120deg, #fff6e8, #fff);
       border-bottom: none;
+   }
+   .messages-panel-head-content {
+      min-width: 0;
    }
    .messages-panel-title {
       margin: 0;
@@ -41,6 +47,66 @@
       font-size: 13px;
       color: #746652;
    }
+   .messages-filter-menu {
+      position: relative;
+      flex: 0 0 auto;
+      align-self: flex-start;
+   }
+   .messages-filter-summary {
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--customer-panel-accent);
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(39, 31, 20, 0.12);
+      user-select: none;
+   }
+   .messages-filter-menu summary::-webkit-details-marker {
+      display: none;
+   }
+   .messages-filter-menu[open] .messages-filter-summary {
+      filter: brightness(0.97);
+   }
+   .messages-filter-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 190px;
+      border-radius: 14px;
+      border: 1px solid #eadbc7;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 12px 28px rgba(67, 47, 20, 0.12);
+      padding: 6px;
+      z-index: 20;
+    }
+   .messages-filter-dropdown a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: #4f4435;
+      text-decoration: none !important;
+      font-size: 13px;
+      font-weight: 600;
+    }
+   .messages-filter-dropdown a:hover {
+      background: #f6efe4;
+      color: #2f2516;
+   }
+   .messages-filter-dropdown a.is-active {
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff);
+    }
    .messages-panel-body {
       padding: 12px;
       flex: 1;
@@ -147,6 +213,7 @@
 <div class="page-wrapper">
    @php $activeTopTab = (isset($message_type) && $message_type==='assignment') ? 'assignments' : 'messages'; @endphp
    @php $isAssignmentTab = (isset($message_type) && $message_type==='assignment'); @endphp
+   @php $currentMessageType = isset($message_type) ? $message_type : ''; @endphp
    @include('front.users.partials.topbar', ['activeTopTab' => $activeTopTab])
    <div class="contact-section account-page">
       <div class="auto-container">
@@ -159,9 +226,17 @@
                <div class="messages-shell">
                   <div class="messages-panel">
                      <div class="messages-panel-head">
-                        <div>
+                        <div class="messages-panel-head-content">
                            <h3 class="messages-panel-title">{{ $isAssignmentTab ? 'Oppdrag' : 'Meldinger' }}</h3>
                         </div>
+                        <details class="messages-filter-menu">
+                           <summary class="messages-filter-summary"><i class="fa fa-filter"></i> Filter <i class="fa fa-chevron-down" style="font-size:10px;"></i></summary>
+                           <div class="messages-filter-dropdown" role="menu" aria-label="Filtrer meldinger">
+                              <a href="{{ url('user/enquiries') }}" class="{{ $currentMessageType === '' ? 'is-active' : '' }}" role="menuitem">Alle meldinger <span><i class="fa fa-th-large"></i></span></a>
+                              <a href="{{ url('user/enquiries?message_type=direct') }}" class="{{ $currentMessageType === 'direct' ? 'is-active' : '' }}" role="menuitem">Direkte <span><i class="fa fa-comment-o"></i></span></a>
+                              <a href="{{ url('user/enquiries?message_type=assignment') }}" class="{{ $currentMessageType === 'assignment' ? 'is-active' : '' }}" role="menuitem">Oppdrag <span><i class="fa fa-briefcase"></i></span></a>
+                           </div>
+                        </details>
                      </div>
                      <div class="messages-panel-body">
                         <div class="messages-main">
