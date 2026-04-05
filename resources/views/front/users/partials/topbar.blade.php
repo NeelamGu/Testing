@@ -247,13 +247,13 @@
 
       .customer-topbar .center-nav a.is-active {
          border: none;
-         background: linear-gradient(180deg, rgba(190, 118, 35, 0.96), rgba(170, 93, 4, 0.96));
-         color: #fff;
+         background: var(--customer-panel-accent, #a65f03);
+         color: var(--customer-panel-accent-contrast, #ffffff) !important;
          box-shadow: 0 4px 12px rgba(166, 93, 4, 0.18);
       }
 
       .customer-topbar .center-nav a:hover {
-         color: #7c4904;
+         color: var(--customer-panel-accent-contrast, #ffffff);
          border: none;
       }
 
