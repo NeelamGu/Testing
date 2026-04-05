@@ -929,8 +929,15 @@ class UserController extends Controller
             ->update(['is_unread'=>0]);
 
         $conversationTitle = 'Samtale med';
+        $conversationVendorName = 'Leverandør';
+        $conversationVendorUrl = '';
         if(!empty($baseEnquiry->product) && !empty($baseEnquiry->product->product_name)){
-            $conversationTitle = 'Samtale med '.$baseEnquiry->product->product_name;
+            $conversationVendorName = $baseEnquiry->product->product_name;
+            $conversationTitle = 'Samtale med '.$conversationVendorName;
+            $productSlug = Product::productURL($conversationVendorName);
+            if(!empty($productSlug) && !empty($baseEnquiry->product->id)){
+                $conversationVendorUrl = url('product/'.$productSlug.'/'.$baseEnquiry->product->id);
+            }
         }
 
         $activeTopTab = !empty($baseEnquiry->enquiry_detail_id) ? 'oppdrag' : 'meldinger';
@@ -942,7 +949,7 @@ class UserController extends Controller
             : url('user/enquiries/');
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
-        return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel'));
+        return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','conversationVendorName','conversationVendorUrl','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel'));
     }
 
     public function userEnquiryOverview($enqid){

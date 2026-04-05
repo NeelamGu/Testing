@@ -473,7 +473,14 @@ $messagesCountCustomer = messagesCountCustomer();
                @endif
                 <div class="conversation-head">
                    <div>
-                      <h3 class="conversation-title">{{ $conversationTitle ?? 'Samtale' }}</h3>
+                      <h3 class="conversation-title">
+                         Samtale med
+                         @if(!empty($conversationVendorUrl))
+                            <a href="{{ $conversationVendorUrl }}">{{ $conversationVendorName ?? 'Leverandør' }}</a>
+                         @else
+                            <span>{{ $conversationVendorName ?? 'Leverandør' }}</span>
+                         @endif
+                      </h3>
                    </div>
                    <div class="conversation-actions">
                       <a href="{{ $backUrl ?? url('user/enquiries/') }}" class="reply-back-btn">
