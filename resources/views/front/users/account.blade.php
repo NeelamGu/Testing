@@ -159,14 +159,9 @@
       background: #fff;
       display: inline-block;
    }
-   .security-card .field-wrap {
-      margin-bottom: 8px;
-   }
-   .security-card .field-wrap:last-child {
-      margin-bottom: 0;
-   }
    .security-help {
-      margin-top: 6px;
+      margin-top: 10px;
+      margin-bottom: 4px;
       font-size: 13px;
       font-weight: 700;
       text-transform: uppercase;
@@ -540,6 +535,7 @@
 
                               <div class="profile-side-actions">
                                  <button class="save-btn" type="submit"><i class="fa fa-save"></i> Lagre endringer</button>
+                                 <a class="security-help" href="{{ url('user/update-password') }}">Glemt passord?</a>
                                  <div class="deactivate-link">
                                     <a href="javascript:void(0)">Deaktiver konto</a>
                                  </div>
@@ -548,40 +544,9 @@
                         </div>
 
                         <div class="profile-right-stack">
-                           <div class="card-soft security-card">
-                              <h4 class="card-icon-title"><i class="fa fa-shield"></i> Sikkerhet</h4>
-                              <div class="field-wrap">
-                                 <label>Nåværende passord</label>
-                                 <input type="password" value="********" readonly>
-                              </div>
-                              <div class="field-wrap">
-                                 <label>Nytt passord</label>
-                                 <input type="password" value="" placeholder="Min. 8 tegn" readonly>
-                              </div>
-                              <a class="security-help" href="{{ url('user/update-password') }}">Glemt passord?</a>
-                           </div>
-
-                           <div class="card-soft profile-summary">
-                              @php
-                                 $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
-                                 $profileImageAbsolutePath = public_path($profileImageRelativePath);
-                                 $profileImageUrl = file_exists($profileImageAbsolutePath)
-                                    ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
-                                    : asset('front/images/profile.png');
-                              @endphp
-                              <div class="profile-avatar-wrap">
-                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
-                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
-                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
-                              </div>
-                              <p id="profile-image-status">Trykk på blyanten for å endre bilde.</p>
-                              <h4>{{ Auth::user()->name }}</h4>
-                              <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
-                           </div>
-
                            <div class="card-soft timeline-card">
                               <h4 class="timeline-title">Nylige oppdateringer</h4>
-                              <p class="timeline-subtitle">Her vises kun varsler når du har fått ny melding.</p>
+                              <p class="timeline-subtitle">Her vises varsler når du har fått ny melding.</p>
                               @php
                                  $newMessageUpdates = collect($recentEnquiries ?? [])->filter(function($timeline){
                                     return (int)($timeline['unread_vendor'] ?? 0) > 0;
@@ -611,6 +576,24 @@
                                     </div>
                                  @endforelse
                               </div>
+                           </div>
+
+                           <div class="card-soft profile-summary">
+                              @php
+                                 $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
+                                 $profileImageAbsolutePath = public_path($profileImageRelativePath);
+                                 $profileImageUrl = file_exists($profileImageAbsolutePath)
+                                    ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
+                                    : asset('front/images/profile.png');
+                              @endphp
+                              <div class="profile-avatar-wrap">
+                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
+                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
+                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
+                              </div>
+                              <p id="profile-image-status">Trykk på blyanten for å endre bilde.</p>
+                              <h4>{{ Auth::user()->name }}</h4>
+                              <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
                            </div>
                         </div>
                      </div>
