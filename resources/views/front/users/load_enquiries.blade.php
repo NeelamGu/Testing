@@ -747,7 +747,7 @@ use App\Models\Category;
             $unreadVendorCount = (int)($enquiry['unreadVendorCount'] ?? 0);
          @endphp
 
-         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}">
+         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}" data-message-kind="{{ $isAssignment ? 'assignment' : 'direct' }}">
             <div>
                <img class="message-brand" src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}">
             </div>
@@ -826,6 +826,9 @@ use App\Models\Category;
       @empty
          <div class="message-empty">Ingen meldinger funnet med valgt filter.</div>
       @endforelse
+      @if(count($enquiries) > 0)
+         <div class="message-empty js-filter-empty">Ingen meldinger funnet med valgt filter.</div>
+      @endif
       </div>
    </div>
 </div>
