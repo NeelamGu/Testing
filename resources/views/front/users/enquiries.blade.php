@@ -8,7 +8,7 @@
    }
    .messages-shell {
       background: #f8f4ed;
-      border: 1px solid #ecd9bf;
+      border: none;
       border-radius: 14px;
       padding: 18px;
       margin-top: 12px;

@@ -5,7 +5,7 @@ use App\Models\Category;
 ?>
 <style>
    .message-hub {
-      border: 1px solid #e8d9c4;
+      border: none;
       border-radius: 14px;
       background: #fff;
       overflow: hidden;
@@ -103,7 +103,7 @@ use App\Models\Category;
    .status-filter-btn:hover {
       background: #f1e9de;
    }
-   .status-filter-btn.is-active {
+   .contact-section.account-page .status-filter-btn.is-active {
       background: var(--customer-panel-accent) !important;
       border-color: var(--customer-panel-accent) !important;
       color: var(--customer-panel-accent-contrast, #ffffff) !important;
@@ -120,7 +120,7 @@ use App\Models\Category;
       font-size: 11px;
       font-weight: 700;
    }
-   .status-filter-btn.is-active .count {
+   .contact-section.account-page .status-filter-btn.is-active .count {
       background: rgba(255, 255, 255, 0.34);
       color: var(--customer-panel-accent-contrast, #ffffff);
    }
@@ -476,13 +476,13 @@ use App\Models\Category;
          color: #675947;
       }
 
-      .status-filter-btn.is-active {
+      .contact-section.account-page .status-filter-btn.is-active {
          background: var(--customer-panel-accent) !important;
          border-color: var(--customer-panel-accent) !important;
          color: var(--customer-panel-accent-contrast, #ffffff) !important;
       }
 
-      .status-filter-btn.is-active .count {
+      .contact-section.account-page .status-filter-btn.is-active .count {
          background: rgba(255, 255, 255, 0.34);
          color: var(--customer-panel-accent-contrast, #ffffff);
       }
