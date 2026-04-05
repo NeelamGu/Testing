@@ -273,8 +273,20 @@ use App\Models\Category;
       align-items: center;
       flex-wrap: wrap;
    }
+   .message-vendor-meta .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+   }
+   .message-category-icon {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+      display: inline-block;
+   }
    .message-vendor-meta i {
       margin-right: 5px;
+      color: var(--customer-panel-accent, #e78002);
    }
    .message-type-cell {
       display: flex;
@@ -805,7 +817,17 @@ use App\Models\Category;
                @else
                   <p class="message-preview">{{ $previewText }}</p>
                @endif
-               <div class="message-vendor-meta"><span><i class="fa fa-tag"></i>{{ $categoryName }}</span><span><i class="fa fa-calendar"></i>{{ $displayDate }}</span></div>
+               <div class="message-vendor-meta">
+                  <span class="meta-item">
+                     @if(!empty($categoryImage))
+                        <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
+                     @else
+                        <i class="fa fa-tag"></i>
+                     @endif
+                     {{ $categoryName }}
+                  </span>
+                  <span class="meta-item"><i class="fa fa-calendar"></i>{{ $displayDate }}</span>
+               </div>
             </div>
 
             <div>
