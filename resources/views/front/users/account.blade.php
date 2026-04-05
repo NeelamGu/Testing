@@ -348,19 +348,6 @@
    .profile-side-actions .save-btn:hover {
       filter: brightness(0.96);
    }
-   .deactivate-link {
-      text-align: left;
-      width: 100%;
-   }
-   .profile-side-actions .deactivate-link a {
-      color: #000;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-   }
-   .profile-side-actions .deactivate-link a:hover {
-      color: #000;
-   }
    #account-success,
    #account-error {
       margin: 0 0 8px;
@@ -533,23 +520,6 @@
                                  <p id="account-panel_accent_color" style="display:none;"></p>
                               </div>
 
-                              <div class="card-soft profile-summary">
-                                 @php
-                                    $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
-                                    $profileImageAbsolutePath = public_path($profileImageRelativePath);
-                                    $profileImageUrl = file_exists($profileImageAbsolutePath)
-                                       ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
-                                       : asset('front/images/profile.png');
-                                 @endphp
-                                 <div class="profile-avatar-wrap">
-                                    <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
-                                    <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
-                                    <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
-                                 </div>
-                                 <h4>{{ Auth::user()->name }}</h4>
-                                 <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
-                              </div>
-
                            </form>
                         </div>
 
@@ -586,6 +556,23 @@
                                     </div>
                                  @endforelse
                               </div>
+                           </div>
+
+                           <div class="card-soft profile-summary">
+                              @php
+                                 $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
+                                 $profileImageAbsolutePath = public_path($profileImageRelativePath);
+                                 $profileImageUrl = file_exists($profileImageAbsolutePath)
+                                    ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
+                                    : asset('front/images/profile.png');
+                              @endphp
+                              <div class="profile-avatar-wrap">
+                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
+                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
+                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
+                              </div>
+                              <h4>{{ Auth::user()->name }}</h4>
+                              <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
                            </div>
 
                            <div class="profile-side-actions">
