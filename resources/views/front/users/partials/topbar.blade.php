@@ -48,7 +48,7 @@
    .customer-topbar .center-nav a {
       font-size: 15px;
       font-weight: 600;
-      color: #6a6258;
+      color: #000;
       text-decoration: none !important;
       border-bottom: 2px solid transparent;
       padding-bottom: 4px;
@@ -64,7 +64,7 @@
    }
    .customer-topbar .center-nav a.is-active,
    .customer-topbar .center-nav a:hover {
-      color: #b26407;
+      color: #000;
       border-color: #b26407;
    }
    .customer-topbar .right-actions {
@@ -265,7 +265,7 @@
       }
 
       .customer-topbar .center-nav a:hover {
-         color: var(--customer-panel-accent-contrast, #ffffff);
+         color: #000;
          border: none;
       }
 
