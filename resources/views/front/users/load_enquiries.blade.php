@@ -244,6 +244,26 @@ use App\Models\Category;
       background: #f0f2fb;
       color: #2f4f98;
    }
+   .message-flags {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 22px;
+   }
+   .message-status-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--customer-panel-accent);
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+   }
    .message-vendor-meta {
       margin-top: 9px;
       color: #988877;
@@ -739,6 +759,7 @@ use App\Models\Category;
             $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
             $newVendorCount = (int)($enquiry['newVendorCount'] ?? 0);
             $newMessageCount = (int)($enquiry['newMessageCount'] ?? 0);
+            $hasNewMessage = (int)($enquiry['unreadCount'] ?? 0) > 0;
          @endphp
 
          <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}">
@@ -759,7 +780,15 @@ use App\Models\Category;
                      <span class="message-unread">{{ (int)$enquiry['unreadCount'] }}</span>
                   @endif
                </div>
-               @if($isAssignment)
+               @if($isMessagesTab)
+                  @if($hasNewMessage)
+                     <div class="message-flags">
+                        <span class="message-status-badge">Ny melding</span>
+                     </div>
+                  @else
+                     <p class="message-preview">Ingen ny melding</p>
+                  @endif
+               @elseif($isAssignment)
                   <div class="assignment-summary">
                      <strong>{{ $vendorResponseCount }} Samtaler</strong>
                      @if($newVendorCount > 0 || $newMessageCount > 0)
