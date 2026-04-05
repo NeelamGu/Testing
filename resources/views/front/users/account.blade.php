@@ -180,18 +180,18 @@
    }
    .profile-summary {
       text-align: center;
-      padding: 16px 12px;
+      padding: 12px 10px;
       background: #f8f5ef;
    }
    .profile-avatar-wrap {
-      width: 82px;
-      height: 82px;
-      margin: 0 auto 10px;
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 8px;
       position: relative;
    }
    .profile-summary img {
-      width: 82px;
-      height: 82px;
+      width: 74px;
+      height: 74px;
       border-radius: 50%;
       border: 3px solid #fff;
       box-shadow: 0 8px 18px rgba(30, 23, 13, 0.2);
@@ -228,13 +228,13 @@
    .profile-summary h4 {
       margin: 0;
       color: #000;
-      font-size: 23px;
+      font-size: 21px;
       font-weight: 700;
    }
    .profile-summary p {
       margin: 5px 0 0;
       color: #000;
-      font-size: 13px;
+      font-size: 12px;
    }
    .timeline-title {
       margin: 0;
