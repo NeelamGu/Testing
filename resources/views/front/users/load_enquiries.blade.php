@@ -46,20 +46,6 @@ use App\Models\Category;
       display: grid;
       gap: 6px;
    }
-   .status-filter-mobile {
-      display: none;
-   }
-   .status-filter-mobile-select {
-      width: 100%;
-      min-height: 38px;
-      border-radius: 11px;
-      border: 1px solid #dfd2bf;
-      background: #fff;
-      color: #5b4d3c;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 8px 12px;
-   }
    .status-filter-actions {
       margin-top: 10px;
    }
@@ -229,9 +215,34 @@ use App\Models\Category;
       color: #2f2516;
       font-size: 15px;
    }
-   .assignment-summary span {
-      font-size: 12px;
-      color: #7d6f60;
+   .assignment-alerts {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 1px;
+   }
+   .assignment-alert {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #d3dfef;
+      background: #edf3fb;
+      color: #204974;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+   }
+   .assignment-alert.new-vendor {
+      border-color: #c6decf;
+      background: #e9f6ee;
+      color: #1e5a34;
+   }
+   .assignment-alert.new-message {
+      border-color: #d5d8f0;
+      background: #f0f2fb;
+      color: #2f4f98;
    }
    .message-vendor-meta {
       margin-top: 9px;
@@ -452,18 +463,7 @@ use App\Models\Category;
       }
 
       .status-filter-list {
-         display: none;
-      }
-
-      .status-filter-mobile {
-         display: block;
-      }
-
-      .status-filter-mobile-select {
-         min-height: 40px;
-         border-radius: 12px;
-         border-color: #d8caaf;
-         background: #fffaf1;
+         display: grid;
       }
 
       .status-filter-actions {
@@ -673,13 +673,6 @@ use App\Models\Category;
       <div class="message-filter-shell">
          <div class="status-filter-panel">
             <p class="status-filter-title">Filter</p>
-            <div class="status-filter-mobile">
-               <select id="mobileStatusFilter" class="status-filter-mobile-select" aria-label="Velg statusfilter">
-                  <option value="" {{ ($active_close === '' || $active_close === null) ? 'selected' : '' }}>{{ $allItemsLabel }} ({{ (int)($totalAssignments ?? 0) }})</option>
-                  <option value="1" {{ (string)$active_close === '1' ? 'selected' : '' }}>Aktive ({{ (int)($activeAssignments ?? 0) }})</option>
-                  <option value="0" {{ (string)$active_close === '0' ? 'selected' : '' }}>Fullførte ({{ (int)($completedAssignments ?? 0) }})</option>
-               </select>
-            </div>
             <div class="status-filter-list">
                <a href="javascript:void(0)" class="status-filter-btn {{ ($active_close === '' || $active_close === null) ? 'is-active' : '' }}" data-status="">
                   <span><i class="fa fa-th-large" style="margin-right:8px;"></i>{{ $allItemsLabel }}</span>
@@ -744,10 +737,11 @@ use App\Models\Category;
             $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
             $previewText = !empty($enquiry['response']) ? \Illuminate\Support\Str::limit(strip_tags($enquiry['response']), 95) : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
             $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
-            $unreadVendorCount = (int)($enquiry['unreadVendorCount'] ?? 0);
+            $newVendorCount = (int)($enquiry['newVendorCount'] ?? 0);
+            $newMessageCount = (int)($enquiry['newMessageCount'] ?? 0);
          @endphp
 
-         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}" data-message-kind="{{ $isAssignment ? 'assignment' : 'direct' }}">
+         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}">
             <div>
                <img class="message-brand" src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}">
             </div>
@@ -767,12 +761,16 @@ use App\Models\Category;
                </div>
                @if($isAssignment)
                   <div class="assignment-summary">
-                     @if($vendorResponseCount > 0)
-                        <strong>{{ $vendorResponseCount }} leverandører har svart</strong>
-                        <span>{{ $unreadVendorCount > 0 ? $unreadVendorCount.' nye leverandører har ikke åpnet samtalen' : 'Ingen nye leverandører venter' }}</span>
-                     @else
-                        <strong>Ingen leverandører har svart ennå</strong>
-                        <span>Når leverandører svarer, vises det her.</span>
+                     <strong>{{ $vendorResponseCount }} Samtaler</strong>
+                     @if($newVendorCount > 0 || $newMessageCount > 0)
+                        <div class="assignment-alerts">
+                           @if($newVendorCount > 0)
+                              <span class="assignment-alert new-vendor">Ny leverandør</span>
+                           @endif
+                           @if($newMessageCount > 0)
+                              <span class="assignment-alert new-message">Ny Melding</span>
+                           @endif
+                        </div>
                      @endif
                   </div>
                @else
@@ -826,9 +824,6 @@ use App\Models\Category;
       @empty
          <div class="message-empty">Ingen meldinger funnet med valgt filter.</div>
       @endforelse
-      @if(count($enquiries) > 0)
-         <div class="message-empty js-filter-empty">Ingen meldinger funnet med valgt filter.</div>
-      @endif
       </div>
    </div>
 </div>

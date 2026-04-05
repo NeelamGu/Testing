@@ -234,18 +234,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		var statusVal = $(this).attr('data-status');
 		$("#selcloseenq").val(statusVal);
-		$("#mobileStatusFilter").val(statusVal);
 		$('.status-filter-btn').removeClass('is-active');
 		$(this).addClass('is-active');
-		reloadUserEnquiriesList();
-	});
-
-	$(document).on('change', '#mobileStatusFilter', function(){
-		var statusVal = $(this).val();
-		$("#selcloseenq").val(statusVal);
-		$('.status-filter-btn').removeClass('is-active').filter(function(){
-			return ($(this).attr('data-status') || '') === (statusVal || '');
-		}).addClass('is-active');
 		reloadUserEnquiriesList();
 	});
 
