@@ -17,7 +17,7 @@
    .messages-panel {
       background: #fff;
       border-radius: 12px;
-      border: 1px solid #f0e5d4;
+      border: none;
       box-shadow: 0 10px 26px rgba(67, 47, 20, 0.08);
       overflow: hidden;
       height: 100%;
@@ -28,7 +28,7 @@
       display: block;
       padding: 16px 18px;
       background: linear-gradient(120deg, #fff6e8, #fff);
-      border-bottom: 1px solid #f2e5d2;
+      border-bottom: none;
    }
    .messages-panel-title {
       margin: 0;
