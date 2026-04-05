@@ -139,7 +139,7 @@ $messagesCountCustomer = messagesCountCustomer();
       border-top-left-radius: 5px;
    }
    .chat-item.customer .chat-bubble {
-      background: linear-gradient(180deg, rgba(216, 252, 211, 0.94) 0%, rgba(201, 244, 194, 0.92) 100%);
+      background: var(--customer-panel-accent, #e78002);
       border-color: transparent;
       border-top-right-radius: 5px;
    }
@@ -153,8 +153,14 @@ $messagesCountCustomer = messagesCountCustomer();
       letter-spacing: 0.35px;
    }
    .chat-item.customer .chat-author {
-      color: #2f7a46;
+      color: rgba(255, 255, 255, 0.92);
       text-align: right;
+   }
+   .chat-item.customer .chat-text {
+      color: #ffffff;
+   }
+   .chat-item.customer .chat-time {
+      color: rgba(255, 255, 255, 0.86);
    }
    .chat-text {
       font-size: 15px;
