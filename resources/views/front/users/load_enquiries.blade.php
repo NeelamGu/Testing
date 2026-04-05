@@ -656,7 +656,7 @@ use App\Models\Category;
    <div class="message-body-layout">
       <div class="message-filter-shell">
          <div class="status-filter-panel">
-            <p class="status-filter-title">Filter status</p>
+            <p class="status-filter-title">Filter</p>
             <div class="status-filter-mobile">
                <select id="mobileStatusFilter" class="status-filter-mobile-select" aria-label="Velg statusfilter">
                   <option value="" {{ ($active_close === '' || $active_close === null) ? 'selected' : '' }}>{{ $allItemsLabel }} ({{ (int)($totalAssignments ?? 0) }})</option>
