@@ -52,7 +52,15 @@
       text-decoration: none !important;
       border-bottom: 2px solid transparent;
       padding-bottom: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       transition: color 0.2s ease, border-color 0.2s ease;
+   }
+   .customer-topbar .center-nav a i {
+      font-size: 13px;
+      line-height: 1;
+      opacity: 0.88;
    }
    .customer-topbar .center-nav a.is-active,
    .customer-topbar .center-nav a:hover {
@@ -193,6 +201,7 @@
          min-height: 38px;
          display: inline-flex;
          align-items: center;
+         gap: 6px;
          font-size: 14px;
       }
 
@@ -244,6 +253,9 @@
          font-size: 13px;
          line-height: 1;
       }
+      .customer-topbar .center-nav a i {
+         font-size: 12px;
+      }
 
       .customer-topbar .center-nav a.is-active {
          border: none;
@@ -277,10 +289,10 @@
    <div class="topbar-inner">
       <h1 class="brand"><a href="{{ url('/') }}"><img src="{{ asset('front/images/logo5.png') }}" alt="Samling.no"></a></h1>
       <nav class="center-nav">
-         <a href="{{ url('user/enquiries?message_type=assignment') }}" class="js-customer-panel-link {{ $activeTopTab === 'assignments' ? 'is-active' : '' }}">Oppdrag</a>
-         <a href="{{ url('user/wishlist') }}" class="js-customer-panel-link {{ $activeTopTab === 'favorites' ? 'is-active' : '' }}">Favoritter</a>
-         <a href="{{ url('user/enquiries') }}" class="js-customer-panel-link {{ $activeTopTab === 'messages' ? 'is-active' : '' }}">Meldinger</a>
-         <a href="{{ url('user/account') }}" class="js-customer-panel-link {{ $activeTopTab === 'profile' ? 'is-active' : '' }}">Profil</a>
+         <a href="{{ url('user/enquiries?message_type=assignment') }}" class="js-customer-panel-link {{ $activeTopTab === 'assignments' ? 'is-active' : '' }}"><i class="fa fa-briefcase" aria-hidden="true"></i>Oppdrag</a>
+         <a href="{{ url('user/wishlist') }}" class="js-customer-panel-link {{ $activeTopTab === 'favorites' ? 'is-active' : '' }}"><i class="fa fa-heart" aria-hidden="true"></i>Favoritter</a>
+         <a href="{{ url('user/enquiries') }}" class="js-customer-panel-link {{ $activeTopTab === 'messages' ? 'is-active' : '' }}"><i class="fa fa-comments" aria-hidden="true"></i>Meldinger</a>
+         <a href="{{ url('user/account') }}" class="js-customer-panel-link {{ $activeTopTab === 'profile' ? 'is-active' : '' }}"><i class="fa fa-user" aria-hidden="true"></i>Profil</a>
       </nav>
       <div class="right-actions">
          <div class="profile-menu" id="topbarProfileMenu">
