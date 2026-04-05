@@ -533,13 +533,23 @@
                                  <p id="account-panel_accent_color" style="display:none;"></p>
                               </div>
 
-                              <div class="profile-side-actions">
-                                 <button class="save-btn" type="submit"><i class="fa fa-save"></i> Lagre endringer</button>
-                                 <a class="security-help" href="{{ url('user/update-password') }}">Glemt passord?</a>
-                                 <div class="deactivate-link">
-                                    <a href="javascript:void(0)">Deaktiver konto</a>
+                              <div class="card-soft profile-summary">
+                                 @php
+                                    $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
+                                    $profileImageAbsolutePath = public_path($profileImageRelativePath);
+                                    $profileImageUrl = file_exists($profileImageAbsolutePath)
+                                       ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
+                                       : asset('front/images/profile.png');
+                                 @endphp
+                                 <div class="profile-avatar-wrap">
+                                    <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
+                                    <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
+                                    <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
                                  </div>
+                                 <h4>{{ Auth::user()->name }}</h4>
+                                 <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
                               </div>
+
                            </form>
                         </div>
 
@@ -578,22 +588,9 @@
                               </div>
                            </div>
 
-                           <div class="card-soft profile-summary">
-                              @php
-                                 $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
-                                 $profileImageAbsolutePath = public_path($profileImageRelativePath);
-                                 $profileImageUrl = file_exists($profileImageAbsolutePath)
-                                    ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
-                                    : asset('front/images/profile.png');
-                              @endphp
-                              <div class="profile-avatar-wrap">
-                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
-                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
-                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
-                              </div>
-                              <p id="profile-image-status">Trykk på blyanten for å endre bilde.</p>
-                              <h4>{{ Auth::user()->name }}</h4>
-                              <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
+                           <div class="profile-side-actions">
+                              <button class="save-btn" type="submit" form="accountForm"><i class="fa fa-save"></i> Lagre endringer</button>
+                              <a class="security-help" href="{{ url('user/update-password') }}">Glemt passord?</a>
                            </div>
                         </div>
                      </div>
