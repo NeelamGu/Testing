@@ -1461,6 +1461,8 @@ class UserController extends Controller
 
         return [
             'thread_id' => (int)$baseEnquiry->id,
+            'thread_status' => (int)($baseEnquiry->status ?? 1),
+            'assignment_id' => (int)($baseEnquiry->enquiry_detail_id ?? 0),
             'messages' => $messages,
             'vendor_name' => $conversationVendorName,
             'vendor_url' => $conversationVendorUrl,

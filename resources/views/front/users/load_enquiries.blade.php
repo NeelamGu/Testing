@@ -849,9 +849,12 @@ use App\Models\Category;
       font-weight: 700;
       color: #222;
       line-height: 1.25;
+      white-space: normal;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
    }
 
    .enquiry-row-date {
@@ -927,6 +930,119 @@ use App\Models\Category;
       text-align: center;
       color: #6f6658;
       font-size: 14px;
+   }
+
+   .assignment-mode-wrap {
+      display: grid;
+      gap: 10px;
+      padding: 10px;
+   }
+
+   .assignment-mode-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #ebe6dc;
+      padding-bottom: 9px;
+   }
+
+   .assignment-back-btn {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      border-radius: 999px;
+      background: #e8f1ff;
+      color: #2563eb;
+      font-size: 17px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+   }
+
+   .assignment-mode-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.2;
+   }
+
+   .assignment-mode-sub {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #4b5563;
+   }
+
+   .assignment-thread-list {
+      display: grid;
+   }
+
+   .assignment-thread-row {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      text-decoration: none !important;
+      color: inherit;
+      padding: 10px 0;
+      border-bottom: 1px solid #ece7de;
+   }
+
+   .assignment-thread-row:last-child {
+      border-bottom: 0;
+   }
+
+   .assignment-thread-row.is-selected {
+      background: #eef4ff;
+      margin: 0 -10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 8px;
+      border-bottom-color: transparent;
+   }
+
+   .assignment-thread-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #f2eee7;
+      border: 1px solid #e3d8c9;
+   }
+
+   .assignment-thread-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+   }
+
+   .assignment-thread-name {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1f2937;
+      line-height: 1.2;
+   }
+
+   .assignment-thread-preview {
+      margin: 3px 0 0;
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+   }
+
+   .assignment-thread-date {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 600;
+      white-space: nowrap;
    }
 
    .message-item,

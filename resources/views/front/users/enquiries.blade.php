@@ -70,10 +70,17 @@
    }
    .messages-right-pane {
       min-height: 0;
+      height: 100%;
       overflow: hidden;
       border: 1px solid #e8dece;
       border-radius: 12px;
       background: linear-gradient(180deg, #f6f9fd, #f2f7fc);
+      display: flex;
+      flex-direction: column;
+   }
+   #splitChatPane {
+      height: 100%;
+      min-height: 0;
       display: flex;
       flex-direction: column;
    }
@@ -102,6 +109,7 @@
    .split-chat-card {
       height: 100%;
       min-height: 0;
+      flex: 1;
       display: flex;
       flex-direction: column;
    }
@@ -143,6 +151,15 @@
       font-weight: 600;
    }
    .split-chat-overview-link:hover {
+      text-decoration: underline;
+   }
+   .split-chat-close-link {
+      color: #b91c1c;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+   }
+   .split-chat-close-link:hover {
       text-decoration: underline;
    }
    .split-chat-messages {
@@ -235,6 +252,7 @@
       background: rgba(255, 255, 255, 0.9);
       padding: 10px;
       flex-shrink: 0;
+      margin-top: auto;
    }
    .split-chat-input-row {
       display: flex;
@@ -367,6 +385,46 @@
    }
 </style>
 <div class="page-wrapper">
+   @php
+      $assignmentThreadMap = [];
+      foreach(($enquiries ?? []) as $assignmentThread){
+         $isOppdrag = strtolower((string)($assignmentThread['messageType'] ?? '')) === 'oppdrag';
+         $assignmentDetailId = (int)($assignmentThread['enquiry_detail_id'] ?? 0);
+         if(!$isOppdrag || $assignmentDetailId <= 0){
+            continue;
+         }
+
+         $threadUpdatedAt = $assignmentThread['updated_at'] ?? $assignmentThread['created_at'] ?? null;
+         $threadDateLabel = !empty($threadUpdatedAt) ? date('d.m.y, H:i', strtotime($threadUpdatedAt)) : '';
+         $threadPreviewSource = !empty($assignmentThread['response']) ? $assignmentThread['response'] : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
+         $categoryImageName = '';
+         if(!empty($assignmentThread['product']['category_id'])){
+            $categoryImageName = (string)(\App\Models\Category::getCategoryImage($assignmentThread['product']['category_id']) ?? '');
+         }
+         $threadAvatar = $categoryImageName !== ''
+            ? asset('front/images/category_images/'.$categoryImageName)
+            : asset('front/images/profile.png');
+
+         $assignmentThreadMap[$assignmentDetailId][] = [
+            'id' => (int)($assignmentThread['id'] ?? 0),
+            'name' => $assignmentThread['product']['product_name'] ?? 'Ukjent leverandør',
+            'preview' => \Illuminate\Support\Str::limit(strip_tags((string)$threadPreviewSource), 88),
+            'date' => $threadDateLabel,
+            'updated_at' => $assignmentThread['updated_at'] ?? $assignmentThread['created_at'] ?? null,
+            'unread' => (int)($assignmentThread['unreadCount'] ?? 0),
+            'status' => (int)($assignmentThread['status'] ?? 1),
+            'avatar' => $threadAvatar,
+         ];
+      }
+      foreach($assignmentThreadMap as $assignmentDetailId => $assignmentThreads){
+         usort($assignmentThreads, function($a, $b){
+            $aTs = strtotime((string)($a['updated_at'] ?? '1970-01-01'));
+            $bTs = strtotime((string)($b['updated_at'] ?? '1970-01-01'));
+            return $bTs <=> $aTs;
+         });
+         $assignmentThreadMap[$assignmentDetailId] = array_values($assignmentThreads);
+      }
+   @endphp
    @php $activeTopTab = (isset($message_type) && $message_type==='assignment') ? 'assignments' : 'messages'; @endphp
    @php $isAssignmentTab = (isset($message_type) && $message_type==='assignment'); @endphp
    @include('front.users.partials.topbar', ['activeTopTab' => $activeTopTab])
@@ -412,6 +470,8 @@
 
 @section('javascript')
 <script>
+   window.assignmentThreadMap = @json($assignmentThreadMap);
+
    $(document).on('show.bs.modal', '.replymodal', function () {
       var $modal = $(this);
       if (!$modal.parent().is('body')) {
@@ -421,6 +481,7 @@
 
    (function(){
       var splitPollingTimer = null;
+      var desktopMainListHtml = null;
 
       function autoResizeSplitInput() {
          var $input = $("#splitReplyEnquiryForm textarea[name='message']");
@@ -447,6 +508,112 @@
          if (nearBottom) {
             el.scrollTop = el.scrollHeight;
          }
+      }
+
+      function getSelectedEnquiryIdFromUrl(url) {
+         try {
+            return parseInt((new URL(url, window.location.origin)).searchParams.get('selected_enquiry_id') || '0', 10) || 0;
+         } catch (e) {
+            return 0;
+         }
+      }
+
+      function buildDesktopUrlForThread(threadId) {
+         var url = new URL(window.location.href);
+         url.searchParams.set('selected_enquiry_id', String(threadId));
+         return url.toString();
+      }
+
+      function ensureDesktopListSnapshot() {
+         if (desktopMainListHtml === null) {
+            desktopMainListHtml = $('.message-list-desktop').html() || '';
+         }
+      }
+
+      function restoreDesktopMainList() {
+         if (desktopMainListHtml === null) {
+            return;
+         }
+         $('.message-list-desktop').html(desktopMainListHtml);
+      }
+
+      function setEmptySplitPaneState() {
+         $('#splitChatPane').html(
+            '<div class="split-chat-shell"><div class="split-chat-empty"><h4>Velg en samtale</h4><p>Velg en samtale i listen til venstre.</p></div></div>'
+         );
+      }
+
+      function renderAssignmentThreadMode($row) {
+         var assignmentId = parseInt($row.attr('data-assignment-id') || '0', 10) || 0;
+         if (assignmentId <= 0) {
+            return false;
+         }
+
+         var threadIdsRaw = String($row.attr('data-thread-ids') || '');
+         var threadIds = threadIdsRaw.split(',').map(function(v){ return parseInt(v, 10) || 0; }).filter(function(v){ return v > 0; });
+         if (threadIds.length <= 1) {
+            return false;
+         }
+
+         var threadMap = window.assignmentThreadMap || {};
+         var threads = threadMap[String(assignmentId)] || threadMap[assignmentId] || [];
+         if (!threads.length) {
+            return false;
+         }
+
+         ensureDesktopListSnapshot();
+
+         var assignmentTitle = $.trim($row.find('.enquiry-row-title').text()) || 'Oppdrag';
+         var headerHtml = ''
+            + '<div class="assignment-mode-wrap">'
+            + '  <div class="assignment-mode-head">'
+            + '    <button type="button" class="assignment-back-btn" aria-label="Tilbake">&#8592;</button>'
+            + '    <div>'
+            + '      <h4 class="assignment-mode-title">' + $('<div>').text(assignmentTitle).html() + '</h4>'
+            + '      <p class="assignment-mode-sub">' + threads.length + ' samtaler</p>'
+            + '    </div>'
+            + '  </div>'
+            + '  <div class="assignment-thread-list"></div>'
+            + '</div>';
+
+         $('.message-list-desktop').html(headerHtml);
+         var $threadList = $('.assignment-thread-list');
+         var selectedThreadId = parseInt($('#selectedEnquiryId').val() || '0', 10) || 0;
+
+         threads.forEach(function(thread){
+            var threadId = parseInt(thread.id || 0, 10) || 0;
+            if (threadId <= 0) {
+               return;
+            }
+
+            var threadUrl = buildDesktopUrlForThread(threadId);
+            var selectedClass = threadId === selectedThreadId ? ' is-selected' : '';
+            var unreadHtml = (parseInt(thread.unread || 0, 10) > 0)
+               ? '<span class="badge-unread">' + parseInt(thread.unread, 10) + '</span>'
+               : '';
+            var preview = $('<div>').text(String(thread.preview || '')).html();
+            var name = $('<div>').text(String(thread.name || 'Leverandør')).html();
+            var date = $('<div>').text(String(thread.date || '')).html();
+            var avatar = $('<div>').text(String(thread.avatar || '')).html();
+
+            var rowHtml = ''
+               + '<a href="' + threadUrl + '" class="assignment-thread-row js-thread-link' + selectedClass + '" data-enquiry-id="' + threadId + '">'
+               + '  <div class="assignment-thread-avatar"><img src="' + avatar + '" alt="Leverandør"></div>'
+               + '  <div>'
+               + '    <h5 class="assignment-thread-name">' + name + '</h5>'
+               + '    <p class="assignment-thread-preview">' + preview + '</p>'
+               + '  </div>'
+               + '  <div style="display:grid;gap:6px;justify-items:end;">'
+               + '    <span class="assignment-thread-date">' + date + '</span>'
+               +      unreadHtml
+               + '  </div>'
+               + '</a>';
+
+            $threadList.append(rowHtml);
+         });
+
+         setEmptySplitPaneState();
+         return true;
       }
 
       function renderDateSeparators() {
@@ -548,12 +715,7 @@
 
             $pane.replaceWith($nextPane);
 
-            var selectedId = 0;
-            try {
-               selectedId = parseInt((new URL(url, window.location.origin)).searchParams.get('selected_enquiry_id') || '0', 10) || 0;
-            } catch (e) {
-               selectedId = 0;
-            }
+            var selectedId = getSelectedEnquiryIdFromUrl(url);
 
             $('#selectedEnquiryId').val(selectedId);
             $('.message-list-desktop .js-thread-link').removeClass('is-selected');
@@ -585,11 +747,53 @@
             return;
          }
 
+         var $row = $(this);
+         var isGroupedAssignment = parseInt($row.attr('data-is-grouped-assignment') || '0', 10) === 1;
+         if (isGroupedAssignment && !$('.assignment-mode-wrap').length) {
+            var switched = renderAssignmentThreadMode($row);
+            if (switched) {
+               return;
+            }
+         }
+
          $('.message-list-desktop .js-thread-link').removeClass('is-selected');
          $(this).addClass('is-selected');
          $('#selectedEnquiryId').val(parseInt($(this).attr('data-enquiry-id') || '0', 10) || 0);
 
          loadSplitChatPane(nextUrl, true);
+      });
+
+      $(document).on('click', '.assignment-back-btn', function(){
+         restoreDesktopMainList();
+      });
+
+      $(document).on('click', '.split-chat-close-link', function(e){
+         e.preventDefault();
+         var $link = $(this);
+         var threadId = parseInt($link.attr('data-thread-id') || '0', 10) || 0;
+         if (threadId <= 0) {
+            return;
+         }
+
+         var confirmClose = confirm('Er du sikker på at du vil avslutte denne tråden?');
+         if (!confirmClose) {
+            return;
+         }
+
+         $.ajax({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/update-enquiry-status',
+            data: { status: 'Active', enquiry_id: threadId },
+            success: function(){
+               if (typeof reloadUserEnquiriesList === 'function') {
+                  reloadUserEnquiriesList();
+               }
+               loadSplitChatPane(window.location.href, false);
+            }
+         });
       });
 
       window.addEventListener('popstate', function(){
@@ -689,6 +893,13 @@
       autoResizeSplitInput();
       scrollSplitChatBottom(true);
       startSplitChatPolling();
+
+      $('.message-list-desktop .js-thread-link.is-selected').each(function(){
+         var $selectedRow = $(this);
+         if (parseInt($selectedRow.attr('data-is-grouped-assignment') || '0', 10) === 1) {
+            renderAssignmentThreadMode($selectedRow);
+         }
+      });
    })();
 </script>
 @endsection

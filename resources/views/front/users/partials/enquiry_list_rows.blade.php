@@ -37,9 +37,12 @@
       $isSelected = !$isMobileList && (int)($selectedEnquiryId ?? 0) === (int)($enquiry['id'] ?? 0);
       $isCompleted = (int)($enquiry['status'] ?? 0) === 0;
       $unreadCount = (int)($enquiry['unreadCount'] ?? 0);
+      $assignmentId = (int)($enquiry['enquiry_detail_id'] ?? 0);
+      $threadIds = array_values(array_filter($enquiry['threadIds'] ?? [(int)($enquiry['id'] ?? 0)]));
+      $threadIdsCsv = implode(',', $threadIds);
    @endphp
 
-   <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}">
+   <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
       <div class="enquiry-row-avatar">
          <img src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image">
       </div>

@@ -13,7 +13,7 @@
          $messages = $conversation['messages'] ?? [];
          $lastMessageId = count($messages) > 0 ? (int)$messages[count($messages)-1]['id'] : 0;
       @endphp
-      <div class="split-chat-card" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-poll-url="{{ $conversation['poll_url'] ?? '' }}">
+      <div class="split-chat-card" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-thread-status="{{ (int)($conversation['thread_status'] ?? 1) }}" data-assignment-id="{{ (int)($conversation['assignment_id'] ?? 0) }}" data-poll-url="{{ $conversation['poll_url'] ?? '' }}">
          <div class="split-chat-head">
             <div class="split-chat-title-wrap">
                <h4 class="split-chat-title">
@@ -27,6 +27,9 @@
                   <p class="split-chat-subtitle">{{ !empty($conversation['is_assignment']) ? 'Oppdragstråd' : 'Direkte melding' }}</p>
                   @if(!empty($conversation['is_assignment']) && !empty($conversation['overview_url']))
                      <a href="{{ $conversation['overview_url'] }}" class="split-chat-overview-link">Se alle tråder</a>
+                  @endif
+                  @if((int)($conversation['thread_status'] ?? 1) === 1)
+                     <a href="javascript:void(0)" class="split-chat-close-link" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-current-status="Active">Avslutt tråd</a>
                   @endif
                </div>
             </div>
