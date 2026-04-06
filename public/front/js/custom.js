@@ -239,6 +239,24 @@ $(document).ready(function(){
 		reloadUserEnquiriesList();
 	});
 
+	$(document).on('click', '.status-filter-toggle', function(e){
+		if (!window.matchMedia('(max-width: 767px)').matches) {
+			return;
+		}
+		e.preventDefault();
+		var $panel = $(this).closest('.status-filter-panel');
+		var isOpen = !$panel.hasClass('is-open');
+		$panel.toggleClass('is-open', isOpen);
+		$(this).attr('aria-expanded', isOpen ? 'true' : 'false');
+	});
+
+	$(window).on('resize', function(){
+		if (!window.matchMedia('(max-width: 767px)').matches) {
+			$('.status-filter-panel').removeClass('is-open');
+			$('.status-filter-toggle').attr('aria-expanded', 'false');
+		}
+	});
+
 	// Update Enquiry Status for Pin/Unpin
 	$(document).on("click",".updatePinStatus",function(){
 		$('.PleaseWaitDiv').show();

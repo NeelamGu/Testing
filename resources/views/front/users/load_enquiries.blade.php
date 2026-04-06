@@ -168,6 +168,9 @@ use App\Models\Category;
       border-color: #9fceaa;
       box-shadow: inset 0 0 0 1px rgba(157, 204, 168, 0.35);
    }
+      .message-item.is-direct::before {
+         background: #2f4f98;
+      }
    .message-item.is-completed .message-vendor-title a,
    .message-item.is-completed .message-preview,
    .message-item.is-completed .message-type-note {
@@ -679,11 +682,11 @@ use App\Models\Category;
          color: #7a6b58;
       }
 
-      .message-item.is-assignment .message-type-cell {
+      .message-item.is-assignment.is-assignment-tab .message-type-cell {
          display: none;
       }
 
-      .message-item.is-assignment::before {
+      .message-item.is-assignment.is-assignment-tab::before {
          background: #e78002;
       }
 
@@ -828,7 +831,7 @@ use App\Models\Category;
             $hasNewMessage = (int)($enquiry['unreadCount'] ?? 0) > 0;
          @endphp
 
-         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }}">
+         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isAssignmentTab ? 'is-assignment-tab' : '' }}">
             <div>
                <img class="message-brand" src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}">
             </div>
@@ -932,33 +935,4 @@ use App\Models\Category;
       </div>
    </div>
 </div>
-
-<script>
-   (function () {
-      var panel = document.querySelector('.status-filter-panel');
-      var toggle = panel ? panel.querySelector('.status-filter-toggle') : null;
-      if (!panel || !toggle) {
-         return;
-      }
-
-      function isMobile() {
-         return window.matchMedia('(max-width: 767px)').matches;
-      }
-
-      toggle.addEventListener('click', function () {
-         if (!isMobile()) {
-            return;
-         }
-         var isOpen = panel.classList.toggle('is-open');
-         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-
-      window.addEventListener('resize', function () {
-         if (!isMobile()) {
-            panel.classList.remove('is-open');
-            toggle.setAttribute('aria-expanded', 'false');
-         }
-      });
-   })();
-</script>
                            
