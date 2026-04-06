@@ -106,10 +106,7 @@
       flex-direction: column;
    }
    .split-chat-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      display: block;
       padding: 12px;
       border-bottom: 1px solid #e5dfd4;
       background: rgba(255, 255, 255, 0.8);
@@ -126,36 +123,27 @@
       text-decoration: underline;
    }
    .split-chat-subtitle {
-      margin: 4px 0 0;
+      margin: 2px 0 0;
       font-size: 11px;
       color: #7f7261;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       font-weight: 700;
    }
-   .split-chat-actions {
+   .split-chat-meta {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-   }
-   .split-chat-link {
-      display: inline-flex;
       align-items: center;
-      min-height: 30px;
-      border-radius: 999px;
-      border: 1px solid var(--customer-panel-accent);
-      background: var(--customer-panel-accent);
-      color: var(--customer-panel-accent-contrast, #ffffff) !important;
-      text-decoration: none !important;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 0 11px;
+      gap: 10px;
+      flex-wrap: wrap;
    }
-   .split-chat-link.muted {
-      border-color: #ded3c2;
-      background: #f3ede4;
-      color: #6f624f !important;
+   .split-chat-overview-link {
+      color: #2f80ed;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+   }
+   .split-chat-overview-link:hover {
+      text-decoration: underline;
    }
    .split-chat-messages {
       flex: 1;

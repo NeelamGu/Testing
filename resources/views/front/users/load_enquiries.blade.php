@@ -773,6 +773,215 @@ use App\Models\Category;
          font-size: 13px;
       }
    }
+
+   .message-list {
+      gap: 0;
+      border: 1px solid #ece7de;
+      border-radius: 12px;
+      background: #fff;
+      padding: 0;
+      overflow: auto;
+   }
+
+   .enquiry-row-link {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid #f0ebe2;
+      text-decoration: none !important;
+      color: inherit;
+      background: #fff;
+      transition: background-color 0.16s ease;
+   }
+
+   .enquiry-row-link:last-child {
+      border-bottom: none;
+   }
+
+   .enquiry-row-link:hover {
+      background: #f8f7f4;
+   }
+
+   .enquiry-row-link.is-selected {
+      background: #eef4ff;
+   }
+
+   .enquiry-row-link.is-completed .enquiry-row-title,
+   .enquiry-row-link.is-completed .enquiry-row-preview {
+      color: #4a6a50;
+   }
+
+   .enquiry-row-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f2eee7;
+      border: 1px solid #e3d8c9;
+   }
+
+   .enquiry-avatar-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+   }
+
+   .enquiry-row-main {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+   }
+
+   .enquiry-row-top {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      justify-content: space-between;
+      min-width: 0;
+   }
+
+   .enquiry-row-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: #222;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+   }
+
+   .enquiry-row-date {
+      flex-shrink: 0;
+      font-size: 12px;
+      color: #767676;
+      font-weight: 600;
+   }
+
+   .enquiry-row-preview {
+      margin: 0;
+      color: #555;
+      font-size: 14px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+   }
+
+   .enquiry-row-submeta {
+      margin: 0;
+      color: #3b3b3b;
+      font-size: 13px;
+      font-weight: 700;
+   }
+
+   .enquiry-row-meta {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #7a7a7a;
+      font-size: 12px;
+      flex-wrap: wrap;
+   }
+
+   .enquiry-row-side {
+      display: grid;
+      gap: 6px;
+      justify-items: end;
+      align-content: center;
+   }
+
+   .badge-fullfort {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      border-radius: 7px;
+      padding: 0 8px;
+      background: #b07420;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: none;
+   }
+
+   .badge-unread {
+      min-width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #2f80ed;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+   }
+
+   .enquiry-empty-state {
+      padding: 24px;
+      text-align: center;
+      color: #6f6658;
+      font-size: 14px;
+   }
+
+   .message-item,
+   .message-actions,
+   .message-toggles,
+   .message-open-link,
+   .message-type-note,
+   .message-status-chip,
+   .message-unread {
+      display: none !important;
+   }
+
+   @media (max-width: 767px) {
+      .message-list {
+         border: none;
+         background: transparent;
+      }
+
+      .enquiry-row-link {
+         grid-template-columns: 44px minmax(0, 1fr) auto;
+         gap: 10px;
+         border: 1px solid #e8ddcc;
+         border-radius: 14px;
+         margin-bottom: 10px;
+         padding: 11px;
+         box-shadow: 0 6px 14px rgba(61, 46, 24, 0.06);
+      }
+
+      .enquiry-row-avatar {
+         width: 44px;
+         height: 44px;
+         border-radius: 50%;
+      }
+
+      .enquiry-row-title {
+         font-size: 15px;
+      }
+
+      .enquiry-row-date {
+         font-size: 11px;
+      }
+
+      .enquiry-row-preview {
+         font-size: 13px;
+      }
+
+      .enquiry-row-side {
+         gap: 4px;
+      }
+
+      .badge-fullfort {
+         height: 20px;
+         font-size: 10px;
+      }
+   }
 </style>
 
 @php
