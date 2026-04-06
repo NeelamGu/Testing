@@ -168,9 +168,12 @@ use App\Models\Category;
       border-color: #9fceaa;
       box-shadow: inset 0 0 0 1px rgba(157, 204, 168, 0.35);
    }
-      .message-item.is-direct::before {
-         background: #2f4f98;
-      }
+   .message-item.is-assignment::before {
+      background: #e78002;
+   }
+   .message-item.is-direct::before {
+      background: #2f4f98;
+   }
    .message-item.is-completed .message-vendor-title a,
    .message-item.is-completed .message-preview,
    .message-item.is-completed .message-type-note {
@@ -610,12 +613,20 @@ use App\Models\Category;
          pointer-events: none;
       }
 
+      .message-item.is-direct::before {
+         background: #2f4f98;
+      }
+
       .message-item.is-assignment::before {
          background: var(--customer-panel-accent);
       }
 
-      .message-item.is-completed::before {
-         background: #8bb69a;
+      .message-item.is-completed.is-direct::before {
+         background: #2f4f98;
+      }
+
+      .message-item.is-completed.is-assignment::before {
+         background: #e78002;
       }
 
       .message-item > div:first-child {
