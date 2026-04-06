@@ -387,11 +387,24 @@
 <div class="page-wrapper">
    @php
       $assignmentThreadMap = [];
+   $assignmentDetailsMap = [];
       foreach(($enquiries ?? []) as $assignmentThread){
          $isOppdrag = strtolower((string)($assignmentThread['messageType'] ?? '')) === 'oppdrag';
          $assignmentDetailId = (int)($assignmentThread['enquiry_detail_id'] ?? 0);
          if(!$isOppdrag || $assignmentDetailId <= 0){
             continue;
+         }
+
+         if(!isset($assignmentDetailsMap[$assignmentDetailId])){
+            $assignmentDetailsMap[$assignmentDetailId] = [
+               'title' => $assignmentThread['enquiry_detail']['title'] ?? ($assignmentThread['product']['product_name'] ?? 'Oppdrag'),
+               'assignment_date' => $assignmentThread['enquiry_detail']['assignment_date'] ?? '',
+               'address' => $assignmentThread['enquiry_detail']['address'] ?? '',
+               'city' => $assignmentThread['enquiry_detail']['city'] ?? '',
+               'pincode' => $assignmentThread['enquiry_detail']['pincode'] ?? '',
+               'assignment_text' => $assignmentThread['enquiry_detail']['assignment_text'] ?? '',
+               'desired_price' => $assignmentThread['enquiry_detail']['price'] ?? ($assignmentThread['enquiry_detail']['desired_price'] ?? ''),
+            ];
          }
 
          $threadUpdatedAt = $assignmentThread['updated_at'] ?? $assignmentThread['created_at'] ?? null;
@@ -502,6 +515,7 @@
 @section('javascript')
 <script>
    window.assignmentThreadMap = @json($assignmentThreadMap);
+   window.assignmentDetailsMap = @json($assignmentDetailsMap);
 
    $(document).on('show.bs.modal', '.replymodal', function () {
       var $modal = $(this);
@@ -513,6 +527,7 @@
    (function(){
       var splitPollingTimer = null;
       var desktopMainListHtml = null;
+      var activeAssignmentModeId = 0;
 
       function autoResizeSplitInput() {
          var $input = $("#splitReplyEnquiryForm textarea[name='message']");
@@ -566,12 +581,77 @@
             return;
          }
          $('.message-list-desktop').html(desktopMainListHtml);
+         activeAssignmentModeId = 0;
       }
 
       function setEmptySplitPaneState() {
          $('#splitChatPane').html(
             '<div class="split-chat-shell"><div class="split-chat-empty"><h4>Velg en samtale</h4><p>Velg en samtale i listen til venstre.</p></div></div>'
          );
+      }
+
+      function renderAssignmentDetailsPane(assignmentId, assignmentTitle, threadCount) {
+         var detailsMap = window.assignmentDetailsMap || {};
+         var details = detailsMap[String(assignmentId)] || detailsMap[assignmentId] || {};
+
+         var dateText = String(details.assignment_date || '').trim();
+         var addressText = String(details.address || '').trim();
+         var cityText = String(details.city || '').trim();
+         var pincodeText = String(details.pincode || '').trim();
+         var desiredPriceText = String(details.desired_price || '').trim();
+         var assignmentText = String(details.assignment_text || '').trim();
+
+         var locationParts = [];
+         if (addressText !== '') {
+            locationParts.push(addressText);
+         }
+         if (cityText !== '') {
+            locationParts.push(cityText);
+         }
+         var locationText = locationParts.join(', ');
+         if (locationText !== '' && pincodeText !== '') {
+            locationText += ' (' + pincodeText + ')';
+         }
+
+         var esc = function(value){
+            return $('<div>').text(String(value || '')).html();
+         };
+
+         var detailRows = '';
+         if (dateText !== '') {
+            detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Oppdragsdato</strong><span style="font-size:14px;color:#1f2937;">' + esc(dateText) + '</span></div>';
+         }
+         if (locationText !== '') {
+            detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Sted</strong><span style="font-size:14px;color:#1f2937;">' + esc(locationText) + '</span></div>';
+         }
+         if (desiredPriceText !== '') {
+            detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Ønsket pris</strong><span style="font-size:14px;color:#1f2937;">' + esc(desiredPriceText) + '</span></div>';
+         }
+         if (assignmentText !== '') {
+            detailRows += '<div style="padding:8px 0 0;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Oppdragsbeskrivelse</strong><span style="font-size:14px;color:#1f2937;line-height:1.45;white-space:pre-wrap;">' + esc(assignmentText) + '</span></div>';
+         }
+         if (detailRows === '') {
+            detailRows = '<div style="padding:8px 0;"><span style="font-size:14px;color:#6b7280;">Ingen oppdragsdetaljer registrert.</span></div>';
+         }
+
+         var paneHtml = ''
+            + '<div class="split-chat-shell">'
+            + '  <div class="split-chat-card">'
+            + '    <div class="split-chat-head">'
+            + '      <div class="split-chat-title-wrap">'
+            + '        <h4 class="split-chat-title">' + esc(assignmentTitle) + '</h4>'
+            + '        <div class="split-chat-meta"><p class="split-chat-subtitle">Oppdrag · ' + esc(threadCount + ' samtaler') + '</p></div>'
+            + '      </div>'
+            + '    </div>'
+            + '    <div class="split-chat-messages" style="padding:14px;background:#f7fafc;">'
+            + '      <div style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e5dfd4;border-radius:10px;padding:12px;">'
+            +            detailRows
+            + '      </div>'
+            + '    </div>'
+            + '  </div>'
+            + '</div>';
+
+         $('#splitChatPane').html(paneHtml);
       }
 
       function renderAssignmentThreadMode($row) {
@@ -588,6 +668,8 @@
          if (!threads.length) {
             return false;
          }
+
+         activeAssignmentModeId = assignmentId;
 
          ensureDesktopListSnapshot();
 
@@ -640,7 +722,7 @@
             $threadList.append(rowHtml);
          });
 
-         setEmptySplitPaneState();
+         renderAssignmentDetailsPane(assignmentId, assignmentTitle, threads.length);
          return true;
       }
 
@@ -802,7 +884,7 @@
 
       $(document).on('click', '.assignment-back-btn', function(){
          restoreDesktopMainList();
-         maybeRenderAssignmentModeForSelectedRow();
+         setEmptySplitPaneState();
       });
 
       $(document).on('click', '.split-chat-close-link', function(e){
