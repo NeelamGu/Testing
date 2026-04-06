@@ -59,7 +59,7 @@
    }
    .messages-main-split {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 420px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
       gap: 12px;
       height: 100%;
       min-height: 0;
@@ -149,13 +149,86 @@
       flex: 1;
       min-height: 0;
       overflow-y: auto;
-      padding: 10px;
+      padding: 12px;
       background:
          radial-gradient(circle at 1px 1px, rgba(72, 96, 123, 0.028) 1px, transparent 0) 0 0/16px 16px,
          linear-gradient(180deg, rgba(244, 248, 252, 0.85) 0%, rgba(238, 244, 251, 0.8) 100%);
    }
    .split-chat-messages .chat-item {
-      margin-bottom: 7px;
+      margin-bottom: 10px;
+      display: flex;
+      width: 100%;
+   }
+   .split-chat-messages .chat-item.vendor {
+      justify-content: flex-start;
+   }
+   .split-chat-messages .chat-item.customer {
+      justify-content: flex-end;
+   }
+   .split-chat-messages .chat-bubble {
+      width: fit-content;
+      max-width: min(78%, 690px);
+      border-radius: 14px;
+      padding: 9px 12px 7px;
+      background: #fff;
+      border: 1px solid #e2d9cb;
+      box-shadow: 0 2px 8px rgba(40, 35, 26, 0.07);
+   }
+   .split-chat-messages .chat-item.vendor .chat-bubble {
+      border-top-left-radius: 5px;
+   }
+   .split-chat-messages .chat-item.customer .chat-bubble {
+      background: #cfe2ff;
+      border-color: #b7d0f4;
+      border-top-right-radius: 5px;
+   }
+   .split-chat-messages .chat-author {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #3b6ea8;
+      margin-bottom: 4px;
+   }
+   .split-chat-messages .chat-text {
+      font-size: 15px;
+      line-height: 1.42;
+      color: #222;
+      white-space: pre-wrap;
+      word-break: break-word;
+   }
+   .split-chat-messages .chat-time {
+      display: block;
+      margin-top: 4px;
+      text-align: right;
+      font-size: 11px;
+      color: #6f6f6f;
+      font-weight: 600;
+   }
+   .split-chat-messages .msg-reply-img {
+      max-width: 160px;
+      border-radius: 9px;
+      border: 1px solid #cfdae6;
+      display: block;
+   }
+   .split-chat-messages .chat-media-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+   }
+   .chat-date-separator {
+      display: flex;
+      justify-content: center;
+      margin: 7px 0 9px;
+   }
+   .chat-date-separator span {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: #e9eff7;
+      color: #5d6f84;
+      font-size: 11px;
+      font-weight: 700;
    }
    .split-chat-composer {
       border-top: 1px solid #e5dfd4;
@@ -181,21 +254,22 @@
       min-height: 36px;
       max-height: 110px;
       border: 1px solid #ddd2c1;
-      border-radius: 14px;
+      border-radius: 18px;
       padding: 8px 12px;
       resize: none;
       line-height: 1.35;
       background: #fff;
+      font-size: 14px;
    }
    .split-chat-send {
-      min-height: 34px;
+      min-height: 36px;
       border-radius: 999px;
       border: 1px solid #1b8c4f;
       background: linear-gradient(135deg, #23b364, #1e9f5a);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
-      padding: 0 14px;
+      padding: 0 16px;
    }
    .messages-main .table-data {
       margin-bottom: 0;
@@ -346,6 +420,8 @@
    });
 
    (function(){
+      var splitPollingTimer = null;
+
       function autoResizeSplitInput() {
          var $input = $("#splitReplyEnquiryForm textarea[name='message']");
          if (!$input.length) {
@@ -373,6 +449,32 @@
          }
       }
 
+      function renderDateSeparators() {
+         var $messages = $("#splitChatMessages");
+         if (!$messages.length) {
+            return;
+         }
+
+         $messages.find('.chat-date-separator').remove();
+
+         var lastDayKey = '';
+         $messages.children('.chat-item').each(function(){
+            var $item = $(this);
+            var dayKey = String($item.data('day-key') || '');
+            if (!dayKey) {
+               return;
+            }
+
+            if (dayKey !== lastDayKey) {
+               var dayLabel = String($item.data('day-label') || dayKey);
+               var $separator = $('<div class="chat-date-separator"><span></span></div>');
+               $separator.find('span').text(dayLabel);
+               $separator.insertBefore($item);
+               lastDayKey = dayKey;
+            }
+         });
+      }
+
       function appendSplitMessages(messageHtml, lastId) {
          var $messages = $("#splitChatMessages");
          if (!$messages.length) {
@@ -380,6 +482,7 @@
          }
          if (messageHtml && $.trim(messageHtml) !== '') {
             $messages.append(messageHtml);
+            renderDateSeparators();
             scrollSplitChatBottom(false);
          }
          if (lastId) {
@@ -387,7 +490,16 @@
          }
       }
 
+      function stopSplitChatPolling() {
+         if (splitPollingTimer) {
+            clearInterval(splitPollingTimer);
+            splitPollingTimer = null;
+         }
+      }
+
       function startSplitChatPolling() {
+         stopSplitChatPolling();
+
          var $card = $('.split-chat-card');
          if (!$card.length) {
             return;
@@ -398,7 +510,7 @@
             return;
          }
 
-         setInterval(function(){
+         splitPollingTimer = setInterval(function(){
             var $messages = $("#splitChatMessages");
             if (!$messages.length) {
                return;
@@ -417,6 +529,75 @@
             });
          }, 4000);
       }
+
+      function loadSplitChatPane(url, shouldPushState) {
+         var $pane = $('#splitChatPane');
+         if (!$pane.length) {
+            return;
+         }
+
+         stopSplitChatPolling();
+
+         $.get(url, function(html){
+            var $doc = $('<div>').append($.parseHTML(html, document, true));
+            var $nextPane = $doc.find('#splitChatPane').first();
+            if (!$nextPane.length) {
+               window.location.href = url;
+               return;
+            }
+
+            $pane.replaceWith($nextPane);
+
+            var selectedId = 0;
+            try {
+               selectedId = parseInt((new URL(url, window.location.origin)).searchParams.get('selected_enquiry_id') || '0', 10) || 0;
+            } catch (e) {
+               selectedId = 0;
+            }
+
+            $('#selectedEnquiryId').val(selectedId);
+            $('.message-list-desktop .js-thread-link').removeClass('is-selected');
+            if (selectedId > 0) {
+               $('.message-list-desktop .js-thread-link[data-enquiry-id="' + selectedId + '"]').addClass('is-selected');
+            }
+
+            renderDateSeparators();
+            autoResizeSplitInput();
+            scrollSplitChatBottom(true);
+            startSplitChatPolling();
+
+            if (shouldPushState) {
+               window.history.pushState({ splitChatUrl: url }, '', url);
+            }
+         }).fail(function(){
+            window.location.href = url;
+         });
+      }
+
+      $(document).on('click', '.message-list-desktop .js-thread-link', function(e){
+         if (window.matchMedia('(max-width: 767px)').matches) {
+            return;
+         }
+
+         e.preventDefault();
+         var nextUrl = $(this).attr('href');
+         if (!nextUrl) {
+            return;
+         }
+
+         $('.message-list-desktop .js-thread-link').removeClass('is-selected');
+         $(this).addClass('is-selected');
+         $('#selectedEnquiryId').val(parseInt($(this).attr('data-enquiry-id') || '0', 10) || 0);
+
+         loadSplitChatPane(nextUrl, true);
+      });
+
+      window.addEventListener('popstate', function(){
+         if (window.matchMedia('(max-width: 767px)').matches) {
+            return;
+         }
+         loadSplitChatPane(window.location.href, false);
+      });
 
       $(document).on('input', "#splitReplyEnquiryForm textarea[name='message']", function(){
          autoResizeSplitInput();
@@ -504,6 +685,7 @@
          });
       });
 
+      renderDateSeparators();
       autoResizeSplitInput();
       scrollSplitChatBottom(true);
       startSplitChatPolling();

@@ -23,13 +23,12 @@
                      <span>{{ $conversation['vendor_name'] ?? 'Leverandør' }}</span>
                   @endif
                </h4>
-               <p class="split-chat-subtitle">{{ !empty($conversation['is_assignment']) ? 'Oppdragstråd' : 'Direkte melding' }}</p>
-            </div>
-            <div class="split-chat-actions">
-               @if(!empty($conversation['overview_url']))
-                  <a class="split-chat-link muted" href="{{ $conversation['overview_url'] }}">Se alle tråder</a>
-               @endif
-               <a class="split-chat-link" href="{{ $conversation['detail_url'] ?? '#' }}">Åpne full visning</a>
+               <div class="split-chat-meta">
+                  <p class="split-chat-subtitle">{{ !empty($conversation['is_assignment']) ? 'Oppdragstråd' : 'Direkte melding' }}</p>
+                  @if(!empty($conversation['is_assignment']) && !empty($conversation['overview_url']))
+                     <a href="{{ $conversation['overview_url'] }}" class="split-chat-overview-link">Se alle tråder</a>
+                  @endif
+               </div>
             </div>
          </div>
 
