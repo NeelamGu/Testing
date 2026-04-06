@@ -16,9 +16,9 @@ use App\Models\Category;
    }
    .message-body-layout {
       display: grid;
-      grid-template-columns: 270px minmax(0, 1fr);
-      gap: 12px;
-      padding: 12px;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 10px;
+      padding: 10px;
       height: 100%;
       min-height: 0;
    }
@@ -27,12 +27,12 @@ use App\Models\Category;
       align-self: start;
    }
    .status-filter-panel {
-      width: 250px;
+      width: 210px;
       max-width: 100%;
       border: 1px solid #ebddca;
-      border-radius: 14px;
+      border-radius: 12px;
       background: #fbf7f1;
-      padding: 12px;
+      padding: 9px;
    }
    .status-filter-toggle {
       display: none;
@@ -63,7 +63,7 @@ use App\Models\Category;
    }
    .status-filter-title {
       margin: 0 0 8px;
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: #9f927f;
@@ -71,7 +71,7 @@ use App\Models\Category;
    }
    .status-filter-list {
       display: grid;
-      gap: 6px;
+      gap: 5px;
    }
    .status-filter-actions {
       margin-top: 10px;
@@ -100,13 +100,13 @@ use App\Models\Category;
    }
    .status-filter-btn {
       border: 1px solid transparent;
-      border-radius: 12px;
+      border-radius: 10px;
       background: transparent;
       color: #5b4d3c;
       font-weight: 700;
-      font-size: 14px;
-      min-height: 36px;
-      padding: 6px 10px;
+      font-size: 13px;
+      min-height: 32px;
+      padding: 5px 8px;
       text-decoration: none !important;
       display: flex;
       align-items: center;
@@ -122,15 +122,15 @@ use App\Models\Category;
       color: var(--customer-panel-accent-contrast, #ffffff) !important;
    }
    .status-filter-btn .count {
-      min-width: 22px;
-      height: 22px;
+      min-width: 20px;
+      height: 20px;
       border-radius: 999px;
       background: #ece3d6;
       color: #6f604c;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
    }
    .contact-section.account-page .status-filter-btn.is-active .count {
@@ -837,7 +837,7 @@ use App\Models\Category;
 
    .enquiry-row-top {
       display: flex;
-      gap: 10px;
+      gap: 7px;
       align-items: baseline;
       justify-content: space-between;
       min-width: 0;
@@ -845,7 +845,7 @@ use App\Models\Category;
 
    .enquiry-row-title {
       margin: 0;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: #222;
       line-height: 1.25;
@@ -853,7 +853,7 @@ use App\Models\Category;
       word-break: break-word;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       overflow: hidden;
    }
 
@@ -893,9 +893,15 @@ use App\Models\Category;
 
    .enquiry-row-side {
       display: grid;
-      gap: 6px;
+      gap: 4px;
       justify-items: end;
       align-content: center;
+   }
+
+   .enquiry-row-side .type-chip {
+      font-size: 9px;
+      padding: 3px 7px;
+      letter-spacing: 0.04em;
    }
 
    .badge-fullfort {

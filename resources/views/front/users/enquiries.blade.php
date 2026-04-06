@@ -395,7 +395,38 @@
          }
 
          $threadUpdatedAt = $assignmentThread['updated_at'] ?? $assignmentThread['created_at'] ?? null;
-         $threadDateLabel = !empty($threadUpdatedAt) ? date('d.m.y, H:i', strtotime($threadUpdatedAt)) : '';
+         $threadDateLabel = '';
+         if(!empty($threadUpdatedAt)){
+            try{
+               $dateObj = \Carbon\Carbon::parse($threadUpdatedAt);
+               $nowObj = \Carbon\Carbon::now();
+               $yearsDiff = $dateObj->diffInYears($nowObj);
+               if($yearsDiff >= 2){
+                  $threadDateLabel = $yearsDiff.' år';
+               }elseif($yearsDiff === 1){
+                  $threadDateLabel = 'I fjor';
+               }else{
+                  $monthMap = [
+                     1 => 'jan.',
+                     2 => 'feb.',
+                     3 => 'mars',
+                     4 => 'apr.',
+                     5 => 'mai',
+                     6 => 'juni',
+                     7 => 'juli',
+                     8 => 'aug.',
+                     9 => 'sep.',
+                     10 => 'okt.',
+                     11 => 'nov.',
+                     12 => 'des.',
+                  ];
+                  $monthLabel = $monthMap[(int)$dateObj->month] ?? strtolower($dateObj->format('M'));
+                  $threadDateLabel = $dateObj->format('j').'. '.$monthLabel;
+               }
+            }catch(\Throwable $e){
+               $threadDateLabel = '';
+            }
+         }
          $threadPreviewSource = !empty($assignmentThread['response']) ? $assignmentThread['response'] : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
          $categoryImageName = '';
          if(!empty($assignmentThread['product']['category_id'])){
@@ -551,9 +582,6 @@
 
          var threadIdsRaw = String($row.attr('data-thread-ids') || '');
          var threadIds = threadIdsRaw.split(',').map(function(v){ return parseInt(v, 10) || 0; }).filter(function(v){ return v > 0; });
-         if (threadIds.length <= 1) {
-            return false;
-         }
 
          var threadMap = window.assignmentThreadMap || {};
          var threads = threadMap[String(assignmentId)] || threadMap[assignmentId] || [];
@@ -736,6 +764,15 @@
          });
       }
 
+      function maybeRenderAssignmentModeForSelectedRow() {
+         $('.message-list-desktop .js-thread-link.is-selected').each(function(){
+            var $selectedRow = $(this);
+            if (parseInt($selectedRow.attr('data-is-grouped-assignment') || '0', 10) === 1) {
+               renderAssignmentThreadMode($selectedRow);
+            }
+         });
+      }
+
       $(document).on('click', '.message-list-desktop .js-thread-link', function(e){
          if (window.matchMedia('(max-width: 767px)').matches) {
             return;
@@ -765,6 +802,7 @@
 
       $(document).on('click', '.assignment-back-btn', function(){
          restoreDesktopMainList();
+         maybeRenderAssignmentModeForSelectedRow();
       });
 
       $(document).on('click', '.split-chat-close-link', function(e){
@@ -800,6 +838,7 @@
          if (window.matchMedia('(max-width: 767px)').matches) {
             return;
          }
+         restoreDesktopMainList();
          loadSplitChatPane(window.location.href, false);
       });
 
@@ -893,13 +932,7 @@
       autoResizeSplitInput();
       scrollSplitChatBottom(true);
       startSplitChatPolling();
-
-      $('.message-list-desktop .js-thread-link.is-selected').each(function(){
-         var $selectedRow = $(this);
-         if (parseInt($selectedRow.attr('data-is-grouped-assignment') || '0', 10) === 1) {
-            renderAssignmentThreadMode($selectedRow);
-         }
-      });
+      maybeRenderAssignmentModeForSelectedRow();
    })();
 </script>
 @endsection

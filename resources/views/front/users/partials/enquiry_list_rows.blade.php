@@ -8,7 +8,39 @@
       $isAssignment = $messageType === 'Oppdrag';
       $isGroupedAssignment = !empty($enquiry['is_grouped_assignment']) && !$isMobileList;
       $lastActivityDate = $enquiry['last_message_at'] ?? ($enquiry['updated_at'] ?? $enquiry['created_at'] ?? null);
-      $displayDate = !empty($lastActivityDate) ? date('d.m.y, H:i', strtotime($lastActivityDate)) : '';
+      $displayDate = '';
+      if(!empty($lastActivityDate)){
+         try{
+            $dateObj = \Carbon\Carbon::parse($lastActivityDate);
+            $nowObj = \Carbon\Carbon::now();
+            $yearsDiff = $dateObj->diffInYears($nowObj);
+
+            if($yearsDiff >= 2){
+               $displayDate = $yearsDiff.' år';
+            }elseif($yearsDiff === 1){
+               $displayDate = 'I fjor';
+            }else{
+               $monthMap = [
+                  1 => 'jan.',
+                  2 => 'feb.',
+                  3 => 'mars',
+                  4 => 'apr.',
+                  5 => 'mai',
+                  6 => 'juni',
+                  7 => 'juli',
+                  8 => 'aug.',
+                  9 => 'sep.',
+                  10 => 'okt.',
+                  11 => 'nov.',
+                  12 => 'des.',
+               ];
+               $monthLabel = $monthMap[(int)$dateObj->month] ?? strtolower($dateObj->format('M'));
+               $displayDate = $dateObj->format('j').'. '.$monthLabel;
+            }
+         }catch(\Throwable $e){
+            $displayDate = '';
+         }
+      }
       $conversationUrl = url('user/enquiries/'.$enquiry['id']);
       $assignmentOverviewUrl = url('user/enquiries/'.$enquiry['id'].'/overview');
       $selectedParams = [
