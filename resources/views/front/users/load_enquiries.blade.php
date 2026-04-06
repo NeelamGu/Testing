@@ -618,7 +618,7 @@ use App\Models\Category;
       }
 
       .message-item.is-assignment::before {
-         background: var(--customer-panel-accent);
+         background: #e78002;
       }
 
       .message-item.is-completed.is-direct::before {
