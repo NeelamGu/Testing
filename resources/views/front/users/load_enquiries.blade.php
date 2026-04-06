@@ -34,6 +34,33 @@ use App\Models\Category;
       background: #fbf7f1;
       padding: 12px;
    }
+   .status-filter-toggle {
+      display: none;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      color: #9f927f;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+    }
+   .status-filter-toggle i {
+      font-size: 12px;
+      transition: transform 0.16s ease;
+   }
+   .status-filter-panel.is-open .status-filter-toggle i {
+      transform: rotate(180deg);
+   }
+   .status-filter-content {
+      display: block;
+   }
    .status-filter-title {
       margin: 0 0 8px;
       font-size: 11px;
@@ -490,8 +517,21 @@ use App\Models\Category;
          box-shadow: 0 6px 14px rgba(55, 40, 20, 0.05);
       }
 
+      .status-filter-toggle {
+         display: flex;
+      }
+
+      .status-filter-content {
+         display: none;
+         margin-top: 10px;
+      }
+
+      .status-filter-panel.is-open .status-filter-content {
+         display: block;
+      }
+
       .status-filter-title {
-         margin-bottom: 8px;
+         display: none;
       }
 
       .status-filter-list {
@@ -639,6 +679,14 @@ use App\Models\Category;
          color: #7a6b58;
       }
 
+      .message-item.is-assignment .message-type-cell {
+         display: none;
+      }
+
+      .message-item.is-assignment::before {
+         background: #e78002;
+      }
+
       .message-actions {
          display: flex;
          flex-direction: column;
@@ -704,30 +752,36 @@ use App\Models\Category;
    <div class="message-body-layout">
       <div class="message-filter-shell">
          <div class="status-filter-panel">
-            <p class="status-filter-title">Filter</p>
-            <div class="status-filter-list">
-               <a href="javascript:void(0)" class="status-filter-btn {{ ($active_close === '' || $active_close === null) ? 'is-active' : '' }}" data-status="">
-                  <span><i class="fa fa-th-large" style="margin-right:8px;"></i>{{ $allItemsLabel }}</span>
-                  <span class="count">{{ (int)($totalAssignments ?? 0) }}</span>
-               </a>
-               <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '1' ? 'is-active' : '' }}" data-status="1">
-                  <span><i class="fa fa-play-circle" style="margin-right:8px;"></i>Aktive</span>
-                  <span class="count">{{ (int)($activeAssignments ?? 0) }}</span>
-               </a>
-               <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '0' ? 'is-active' : '' }}" data-status="0">
-                  <span><i class="fa fa-check-circle" style="margin-right:8px;"></i>Fullførte</span>
-                  <span class="count">{{ (int)($completedAssignments ?? 0) }}</span>
-               </a>
-            </div>
-
-            @if($isAssignmentTab)
-               <div class="status-filter-actions">
-                  <a href="{{ url('enquire-us') }}" class="new-assignment-btn">
-                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                     Nytt Oppdrag
+            <button type="button" class="status-filter-toggle" aria-expanded="false">
+               <span>Filter</span>
+               <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="status-filter-content">
+               <p class="status-filter-title">Filter</p>
+               <div class="status-filter-list">
+                  <a href="javascript:void(0)" class="status-filter-btn {{ ($active_close === '' || $active_close === null) ? 'is-active' : '' }}" data-status="">
+                     <span><i class="fa fa-th-large" style="margin-right:8px;"></i>{{ $allItemsLabel }}</span>
+                     <span class="count">{{ (int)($totalAssignments ?? 0) }}</span>
+                  </a>
+                  <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '1' ? 'is-active' : '' }}" data-status="1">
+                     <span><i class="fa fa-play-circle" style="margin-right:8px;"></i>Aktive</span>
+                     <span class="count">{{ (int)($activeAssignments ?? 0) }}</span>
+                  </a>
+                  <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '0' ? 'is-active' : '' }}" data-status="0">
+                     <span><i class="fa fa-check-circle" style="margin-right:8px;"></i>Fullførte</span>
+                     <span class="count">{{ (int)($completedAssignments ?? 0) }}</span>
                   </a>
                </div>
-            @endif
+
+               @if($isAssignmentTab)
+                  <div class="status-filter-actions">
+                     <a href="{{ url('enquire-us') }}" class="new-assignment-btn">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Nytt Oppdrag
+                     </a>
+                  </div>
+               @endif
+            </div>
          </div>
 
          <div class="filter-hidden">
@@ -878,4 +932,33 @@ use App\Models\Category;
       </div>
    </div>
 </div>
+
+<script>
+   (function () {
+      var panel = document.querySelector('.status-filter-panel');
+      var toggle = panel ? panel.querySelector('.status-filter-toggle') : null;
+      if (!panel || !toggle) {
+         return;
+      }
+
+      function isMobile() {
+         return window.matchMedia('(max-width: 767px)').matches;
+      }
+
+      toggle.addEventListener('click', function () {
+         if (!isMobile()) {
+            return;
+         }
+         var isOpen = panel.classList.toggle('is-open');
+         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      window.addEventListener('resize', function () {
+         if (!isMobile()) {
+            panel.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+         }
+      });
+   })();
+</script>
                            

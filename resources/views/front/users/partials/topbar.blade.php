@@ -221,8 +221,9 @@
       }
 
       .customer-topbar .topbar-inner {
-         grid-template-columns: 1fr auto;
-         padding: 10px 12px;
+         position: relative;
+         grid-template-columns: 1fr;
+         padding: 10px 12px 12px;
          row-gap: 8px;
       }
 
@@ -230,9 +231,14 @@
          width: 138px;
       }
 
+      .customer-topbar .brand {
+         justify-self: center;
+         width: 100%;
+      }
+
       .customer-topbar .center-nav {
          display: inline-flex;
-         grid-column: 1 / -1;
+         grid-column: 1;
          width: 100%;
          gap: 6px;
          justify-content: center;
@@ -274,7 +280,10 @@
       }
 
       .customer-topbar .right-actions {
-         justify-self: end;
+         position: absolute;
+         top: 10px;
+         right: 12px;
+         justify-self: auto;
       }
 
       .customer-topbar .avatar {
