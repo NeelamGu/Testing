@@ -611,63 +611,7 @@ class UserController extends Controller
             //dd($enquiries);
         }
         
-        foreach ($enquiries as $key => $enquiry) {
-            $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
-            $vendorResponseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->where('sender_type','Vendor')
-                ->select('sender_id')
-                ->distinct()
-                ->count('sender_id');
-            $unreadVendorCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->where('sender_type','Vendor')
-                ->where('is_unread',1)
-                ->select('sender_id')
-                ->distinct()
-                ->count('sender_id');
-            $senderStats = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->where('sender_type','Vendor')
-                ->select('sender_id', DB::raw('COUNT(*) as total_count'), DB::raw('SUM(CASE WHEN is_unread = 1 THEN 1 ELSE 0 END) as unread_count'))
-                ->groupBy('sender_id')
-                ->get();
-            $newVendorCount = 0;
-            $newMessageCount = 0;
-            foreach($senderStats as $senderStat){
-                $senderUnread = (int)($senderStat->unread_count ?? 0);
-                if($senderUnread <= 0){
-                    continue;
-                }
-                $senderTotal = (int)($senderStat->total_count ?? 0);
-                if($senderTotal === $senderUnread){
-                    $newVendorCount++;
-                }else{
-                    $newMessageCount++;
-                }
-            }
-            if($responseCount>0){
-                $enquiryResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->first();
-                $enquiries[$key]['response'] = $enquiryResponse->response;    
-            }else{
-                $enquiries[$key]['response'] = "";
-            }
-            $totalMessagesCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->count();
-            $enquiries[$key]['hasMessages'] = $totalMessagesCount > 0;
-            $unreadCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->where('is_unread',1)->count();
-            $enquiries[$key]['unreadCount'] = $unreadCount;
-            $enquiries[$key]['vendorResponseCount'] = $vendorResponseCount;
-            $enquiries[$key]['unreadVendorCount'] = $unreadVendorCount;
-            $enquiries[$key]['newVendorCount'] = $newVendorCount;
-            $enquiries[$key]['newMessageCount'] = $newMessageCount;
-
-            $type = "Direkte";
-            if(isset($enquiry['enquiry_detail_id']) && $enquiry['enquiry_detail_id']>0){
-                $title = $enquiry['enquiry_detail']['title'] ?? "";
-                $assignmentDate = $enquiry['enquiry_detail']['assignment_date'] ?? "";
-                if(!empty($title) || !empty($assignmentDate)){
-                    $type = "Oppdrag";
-                }
-            }
-            $enquiries[$key]['messageType'] = $type;
-        }
+        $enquiries = $this->attachEnquiryConversationMeta($enquiries);
 
         if($message_type!=""){
             $enquiries = array_values(array_filter($enquiries,function($enquiry) use ($message_type){
@@ -710,15 +654,14 @@ class UserController extends Controller
                 return $statusB <=> $statusA;
             }
 
-            $catA = strtolower($a['product']['category']['category_name'] ?? '');
-            $catB = strtolower($b['product']['category']['category_name'] ?? '');
-            if($catA === $catB){
-                $dateA = strtotime($a['updated_at'] ?? $a['created_at'] ?? '1970-01-01');
-                $dateB = strtotime($b['updated_at'] ?? $b['created_at'] ?? '1970-01-01');
-                return $dateB <=> $dateA;
-            }
-            return $catA <=> $catB;
+            $dateA = strtotime($a['updated_at'] ?? $a['created_at'] ?? '1970-01-01');
+            $dateB = strtotime($b['updated_at'] ?? $b['created_at'] ?? '1970-01-01');
+            return $dateB <=> $dateA;
         });
+
+        $desktopEnquiries = $this->buildDesktopGroupedEnquiries($enquiries);
+        $selectedEnquiryId = $this->resolveSelectedEnquiryId($desktopEnquiries, $request->get('selected_enquiry_id', ''));
+        $selectedConversation = $this->buildSelectedConversationPayload($selectedEnquiryId);
 
         /*dd($enquiries);*/
         $catenquiries = ProductsEnquiry::with('product')->where('user_id',Auth::user()->id)->orderBy('id','Desc')->get()->toArray();
@@ -731,7 +674,7 @@ class UserController extends Controller
         $allcategories = array_values(array_unique($allcategories));
         sort($allcategories, SORT_NATURAL | SORT_FLAG_CASE);
         /*dd($enquiries);*/
-        return view('front.users.enquiries')->with(compact('enquiries','allcategories','message_type','active_close','enqCat','totalAssignments','activeAssignments','completedAssignments'));    
+        return view('front.users.enquiries')->with(compact('enquiries','desktopEnquiries','selectedEnquiryId','selectedConversation','allcategories','message_type','active_close','enqCat','totalAssignments','activeAssignments','completedAssignments'));    
     }
 
     public function getUserEnquiries(Request $request){
@@ -772,63 +715,7 @@ class UserController extends Controller
                 $message_type = "";
             }
         
-            foreach ($enquiries as $key => $enquiry) {
-                $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
-                $vendorResponseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                    ->where('sender_type','Vendor')
-                    ->select('sender_id')
-                    ->distinct()
-                    ->count('sender_id');
-                $unreadVendorCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                    ->where('sender_type','Vendor')
-                    ->where('is_unread',1)
-                    ->select('sender_id')
-                    ->distinct()
-                    ->count('sender_id');
-                $senderStats = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                    ->where('sender_type','Vendor')
-                    ->select('sender_id', DB::raw('COUNT(*) as total_count'), DB::raw('SUM(CASE WHEN is_unread = 1 THEN 1 ELSE 0 END) as unread_count'))
-                    ->groupBy('sender_id')
-                    ->get();
-                $newVendorCount = 0;
-                $newMessageCount = 0;
-                foreach($senderStats as $senderStat){
-                    $senderUnread = (int)($senderStat->unread_count ?? 0);
-                    if($senderUnread <= 0){
-                        continue;
-                    }
-                    $senderTotal = (int)($senderStat->total_count ?? 0);
-                    if($senderTotal === $senderUnread){
-                        $newVendorCount++;
-                    }else{
-                        $newMessageCount++;
-                    }
-                }
-                if($responseCount>0){
-                    $enquiryResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->first();
-                    $enquiries[$key]['response'] = $enquiryResponse->response;    
-                }else{
-                    $enquiries[$key]['response'] = "";
-                }
-                $totalMessagesCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->count();
-                $enquiries[$key]['hasMessages'] = $totalMessagesCount > 0;
-                $unreadCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->where('is_unread',1)->count();
-                $enquiries[$key]['unreadCount'] = $unreadCount;
-                $enquiries[$key]['vendorResponseCount'] = $vendorResponseCount;
-                $enquiries[$key]['unreadVendorCount'] = $unreadVendorCount;
-                $enquiries[$key]['newVendorCount'] = $newVendorCount;
-                $enquiries[$key]['newMessageCount'] = $newMessageCount;
-
-                $type = "Direkte";
-                if(isset($enquiry['enquiry_detail_id']) && $enquiry['enquiry_detail_id']>0){
-                    $title = $enquiry['enquiry_detail']['title'] ?? "";
-                    $assignmentDate = $enquiry['enquiry_detail']['assignment_date'] ?? "";
-                    if(!empty($title) || !empty($assignmentDate)){
-                        $type = "Oppdrag";
-                    }
-                }
-                $enquiries[$key]['messageType'] = $type;
-            }
+            $enquiries = $this->attachEnquiryConversationMeta($enquiries);
 
             if($message_type!=""){
                 $enquiries = array_values(array_filter($enquiries,function($enquiry) use ($message_type){
@@ -871,15 +758,13 @@ class UserController extends Controller
                     return $statusB <=> $statusA;
                 }
 
-                $catA = strtolower($a['product']['category']['category_name'] ?? '');
-                $catB = strtolower($b['product']['category']['category_name'] ?? '');
-                if($catA === $catB){
-                    $dateA = strtotime($a['updated_at'] ?? $a['created_at'] ?? '1970-01-01');
-                    $dateB = strtotime($b['updated_at'] ?? $b['created_at'] ?? '1970-01-01');
-                    return $dateB <=> $dateA;
-                }
-                return $catA <=> $catB;
+                $dateA = strtotime($a['updated_at'] ?? $a['created_at'] ?? '1970-01-01');
+                $dateB = strtotime($b['updated_at'] ?? $b['created_at'] ?? '1970-01-01');
+                return $dateB <=> $dateA;
             });
+
+            $desktopEnquiries = $this->buildDesktopGroupedEnquiries($enquiries);
+            $selectedEnquiryId = $this->resolveSelectedEnquiryId($desktopEnquiries, $data['selected_enquiry_id'] ?? '');
             /*dd($enquiries);*/
             $catenquiries = ProductsEnquiry::with('product')->where('user_id',Auth::user()->id)->orderBy('id','Desc')->get()->toArray();
             $allcategories = array();
@@ -895,7 +780,7 @@ class UserController extends Controller
             // Return the Updated Cart Item via Ajax
             return response()->json([
                 'status'=>true,
-                'view'=>(String)View::make('front.users.load_enquiries')->with(compact('enquiries','allcategories','enqCat','active_close','message_type','totalAssignments','activeAssignments','completedAssignments'))
+                'view'=>(String)View::make('front.users.load_enquiries')->with(compact('enquiries','desktopEnquiries','selectedEnquiryId','allcategories','enqCat','active_close','message_type','totalAssignments','activeAssignments','completedAssignments'))
             ]);
 
         }
@@ -1370,6 +1255,223 @@ class UserController extends Controller
         Auth::logout();
         Session::flush();
         return redirect('/');
+    }
+
+    private function attachEnquiryConversationMeta(array $enquiries){
+        foreach ($enquiries as $key => $enquiry) {
+            $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
+            $vendorResponseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                ->where('sender_type','Vendor')
+                ->select('sender_id')
+                ->distinct()
+                ->count('sender_id');
+            $unreadVendorCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                ->where('sender_type','Vendor')
+                ->where('is_unread',1)
+                ->select('sender_id')
+                ->distinct()
+                ->count('sender_id');
+            $senderStats = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                ->where('sender_type','Vendor')
+                ->select('sender_id', DB::raw('COUNT(*) as total_count'), DB::raw('SUM(CASE WHEN is_unread = 1 THEN 1 ELSE 0 END) as unread_count'))
+                ->groupBy('sender_id')
+                ->get();
+            $newVendorCount = 0;
+            $newMessageCount = 0;
+            foreach($senderStats as $senderStat){
+                $senderUnread = (int)($senderStat->unread_count ?? 0);
+                if($senderUnread <= 0){
+                    continue;
+                }
+                $senderTotal = (int)($senderStat->total_count ?? 0);
+                if($senderTotal === $senderUnread){
+                    $newVendorCount++;
+                }else{
+                    $newMessageCount++;
+                }
+            }
+
+            $latestResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
+                ->orderBy('id','Desc')
+                ->first();
+
+            if(!empty($latestResponse) && !empty($latestResponse->message)){
+                $enquiries[$key]['response'] = $latestResponse->message;
+            }else{
+                $enquiries[$key]['response'] = "";
+            }
+
+            $enquiries[$key]['last_message_at'] = !empty($latestResponse) ? $latestResponse->created_at : null;
+
+            $totalMessagesCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->count();
+            $enquiries[$key]['hasMessages'] = $totalMessagesCount > 0;
+            $unreadCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->where('is_unread',1)->count();
+            $enquiries[$key]['unreadCount'] = $unreadCount;
+            $enquiries[$key]['vendorResponseCount'] = $vendorResponseCount;
+            $enquiries[$key]['unreadVendorCount'] = $unreadVendorCount;
+            $enquiries[$key]['newVendorCount'] = $newVendorCount;
+            $enquiries[$key]['newMessageCount'] = $newMessageCount;
+
+            $type = "Direkte";
+            if(isset($enquiry['enquiry_detail_id']) && $enquiry['enquiry_detail_id']>0){
+                $title = $enquiry['enquiry_detail']['title'] ?? "";
+                $assignmentDate = $enquiry['enquiry_detail']['assignment_date'] ?? "";
+                if(!empty($title) || !empty($assignmentDate)){
+                    $type = "Oppdrag";
+                }
+            }
+            $enquiries[$key]['messageType'] = $type;
+            $enquiries[$key]['is_grouped_assignment'] = false;
+        }
+
+        return $enquiries;
+    }
+
+    private function buildDesktopGroupedEnquiries(array $enquiries){
+        $desktopRows = [];
+
+        foreach($enquiries as $enquiry){
+            $isAssignment = strtolower((string)($enquiry['messageType'] ?? 'direkte')) === 'oppdrag';
+            $assignmentId = (int)($enquiry['enquiry_detail_id'] ?? 0);
+
+            if(!$isAssignment || $assignmentId <= 0){
+                $enquiry['is_grouped_assignment'] = false;
+                $enquiry['threadIds'] = [(int)($enquiry['id'] ?? 0)];
+                $desktopRows[] = $enquiry;
+                continue;
+            }
+
+            $groupKey = 'assignment_'.$assignmentId;
+            $threadDate = strtotime($enquiry['updated_at'] ?? $enquiry['created_at'] ?? '1970-01-01');
+
+            if(!isset($desktopRows[$groupKey])){
+                $desktopRows[$groupKey] = $enquiry;
+                $desktopRows[$groupKey]['is_grouped_assignment'] = true;
+                $desktopRows[$groupKey]['threadIds'] = [];
+                $desktopRows[$groupKey]['vendorResponseCount'] = 0;
+                $desktopRows[$groupKey]['unreadCount'] = 0;
+                $desktopRows[$groupKey]['newVendorCount'] = 0;
+                $desktopRows[$groupKey]['newMessageCount'] = 0;
+                $desktopRows[$groupKey]['latestThreadTs'] = 0;
+                $desktopRows[$groupKey]['groupTitle'] = $enquiry['enquiry_detail']['title'] ?? ($enquiry['product']['product_name'] ?? 'Oppdrag');
+            }
+
+            $desktopRows[$groupKey]['threadIds'][] = (int)($enquiry['id'] ?? 0);
+            $desktopRows[$groupKey]['vendorResponseCount'] = (int)($desktopRows[$groupKey]['vendorResponseCount'] ?? 0) + 1;
+            $desktopRows[$groupKey]['unreadCount'] = (int)($desktopRows[$groupKey]['unreadCount'] ?? 0) + (int)($enquiry['unreadCount'] ?? 0);
+            $desktopRows[$groupKey]['newVendorCount'] = (int)($desktopRows[$groupKey]['newVendorCount'] ?? 0) + (int)($enquiry['newVendorCount'] ?? 0);
+            $desktopRows[$groupKey]['newMessageCount'] = (int)($desktopRows[$groupKey]['newMessageCount'] ?? 0) + (int)($enquiry['newMessageCount'] ?? 0);
+
+            $groupIsActive = (int)($desktopRows[$groupKey]['status'] ?? 0) === 1;
+            if(!$groupIsActive && (int)($enquiry['status'] ?? 0) === 1){
+                $desktopRows[$groupKey]['status'] = 1;
+            }
+
+            if($threadDate >= (int)$desktopRows[$groupKey]['latestThreadTs']){
+                $desktopRows[$groupKey]['latestThreadTs'] = $threadDate;
+                $desktopRows[$groupKey]['id'] = $enquiry['id'];
+                $desktopRows[$groupKey]['updated_at'] = $enquiry['updated_at'] ?? $enquiry['created_at'];
+                $desktopRows[$groupKey]['created_at'] = $enquiry['created_at'] ?? $enquiry['updated_at'];
+                $desktopRows[$groupKey]['response'] = $enquiry['response'] ?? '';
+                $desktopRows[$groupKey]['product'] = $enquiry['product'] ?? ($desktopRows[$groupKey]['product'] ?? []);
+            }
+        }
+
+        $desktopRows = array_values($desktopRows);
+
+        usort($desktopRows, function($a, $b){
+            $statusA = (int)($a['status'] ?? 0);
+            $statusB = (int)($b['status'] ?? 0);
+            if($statusA !== $statusB){
+                return $statusB <=> $statusA;
+            }
+
+            $dateA = strtotime($a['updated_at'] ?? $a['created_at'] ?? '1970-01-01');
+            $dateB = strtotime($b['updated_at'] ?? $b['created_at'] ?? '1970-01-01');
+            return $dateB <=> $dateA;
+        });
+
+        return $desktopRows;
+    }
+
+    private function resolveSelectedEnquiryId(array $desktopEnquiries, $requestedEnquiryId){
+        $requestedId = (int)$requestedEnquiryId;
+
+        if($requestedId > 0){
+            foreach($desktopEnquiries as $row){
+                $threadIds = array_filter($row['threadIds'] ?? []);
+                if((int)($row['id'] ?? 0) === $requestedId || in_array($requestedId, $threadIds, true)){
+                    return $requestedId;
+                }
+            }
+        }
+
+        if(empty($desktopEnquiries)){
+            return 0;
+        }
+
+        $firstRow = $desktopEnquiries[0];
+        $firstThreadIds = array_values(array_filter($firstRow['threadIds'] ?? []));
+        if(!empty($firstThreadIds)){
+            return (int)$firstThreadIds[0];
+        }
+
+        return (int)($firstRow['id'] ?? 0);
+    }
+
+    private function buildSelectedConversationPayload($selectedEnquiryId){
+        $threadId = (int)$selectedEnquiryId;
+        if($threadId <= 0){
+            return null;
+        }
+
+        $baseEnquiry = ProductsEnquiry::with(['product','enquiryDetail','vendor'])
+            ->where('id',$threadId)
+            ->where('user_id',Auth::user()->id)
+            ->first();
+
+        if(!$baseEnquiry){
+            return null;
+        }
+
+        $enquiryIds = [$baseEnquiry->id];
+
+        $messages = EnquiriesResponse::whereIn('enquiry_id',$enquiryIds)
+            ->with(['enquiry'])
+            ->orderBy('id','Asc')
+            ->limit(120)
+            ->get()
+            ->toArray();
+
+        EnquiriesResponse::whereIn('enquiry_id',$enquiryIds)
+            ->where('sender_type','Vendor')
+            ->update(['is_unread'=>0]);
+
+        $conversationVendorName = 'Leverandør';
+        $conversationVendorUrl = '';
+        if(!empty($baseEnquiry->product) && !empty($baseEnquiry->product->product_name)){
+            $conversationVendorName = $baseEnquiry->product->product_name;
+            $productSlug = Product::productURL($conversationVendorName);
+            if(!empty($productSlug) && !empty($baseEnquiry->product->id)){
+                $conversationVendorUrl = url('product/'.$productSlug.'/'.$baseEnquiry->product->id);
+            }
+        }
+
+        [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
+
+        return [
+            'thread_id' => (int)$baseEnquiry->id,
+            'messages' => $messages,
+            'vendor_name' => $conversationVendorName,
+            'vendor_url' => $conversationVendorUrl,
+            'customer_label' => $customerLabel,
+            'vendor_label' => $vendorLabel,
+            'send_url' => url('user/enquiry/response'),
+            'poll_url' => url('user/enquiries/'.$baseEnquiry->id.'/messages'),
+            'detail_url' => url('user/enquiries/'.$baseEnquiry->id),
+            'overview_url' => !empty($baseEnquiry->enquiry_detail_id) ? url('user/enquiries/'.$baseEnquiry->id.'/overview') : '',
+            'is_assignment' => !empty($baseEnquiry->enquiry_detail_id),
+        ];
     }
 
     private function getChatParticipantLabels($baseEnquiry){

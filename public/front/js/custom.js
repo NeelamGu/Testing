@@ -152,12 +152,13 @@ $(document).ready(function(){
 		var cat = $("#selcatenq").val();
 		var message_type = $("#seltypeenq").val();
 		var active_close = $("#selcloseenq").val();
+		var selected_enquiry_id = $("#selectedEnquiryId").val() || "";
 		$.ajax({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			type:'post',
-			data:{cat:cat,message_type:message_type,active_close:active_close},
+			data:{cat:cat,message_type:message_type,active_close:active_close,selected_enquiry_id:selected_enquiry_id},
 			url:'/get-user-enquiries',
 			success:function(resp){
 				$("#loadEnqueries").html(resp.view);

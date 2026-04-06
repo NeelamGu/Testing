@@ -149,6 +149,12 @@ use App\Models\Category;
       padding-right: 6px;
       align-content: start;
    }
+   .message-list-desktop {
+      display: grid;
+   }
+   .message-list-mobile {
+      display: none;
+   }
    .message-item {
       border: 1px solid #ece3d7;
       border-radius: 14px;
@@ -159,6 +165,11 @@ use App\Models\Category;
       grid-template-columns: 54px minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1.2fr);
       gap: 12px;
       align-items: center;
+   }
+   .message-item.is-selected {
+      border-color: var(--customer-panel-accent);
+      box-shadow: 0 0 0 2px rgba(231, 128, 2, 0.2);
+      background: #fff9ef;
    }
    .message-item > div {
       min-width: 0;
@@ -588,6 +599,14 @@ use App\Models\Category;
          overflow-x: hidden;
       }
 
+      .message-list-desktop {
+         display: none;
+      }
+
+      .message-list-mobile {
+         display: grid;
+      }
+
       .message-item {
          grid-template-columns: 1fr;
          gap: 8px;
@@ -760,9 +779,11 @@ use App\Models\Category;
    $isAssignmentTab = isset($message_type) && $message_type === 'assignment';
    $isMessagesTab = !$isAssignmentTab;
    $allItemsLabel = $isAssignmentTab ? 'Alle oppdrag' : 'Alle meldinger';
+   $desktopRows = $desktopEnquiries ?? $enquiries;
 @endphp
 
 <div class="message-hub">
+   <input type="hidden" id="selectedEnquiryId" value="{{ (int)($selectedEnquiryId ?? 0) }}">
    <div class="message-body-layout">
       <div class="message-filter-shell">
          <div class="status-filter-panel">
@@ -818,131 +839,11 @@ use App\Models\Category;
          </div>
       </div>
 
-      <div class="message-list">
-      @forelse($enquiries as $key => $enquiry)
-         @if(!isset($enquiry['product']['category']['category_name']))
-            @continue
-         @endif
-         @php
-            $messageType = $enquiry['messageType'] ?? 'Direkte';
-            $isAssignment = $messageType === 'Oppdrag';
-            $lastEnquiryDate = EnquiriesResponse::getlastEnquiryDate($enquiry['id']);
-            $displayDate = $lastEnquiryDate != '' ? date('d.m.y, H:i', strtotime($lastEnquiryDate)) : date('d.m.y, H:i', strtotime($enquiry['created_at']));
-            $conversationUrl = url('user/enquiries/'.$enquiry['id']);
-            $assignmentOverviewUrl = url('user/enquiries/'.$enquiry['id'].'/overview');
-            $cardPrimaryUrl = ($isAssignment && $isAssignmentTab) ? $assignmentOverviewUrl : $conversationUrl;
-            $showStatusActions = $isAssignmentTab || !$isAssignment;
-            $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
-            $categoryImage = !empty($enquiry['product']['category_id']) ? Category::getCategoryImage($enquiry['product']['category_id']) : '';
-            $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
-            $previewText = !empty($enquiry['response']) ? \Illuminate\Support\Str::limit(strip_tags($enquiry['response']), 95) : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
-            $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
-            $newVendorCount = (int)($enquiry['newVendorCount'] ?? 0);
-            $newMessageCount = (int)($enquiry['newMessageCount'] ?? 0);
-            $hasNewMessage = (int)($enquiry['unreadCount'] ?? 0) > 0;
-         @endphp
-
-         <div class="message-item {{ ($enquiry['status'] ?? 0) == 0 ? 'is-completed' : '' }} {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isAssignmentTab ? 'is-assignment-tab' : '' }}">
-            <div>
-               <img class="message-brand" src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}">
-            </div>
-            <div>
-               <div class="message-vendor-head">
-                  <h5 class="message-vendor-title">
-                     @if(isset($enquiry['product']['product_name']))
-                        <a href="{{ $cardPrimaryUrl }}">{{ $enquiry['product']['product_name'] }}</a>
-                     @else
-                        Ukjent leverandør
-                     @endif
-                  </h5>
-                  <span class="message-status-chip {{ $enquiry['status'] == 1 ? 'open' : 'closed' }}">{{ $enquiry['status'] == 1 ? 'Aktiv' : 'Lukket' }}</span>
-                  @if(!empty($enquiry['unreadCount']) && (int)$enquiry['unreadCount'] > 0)
-                     <span class="message-unread">{{ (int)$enquiry['unreadCount'] }}</span>
-                  @endif
-               </div>
-               @if($isMessagesTab)
-                  @if($hasNewMessage)
-                     <div class="message-flags">
-                        <span class="message-status-badge">Ny melding</span>
-                     </div>
-                  @else
-                     <p class="message-preview">Ingen nye meldinger</p>
-                  @endif
-               @elseif($isAssignment)
-                  <div class="assignment-summary">
-                     <strong>{{ $vendorResponseCount }} Samtaler</strong>
-                     @if($newVendorCount > 0 || $newMessageCount > 0)
-                        <div class="assignment-alerts">
-                           @if($newVendorCount > 0)
-                              <span class="assignment-alert new-vendor">Ny leverandør</span>
-                           @endif
-                           @if($newMessageCount > 0)
-                              <span class="assignment-alert new-message">Ny Melding</span>
-                           @endif
-                        </div>
-                     @endif
-                  </div>
-               @else
-                  <p class="message-preview">{{ $previewText }}</p>
-               @endif
-               <div class="message-vendor-meta">
-                  <span class="meta-item">
-                     @if(!empty($categoryImage))
-                        <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
-                     @else
-                        <i class="fa fa-tag"></i>
-                     @endif
-                     {{ $categoryName }}
-                  </span>
-                  <span class="meta-item"><i class="fa fa-calendar"></i>{{ $displayDate }}</span>
-               </div>
-            </div>
-
-            <div>
-               <div class="message-type-cell">
-                  @if($isAssignment)
-                     <span class="type-chip assignment">Oppdrag</span>
-                     <span class="message-type-note">Svar på oppdraget ditt</span>
-                  @else
-                     <span class="type-chip direct">Direkte</span>
-                     <span class="message-type-note">Direkte samtale</span>
-                  @endif
-               </div>
-            </div>
-
-            <div>
-               <div class="message-actions">
-                  @if($isAssignment && $isMessagesTab)
-                     <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Åpne oppdrag</a>
-                     <a class="message-open-link assignment" href="{{ $conversationUrl }}">Åpne melding</a>
-                  @else
-                     @if($isAssignment)
-                        @if($enquiry['status'] == 1)
-                           <a class="updateEnquiryStatus enquiry-complete-btn message-open-link view" id="enquiry-{{ $enquiry['id'] }}" enquiry_id="{{ $enquiry['id'] }}" data-item-label="assignment" href="javascript:void(0)"><i class="status-marker" status="Active"></i><i class="fa fa-check-circle" style="margin-right:7px;"></i>Fullfør oppdrag</a>
-                           <a class="message-open-link assignment" href="{{ $assignmentOverviewUrl }}">Åpne oppdrag</a>
-                        @else
-                           <a class="message-open-link view" href="{{ $assignmentOverviewUrl }}">Se oppdragshistorikk</a>
-                        @endif
-                     @else
-                        <a class="message-open-link assignment" href="{{ $conversationUrl }}">Åpne melding</a>
-                     @endif
-                  @endif
-               </div>
-
-               @if($showStatusActions && !$isAssignment)
-                  <div class="message-toggles">
-                     @if($enquiry['status'] == 1)
-                        <a class="updateEnquiryStatus enquiry-complete-btn" id="enquiry-{{ $enquiry['id'] }}" enquiry_id="{{ $enquiry['id'] }}" data-item-label="{{ $isAssignment ? 'assignment' : 'conversation' }}" href="javascript:void(0)"><i class="status-marker" status="Active"></i><i class="fa fa-check-circle" style="margin-right:7px;"></i>{{ $isAssignment ? 'Fullfør oppdrag' : 'Avslutt samtale' }}</a>
-                     @else
-                        <a class="deleteEnquiry delete-enquiry-btn" enquiry_id="{{ $enquiry['id'] }}" data-item-label="{{ $isAssignment ? 'assignment' : 'conversation' }}" href="javascript:void(0)"><i class="fa fa-trash" style="margin-right:7px;"></i>{{ $isAssignment ? 'Fjern oppdrag' : 'Fjern samtale' }}</a>
-                     @endif
-                  </div>
-               @endif
-            </div>
-         </div>
-      @empty
-         <div class="message-empty">Ingen meldinger funnet med valgt filter.</div>
-      @endforelse
+      <div class="message-list message-list-desktop">
+         @include('front.users.partials.enquiry_list_rows', ['renderEnquiries' => $desktopRows, 'isMobileList' => false])
+      </div>
+      <div class="message-list message-list-mobile">
+         @include('front.users.partials.enquiry_list_rows', ['renderEnquiries' => $enquiries, 'isMobileList' => true])
       </div>
    </div>
 </div>

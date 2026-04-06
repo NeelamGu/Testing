@@ -57,6 +57,158 @@
       flex: 1;
       min-height: 0;
    }
+   .messages-main-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 12px;
+      height: 100%;
+      min-height: 0;
+   }
+   .messages-left-pane {
+      min-height: 0;
+      overflow: hidden;
+   }
+   .messages-right-pane {
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid #e8dece;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #f6f9fd, #f2f7fc);
+      display: flex;
+      flex-direction: column;
+   }
+   .split-chat-shell {
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+   }
+   .split-chat-empty {
+      margin: auto;
+      text-align: center;
+      color: #6e6658;
+      padding: 18px;
+   }
+   .split-chat-empty h4 {
+      margin: 0 0 8px;
+      color: #2d2519;
+      font-size: 18px;
+      font-weight: 700;
+   }
+   .split-chat-empty p {
+      margin: 0;
+      font-size: 13px;
+   }
+   .split-chat-card {
+      height: 100%;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+   }
+   .split-chat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border-bottom: 1px solid #e5dfd4;
+      background: rgba(255, 255, 255, 0.8);
+   }
+   .split-chat-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2d2519;
+      line-height: 1.25;
+   }
+   .split-chat-title a {
+      color: #c96900;
+      text-decoration: underline;
+   }
+   .split-chat-subtitle {
+      margin: 4px 0 0;
+      font-size: 11px;
+      color: #7f7261;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+   }
+   .split-chat-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+   }
+   .split-chat-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      border: 1px solid var(--customer-panel-accent);
+      background: var(--customer-panel-accent);
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
+      text-decoration: none !important;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 0 11px;
+   }
+   .split-chat-link.muted {
+      border-color: #ded3c2;
+      background: #f3ede4;
+      color: #6f624f !important;
+   }
+   .split-chat-messages {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 10px;
+      background:
+         radial-gradient(circle at 1px 1px, rgba(72, 96, 123, 0.028) 1px, transparent 0) 0 0/16px 16px,
+         linear-gradient(180deg, rgba(244, 248, 252, 0.85) 0%, rgba(238, 244, 251, 0.8) 100%);
+   }
+   .split-chat-messages .chat-item {
+      margin-bottom: 7px;
+   }
+   .split-chat-composer {
+      border-top: 1px solid #e5dfd4;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      flex-shrink: 0;
+   }
+   .split-chat-input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+   }
+   .split-chat-attach {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid #d6c9b6;
+      background: #fff;
+      color: #5e503c;
+   }
+   .split-chat-input {
+      flex: 1;
+      min-height: 36px;
+      max-height: 110px;
+      border: 1px solid #ddd2c1;
+      border-radius: 14px;
+      padding: 8px 12px;
+      resize: none;
+      line-height: 1.35;
+      background: #fff;
+   }
+   .split-chat-send {
+      min-height: 34px;
+      border-radius: 999px;
+      border: 1px solid #1b8c4f;
+      background: linear-gradient(135deg, #23b364, #1e9f5a);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 0 14px;
+   }
    .messages-main .table-data {
       margin-bottom: 0;
       height: 100%;
@@ -137,6 +289,14 @@
          overflow: visible !important;
       }
 
+      .messages-main-split {
+         display: block;
+      }
+
+      .messages-right-pane {
+         display: none;
+      }
+
       .replymodal .modal-dialog {
          margin: 0 auto;
          width: calc(100% - 24px);
@@ -165,9 +325,16 @@
                      </div>
                      <div class="messages-panel-body">
                         <div class="messages-main">
-                           <div class="table-responsive table-data">
-                              <div id="loadEnqueries">
-                                 @include('front.users.load_enquiries')
+                           <div class="messages-main-split">
+                              <div class="messages-left-pane table-responsive table-data">
+                                 <div id="loadEnqueries">
+                                    @include('front.users.load_enquiries')
+                                 </div>
+                              </div>
+                              <div class="messages-right-pane">
+                                 <div id="splitChatPane">
+                                    @include('front.users.partials.enquiry_split_chat', ['selectedConversation' => ($selectedConversation ?? null)])
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -189,6 +356,170 @@
          $modal.appendTo('body');
       }
    });
+
+   (function(){
+      function autoResizeSplitInput() {
+         var $input = $("#splitReplyEnquiryForm textarea[name='message']");
+         if (!$input.length) {
+            return;
+         }
+         var el = $input.get(0);
+         el.style.height = 'auto';
+         var nextHeight = Math.min(el.scrollHeight, 110);
+         el.style.height = nextHeight + 'px';
+      }
+
+      function scrollSplitChatBottom(force) {
+         var $messages = $("#splitChatMessages");
+         if (!$messages.length) {
+            return;
+         }
+         var el = $messages.get(0);
+         if (force) {
+            el.scrollTop = el.scrollHeight;
+            return;
+         }
+         var nearBottom = (el.scrollHeight - (el.scrollTop + el.clientHeight)) < 140;
+         if (nearBottom) {
+            el.scrollTop = el.scrollHeight;
+         }
+      }
+
+      function appendSplitMessages(messageHtml, lastId) {
+         var $messages = $("#splitChatMessages");
+         if (!$messages.length) {
+            return;
+         }
+         if (messageHtml && $.trim(messageHtml) !== '') {
+            $messages.append(messageHtml);
+            scrollSplitChatBottom(false);
+         }
+         if (lastId) {
+            $messages.attr('data-last-id', parseInt(lastId, 10) || 0);
+         }
+      }
+
+      function startSplitChatPolling() {
+         var $card = $('.split-chat-card');
+         if (!$card.length) {
+            return;
+         }
+
+         var pollUrl = String($card.data('poll-url') || '');
+         if (!pollUrl) {
+            return;
+         }
+
+         setInterval(function(){
+            var $messages = $("#splitChatMessages");
+            if (!$messages.length) {
+               return;
+            }
+            var lastId = parseInt($messages.attr('data-last-id'), 10) || 0;
+            $.ajax({
+               url: pollUrl,
+               type: 'GET',
+               dataType: 'json',
+               data: { after_id: lastId },
+               success: function(resp){
+                  if (resp && resp.status) {
+                     appendSplitMessages(resp.message_html || '', resp.last_id || lastId);
+                  }
+               }
+            });
+         }, 4000);
+      }
+
+      $(document).on('input', "#splitReplyEnquiryForm textarea[name='message']", function(){
+         autoResizeSplitInput();
+      });
+
+      $(document).on('click', '#splitComposerAttachBtn', function(){
+         $('#splitComposerFileInput').trigger('click');
+      });
+
+      $(document).on('change', '#splitComposerFileInput', function(){
+         var $previewWrap = $('#splitImagePreviewWrap');
+         var $previewList = $('#splitImagePreviewList');
+         $previewList.empty();
+         var files = this.files || [];
+         if (!files.length) {
+            $previewWrap.hide();
+            return;
+         }
+
+         Array.prototype.forEach.call(files, function(file){
+            if (!file || !file.type || file.type.indexOf('image/') !== 0) {
+               return;
+            }
+            var url = URL.createObjectURL(file);
+            var $item = $('<div class="image-preview-item"></div>');
+            $item.append($('<img>').attr('src', url).attr('alt', 'Bildepreview'));
+            $item.append($('<span class="image-preview-meta"></span>').text(file.name || 'Bilde'));
+            $previewList.append($item);
+         });
+
+         if ($previewList.children().length > 0) {
+            $previewWrap.show();
+         } else {
+            $previewWrap.hide();
+         }
+      });
+
+      $(document).on('submit', '#splitReplyEnquiryForm', function(e){
+         e.preventDefault();
+         var form = this;
+         var $form = $(form);
+         var $messageInput = $form.find("textarea[name='message']");
+         var messageText = $.trim($messageInput.val() || '');
+         var $fileInput = $('#splitComposerFileInput');
+         var hasImage = !!($fileInput.get(0) && $fileInput.get(0).files && $fileInput.get(0).files.length > 0);
+         if (messageText === '' && !hasImage) {
+            alert('Skriv en melding eller velg minst ett bilde.');
+            return;
+         }
+
+         var formData = new FormData(form);
+         var $submitBtn = $form.find("button[type='submit']");
+         $submitBtn.prop('disabled', true).text('Sender...');
+
+         $.ajax({
+            url: $form.attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(resp){
+               if (resp && resp.status) {
+                  form.reset();
+                  $('#splitImagePreviewList').empty();
+                  $('#splitImagePreviewWrap').hide();
+                  appendSplitMessages(resp.message_html || '', resp.message_id || 0);
+                  autoResizeSplitInput();
+                  scrollSplitChatBottom(true);
+               }
+            },
+            error: function(xhr){
+               var msg = 'Noe gikk galt. Prøv igjen.';
+               if (xhr.responseJSON && xhr.responseJSON.errors) {
+                  var firstKey = Object.keys(xhr.responseJSON.errors)[0];
+                  if (firstKey) {
+                     msg = xhr.responseJSON.errors[firstKey][0];
+                  }
+               }
+               alert(msg);
+            },
+            complete: function(){
+               $submitBtn.prop('disabled', false).text('Send');
+            }
+         });
+      });
+
+      autoResizeSplitInput();
+      scrollSplitChatBottom(true);
+      startSplitChatPolling();
+   })();
 </script>
 @endsection
         
