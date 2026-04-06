@@ -570,7 +570,6 @@
                                     <div class="timeline-item">
                                        <span class="timeline-icon neutral"><i class="fa fa-info"></i></span>
                                        <div class="timeline-item-top"><strong>Ingen nye meldinger</strong></div>
-                                       <p class="timeline-time">Du får varsel her når leverandører svarer</p>
                                     </div>
                                  @endforelse
                               </div>
