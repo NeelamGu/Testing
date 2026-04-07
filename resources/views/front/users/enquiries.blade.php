@@ -663,7 +663,6 @@
          var cityText = String(details.city || '').trim();
          var pincodeText = String(details.pincode || '').trim();
          var desiredPriceText = String(details.desired_price || '').trim();
-         var assignmentText = String(details.assignment_text || '').trim();
 
          var locationParts = [];
          if (addressText !== '') {
@@ -690,9 +689,6 @@
          }
          if (desiredPriceText !== '') {
             detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Ønsket pris</strong><span style="font-size:14px;color:#1f2937;">' + esc(desiredPriceText) + '</span></div>';
-         }
-         if (assignmentText !== '') {
-            detailRows += '<div style="padding:8px 0 0;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Oppdragsbeskrivelse</strong><span style="font-size:14px;color:#1f2937;line-height:1.45;white-space:pre-wrap;">' + esc(assignmentText) + '</span></div>';
          }
          if (detailRows === '') {
             detailRows = '<div style="padding:8px 0;"><span style="font-size:14px;color:#6b7280;">Ingen oppdragsdetaljer registrert.</span></div>';
@@ -952,6 +948,9 @@
       $(document).on('click', '.assignment-back-btn', function(){
          $('#selectedEnquiryId').val('0');
          activeAssignmentModeId = 0;
+         if (String(window.currentMessageType || '') === 'assignment' && $('#seltypeenq').length) {
+            $('#seltypeenq').val('assignment');
+         }
          syncAssignmentCloseButton();
 
          if (String(window.currentMessageType || '') === 'assignment') {

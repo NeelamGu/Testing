@@ -151,6 +151,9 @@ $(document).ready(function(){
 		}
 		var cat = $("#selcatenq").val();
 		var message_type = $("#seltypeenq").val();
+		if ((message_type === undefined || message_type === null || message_type === "") && typeof window.currentMessageType !== 'undefined') {
+			message_type = String(window.currentMessageType || "");
+		}
 		var active_close = $("#selcloseenq").val();
 		var selected_enquiry_id = $("#selectedEnquiryId").val() || "";
 		$.ajax({
@@ -162,6 +165,9 @@ $(document).ready(function(){
 			url:'/get-user-enquiries',
 			success:function(resp){
 				$("#loadEnqueries").html(resp.view);
+				if (typeof window.currentMessageType !== 'undefined' && String(window.currentMessageType || '') !== '' && $("#seltypeenq").length) {
+					$("#seltypeenq").val(String(window.currentMessageType));
+				}
 			},error:function(){
 				//alert("Error");
 			}
