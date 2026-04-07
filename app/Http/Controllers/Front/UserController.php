@@ -1460,11 +1460,32 @@ class UserController extends Controller
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
         $isAssignment = false;
+        $assignmentDetails = [];
         if(!empty($baseEnquiry->enquiry_detail_id)){
-            $title = $baseEnquiry->enquiryDetail['title'] ?? '';
-            $assignmentDate = $baseEnquiry->enquiryDetail['assignment_date'] ?? '';
+            $assignmentDetails = [
+                'title' => data_get($baseEnquiry, 'enquiryDetail.title', ''),
+                'assignment_date' => data_get($baseEnquiry, 'enquiryDetail.assignment_date', ''),
+                'address' => data_get($baseEnquiry, 'enquiryDetail.address', ''),
+                'city' => data_get($baseEnquiry, 'enquiryDetail.city', ''),
+                'pincode' => data_get($baseEnquiry, 'enquiryDetail.pincode', ''),
+                'desired_price' => data_get($baseEnquiry, 'enquiryDetail.desired_price', data_get($baseEnquiry, 'enquiryDetail.price', '')),
+                'description' => data_get($baseEnquiry, 'enquiryDetail.description', ''),
+                'assignment_text' => data_get($baseEnquiry, 'enquiryDetail.assignment_text', data_get($baseEnquiry, 'enquiryDetail.description', '')),
+            ];
+            $title = $assignmentDetails['title'] ?? '';
+            $assignmentDate = $assignmentDetails['assignment_date'] ?? '';
             if(!empty($title) || !empty($assignmentDate)){
                 $isAssignment = true;
+            }
+        }
+
+        $threadCount = 1;
+        if($isAssignment && !empty($baseEnquiry->enquiry_detail_id)){
+            $threadCount = (int)ProductsEnquiry::where('user_id',Auth::user()->id)
+                ->where('enquiry_detail_id',$baseEnquiry->enquiry_detail_id)
+                ->count();
+            if($threadCount <= 0){
+                $threadCount = 1;
             }
         }
 
@@ -1472,11 +1493,13 @@ class UserController extends Controller
             'thread_id' => (int)$baseEnquiry->id,
             'thread_status' => (int)($baseEnquiry->status ?? 1),
             'assignment_id' => (int)($baseEnquiry->enquiry_detail_id ?? 0),
+            'thread_count' => $threadCount,
             'messages' => $messages,
             'vendor_name' => $conversationVendorName,
             'vendor_url' => $conversationVendorUrl,
             'customer_label' => $customerLabel,
             'vendor_label' => $vendorLabel,
+            'assignment_details' => $assignmentDetails,
             'send_url' => url('user/enquiry/response'),
             'poll_url' => url('user/enquiries/'.$baseEnquiry->id.'/messages'),
             'detail_url' => url('user/enquiries/'.$baseEnquiry->id),
