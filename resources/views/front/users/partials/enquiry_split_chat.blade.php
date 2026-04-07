@@ -24,7 +24,11 @@
                   @endif
                </h4>
                <div class="split-chat-meta">
-                  <p class="split-chat-subtitle">{{ !empty($conversation['is_assignment']) ? 'Oppdragstråd' : 'Direkte melding' }}</p>
+                  @if(!empty($conversation['is_assignment']))
+                     <p class="split-chat-subtitle">Oppdrag · {{ !empty($conversation['thread_count']) ? $conversation['thread_count'] . ' samtale' . ($conversation['thread_count'] != 1 ? 'r' : '') : 'samtale' }}</p>
+                  @else
+                     <p class="split-chat-subtitle">Direkte melding</p>
+                  @endif
                </div>
             </div>
             @if(empty($conversation['is_assignment']) && (int)($conversation['thread_status'] ?? 1) === 1)
