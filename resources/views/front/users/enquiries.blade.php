@@ -114,10 +114,16 @@
       flex-direction: column;
    }
    .split-chat-head {
-      display: block;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
       padding: 12px;
       border-bottom: 1px solid #e5dfd4;
       background: rgba(255, 255, 255, 0.8);
+   }
+   .split-chat-head-actions {
+      margin-left: auto;
    }
    .split-chat-title {
       margin: 0;
@@ -154,13 +160,21 @@
       text-decoration: underline;
    }
    .split-chat-close-link {
-      color: #b91c1c;
+      color: #9f2b1b;
       text-decoration: none;
       font-size: 12px;
       font-weight: 700;
+      border: 1px solid #e8b4ad;
+      background: #fff2f0;
+      border-radius: 999px;
+      min-height: 30px;
+      padding: 5px 10px;
+      display: inline-flex;
+      align-items: center;
    }
    .split-chat-close-link:hover {
-      text-decoration: underline;
+      color: #7f1f12;
+      background: #ffe8e4;
    }
    .split-chat-messages {
       flex: 1;
@@ -590,6 +604,25 @@
          );
       }
 
+      function syncAssignmentCloseButton() {
+         var $btn = $('#closeSelectedAssignmentBtn');
+         if (!$btn.length) {
+            return;
+         }
+
+         var $selectedRow = $('.message-list-desktop .js-thread-link.is-selected').first();
+         var selectedId = parseInt(($selectedRow.attr('data-enquiry-id') || $('#selectedEnquiryId').val() || '0'), 10) || 0;
+         var assignmentId = parseInt($selectedRow.attr('data-assignment-id') || '0', 10) || 0;
+         var isAssignmentRow = assignmentId > 0 || $selectedRow.hasClass('is-assignment');
+         var isCompletedRow = $selectedRow.hasClass('is-completed');
+
+         if (isAssignmentRow && !isCompletedRow && selectedId > 0) {
+            $btn.removeClass('filter-hidden').attr('data-thread-id', selectedId);
+         } else {
+            $btn.addClass('filter-hidden').removeAttr('data-thread-id');
+         }
+      }
+
       function renderAssignmentDetailsPane(assignmentId, assignmentTitle, threadCount) {
          var detailsMap = window.assignmentDetailsMap || {};
          var details = detailsMap[String(assignmentId)] || detailsMap[assignmentId] || {};
@@ -833,6 +866,8 @@
                $('.message-list-desktop .js-thread-link[data-enquiry-id="' + selectedId + '"]').addClass('is-selected');
             }
 
+            syncAssignmentCloseButton();
+
             renderDateSeparators();
             autoResizeSplitInput();
             scrollSplitChatBottom(true);
@@ -885,6 +920,35 @@
       $(document).on('click', '.assignment-back-btn', function(){
          restoreDesktopMainList();
          setEmptySplitPaneState();
+         syncAssignmentCloseButton();
+      });
+
+      $(document).on('click', '#closeSelectedAssignmentBtn', function(e){
+         e.preventDefault();
+         var threadId = parseInt($(this).attr('data-thread-id') || $('#selectedEnquiryId').val() || '0', 10) || 0;
+         if (threadId <= 0) {
+            return;
+         }
+
+         var confirmClose = confirm('Er du sikker på at du vil avslutte dette oppdraget?');
+         if (!confirmClose) {
+            return;
+         }
+
+         $.ajax({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/update-enquiry-status',
+            data: { status: 'Active', enquiry_id: threadId },
+            success: function(){
+               if (typeof reloadUserEnquiriesList === 'function') {
+                  reloadUserEnquiriesList();
+               }
+               loadSplitChatPane(window.location.href, false);
+            }
+         });
       });
 
       $(document).on('click', '.split-chat-close-link', function(e){
@@ -895,7 +959,7 @@
             return;
          }
 
-         var confirmClose = confirm('Er du sikker på at du vil avslutte denne tråden?');
+         var confirmClose = confirm('Er du sikker på at du vil avslutte denne samtalen?');
          if (!confirmClose) {
             return;
          }
@@ -923,6 +987,8 @@
          restoreDesktopMainList();
          loadSplitChatPane(window.location.href, false);
       });
+
+      syncAssignmentCloseButton();
 
       $(document).on('input', "#splitReplyEnquiryForm textarea[name='message']", function(){
          autoResizeSplitInput();

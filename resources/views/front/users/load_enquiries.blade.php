@@ -1111,6 +1111,16 @@ use App\Models\Category;
    $isMessagesTab = !$isAssignmentTab;
    $allItemsLabel = $isAssignmentTab ? 'Alle oppdrag' : 'Alle meldinger';
    $desktopRows = $desktopEnquiries ?? $enquiries;
+   $selectedRow = null;
+   foreach($desktopRows as $rowItem){
+      if((int)($rowItem['id'] ?? 0) === (int)($selectedEnquiryId ?? 0)){
+         $selectedRow = $rowItem;
+         break;
+      }
+   }
+   $canCloseSelectedAssignment = !empty($selectedRow)
+      && strtolower((string)($selectedRow['messageType'] ?? '')) === 'oppdrag'
+      && (int)($selectedRow['status'] ?? 0) === 1;
 @endphp
 
 <div class="message-hub">
@@ -1144,6 +1154,10 @@ use App\Models\Category;
                      <a href="{{ url('enquire-us') }}" class="new-assignment-btn">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Nytt Oppdrag
+                     </a>
+                     <a href="javascript:void(0)" id="closeSelectedAssignmentBtn" class="new-assignment-btn {{ $canCloseSelectedAssignment ? '' : 'filter-hidden' }}" style="margin-top:8px;background:#f3ede4;border-color:#dfd1bb;color:#6f5c46 !important;">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        Avslutt oppdrag
                      </a>
                   </div>
                @endif

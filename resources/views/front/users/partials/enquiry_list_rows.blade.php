@@ -108,8 +108,6 @@
       <div class="enquiry-row-side">
          @if($isAssignment)
             <span class="type-chip assignment">Oppdrag</span>
-         @else
-            <span class="type-chip direct">Direkte</span>
          @endif
 
          @if($isCompleted)
