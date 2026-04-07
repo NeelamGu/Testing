@@ -1024,6 +1024,21 @@
          if (window.matchMedia('(max-width: 767px)').matches) {
             return;
          }
+
+         if (String(window.currentMessageType || '') === 'assignment') {
+            $('#selectedEnquiryId').val('0');
+            activeAssignmentModeId = 0;
+            if ($('#seltypeenq').length) {
+               $('#seltypeenq').val('assignment');
+            }
+            if (typeof reloadUserEnquiriesList === 'function') {
+               reloadUserEnquiriesList('assignment');
+            }
+            setEmptySplitPaneState();
+            syncAssignmentCloseButton();
+            return;
+         }
+
          restoreDesktopMainList();
          loadSplitChatPane(window.location.href, false);
       });

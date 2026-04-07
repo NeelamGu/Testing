@@ -1111,6 +1111,16 @@ use App\Models\Category;
    $isMessagesTab = !$isAssignmentTab;
    $allItemsLabel = $isAssignmentTab ? 'Alle oppdrag' : 'Alle meldinger';
    $desktopRows = $desktopEnquiries ?? $enquiries;
+   $mobileRows = $enquiries;
+
+   if($isAssignmentTab){
+      $desktopRows = array_values(array_filter($desktopRows, function($row){
+         return (int)($row['enquiry_detail_id'] ?? 0) > 0;
+      }));
+      $mobileRows = array_values(array_filter($mobileRows, function($row){
+         return (int)($row['enquiry_detail_id'] ?? 0) > 0;
+      }));
+   }
 @endphp
 
 <div class="message-hub">
@@ -1178,7 +1188,7 @@ use App\Models\Category;
          @include('front.users.partials.enquiry_list_rows', ['renderEnquiries' => $desktopRows, 'isMobileList' => false])
       </div>
       <div class="message-list message-list-mobile">
-         @include('front.users.partials.enquiry_list_rows', ['renderEnquiries' => $enquiries, 'isMobileList' => true])
+         @include('front.users.partials.enquiry_list_rows', ['renderEnquiries' => $mobileRows, 'isMobileList' => true])
       </div>
    </div>
 </div>
