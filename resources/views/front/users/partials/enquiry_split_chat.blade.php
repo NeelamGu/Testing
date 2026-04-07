@@ -25,14 +25,13 @@
                </h4>
                <div class="split-chat-meta">
                   <p class="split-chat-subtitle">{{ !empty($conversation['is_assignment']) ? 'Oppdragstråd' : 'Direkte melding' }}</p>
-                  @if(!empty($conversation['is_assignment']) && !empty($conversation['overview_url']))
-                     <a href="{{ $conversation['overview_url'] }}" class="split-chat-overview-link">Se alle tråder</a>
-                  @endif
-                  @if((int)($conversation['thread_status'] ?? 1) === 1)
-                     <a href="javascript:void(0)" class="split-chat-close-link" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-current-status="Active">Avslutt tråd</a>
-                  @endif
                </div>
             </div>
+            @if(empty($conversation['is_assignment']) && (int)($conversation['thread_status'] ?? 1) === 1)
+               <div class="split-chat-head-actions">
+                  <a href="javascript:void(0)" class="split-chat-close-link" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-item-type="conversation" data-current-status="Active">Avslutt samtale</a>
+               </div>
+            @endif
          </div>
 
          <div class="split-chat-messages" id="splitChatMessages" data-last-id="{{ $lastMessageId }}">
