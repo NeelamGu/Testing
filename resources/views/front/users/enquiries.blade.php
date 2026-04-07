@@ -941,6 +941,12 @@
          restoreDesktopMainList();
          setEmptySplitPaneState();
          syncAssignmentCloseButton();
+         
+         var currentUrl = new URL(window.location.href);
+         var messageType = currentUrl.searchParams.get('message_type') || '';
+         if (messageType) {
+            reloadUserEnquiriesList();
+         }
       });
 
       $(document).on('click', '#closeSelectedAssignmentBtn', function(e){
