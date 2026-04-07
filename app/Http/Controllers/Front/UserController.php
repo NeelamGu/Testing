@@ -1314,11 +1314,7 @@ class UserController extends Controller
 
             $type = "Direkte";
             if(isset($enquiry['enquiry_detail_id']) && $enquiry['enquiry_detail_id']>0){
-                $title = $enquiry['enquiry_detail']['title'] ?? "";
-                $assignmentDate = $enquiry['enquiry_detail']['assignment_date'] ?? "";
-                if(!empty($title) || !empty($assignmentDate)){
-                    $type = "Oppdrag";
-                }
+                $type = "Oppdrag";
             }
             $enquiries[$key]['messageType'] = $type;
             $enquiries[$key]['is_grouped_assignment'] = false;

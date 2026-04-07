@@ -293,6 +293,9 @@
       background: #fff;
       font-size: 14px;
    }
+   .upload-file-area {
+      display: none !important;
+   }
    .split-chat-send {
       min-height: 36px;
       border-radius: 999px;
@@ -416,7 +419,7 @@
                'address' => $assignmentThread['enquiry_detail']['address'] ?? '',
                'city' => $assignmentThread['enquiry_detail']['city'] ?? '',
                'pincode' => $assignmentThread['enquiry_detail']['pincode'] ?? '',
-               'assignment_text' => $assignmentThread['enquiry_detail']['assignment_text'] ?? '',
+               'assignment_text' => $assignmentThread['enquiry_detail']['assignment_text'] ?? ($assignmentThread['enquiry_detail']['description'] ?? ''),
                'desired_price' => $assignmentThread['enquiry_detail']['price'] ?? ($assignmentThread['enquiry_detail']['desired_price'] ?? ''),
             ];
          }
@@ -570,6 +573,20 @@
          }
       }
 
+      function forceSplitChatBottomDeferred() {
+         scrollSplitChatBottom(true);
+         window.requestAnimationFrame(function(){
+            scrollSplitChatBottom(true);
+         });
+         setTimeout(function(){
+            scrollSplitChatBottom(true);
+         }, 80);
+
+         $("#splitChatMessages img").off('load.splitAutoScroll').on('load.splitAutoScroll', function(){
+            scrollSplitChatBottom(true);
+         });
+      }
+
       function getSelectedEnquiryIdFromUrl(url) {
          try {
             return parseInt((new URL(url, window.location.origin)).searchParams.get('selected_enquiry_id') || '0', 10) || 0;
@@ -613,10 +630,11 @@
          var $selectedRow = $('.message-list-desktop .js-thread-link.is-selected').first();
          var selectedId = parseInt(($selectedRow.attr('data-enquiry-id') || $('#selectedEnquiryId').val() || '0'), 10) || 0;
          var assignmentId = parseInt($selectedRow.attr('data-assignment-id') || '0', 10) || 0;
-         var isAssignmentRow = assignmentId > 0 || $selectedRow.hasClass('is-assignment');
+         var inAssignmentMode = activeAssignmentModeId > 0;
+         var isAssignmentRow = assignmentId > 0 || $selectedRow.hasClass('is-assignment') || $selectedRow.hasClass('assignment-thread-row');
          var isCompletedRow = $selectedRow.hasClass('is-completed');
 
-         if (isAssignmentRow && !isCompletedRow && selectedId > 0) {
+         if (inAssignmentMode && isAssignmentRow && !isCompletedRow && selectedId > 0) {
             $btn.removeClass('filter-hidden').attr('data-thread-id', selectedId);
          } else {
             $btn.addClass('filter-hidden').removeAttr('data-thread-id');
@@ -756,6 +774,7 @@
          });
 
          renderAssignmentDetailsPane(assignmentId, assignmentTitle, threads.length);
+         syncAssignmentCloseButton();
          return true;
       }
 
@@ -870,7 +889,7 @@
 
             renderDateSeparators();
             autoResizeSplitInput();
-            scrollSplitChatBottom(true);
+            forceSplitChatBottomDeferred();
             startSplitChatPolling();
 
             if (shouldPushState) {
@@ -1057,7 +1076,7 @@
                   $('#splitImagePreviewWrap').hide();
                   appendSplitMessages(resp.message_html || '', resp.message_id || 0);
                   autoResizeSplitInput();
-                  scrollSplitChatBottom(true);
+                  forceSplitChatBottomDeferred();
                }
             },
             error: function(xhr){
@@ -1078,9 +1097,8 @@
 
       renderDateSeparators();
       autoResizeSplitInput();
-      scrollSplitChatBottom(true);
+      forceSplitChatBottomDeferred();
       startSplitChatPolling();
-      maybeRenderAssignmentModeForSelectedRow();
    })();
 </script>
 @endsection

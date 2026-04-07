@@ -283,14 +283,7 @@ $messagesCountCustomer = messagesCountCustomer();
       text-overflow: ellipsis;
    }
    .upload-file-area {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      opacity: 0;
-      pointer-events: none;
+      display: none !important;
    }
    .send-reply .r-btn {
       margin-left: 0;
@@ -420,7 +413,7 @@ $messagesCountCustomer = messagesCountCustomer();
       }
 
       .upload-file-area {
-         width: 1px !important;
+         display: none !important;
       }
 
       .send-reply .r-btn {

@@ -62,8 +62,8 @@
       $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
       $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
       $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
-      $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
-      $previewText = \Illuminate\Support\Str::limit(strip_tags($previewSource), 95);
+      $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : ($isAssignment ? '' : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
+      $previewText = !empty($previewSource) ? \Illuminate\Support\Str::limit(strip_tags($previewSource), 95) : '';
       $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
       $rowTitle = $enquiry['groupTitle'] ?? ($enquiry['product']['product_name'] ?? 'Ukjent leverandør');
       $isSelected = !$isMobileList && (int)($selectedEnquiryId ?? 0) === (int)($enquiry['id'] ?? 0);
@@ -87,7 +87,9 @@
             @endif
          </div>
 
-         <p class="enquiry-row-preview">{{ $previewText }}</p>
+         @if($previewText !== '')
+            <p class="enquiry-row-preview">{{ $previewText }}</p>
+         @endif
 
          @if($isAssignment)
             <p class="enquiry-row-submeta">{{ $vendorResponseCount }} samtaler</p>
