@@ -1461,8 +1461,8 @@ class UserController extends Controller
 
         $isAssignment = false;
         if(!empty($baseEnquiry->enquiry_detail_id)){
-            $title = $baseEnquiry->enquiry_detail['title'] ?? "";
-            $assignmentDate = $baseEnquiry->enquiry_detail['assignment_date'] ?? "";
+            $title = $baseEnquiry->enquiryDetail['title'] ?? '';
+            $assignmentDate = $baseEnquiry->enquiryDetail['assignment_date'] ?? '';
             if(!empty($title) || !empty($assignmentDate)){
                 $isAssignment = true;
             }
