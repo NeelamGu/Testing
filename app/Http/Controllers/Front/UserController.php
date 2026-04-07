@@ -1459,6 +1459,15 @@ class UserController extends Controller
 
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
+        $isAssignment = false;
+        if(!empty($baseEnquiry->enquiry_detail_id)){
+            $title = $baseEnquiry->enquiry_detail['title'] ?? "";
+            $assignmentDate = $baseEnquiry->enquiry_detail['assignment_date'] ?? "";
+            if(!empty($title) || !empty($assignmentDate)){
+                $isAssignment = true;
+            }
+        }
+
         return [
             'thread_id' => (int)$baseEnquiry->id,
             'thread_status' => (int)($baseEnquiry->status ?? 1),
@@ -1472,7 +1481,7 @@ class UserController extends Controller
             'poll_url' => url('user/enquiries/'.$baseEnquiry->id.'/messages'),
             'detail_url' => url('user/enquiries/'.$baseEnquiry->id),
             'overview_url' => !empty($baseEnquiry->enquiry_detail_id) ? url('user/enquiries/'.$baseEnquiry->id.'/overview') : '',
-            'is_assignment' => !empty($baseEnquiry->enquiry_detail_id),
+            'is_assignment' => $isAssignment,
         ];
     }
 

@@ -630,11 +630,10 @@
          var $selectedRow = $('.message-list-desktop .js-thread-link.is-selected').first();
          var selectedId = parseInt(($selectedRow.attr('data-enquiry-id') || $('#selectedEnquiryId').val() || '0'), 10) || 0;
          var assignmentId = parseInt($selectedRow.attr('data-assignment-id') || '0', 10) || 0;
-         var inAssignmentMode = activeAssignmentModeId > 0;
          var isAssignmentRow = assignmentId > 0 || $selectedRow.hasClass('is-assignment') || $selectedRow.hasClass('assignment-thread-row');
          var isCompletedRow = $selectedRow.hasClass('is-completed');
 
-         if (inAssignmentMode && isAssignmentRow && !isCompletedRow && selectedId > 0) {
+         if (isAssignmentRow && !isCompletedRow && selectedId > 0) {
             $btn.removeClass('filter-hidden').attr('data-thread-id', selectedId);
          } else {
             $btn.addClass('filter-hidden').removeAttr('data-thread-id');
