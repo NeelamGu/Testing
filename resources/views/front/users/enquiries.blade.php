@@ -574,14 +574,26 @@
          }
       }
 
+      var splitChatScrollTimer = null;
+
       function forceSplitChatBottomDeferred() {
-         scrollSplitChatBottom(true);
+         if (splitChatScrollTimer) {
+            clearTimeout(splitChatScrollTimer);
+            splitChatScrollTimer = null;
+         }
+
+         var attempts = 0;
+         var runScroll = function(){
+            attempts++;
+            scrollSplitChatBottom(true);
+            if (attempts < 4) {
+               splitChatScrollTimer = setTimeout(runScroll, attempts === 1 ? 40 : 120);
+            }
+         };
+
          window.requestAnimationFrame(function(){
-            scrollSplitChatBottom(true);
+            runScroll();
          });
-         setTimeout(function(){
-            scrollSplitChatBottom(true);
-         }, 80);
 
          $("#splitChatMessages img").off('load.splitAutoScroll').on('load.splitAutoScroll', function(){
             scrollSplitChatBottom(true);
