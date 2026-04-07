@@ -954,7 +954,7 @@
          syncAssignmentCloseButton();
 
          if (String(window.currentMessageType || '') === 'assignment') {
-            reloadUserEnquiriesList();
+            reloadUserEnquiriesList('assignment');
             setEmptySplitPaneState();
             return;
          }
@@ -984,7 +984,7 @@
             data: { status: 'Active', enquiry_id: threadId },
             success: function(){
                if (typeof reloadUserEnquiriesList === 'function') {
-                  reloadUserEnquiriesList();
+                  reloadUserEnquiriesList(String(window.currentMessageType || '') === 'assignment' ? 'assignment' : '');
                }
                loadSplitChatPane(window.location.href, false);
             }
@@ -1013,7 +1013,7 @@
             data: { status: 'Active', enquiry_id: threadId },
             success: function(){
                if (typeof reloadUserEnquiriesList === 'function') {
-                  reloadUserEnquiriesList();
+                  reloadUserEnquiriesList(String(window.currentMessageType || '') === 'assignment' ? 'assignment' : '');
                }
                loadSplitChatPane(window.location.href, false);
             }

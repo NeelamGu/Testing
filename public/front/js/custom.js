@@ -145,12 +145,20 @@ $(document).ready(function(){
 		
 	});
 
-	function reloadUserEnquiriesList(){
+	function reloadUserEnquiriesList(forcedMessageType){
 		if (!$("#loadEnqueries").length) {
 			return;
 		}
 		var cat = $("#selcatenq").val();
 		var message_type = $("#seltypeenq").val();
+		if (typeof forcedMessageType !== 'undefined' && forcedMessageType !== null && String(forcedMessageType) !== '') {
+			message_type = String(forcedMessageType);
+		} else if (typeof window.currentMessageType !== 'undefined') {
+			var currentPanelType = String(window.currentMessageType || '');
+			if (currentPanelType === 'assignment') {
+				message_type = 'assignment';
+			}
+		}
 		if ((message_type === undefined || message_type === null || message_type === "") && typeof window.currentMessageType !== 'undefined') {
 			message_type = String(window.currentMessageType || "");
 		}
@@ -165,8 +173,12 @@ $(document).ready(function(){
 			url:'/get-user-enquiries',
 			success:function(resp){
 				$("#loadEnqueries").html(resp.view);
-				if (typeof window.currentMessageType !== 'undefined' && String(window.currentMessageType || '') !== '' && $("#seltypeenq").length) {
-					$("#seltypeenq").val(String(window.currentMessageType));
+				if ($("#seltypeenq").length) {
+					if (typeof forcedMessageType !== 'undefined' && forcedMessageType !== null && String(forcedMessageType) !== '') {
+						$("#seltypeenq").val(String(forcedMessageType));
+					} else if (typeof window.currentMessageType !== 'undefined' && String(window.currentMessageType || '') !== '') {
+						$("#seltypeenq").val(String(window.currentMessageType));
+					}
 				}
 			},error:function(){
 				//alert("Error");

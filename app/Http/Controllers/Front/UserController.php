@@ -586,7 +586,7 @@ class UserController extends Controller
 
     public function userEnquiries(Request $request){
         Session::put('page','user_enquiries');
-        $message_type = $request->get('message_type', '');
+        $message_type = strtolower(trim((string)$request->get('message_type', '')));
         $active_close = $request->get('active_close', '');
         $enqCat = $request->get('cat', '');
         $enquiries = ProductsEnquiry::query();
@@ -616,10 +616,10 @@ class UserController extends Controller
         if($message_type!=""){
             $enquiries = array_values(array_filter($enquiries,function($enquiry) use ($message_type){
                 $type = strtolower($enquiry['messageType'] ?? 'direkte');
-                if($message_type=="assignment"){
+                if(in_array($message_type,["assignment","oppdrag"], true)){
                     return $type=="oppdrag";
                 }
-                if($message_type=="direct"){
+                if(in_array($message_type,["direct","direkte"], true)){
                     return $type=="direkte";
                 }
                 return true;
@@ -710,7 +710,7 @@ class UserController extends Controller
             }
 
             if(isset($data['message_type'])&&$data['message_type']!=""){
-                $message_type = $data['message_type'];
+                $message_type = strtolower(trim((string)$data['message_type']));
             }else{
                 $message_type = "";
             }
@@ -720,10 +720,10 @@ class UserController extends Controller
             if($message_type!=""){
                 $enquiries = array_values(array_filter($enquiries,function($enquiry) use ($message_type){
                     $type = strtolower($enquiry['messageType'] ?? 'direkte');
-                    if($message_type=="assignment"){
+                    if(in_array($message_type,["assignment","oppdrag"], true)){
                         return $type=="oppdrag";
                     }
-                    if($message_type=="direct"){
+                    if(in_array($message_type,["direct","direkte"], true)){
                         return $type=="direkte";
                     }
                     return true;
