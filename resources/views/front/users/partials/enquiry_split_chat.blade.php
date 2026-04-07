@@ -21,27 +21,9 @@
          $assignmentPrice = trim((string)($assignmentDetails['desired_price'] ?? ''));
          $assignmentDescription = trim((string)($assignmentDetails['assignment_text'] ?? ($assignmentDetails['description'] ?? '')));
          $assignmentThreadCount = (int)($conversation['thread_count'] ?? 0);
-         $assignmentInfoLines = [];
-         if($assignmentTitle !== ''){
-            $assignmentInfoLines[] = ['label' => 'Tittel', 'value' => $assignmentTitle];
-         }
-         if($assignmentDate !== ''){
-            $assignmentInfoLines[] = ['label' => 'Oppdragsdato', 'value' => $assignmentDate];
-         }
-         if($assignmentAddress !== '' || $assignmentCity !== ''){
-            $locationValue = $assignmentAddress;
-            if($assignmentAddress !== '' && $assignmentCity !== ''){
-               $locationValue .= ', ';
-            }
-            $locationValue .= $assignmentCity;
-            if($assignmentPincode !== ''){
-               $locationValue .= ' (' . $assignmentPincode . ')';
-            }
-            $assignmentInfoLines[] = ['label' => 'Sted', 'value' => $locationValue];
-         }
-         if($assignmentPrice !== ''){
-            $assignmentInfoLines[] = ['label' => 'Ønsket pris', 'value' => $assignmentPrice];
-         }
+         $assignmentDisplayTitle = $assignmentTitle !== '' ? $assignmentTitle : trim((string)($conversation['vendor_name'] ?? 'Oppdrag'));
+         $assignmentDisplayPrice = $assignmentPrice !== '' ? $assignmentPrice : '0';
+         $assignmentDisplayDescription = $assignmentDescription !== '' ? $assignmentDescription : 'Ingen beskrivelse registrert på dette oppdraget.';
       @endphp
       <div class="split-chat-card" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-thread-status="{{ (int)($conversation['thread_status'] ?? 1) }}" data-assignment-id="{{ (int)($conversation['assignment_id'] ?? 0) }}" data-poll-url="{{ $conversation['poll_url'] ?? '' }}">
          <div class="split-chat-head">
@@ -73,27 +55,23 @@
                <div style="border:1px solid #efe1ce;border-radius:14px;background:#f7f1e8;padding:12px;">
                   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
                      <div>
-                        <h4 style="margin:0 0 6px;font-size:20px;font-weight:700;color:#2f2416;">Oppdragsinformasjon</h4>
-                        @if($assignmentTitle !== '')
-                           <p style="margin:0;color:#2b2115;font-size:16px;font-weight:600;">{{ $assignmentTitle }}</p>
-                        @endif
+                        <p style="margin:0 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#745431;">Oppdragsbeskrivelse</p>
+                        <p style="margin:0;color:#2b2115;font-size:32px;line-height:1.2;font-weight:700;word-break:break-word;">{{ $assignmentDisplayTitle }}</p>
                      </div>
                      @if($assignmentThreadCount > 0)
                         <div style="font-size:11px;font-weight:700;color:#8b7c6c;letter-spacing:.04em;text-transform:uppercase;">{{ $assignmentThreadCount }} samtale{{ $assignmentThreadCount !== 1 ? 'r' : '' }}</div>
                      @endif
                   </div>
 
-                  <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-top:10px;">
-                     @foreach($assignmentInfoLines as $assignmentInfoLine)
-                        <div style="border:1px solid #d9c3a1;border-radius:10px;background:#fffdf9;padding:10px 12px;">
-                           <p style="margin:0 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#745431;">{{ $assignmentInfoLine['label'] }}</p>
-                           <p style="margin:0;color:#2b2115;font-size:18px;line-height:1.45;font-weight:600;word-break:break-word;">{{ $assignmentInfoLine['value'] }}</p>
-                        </div>
-                     @endforeach
+                  <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px;">
+                     <div>
+                        <p style="margin:0 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#745431;">Ønsket pris</p>
+                        <p style="margin:0;color:#2b2115;font-size:28px;line-height:1.2;font-weight:700;word-break:break-word;">{{ $assignmentDisplayPrice }}</p>
+                     </div>
 
-                     <div style="border:1px solid #d9c3a1;border-radius:10px;background:#fffdf9;padding:10px 12px;">
+                     <div>
                         <p style="margin:0 0 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#745431;">Det du skrev i oppdraget</p>
-                        <p style="margin:0;color:#2b2115;font-size:16px;line-height:1.5;font-weight:500;white-space:pre-wrap;">{{ !empty($assignmentDescription) ? $assignmentDescription : 'Ingen beskrivelse registrert på dette oppdraget.' }}</p>
+                        <p style="margin:0;color:#2b2115;font-size:24px;line-height:1.35;font-weight:600;white-space:pre-wrap;word-break:break-word;">{{ $assignmentDisplayDescription }}</p>
                      </div>
                   </div>
                </div>
