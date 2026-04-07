@@ -531,6 +531,7 @@
 
 @section('javascript')
 <script>
+   window.currentMessageType = @json($message_type ?? '');
    window.assignmentThreadMap = @json($assignmentThreadMap);
    window.assignmentDetailsMap = @json($assignmentDetailsMap);
 
@@ -627,16 +628,15 @@
             return;
          }
 
-         var $selectedRow = $('.message-list-desktop .js-thread-link.is-selected').first();
-         var selectedId = parseInt(($selectedRow.attr('data-enquiry-id') || $('#selectedEnquiryId').val() || '0'), 10) || 0;
-         var assignmentId = parseInt($selectedRow.attr('data-assignment-id') || '0', 10) || 0;
-         var inAssignmentMode = activeAssignmentModeId > 0;
-         var isAssignmentRow = assignmentId > 0 || $selectedRow.hasClass('is-assignment') || $selectedRow.hasClass('assignment-thread-row');
-         var isCompletedRow = $selectedRow.hasClass('is-completed');
-         var shouldShow = (inAssignmentMode || (isAssignmentRow && assignmentId > 0)) && !isCompletedRow && selectedId > 0;
+         var $splitCard = $('#splitChatPane .split-chat-card').first();
+         var conversationThreadId = parseInt($splitCard.attr('data-thread-id') || '0', 10) || 0;
+         var conversationAssignmentId = parseInt($splitCard.attr('data-assignment-id') || '0', 10) || 0;
+         var conversationStatus = parseInt($splitCard.attr('data-thread-status') || '1', 10) || 1;
+         var hasOpenConversation = conversationThreadId > 0 && $('#splitChatMessages').length > 0;
+         var shouldShow = hasOpenConversation && conversationAssignmentId > 0 && conversationStatus === 1;
 
          if (shouldShow) {
-            $btn.removeClass('filter-hidden').attr('data-thread-id', selectedId);
+            $btn.removeClass('filter-hidden').attr('data-thread-id', conversationThreadId);
          } else {
             $btn.addClass('filter-hidden').removeAttr('data-thread-id');
          }
@@ -938,15 +938,18 @@
       });
 
       $(document).on('click', '.assignment-back-btn', function(){
+         $('#selectedEnquiryId').val('0');
+         activeAssignmentModeId = 0;
+         syncAssignmentCloseButton();
+
+         if (String(window.currentMessageType || '') === 'assignment') {
+            reloadUserEnquiriesList();
+            setEmptySplitPaneState();
+            return;
+         }
+
          restoreDesktopMainList();
          setEmptySplitPaneState();
-         syncAssignmentCloseButton();
-         
-         var currentUrl = new URL(window.location.href);
-         var messageType = currentUrl.searchParams.get('message_type') || '';
-         if (messageType) {
-            reloadUserEnquiriesList();
-         }
       });
 
       $(document).on('click', '#closeSelectedAssignmentBtn', function(e){
