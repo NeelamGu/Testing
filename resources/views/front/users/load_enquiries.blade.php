@@ -501,7 +501,7 @@ use App\Models\Category;
       }
 
       .enquiry-row-top {
-         display: block;
+         display: grid;
       }
 
       .enquiry-row-date {
@@ -882,8 +882,8 @@ use App\Models\Category;
 
    .enquiry-row-link {
       display: grid;
-      grid-template-columns: 52px minmax(0, 1fr) auto;
-      align-items: center;
+      grid-template-columns: 52px minmax(0, 2.2fr) minmax(92px, 0.8fr);
+      align-items: start;
       gap: 12px;
       padding: 12px;
       border-bottom: 1px solid #f0ebe2;
@@ -933,10 +933,9 @@ use App\Models\Category;
    }
 
    .enquiry-row-top {
-      display: flex;
-      gap: 7px;
-      align-items: baseline;
-      justify-content: space-between;
+      display: grid;
+      gap: 2px;
+      align-items: start;
       min-width: 0;
    }
 
@@ -946,12 +945,12 @@ use App\Models\Category;
       font-weight: 700;
       color: #222;
       line-height: 1.25;
-      white-space: normal;
-      word-break: break-word;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      display: block;
       overflow: hidden;
+      text-overflow: ellipsis;
    }
 
    .enquiry-row-date {
@@ -993,6 +992,7 @@ use App\Models\Category;
       gap: 4px;
       justify-items: end;
       align-content: center;
+      min-width: 92px;
    }
 
    .enquiry-row-side .type-chip {
