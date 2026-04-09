@@ -387,6 +387,16 @@
          }
       }
 
+      function shouldBypassPanelCache(urlValue) {
+         try {
+            var parsedUrl = new URL(urlValue, window.location.origin);
+            var normalizedPath = normalizePath(parsedUrl.pathname);
+            return normalizedPath === '/user/enquiries';
+         } catch (error) {
+            return false;
+         }
+      }
+
       function normalizePath(path) {
          var nextPath = String(path || '/');
          if (nextPath.length > 1 && nextPath.charAt(nextPath.length - 1) === '/') {
@@ -442,6 +452,25 @@
 
       function fetchPanelHtml(urlValue) {
          var cacheKey = getPanelCacheKey(urlValue);
+         var bypassCache = shouldBypassPanelCache(urlValue);
+
+         if (bypassCache) {
+            return fetch(urlValue, {
+               method: 'GET',
+               headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Cache-Control': 'no-cache'
+               },
+               cache: 'no-store',
+               credentials: 'same-origin'
+            }).then(function (response) {
+               if (!response.ok) {
+                  throw new Error('HTTP ' + response.status);
+               }
+               return response.text();
+            });
+         }
+
          if (panelHtmlCache.has(cacheKey)) {
             return Promise.resolve(panelHtmlCache.get(cacheKey));
          }
@@ -826,6 +855,12 @@
                }, function () {
                   if (pushHistory) {
                      window.history.pushState({ customerPanel: true }, '', urlValue);
+                  }
+
+                  if (tabType === 'assignments') {
+                     window.currentMessageType = 'assignment';
+                  } else if (tabType === 'messages') {
+                     window.currentMessageType = '';
                   }
 
                   if (nextTitle) {
