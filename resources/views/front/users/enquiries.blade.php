@@ -59,7 +59,7 @@
    }
    .messages-main-split {
       display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
+      grid-template-columns: minmax(400px, 1.12fr) minmax(0, 0.88fr);
       gap: 12px;
       height: 100%;
       min-height: 0;
