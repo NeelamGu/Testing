@@ -783,6 +783,80 @@ use App\Models\Category;
       overflow: auto;
    }
 
+   .enquiry-row-shell {
+      position: relative;
+   }
+
+   .enquiry-row-shell.has-menu .enquiry-row-link {
+      padding-right: 56px;
+   }
+
+   .enquiry-row-menu-wrap {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 5;
+   }
+
+   .enquiry-row-menu-trigger {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid #e2d5c2;
+      background: #fff7eb;
+      color: #7a6347;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(61, 46, 24, 0.08);
+      transition: transform 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
+   }
+
+   .enquiry-row-menu-trigger:hover {
+      transform: translateY(-1px);
+      background: #f4eadc;
+      box-shadow: 0 6px 12px rgba(61, 46, 24, 0.12);
+   }
+
+   .enquiry-row-menu-panel {
+      position: absolute;
+      top: 38px;
+      right: 0;
+      min-width: 180px;
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid #e2d5c2;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(61, 46, 24, 0.16);
+      display: none;
+   }
+
+   .enquiry-row-menu-panel.is-open {
+      display: grid;
+      gap: 4px;
+   }
+
+   .enquiry-row-menu-item {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      background: #fff1ef;
+      color: #9e3a2b;
+      min-height: 38px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.14s ease, transform 0.14s ease;
+   }
+
+   .enquiry-row-menu-item:hover {
+      background: #ffe3dd;
+      transform: translateY(-1px);
+   }
+
    .enquiry-row-link {
       display: grid;
       grid-template-columns: 52px minmax(0, 1fr) auto;
@@ -1061,6 +1135,10 @@ use App\Models\Category;
       display: none !important;
    }
 
+   .enquiry-row-shell:last-child .enquiry-row-link {
+      border-bottom: none;
+   }
+
    @media (max-width: 767px) {
       .message-list {
          border: none;
@@ -1075,6 +1153,21 @@ use App\Models\Category;
          margin-bottom: 10px;
          padding: 11px;
          box-shadow: 0 6px 14px rgba(61, 46, 24, 0.06);
+      }
+
+      .enquiry-row-shell.has-menu .enquiry-row-link {
+         padding-right: 52px;
+      }
+
+      .enquiry-row-menu-wrap {
+         top: 10px;
+         right: 10px;
+      }
+
+      .enquiry-row-menu-panel {
+         top: 36px;
+         right: 0;
+         min-width: 168px;
       }
 
       .enquiry-row-avatar {
@@ -1154,10 +1247,6 @@ use App\Models\Category;
                      <a href="{{ url('enquire-us') }}" class="new-assignment-btn">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Nytt Oppdrag
-                     </a>
-                     <a href="javascript:void(0)" id="closeSelectedAssignmentBtn" class="new-assignment-btn filter-hidden" style="margin-top:8px;background:#f3ede4;border-color:#dfd1bb;color:#6f5c46 !important;">
-                        <i class="fa fa-check-circle" aria-hidden="true"></i>
-                        Avslutt oppdrag
                      </a>
                   </div>
                @endif

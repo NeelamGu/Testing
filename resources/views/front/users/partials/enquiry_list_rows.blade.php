@@ -74,53 +74,66 @@
       $threadIdsCsv = implode(',', $threadIds);
    @endphp
 
-   <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
-      <div class="enquiry-row-avatar">
-         <img src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image">
-      </div>
+   <div class="enquiry-row-shell {{ $isAssignment ? 'has-menu' : '' }}">
+      <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
+         <div class="enquiry-row-avatar">
+            <img src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image">
+         </div>
 
-      <div class="enquiry-row-main">
-         <div class="enquiry-row-top">
-            <h5 class="enquiry-row-title">{{ $rowTitle }}</h5>
-            @if(!empty($displayDate))
-               <span class="enquiry-row-date">{{ $displayDate }}</span>
+         <div class="enquiry-row-main">
+            <div class="enquiry-row-top">
+               <h5 class="enquiry-row-title">{{ $rowTitle }}</h5>
+               @if(!empty($displayDate))
+                  <span class="enquiry-row-date">{{ $displayDate }}</span>
+               @endif
+            </div>
+
+            @if($previewText !== '')
+               <p class="enquiry-row-preview">{{ $previewText }}</p>
+            @endif
+
+            @if($isAssignment)
+               <p class="enquiry-row-submeta">{{ $vendorResponseCount }} samtaler</p>
+            @endif
+
+            <div class="enquiry-row-meta">
+               <span class="meta-item">
+                  @if(!empty($categoryImage))
+                     <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
+                  @else
+                     <i class="fa fa-tag"></i>
+                  @endif
+                  {{ $categoryName }}
+               </span>
+            </div>
+         </div>
+
+         <div class="enquiry-row-side">
+            @if($isAssignment)
+               <span class="type-chip assignment">Oppdrag</span>
+            @endif
+
+            @if($isCompleted)
+               <span class="badge-fullfort">Fullført</span>
+            @endif
+
+            @if($unreadCount > 0)
+               <span class="badge-unread">{{ $unreadCount }}</span>
             @endif
          </div>
+      </a>
 
-         @if($previewText !== '')
-            <p class="enquiry-row-preview">{{ $previewText }}</p>
-         @endif
-
-         @if($isAssignment)
-            <p class="enquiry-row-submeta">{{ $vendorResponseCount }} samtaler</p>
-         @endif
-
-         <div class="enquiry-row-meta">
-            <span class="meta-item">
-               @if(!empty($categoryImage))
-                  <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
-               @else
-                  <i class="fa fa-tag"></i>
-               @endif
-               {{ $categoryName }}
-            </span>
+      @if($isAssignment)
+         <div class="enquiry-row-menu-wrap">
+            <button type="button" class="enquiry-row-menu-trigger" aria-label="Flere valg for oppdraget" aria-expanded="false">
+               <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+            <div class="enquiry-row-menu-panel" role="menu" aria-hidden="true">
+               <button type="button" class="enquiry-row-menu-item enquiry-row-close-action" data-thread-id="{{ (int)($enquiry['id'] ?? 0) }}">Avslutt oppdrag</button>
+            </div>
          </div>
-      </div>
-
-      <div class="enquiry-row-side">
-         @if($isAssignment)
-            <span class="type-chip assignment">Oppdrag</span>
-         @endif
-
-         @if($isCompleted)
-            <span class="badge-fullfort">Fullført</span>
-         @endif
-
-         @if($unreadCount > 0)
-            <span class="badge-unread">{{ $unreadCount }}</span>
-         @endif
-      </div>
-   </a>
+      @endif
+   </div>
 @empty
    <div class="enquiry-empty-state">Ingen meldinger funnet med valgt filter.</div>
 @endforelse

@@ -654,6 +654,39 @@
          }
       }
 
+      function hideEnquiryRowMenus() {
+         $('.enquiry-row-menu-panel.is-open').removeClass('is-open').attr('aria-hidden', 'true');
+         $('.enquiry-row-menu-trigger[aria-expanded="true"]').attr('aria-expanded', 'false');
+      }
+
+      function closeEnquiryThread(threadId) {
+         threadId = parseInt(threadId || '0', 10) || 0;
+         if (threadId <= 0) {
+            return;
+         }
+
+         var confirmClose = confirm('Er du sikker på at du vil avslutte dette oppdraget?');
+         if (!confirmClose) {
+            return;
+         }
+
+         $.ajax({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: '/update-enquiry-status',
+            data: { status: 'Active', enquiry_id: threadId },
+            success: function(){
+               hideEnquiryRowMenus();
+               if (typeof reloadUserEnquiriesList === 'function') {
+                  reloadUserEnquiriesList(String(window.currentMessageType || '') === 'assignment' ? 'assignment' : '');
+               }
+               loadSplitChatPane(window.location.href, false);
+            }
+         });
+      }
+
       function renderAssignmentDetailsPane(assignmentId, assignmentTitle, threadCount) {
          var detailsMap = window.assignmentDetailsMap || {};
          var details = detailsMap[String(assignmentId)] || detailsMap[assignmentId] || {};
@@ -924,6 +957,7 @@
          }
 
          e.preventDefault();
+         hideEnquiryRowMenus();
          var nextUrl = $(this).attr('href');
          if (!nextUrl) {
             return;
@@ -963,32 +997,44 @@
          setEmptySplitPaneState();
       });
 
+      $(document).on('click', '.enquiry-row-menu-trigger', function(e){
+         e.preventDefault();
+         e.stopPropagation();
+
+         var $wrap = $(this).closest('.enquiry-row-menu-wrap');
+         var $panel = $wrap.find('.enquiry-row-menu-panel').first();
+         var isOpen = $panel.hasClass('is-open');
+
+         hideEnquiryRowMenus();
+
+         if (!isOpen) {
+            $panel.addClass('is-open').attr('aria-hidden', 'false');
+            $(this).attr('aria-expanded', 'true');
+         }
+      });
+
+      $(document).on('click', '.enquiry-row-close-action', function(e){
+         e.preventDefault();
+         e.stopPropagation();
+
+         var threadId = parseInt($(this).attr('data-thread-id') || $(this).closest('.enquiry-row-shell').attr('data-thread-id') || '0', 10) || 0;
+         closeEnquiryThread(threadId);
+      });
+
+      $(document).on('click', function(){
+         hideEnquiryRowMenus();
+      });
+
+      $(document).on('keydown', function(e){
+         if (e.key === 'Escape') {
+            hideEnquiryRowMenus();
+         }
+      });
+
       $(document).on('click', '#closeSelectedAssignmentBtn', function(e){
          e.preventDefault();
          var threadId = parseInt($(this).attr('data-thread-id') || $('#selectedEnquiryId').val() || '0', 10) || 0;
-         if (threadId <= 0) {
-            return;
-         }
-
-         var confirmClose = confirm('Er du sikker på at du vil avslutte dette oppdraget?');
-         if (!confirmClose) {
-            return;
-         }
-
-         $.ajax({
-            headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',
-            url: '/update-enquiry-status',
-            data: { status: 'Active', enquiry_id: threadId },
-            success: function(){
-               if (typeof reloadUserEnquiriesList === 'function') {
-                  reloadUserEnquiriesList(String(window.currentMessageType || '') === 'assignment' ? 'assignment' : '');
-               }
-               loadSplitChatPane(window.location.href, false);
-            }
-         });
+         closeEnquiryThread(threadId);
       });
 
       $(document).on('click', '.split-chat-close-link', function(e){
