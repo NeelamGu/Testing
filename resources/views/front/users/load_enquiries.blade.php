@@ -492,8 +492,31 @@ use App\Models\Category;
       font-size: 14px;
    }
    @media (max-width: 1199px) {
+      .enquiry-row-link {
+         align-items: start;
+      }
+
       .message-item {
          grid-template-columns: 54px 1fr;
+      }
+
+      .enquiry-row-top {
+         display: block;
+      }
+
+      .enquiry-row-date {
+         display: block;
+         margin-top: 2px;
+      }
+
+      .enquiry-row-side {
+         justify-items: start;
+         align-content: start;
+      }
+
+      .enquiry-row-menu-wrap {
+         top: 10px;
+         right: 10px;
       }
 
       .message-vendor-title {
