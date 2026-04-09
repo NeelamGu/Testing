@@ -151,16 +151,29 @@ $(document).ready(function(){
 		}
 		var cat = $("#selcatenq").val();
 		var message_type = $("#seltypeenq").val();
+		var panelType = '';
+		try {
+			var panelUrl = new URL(window.location.href);
+			panelType = String(panelUrl.searchParams.get('message_type') || '');
+		} catch (e) {
+			panelType = '';
+		}
+		if (typeof window.currentMessageType !== 'undefined' && String(window.currentMessageType || '') === 'assignment') {
+			panelType = 'assignment';
+		}
+		if (String(message_type || '') === 'assignment') {
+			panelType = 'assignment';
+		}
 		if (typeof forcedMessageType !== 'undefined' && forcedMessageType !== null && String(forcedMessageType) !== '') {
 			message_type = String(forcedMessageType);
-		} else if (typeof window.currentMessageType !== 'undefined') {
-			var currentPanelType = String(window.currentMessageType || '');
-			if (currentPanelType === 'assignment') {
-				message_type = 'assignment';
-			}
+		} else if (panelType === 'assignment') {
+			message_type = 'assignment';
 		}
 		if ((message_type === undefined || message_type === null || message_type === "") && typeof window.currentMessageType !== 'undefined') {
 			message_type = String(window.currentMessageType || "");
+		}
+		if (panelType === 'assignment') {
+			message_type = 'assignment';
 		}
 		var active_close = $("#selcloseenq").val();
 		var selected_enquiry_id = $("#selectedEnquiryId").val() || "";
@@ -173,6 +186,9 @@ $(document).ready(function(){
 			url:'/get-user-enquiries',
 			success:function(resp){
 				$("#loadEnqueries").html(resp.view);
+				if (message_type === 'assignment') {
+					window.currentMessageType = 'assignment';
+				}
 				if ($("#seltypeenq").length) {
 					if (typeof forcedMessageType !== 'undefined' && forcedMessageType !== null && String(forcedMessageType) !== '') {
 						$("#seltypeenq").val(String(forcedMessageType));

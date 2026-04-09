@@ -589,49 +589,43 @@ class UserController extends Controller
         $message_type = strtolower(trim((string)$request->get('message_type', '')));
         $active_close = $request->get('active_close', '');
         $enqCat = $request->get('cat', '');
-        $enquiries = ProductsEnquiry::query();
-        $enquiries = $enquiries->where('user_id',Auth::user()->id);
+        $enquiries = ProductsEnquiry::query()->where('user_id',Auth::user()->id);
 
         if($enqCat!=""){
             $catIds = Category::select('id')->where('category_name',$enqCat)->get()->pluck('id');
-            /*dd($catIds);*/
             $productIds = Product::select('id')->whereIn('category_id',$catIds)->get()->pluck('id');
-            /*dd($productIds);*/
             $enquiries = $enquiries->with(['product'=>function($query)use($productIds){
                 $query->whereIn('id',$productIds);
-            },'user','vendor','enquiryDetail'])
-            ->orderBy('status','Desc')
-            ->orderBy('updated_at','Desc')
-            ->get()->toArray();
+            },'user','vendor','enquiryDetail']);
         }else{
-            $enquiries = $enquiries->with(['product','user','vendor','enquiryDetail'])
+            $enquiries = $enquiries->with(['product','user','vendor','enquiryDetail']);
+        }
+
+        $enquiries = $enquiries
             ->orderBy('status','Desc')
             ->orderBy('updated_at','Desc')
-            ->get()->toArray();
-            //dd($enquiries);
-        }
-        
+            ->get()
+            ->toArray();
+
         $enquiries = $this->attachEnquiryConversationMeta($enquiries);
 
         if($message_type!=""){
             $enquiries = array_values(array_filter($enquiries,function($enquiry) use ($message_type){
-                $type = strtolower($enquiry['messageType'] ?? 'direkte');
+                $type = strtolower((string)($enquiry['messageType'] ?? 'direkte'));
                 if(in_array($message_type,["assignment","oppdrag"], true)){
-                    return $type=="oppdrag";
+                    return (int)($enquiry['enquiry_detail_id'] ?? 0) > 0 && $type === 'oppdrag';
                 }
                 if(in_array($message_type,["direct","direkte"], true)){
-                    return $type=="direkte";
+                    return $type === 'direkte';
                 }
                 return true;
             }));
         }else{
-            // Messages tab should contain only actual conversations.
             $enquiries = array_values(array_filter($enquiries,function($enquiry){
                 return !empty($enquiry['hasMessages']);
             }));
         }
 
-        // Keep a status-scope copy for filter counters before applying status filter
         $statusScopeEnquiries = $enquiries;
         $totalAssignments = count($statusScopeEnquiries);
         $activeAssignments = count(array_filter($statusScopeEnquiries, function($enquiry){
@@ -663,7 +657,6 @@ class UserController extends Controller
         $selectedEnquiryId = $this->resolveSelectedEnquiryId($desktopEnquiries, $request->get('selected_enquiry_id', ''));
         $selectedConversation = $this->buildSelectedConversationPayload($selectedEnquiryId);
 
-        /*dd($enquiries);*/
         $catenquiries = ProductsEnquiry::with('product')->where('user_id',Auth::user()->id)->orderBy('id','Desc')->get()->toArray();
         $allcategories = array();
         foreach($catenquiries as $key => $enq){
@@ -673,7 +666,7 @@ class UserController extends Controller
         }
         $allcategories = array_values(array_unique($allcategories));
         sort($allcategories, SORT_NATURAL | SORT_FLAG_CASE);
-        /*dd($enquiries);*/
+
         return view('front.users.enquiries')->with(compact('enquiries','desktopEnquiries','selectedEnquiryId','selectedConversation','allcategories','message_type','active_close','enqCat','totalAssignments','activeAssignments','completedAssignments'));    
     }
 
@@ -719,12 +712,12 @@ class UserController extends Controller
 
             if($message_type!=""){
                 $enquiries = array_values(array_filter($enquiries,function($enquiry) use ($message_type){
-                    $type = strtolower($enquiry['messageType'] ?? 'direkte');
+                    $type = strtolower((string)($enquiry['messageType'] ?? 'direkte'));
                     if(in_array($message_type,["assignment","oppdrag"], true)){
-                        return $type=="oppdrag";
+                        return (int)($enquiry['enquiry_detail_id'] ?? 0) > 0 && $type === 'oppdrag';
                     }
                     if(in_array($message_type,["direct","direkte"], true)){
-                        return $type=="direkte";
+                        return $type === 'direkte';
                     }
                     return true;
                 }));
