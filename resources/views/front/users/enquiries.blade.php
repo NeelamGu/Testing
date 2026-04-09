@@ -614,6 +614,13 @@
          return url.toString();
       }
 
+      function buildAssignmentTabUrl() {
+         var url = new URL(window.location.href);
+         url.searchParams.set('message_type', 'assignment');
+         url.searchParams.delete('selected_enquiry_id');
+         return url.toString();
+      }
+
       function ensureDesktopListSnapshot() {
          if (desktopMainListHtml === null) {
             desktopMainListHtml = $('.message-list-desktop').html() || '';
@@ -767,10 +774,11 @@
          ensureDesktopListSnapshot();
 
          var assignmentTitle = $.trim($row.find('.enquiry-row-title').text()) || 'Oppdrag';
+         var backUrl = buildAssignmentTabUrl();
          var headerHtml = ''
             + '<div class="assignment-mode-wrap">'
             + '  <div class="assignment-mode-head">'
-            + '    <button type="button" class="assignment-back-btn" aria-label="Tilbake">&#8592;</button>'
+            + '    <a href="' + backUrl + '" class="assignment-back-btn" aria-label="Tilbake">&#8592;</a>'
             + '    <div>'
             + '      <h4 class="assignment-mode-title">' + $('<div>').text(assignmentTitle).html() + '</h4>'
             + '      <p class="assignment-mode-sub">' + threads.length + ' samtaler</p>'
@@ -979,16 +987,27 @@
          loadSplitChatPane(nextUrl, true);
       });
 
-      $(document).on('click', '.assignment-back-btn', function(){
+      $(document).on('click', '.assignment-back-btn', function(e){
+         e.preventDefault();
+         var fallbackUrl = $(this).attr('href') || buildAssignmentTabUrl();
+
          $('#selectedEnquiryId').val('0');
          activeAssignmentModeId = 0;
          if (String(window.currentMessageType || '') === 'assignment' && $('#seltypeenq').length) {
             $('#seltypeenq').val('assignment');
          }
+         if (window.history && typeof window.history.replaceState === 'function') {
+            window.history.replaceState({ splitChatUrl: fallbackUrl }, '', fallbackUrl);
+         }
          syncAssignmentCloseButton();
 
          if (String(window.currentMessageType || '') === 'assignment') {
-            reloadUserEnquiriesList('assignment');
+            if (typeof reloadUserEnquiriesList === 'function') {
+               reloadUserEnquiriesList('assignment');
+            } else {
+               window.location.href = fallbackUrl;
+               return;
+            }
             setEmptySplitPaneState();
             return;
          }
