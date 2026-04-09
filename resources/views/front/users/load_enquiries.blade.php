@@ -976,6 +976,9 @@ use App\Models\Category;
       color: #3b3b3b;
       font-size: 13px;
       font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
    }
 
    .enquiry-row-meta {
@@ -984,7 +987,15 @@ use App\Models\Category;
       gap: 9px;
       color: #7a7a7a;
       font-size: 12px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      min-width: 0;
+   }
+
+   .enquiry-row-meta .meta-item {
+      white-space: nowrap;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
    }
 
    .enquiry-row-side {
