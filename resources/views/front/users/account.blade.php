@@ -15,8 +15,9 @@
       border-radius: 18px;
       padding: 14px;
       box-shadow: 0 14px 26px rgba(49, 37, 20, 0.07);
-      height: calc(100vh - 124px);
-      overflow: hidden;
+      min-height: calc(100dvh - 124px);
+      height: auto;
+      overflow: visible;
       display: flex;
       flex-direction: column;
       color: #000;
@@ -54,11 +55,12 @@
       display: grid;
       gap: 12px;
       align-content: start;
+      min-width: 0;
    }
    .profile-right-stack {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      height: auto;
    }
    .card-soft {
       border: 1px solid #e9dcc8;
@@ -340,9 +342,16 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 8px;
-      margin-top: auto;
-      margin-left: auto;
-      width: fit-content;
+      justify-content: flex-end;
+      margin-top: 10px;
+      margin-left: 0;
+      width: 100%;
+      position: sticky;
+      bottom: 10px;
+      z-index: 2;
+      padding: 8px 10px 4px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(247, 243, 236, 0), rgba(247, 243, 236, 0.96) 34px);
    }
    .profile-side-actions .save-btn {
       border: 0;
@@ -374,7 +383,6 @@
       .profile-grid {
          grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
       }
-      .field-grid {
       .profile-note {
          margin: 8px 0 0;
          color: #6b5d4a;
@@ -382,8 +390,6 @@
          font-weight: 600;
          max-width: 680px;
          line-height: 1.35;
-      }
-         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
    }
    @media (max-width: 991px) {
