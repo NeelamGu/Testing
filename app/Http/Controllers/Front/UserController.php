@@ -825,6 +825,9 @@ class UserController extends Controller
         $backUrl = !empty($baseEnquiry->enquiry_detail_id)
             ? url('user/enquiries/'.$baseEnquiry->id.'/overview')
             : url('user/enquiries/');
+        if (request()->get('return_to') === 'messages') {
+            $backUrl = url('user/enquiries');
+        }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
         return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','conversationVendorName','conversationVendorUrl','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel'));

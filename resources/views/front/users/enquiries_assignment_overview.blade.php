@@ -472,3 +472,42 @@
    </div>
 </div>
 @endsection
+
+@section('javascript')
+<script>
+   (function () {
+      var mobileLinks = document.querySelectorAll('.thread-open-link');
+      if (!mobileLinks.length) {
+         return;
+      }
+
+      function updateMobileThreadLinks() {
+         var isMobile = window.matchMedia('(max-width: 767px)').matches;
+         for (var i = 0; i < mobileLinks.length; i++) {
+            var link = mobileLinks[i];
+            var originalHref = link.getAttribute('data-original-href');
+            if (!originalHref) {
+               originalHref = link.getAttribute('href') || '#';
+               link.setAttribute('data-original-href', originalHref);
+            }
+
+            if (isMobile) {
+               try {
+                  var mobileUrl = new URL(originalHref, window.location.origin);
+                  mobileUrl.searchParams.set('return_to', 'messages');
+                  link.setAttribute('href', mobileUrl.toString());
+               } catch (error) {
+                  link.setAttribute('href', originalHref);
+               }
+            } else {
+               link.setAttribute('href', originalHref);
+            }
+         }
+      }
+
+      updateMobileThreadLinks();
+      window.addEventListener('resize', updateMobileThreadLinks);
+      window.addEventListener('orientationchange', updateMobileThreadLinks);
+   })();
+</script>
+@endsection

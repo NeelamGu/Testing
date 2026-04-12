@@ -630,6 +630,10 @@ use App\Models\Category;
          display: grid;
       }
 
+      .message-filter-shell {
+         display: none;
+      }
+
       .message-item {
          grid-template-columns: 1fr;
          gap: 8px;
