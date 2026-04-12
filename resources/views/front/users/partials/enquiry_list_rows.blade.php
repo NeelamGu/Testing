@@ -59,6 +59,9 @@
       $cardPrimaryUrl = $isMobileList
          ? ($isAssignment ? $assignmentOverviewUrl : $conversationUrl)
          : $desktopSelectUrl;
+      if($isMobileList){
+         $cardPrimaryUrl .= (str_contains($cardPrimaryUrl, '?') ? '&' : '?').'ui=mobile';
+      }
       $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
       $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
       $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');

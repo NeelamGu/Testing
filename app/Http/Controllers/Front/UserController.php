@@ -825,7 +825,7 @@ class UserController extends Controller
         $backUrl = !empty($baseEnquiry->enquiry_detail_id)
             ? url('user/enquiries/'.$baseEnquiry->id.'/overview')
             : url('user/enquiries/');
-        if (request()->get('return_to') === 'messages') {
+        if (request()->get('ui') === 'mobile' && !empty($baseEnquiry->enquiry_detail_id)) {
             $backUrl = url('user/enquiries');
         }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
@@ -857,6 +857,7 @@ class UserController extends Controller
             ->get();
 
         $threads = [];
+        $isMobileUi = request()->get('ui') === 'mobile';
         foreach($allAssignmentThreads as $thread){
             $lastMessage = EnquiriesResponse::where('enquiry_id',$thread->id)
                 ->orderBy('id','Desc')
@@ -884,7 +885,7 @@ class UserController extends Controller
                 'last_date' => $lastMessage
                     ? date('d.m.y, H:i', strtotime($lastMessage->created_at))
                     : date('d.m.y, H:i', strtotime($thread->updated_at ?? $thread->created_at)),
-                'message_url' => url('user/enquiries/'.$thread->id),
+                'message_url' => url('user/enquiries/'.$thread->id).($isMobileUi ? '?ui=mobile' : ''),
             ];
         }
 
