@@ -1,7 +1,5 @@
 @extends('front.layout.layout')
 @section('content')
-<style>
-</style>
 <div class="page-wrapper">
    <!--End Main Header -->
    <!-- Static Banner Parallax Background-->
@@ -63,7 +61,7 @@
                      <div class="row">
                         <div class="form-group enquiry-col-area">
                            <div class="field-label">Tittel<span class="required-star">*</span></div>
-                           <input name="title" id="title" type="text" name="title" placeholder="F.eks. unicorn-kake, tapas eller festsminke" @if(isset($_GET['title'])) value="{{ $_GET['title'] }}" @endif required>
+                           <input name="title" id="title" type="text" placeholder="F.eks. unicorn-kake, tapas eller festsminke" @if(isset($_GET['title'])) value="{{ $_GET['title'] }}" @endif required>
                         </div>
                         <div class="form-group enquiry-col-area">
                            <div class="field-label">Kategori <span class="required-star">*</span></div>

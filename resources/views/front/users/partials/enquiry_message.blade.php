@@ -28,10 +28,6 @@
    $messageText = trim((string)$message);
    $isCustomer = $senderType === 'Customer';
    $roleClass = $isCustomer ? 'customer' : 'vendor';
-   $customerNameLabel = trim((string)($customerLabel ?? ''));
-   if($customerNameLabel === ''){
-      $customerNameLabel = 'Du';
-   }
    $vendorNameLabel = trim((string)($vendorLabel ?? ''));
    if($vendorNameLabel === ''){
       $vendorNameLabel = 'Leverandør';
