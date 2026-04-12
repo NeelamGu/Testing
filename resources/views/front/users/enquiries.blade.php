@@ -209,8 +209,8 @@
       border-top-left-radius: 5px;
    }
    .split-chat-messages .chat-item.customer .chat-bubble {
-      background: #cfe2ff;
-      border-color: #b7d0f4;
+      background: #e78002;
+      border-color: #cc6f03;
       border-top-right-radius: 5px;
    }
    .split-chat-messages .chat-author {
@@ -226,6 +226,10 @@
       color: #222;
       white-space: pre-wrap;
       word-break: break-word;
+   }
+   .split-chat-messages .chat-item.customer .chat-text,
+   .split-chat-messages .chat-item.customer .chat-time {
+      color: #fff;
    }
    .split-chat-messages .chat-time {
       display: block;

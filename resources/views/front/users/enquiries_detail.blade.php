@@ -139,7 +139,7 @@ $messagesCountCustomer = messagesCountCustomer();
       border-top-left-radius: 5px;
    }
    .chat-item.customer .chat-bubble {
-      background: var(--customer-panel-accent, #e78002);
+      background: #e78002;
       border-color: transparent;
       border-top-right-radius: 5px;
    }
@@ -153,17 +153,17 @@ $messagesCountCustomer = messagesCountCustomer();
       letter-spacing: 0.35px;
    }
    .chat-item.customer .chat-author {
-      color: var(--customer-panel-accent-contrast, #ffffff);
+      color: #ffffff;
       text-align: right;
    }
    .chat-item.vendor .chat-author {
       color: #e78002;
    }
    .chat-item.customer .chat-text {
-      color: var(--customer-panel-accent-contrast, #ffffff);
+      color: #ffffff;
    }
    .chat-item.customer .chat-time {
-      color: var(--customer-panel-accent-contrast, #ffffff);
+      color: #ffffff;
    }
    .chat-text {
       font-size: 15px;

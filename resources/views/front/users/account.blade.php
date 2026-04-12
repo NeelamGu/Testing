@@ -147,14 +147,15 @@
       gap: 8px;
    }
    .color-row input[type="color"] {
-      width: 36px;
-      height: 36px;
-      border: 2px solid #ffffff;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
       border-radius: 50%;
       padding: 0;
-      overflow: hidden;
-      box-shadow: 0 0 0 1px #c8b79f;
-      background: transparent;
+      opacity: 0;
+      margin: 0;
       cursor: pointer;
    }
    .preset-dot {
@@ -165,6 +166,33 @@
       cursor: pointer;
       background: #fff;
       display: inline-block;
+   }
+   .custom-color-dot {
+      width: 34px;
+      height: 34px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 1px #c8b79f;
+      background:
+         conic-gradient(
+            #ff003c 0deg,
+            #ff7a00 60deg,
+            #ffd500 120deg,
+            #00c853 180deg,
+            #00b0ff 240deg,
+            #7c4dff 300deg,
+            #ff003c 360deg
+         );
+   }
+   .custom-color-dot::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
    }
    .security-help {
       margin-top: 10px;
@@ -521,10 +549,16 @@
                                        <p>Velg en fargetone som passer ditt arbeidsmiljø</p>
                                     </div>
                                     <div class="color-row">
-                                       <input type="color" id="user-panel-bg-color" name="panel_bg_color" value="{{ Auth::user()->panel_bg_color ?: '#f8f4ed' }}">
                                        <span class="preset-dot" data-target="bg" data-value="#f8f4ed" style="background:#f8f4ed;"></span>
+                                       <span class="preset-dot" data-target="bg" data-value="#efe6d3" style="background:#efe6d3;"></span>
+                                       <span class="preset-dot" data-target="bg" data-value="#e7f2ed" style="background:#e7f2ed;"></span>
                                        <span class="preset-dot" data-target="bg" data-value="#e9eef1" style="background:#e9eef1;"></span>
+                                       <span class="preset-dot" data-target="bg" data-value="#dfe7f8" style="background:#dfe7f8;"></span>
+                                       <span class="preset-dot" data-target="bg" data-value="#f3e5ef" style="background:#f3e5ef;"></span>
                                        <span class="preset-dot" data-target="bg" data-value="#1e1d1a" style="background:#1e1d1a;"></span>
+                                       <label class="preset-dot custom-color-dot" title="Velg egendefinert bakgrunnsfarge">
+                                          <input type="color" id="user-panel-bg-color" name="panel_bg_color" value="{{ Auth::user()->panel_bg_color ?: '#f8f4ed' }}" aria-label="Velg egendefinert bakgrunnsfarge">
+                                       </label>
                                     </div>
                                  </div>
                                  <div class="visual-row" style="margin-bottom:0;">
@@ -533,11 +567,16 @@
                                        <p>Hovedfarge for knapper og aktive elementer</p>
                                     </div>
                                     <div class="color-row">
-                                       <input type="color" id="user-panel-accent-color" name="panel_accent_color" value="{{ Auth::user()->panel_accent_color ?: '#e78002' }}">
                                        <span class="preset-dot" data-target="accent" data-value="#a65f03" style="background:#a65f03;"></span>
+                                       <span class="preset-dot" data-target="accent" data-value="#e78002" style="background:#e78002;"></span>
+                                       <span class="preset-dot" data-target="accent" data-value="#d64545" style="background:#d64545;"></span>
+                                       <span class="preset-dot" data-target="accent" data-value="#1e9f5a" style="background:#1e9f5a;"></span>
                                        <span class="preset-dot" data-target="accent" data-value="#7aa07d" style="background:#7aa07d;"></span>
                                        <span class="preset-dot" data-target="accent" data-value="#6e8ea5" style="background:#6e8ea5;"></span>
                                        <span class="preset-dot" data-target="accent" data-value="#9f6d8d" style="background:#9f6d8d;"></span>
+                                       <label class="preset-dot custom-color-dot" title="Velg egendefinert aksentfarge">
+                                          <input type="color" id="user-panel-accent-color" name="panel_accent_color" value="{{ Auth::user()->panel_accent_color ?: '#e78002' }}" aria-label="Velg egendefinert aksentfarge">
+                                       </label>
                                     </div>
                                  </div>
                                  <p id="account-panel_bg_color" style="display:none;"></p>
