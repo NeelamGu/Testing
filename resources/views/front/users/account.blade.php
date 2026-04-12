@@ -249,12 +249,6 @@
       outline: none;
       box-shadow: 0 0 0 3px rgba(166, 95, 3, 0.2);
    }
-   #profile-image-status {
-      margin: 8px 0 0;
-      min-height: 18px;
-      font-size: 12px;
-      color: #7a6f62;
-   }
    .profile-summary h4 {
       margin: 0;
       color: #000;

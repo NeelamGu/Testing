@@ -490,7 +490,7 @@ $messagesCountCustomer = messagesCountCustomer();
                      @php $lastMessageId = count($enquiries)>0 ? (int)$enquiries[count($enquiries)-1]['id'] : 0; @endphp
                      <div id="chatMessages" class="chat-messages" data-last-id="{{ $lastMessageId }}">
                         @foreach($enquiries as $enquiry)
-                           @include('front.users.partials.enquiry_message', ['enquiry' => $enquiry, 'customerLabel' => ($customerLabel ?? ''), 'vendorLabel' => ($vendorLabel ?? '')])
+                           @include('front.users.partials.enquiry_message', ['enquiry' => $enquiry, 'vendorLabel' => ($vendorLabel ?? '')])
                         @endforeach
                      </div>
                   </div>

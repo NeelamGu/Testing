@@ -40,7 +40,7 @@
 
          <div class="split-chat-messages" id="splitChatMessages" data-last-id="{{ $lastMessageId }}">
             @foreach($messages as $enquiry)
-               @include('front.users.partials.enquiry_message', ['enquiry' => $enquiry, 'customerLabel' => ($conversation['customer_label'] ?? ''), 'vendorLabel' => ($conversation['vendor_label'] ?? '')])
+               @include('front.users.partials.enquiry_message', ['enquiry' => $enquiry, 'vendorLabel' => ($conversation['vendor_label'] ?? '')])
             @endforeach
          </div>
 
