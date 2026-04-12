@@ -546,6 +546,25 @@
       }
    });
 
+   (function () {
+      var mobileFilterToggle = document.querySelector('.status-filter-toggle');
+      var mobileFilterPanel = document.querySelector('.status-filter-panel');
+
+      if (!mobileFilterToggle || !mobileFilterPanel) {
+         return;
+      }
+
+      mobileFilterToggle.addEventListener('click', function () {
+         if (!window.matchMedia('(max-width: 767px)').matches) {
+            return;
+         }
+
+         var nextState = !mobileFilterPanel.classList.contains('is-open');
+         mobileFilterPanel.classList.toggle('is-open', nextState);
+         mobileFilterToggle.setAttribute('aria-expanded', nextState ? 'true' : 'false');
+      });
+   })();
+
    (function(){
       var splitPollingTimer = null;
       var desktopMainListHtml = null;

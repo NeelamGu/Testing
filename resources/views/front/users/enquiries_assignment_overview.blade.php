@@ -264,13 +264,31 @@
          display: inline-flex;
       }
 
+      .assignment-card {
+         border-radius: 16px;
+      }
+
+      .assignment-head {
+         position: sticky;
+         top: calc(8px + env(safe-area-inset-top));
+         z-index: 3;
+         border-radius: 14px 14px 0 0;
+         box-shadow: 0 8px 18px rgba(67, 47, 20, 0.08);
+      }
+
+      .assignment-body {
+         padding: 10px;
+      }
+
       .assignment-layout {
          grid-template-columns: 1fr;
          gap: 10px;
       }
 
       .assignment-sidebar {
-         position: static;
+         position: sticky;
+         top: calc(76px + env(safe-area-inset-top));
+         z-index: 2;
       }
 
       .assignment-info {
@@ -298,20 +316,48 @@
          font-size: 15px;
       }
 
+      .assignment-threads {
+         gap: 12px;
+      }
+
       .thread-item {
          flex-direction: column;
          align-items: flex-start;
          gap: 8px;
-         padding: 10px;
+         padding: 12px;
+         border-radius: 16px;
+         box-shadow: 0 8px 18px rgba(60, 45, 24, 0.06);
+      }
+
+      .thread-head {
+         gap: 6px;
       }
 
       .thread-title {
          font-size: 18px;
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+
+      .thread-status,
+      .thread-unread {
+         flex-shrink: 0;
       }
 
       .thread-preview {
          white-space: normal;
          font-size: 13px;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 3;
+         overflow: hidden;
+         max-width: 100%;
+      }
+
+      .thread-meta {
+         gap: 8px;
+         font-size: 11px;
       }
 
       .thread-open-link {

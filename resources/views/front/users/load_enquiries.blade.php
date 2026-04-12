@@ -694,8 +694,9 @@ use App\Models\Category;
 
       .message-vendor-title {
          font-size: 20px;
-         overflow-wrap: anywhere;
-         word-break: break-word;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         white-space: nowrap;
       }
 
       .message-status-chip {
@@ -712,11 +713,54 @@ use App\Models\Category;
       .message-preview {
          font-size: 14px;
          line-height: 1.4;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 2;
+         overflow: hidden;
       }
 
       .message-vendor-meta {
          margin-top: 6px;
          font-size: 11px;
+         gap: 8px;
+      }
+
+      .enquiry-row-link {
+         grid-template-columns: 44px minmax(0, 1fr);
+         gap: 10px;
+         padding: 11px 11px 11px 15px;
+         border-radius: 16px;
+      }
+
+      .enquiry-row-avatar {
+         width: 44px;
+         height: 44px;
+         border-radius: 12px;
+      }
+
+      .enquiry-row-side {
+         grid-column: 1 / -1;
+         flex-direction: row;
+         justify-content: flex-start;
+         gap: 8px;
+      }
+
+      .enquiry-row-title {
+         font-size: 18px;
+         white-space: nowrap;
+      }
+
+      .enquiry-row-preview {
+         font-size: 13px;
+         -webkit-line-clamp: 2;
+      }
+
+      .enquiry-row-submeta {
+         font-size: 12px;
+      }
+
+      .enquiry-row-meta {
+         margin-top: 4px;
          gap: 8px;
       }
 
