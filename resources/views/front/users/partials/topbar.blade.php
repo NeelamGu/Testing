@@ -241,7 +241,7 @@
          grid-column: 1;
          width: 100%;
          gap: 6px;
-         justify-content: flex-start;
+         justify-content: center;
          flex-wrap: nowrap;
          overflow-x: auto;
          overflow-y: hidden;
