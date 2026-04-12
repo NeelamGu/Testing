@@ -1,108 +1,6 @@
 @extends('front.layout.layout')
 @section('content')
 <style>
-   .assignment-tips {
-      border: 1px solid #e5d7c2;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #fffdf7 0%, #fdf8ee 100%);
-      padding: 18px;
-      margin: 0 0 16px;
-      box-shadow: 0 10px 24px rgba(70, 52, 24, 0.06);
-   }
-   .assignment-tips h4 {
-      margin: 0 0 6px;
-      color: #2f2516;
-      font-weight: 700;
-      font-size: 30px;
-      line-height: 1.05;
-   }
-   .assignment-tips .tips-lead {
-      margin: 0 0 12px;
-      color: #66553f;
-      font-size: 15px;
-      line-height: 1.45;
-   }
-   .tips-steps {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      counter-reset: tip-step;
-      display: grid;
-      gap: 8px;
-   }
-   .tips-steps li {
-      counter-increment: tip-step;
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 10px;
-      align-items: start;
-      color: #4f4334;
-      font-size: 14px;
-      line-height: 1.5;
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.76);
-      border: 1px solid #f0e4d3;
-      opacity: 0;
-      transform: translateY(8px);
-      animation: tipIn 480ms ease forwards;
-   }
-   .tips-steps li::before {
-      content: counter(tip-step);
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #cf8a3d;
-      color: #fff;
-      font-weight: 700;
-      font-size: 13px;
-      margin-top: 1px;
-      box-shadow: 0 4px 10px rgba(119, 72, 20, 0.2);
-   }
-   .tips-steps li:nth-child(1) { animation-delay: 60ms; }
-   .tips-steps li:nth-child(2) { animation-delay: 120ms; }
-   .tips-steps li:nth-child(3) { animation-delay: 180ms; }
-   .tips-steps li:nth-child(4) { animation-delay: 240ms; }
-   .tips-steps li:nth-child(5) { animation-delay: 300ms; }
-   .tips-example {
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px dashed #d8c2a1;
-      background: #fff;
-   }
-   .tips-example strong {
-      display: block;
-      color: #2f2516;
-      font-size: 13px;
-      margin-bottom: 4px;
-   }
-   .tips-example p {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #5a4b37;
-   }
-   @keyframes tipIn {
-      to {
-         opacity: 1;
-         transform: translateY(0);
-      }
-   }
-   @media (max-width: 767px) {
-      .assignment-tips h4 {
-         font-size: 24px;
-      }
-      .assignment-tips .tips-lead {
-         font-size: 14px;
-      }
-      .tips-steps li {
-         font-size: 13px;
-      }
-   }
 </style>
 <div class="page-wrapper">
    <!--End Main Header -->
@@ -132,21 +30,6 @@
             <div class="col-md-12 col-sm-12 col-xs-12 column pull-left">
                <div class="sec-title inquiry-title">
                   <h3 class="font-20 text-black">Legg ut oppdrag</h3>
-               </div>
-               <div class="assignment-tips">
-                  <h4>Tips for et tydelig oppdrag</h4>
-                  <p class="tips-lead">Fyll ut disse punktene, så får du raskere svar og mer relevante tilbud fra leverandører.</p>
-                  <ul class="tips-steps">
-                     <li><span>Skriv en konkret tittel som sier hva du trenger, for eksempel "Kake til konfirmasjon, 30 personer".</span></li>
-                     <li><span>Beskriv leveringsdato og adresse tydelig, så leverandøren vet når og hvor.</span></li>
-                     <li><span>Forklar detaljer som antall gjester, stil, smak, allergier og andre viktige krav.</span></li>
-                     <li><span>Legg inn ønsket pris eller budsjett, så blir tilbudene mer treffsikre.</span></li>
-                     <li><span>Last gjerne opp inspirasjonsbilde, det gjør kommunikasjonen enklere fra start.</span></li>
-                  </ul>
-                  <div class="tips-example">
-                     <strong>Eksempel på god beskrivelse</strong>
-                     <p>"Vi ønsker en rund sjokoladekake til 25 personer, levering lørdag kl. 14:00 i Oslo. Pynt i hvitt og grønt, uten nøtter. Budsjett ca. 1500 kr."</p>
-                  </div>
                </div>
                <div class="form-box p-xs-15 enquery-form-box">
                   @if(Session::has('error_message'))
