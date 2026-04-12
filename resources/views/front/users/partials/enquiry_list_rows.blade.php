@@ -57,7 +57,7 @@
       }
       $desktopSelectUrl = url('user/enquiries').'?'.http_build_query($selectedParams);
       $cardPrimaryUrl = $isMobileList
-         ? (($isAssignment && ($isGroupedAssignment || $isAssignmentTab)) ? $assignmentOverviewUrl : $conversationUrl)
+         ? ($isAssignment ? $assignmentOverviewUrl : $conversationUrl)
          : $desktopSelectUrl;
       $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
       $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
