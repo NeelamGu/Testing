@@ -139,7 +139,7 @@ $messagesCountCustomer = messagesCountCustomer();
       border-top-left-radius: 5px;
    }
    .chat-item.customer .chat-bubble {
-      background: #e78002;
+      background: #cf8a3d;
       border-color: transparent;
       border-top-right-radius: 5px;
    }

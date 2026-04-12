@@ -209,8 +209,8 @@
       border-top-left-radius: 5px;
    }
    .split-chat-messages .chat-item.customer .chat-bubble {
-      background: #e78002;
-      border-color: #cc6f03;
+      background: #cf8a3d;
+      border-color: #b77731;
       border-top-right-radius: 5px;
    }
    .split-chat-messages .chat-author {
