@@ -494,7 +494,7 @@
             if (isMobile) {
                try {
                   var mobileUrl = new URL(originalHref, window.location.origin);
-                  mobileUrl.searchParams.set('return_to', 'messages');
+                  mobileUrl.searchParams.set('ui', 'mobile');
                   link.setAttribute('href', mobileUrl.toString());
                } catch (error) {
                   link.setAttribute('href', originalHref);

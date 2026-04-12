@@ -825,7 +825,7 @@ class UserController extends Controller
         $backUrl = !empty($baseEnquiry->enquiry_detail_id)
             ? url('user/enquiries/'.$baseEnquiry->id.'/overview')
             : url('user/enquiries/');
-        if (request()->get('ui') === 'mobile' && !empty($baseEnquiry->enquiry_detail_id)) {
+        if ((request()->get('ui') === 'mobile' || request()->get('return_to') === 'messages') && !empty($baseEnquiry->enquiry_detail_id)) {
             $backUrl = url('user/enquiries');
         }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
