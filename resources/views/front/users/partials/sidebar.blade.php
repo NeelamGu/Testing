@@ -159,9 +159,93 @@
    .contact-section.account-page .status-filter-mobile-select,
    .contact-section.account-page input,
    .contact-section.account-page select,
+         html,
+         body {
+            height: auto;
+            min-height: 100%;
+         }
+
+         body {
+            overflow: auto;
+         }
+
+         .page-wrapper {
+            height: auto;
+            min-height: 100dvh;
+            overflow: visible;
+         }
+
+         .contact-section.account-page {
+            height: auto;
+            min-height: calc(100dvh - 66px);
+            overflow: visible;
+            padding-top: 8px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+         }
+
+         .contact-section.account-page .auto-container {
+            width: 100%;
+            max-width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+         }
+
+         .contact-section.account-page .row.clearfix {
+            margin-left: 0;
+            margin-right: 0;
+         }
+
+         .contact-section.account-page .row.clearfix > [class*="col-"] {
+            padding-left: 0;
+            padding-right: 0;
+         }
+
+         .contact-section.account-page .column.pull-left {
+            width: 100% !important;
+            left: 0 !important;
+            height: auto;
+            overflow: visible;
+            padding-right: 0;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+         }
+
+         .contact-section.account-page .account-tab-area {
+            display: none !important;
+         }
+
    .contact-section.account-page textarea {
       border: none !important;
       background: rgba(255, 255, 255, 0.94) !important;
+
+         .contact-section.account-page .customer-panel-sidebar {
+            display: none !important;
+         }
+
+         .customer-mobile-nav {
+            display: none;
+         }
+
+         .customer-panel-shell,
+         .messages-shell,
+         .conversation-shell {
+            border-radius: 14px;
+            padding: 10px;
+            margin-top: 8px;
+         }
+
+         .customer-panel-main,
+         .messages-panel,
+         .conversation-card {
+            border-radius: 14px;
+         }
+
+         .contact-section.account-page input,
+         .contact-section.account-page select,
+         .contact-section.account-page textarea,
+         .contact-section.account-page button,
+         .contact-section.account-page a {
+            min-height: 42px;
+         }
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
    }
    .contact-section.account-page .message-vendor-meta,

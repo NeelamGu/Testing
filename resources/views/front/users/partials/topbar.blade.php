@@ -241,15 +241,22 @@
          grid-column: 1;
          width: 100%;
          gap: 6px;
-         justify-content: center;
+         justify-content: flex-start;
          flex-wrap: nowrap;
-         overflow: hidden;
+         overflow-x: auto;
+         overflow-y: hidden;
          white-space: nowrap;
          padding-bottom: 0;
+         -webkit-overflow-scrolling: touch;
+         scrollbar-width: none;
+      }
+
+      .customer-topbar .center-nav::-webkit-scrollbar {
+         display: none;
       }
 
       .customer-topbar .center-nav a {
-         flex: 1 1 0;
+         flex: 0 0 auto;
          min-width: 0;
          min-height: 34px;
          padding: 7px 6px;
