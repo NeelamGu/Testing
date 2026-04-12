@@ -13,6 +13,12 @@
       color: #2f2516;
       font-weight: 700;
    }
+   .assignment-tips p {
+      margin: 0 0 8px;
+      color: #6f5f4a;
+      font-size: 13px;
+      line-height: 1.5;
+   }
    .assignment-tips ul {
       margin: 0;
       padding-left: 18px;
@@ -51,12 +57,14 @@
                   <h3 class="font-20 text-black">Legg ut oppdrag</h3>
                </div>
                <div class="assignment-tips">
-                  <h4>Slik lager du et godt oppdrag</h4>
+                  <h4>Tips for et tydelig oppdrag</h4>
+                  <p>Jo mer konkret du er, jo enklere blir det for leverandører å gi deg gode og relevante tilbud.</p>
                   <ul>
-                     <li>Start med en tydelig tittel: hva du trenger, hvor og når.</li>
-                     <li>Beskriv omfang: antall gjester, ønsket stil og spesielle krav.</li>
-                     <li>Oppgi budsjett eller prisramme for bedre og mer relevante tilbud.</li>
-                     <li>Legg ved inspirasjonsbilde for raskere avklaringer med leverandører.</li>
+                     <li>Skriv en kort og tydelig tittel, for eksempel: "Kake til konfirmasjon, 30 personer".</li>
+                     <li>Beskriv hva du trenger, hvor det skal leveres, og når det må være klart.</li>
+                     <li>Ta med viktige detaljer som antall gjester, stil, smak, allergier og andre krav.</li>
+                     <li>Oppgi gjerne budsjett eller prisramme, så får du mer treffsikre tilbud.</li>
+                     <li>Legg ved inspirasjonsbilde hvis du har, så blir avklaringer raskere.</li>
                   </ul>
                </div>
                <div class="form-box p-xs-15 enquery-form-box">
