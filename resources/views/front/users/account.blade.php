@@ -430,14 +430,64 @@
       }
    }
    @media (max-width: 767px) {
+      .profile-shell {
+         width: 100%;
+         max-width: 100%;
+         min-width: 0;
+         box-sizing: border-box;
+      }
       .profile-main {
          padding: 10px;
+         width: 100%;
+         max-width: 100%;
+         min-width: 0;
+         overflow-x: hidden;
+         box-sizing: border-box;
+      }
+      .profile-grid,
+      .profile-left-stack,
+      .profile-right-stack,
+      .card-soft,
+      .profile-summary,
+      .timeline-card,
+      .personal-card,
+      .visual-card {
+         width: 100%;
+         max-width: 100%;
+         min-width: 0;
+         box-sizing: border-box;
       }
       .profile-heading p {
          font-size: 14px;
       }
       .field-grid {
          grid-template-columns: 1fr;
+      }
+      .visual-row {
+         grid-template-columns: 1fr;
+         align-items: start;
+      }
+      .color-row {
+         flex-wrap: wrap;
+         justify-content: flex-start;
+         max-width: 100%;
+         gap: 6px;
+      }
+      .preset-dot {
+         width: 26px;
+         height: 26px;
+         flex: 0 0 auto;
+      }
+      .custom-color-dot {
+         width: 30px;
+         height: 30px;
+      }
+      .card-icon-title {
+         font-size: 17px;
+         line-height: 1.15;
+      }
+      .profile-summary {
+         padding: 12px 10px 10px;
       }
       .profile-side-actions .save-btn {
          width: 100%;
@@ -446,15 +496,29 @@
       .profile-side-actions {
          width: 100%;
          margin-left: 0;
+         position: static;
+         padding: 0;
+         background: none;
+         justify-content: stretch;
+      }
+      .profile-side-actions .security-help {
+         width: 100%;
+         text-align: center;
+         margin-top: 4px;
+         margin-bottom: 0;
+      }
+      .profile-side-actions .save-btn,
+      .profile-side-actions .security-help {
+         flex: 1 1 100%;
       }
       .profile-heading h2 {
          font-size: 32px;
       }
       .timeline-title {
-         font-size: 21px;
+         font-size: 18px;
       }
       .timeline-card.is-mobile-top {
-         margin-bottom: 12px;
+         margin-bottom: 10px;
       }
    }
 </style>
