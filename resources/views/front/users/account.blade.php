@@ -73,7 +73,6 @@
    }
    .personal-card {
       margin-bottom: 14px;
-      padding: 12px;
    }
    .card-icon-title {
       margin: 0 0 10px;
@@ -89,32 +88,37 @@
    }
    .field-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 14px;
+   }
+   .field-wrap {
+      min-width: 0;
+   }
+   .field-wrap.field-wrap-wide {
+      grid-column: span 2;
    }
    .field-wrap label {
       display: block;
-      margin: 0 0 5px;
-      color: #2f2516;
+      margin: 0 0 6px;
+      color: #3d2d16;
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
+      letter-spacing: 0.1em;
       font-weight: 700;
    }
    .field-wrap input {
       width: 100%;
-      height: 38px;
+      height: 42px;
       border-radius: 10px;
-      border: 1px solid #d8cbb7;
-      padding: 8px 11px;
-      background: #fffdf9;
-      font-size: 14px;
-      color: #1f1b16;
-      font-weight: 600;
+      border: 1px solid #d7c8b2;
+      padding: 9px 12px;
+      background: #fbf8f2;
+      font-size: 15px;
+      color: #20190f;
    }
    .field-wrap input[readonly] {
-      background: #f3eee4;
-      color: #5b4d3c;
+      background: #f1eadf;
+      color: #6b5a46;
    }
    .field-wrap input:focus {
       border-color: #b56908;
@@ -439,68 +443,17 @@
       }
    }
    @media (max-width: 767px) {
-      .profile-shell {
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-         box-sizing: border-box;
-      }
       .profile-main {
          padding: 10px;
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-         overflow-x: hidden;
-         box-sizing: border-box;
-      }
-      .profile-grid,
-      .profile-left-stack,
-      .profile-right-stack,
-      .card-soft,
-      .profile-summary,
-      .timeline-card,
-      .personal-card,
-      .visual-card {
-         width: 100%;
-         max-width: 100%;
-         min-width: 0;
-         box-sizing: border-box;
       }
       .profile-heading p {
          font-size: 14px;
       }
       .field-grid {
          grid-template-columns: 1fr;
-         gap: 10px;
       }
-      .personal-card {
-         padding: 12px;
-      }
-      .visual-row {
-         grid-template-columns: 1fr;
-         align-items: start;
-      }
-      .color-row {
-         flex-wrap: wrap;
-         justify-content: flex-start;
-         max-width: 100%;
-         gap: 6px;
-      }
-      .preset-dot {
-         width: 26px;
-         height: 26px;
-         flex: 0 0 auto;
-      }
-      .custom-color-dot {
-         width: 30px;
-         height: 30px;
-      }
-      .card-icon-title {
-         font-size: 17px;
-         line-height: 1.15;
-      }
-      .profile-summary {
-         padding: 12px 10px 10px;
+      .field-wrap.field-wrap-wide {
+         grid-column: auto;
       }
       .profile-side-actions .save-btn {
          width: 100%;
@@ -509,29 +462,15 @@
       .profile-side-actions {
          width: 100%;
          margin-left: 0;
-         position: static;
-         padding: 0;
-         background: none;
-         justify-content: stretch;
-      }
-      .profile-side-actions .security-help {
-         width: 100%;
-         text-align: center;
-         margin-top: 4px;
-         margin-bottom: 0;
-      }
-      .profile-side-actions .save-btn,
-      .profile-side-actions .security-help {
-         flex: 1 1 100%;
       }
       .profile-heading h2 {
          font-size: 32px;
       }
       .timeline-title {
-         font-size: 18px;
+         font-size: 21px;
       }
       .timeline-card.is-mobile-top {
-         margin-bottom: 10px;
+         margin-bottom: 12px;
       }
    }
 </style>
@@ -589,7 +528,7 @@
                                        <input type="text" id="user-mobile" name="mobile" value="{{ Auth::user()->mobile }}">
                                        <p id="account-mobile"></p>
                                     </div>
-                                    <div class="field-wrap">
+                                    <div class="field-wrap field-wrap-wide">
                                        <label>Adresse</label>
                                        <input type="text" id="user-address" name="address" value="{{ Auth::user()->address }}">
                                        <p id="account-address"></p>
