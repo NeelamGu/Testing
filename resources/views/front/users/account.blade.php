@@ -63,27 +63,37 @@
       height: auto;
    }
    .card-soft {
-      border: 1px solid #e4d5bf;
-      border-radius: 14px;
-      background: #f5f0e8;
-      padding: 16px;
+      border: 1px solid #e9dcc8;
+      border-radius: 16px;
+      background: #f1ebe2;
+      padding: 12px;
       position: relative;
       overflow: hidden;
       color: #000;
    }
    .personal-card {
       margin-bottom: 14px;
+      padding: 16px;
+      background: #f4f0ea;
+   }
+   .personal-card .card-icon-title {
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd6cb;
+      color: #1f2b3d;
+   }
+   .personal-card .card-icon-title i {
+      color: #1f2b3d;
+      font-size: 16px;
    }
    .card-icon-title {
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       color: #000;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #e8dfd2;
    }
    .card-icon-title i {
       color: #000;
@@ -91,45 +101,57 @@
    .field-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 16px;
+      gap: 16px 18px;
+      align-items: start;
    }
    .field-wrap {
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow: visible;
    }
    .field-wrap.field-wrap-wide {
-      grid-column: span 2;
+      grid-column: 1 / -1;
    }
    .field-wrap label {
       display: block;
-      margin: 0 0 6px;
-      color: #7b5b2d;
+      margin: 0;
+      color: #556176;
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       font-weight: 700;
+      line-height: 1.2;
    }
    .field-wrap input {
       width: 100%;
-      height: 40px;
-      border-radius: 8px;
-      border: 1px solid #d7dbe2;
+      height: 44px;
+      border-radius: 6px;
+      border: 1px solid #d5dbe3;
       padding: 9px 12px;
       background: #ffffff;
       font-size: 14px;
-      color: #1f1b16;
+      line-height: 1.35;
+      color: #1f2b3d;
       box-sizing: border-box;
+      display: block;
+   }
+   .field-wrap input[readonly] {
+      background: #fbfdff;
+      color: #334a64;
    }
    .field-wrap input:focus {
-      border-color: #b58a43;
+      border-color: #b56908;
       outline: none;
-      box-shadow: 0 0 0 3px rgba(181, 138, 67, 0.12);
+      box-shadow: 0 0 0 3px rgba(181, 105, 8, 0.14);
    }
    .field-wrap p {
-      margin: 3px 0 0;
+      margin: 0;
       min-height: 0;
-      font-size: 12px;
-      line-height: 1.35;
-      color: #9f2b1b;
+      font-size: 11px;
+      line-height: 1.3;
+      color: #aa2f1f;
    }
    .field-wrap p:empty {
       display: none;
@@ -436,7 +458,7 @@
       }
       .field-grid {
          grid-template-columns: repeat(2, minmax(0, 1fr));
-         gap: 14px 16px;
+         gap: 14px;
       }
       .profile-heading h2 {
          font-size: 36px;
