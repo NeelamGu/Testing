@@ -75,11 +75,11 @@
    }
    .personal-card {
       margin-bottom: 14px;
-      padding: 16px;
+      padding: 14px;
       background: #f4f0ea;
    }
    .personal-card .card-icon-title {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       padding-bottom: 10px;
       border-bottom: 1px solid #ddd6cb;
       color: #1f2b3d;
@@ -103,14 +103,18 @@
    .field-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px 18px;
+      gap: 12px 14px;
       align-items: start;
+   }
+   .personal-card .field-grid {
+      width: min(100%, 980px);
+      margin-right: auto;
    }
    .field-wrap {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       overflow: visible;
    }
    .field-wrap.field-wrap-wide {
@@ -128,10 +132,10 @@
    }
    .field-wrap input {
       width: 100%;
-      height: 44px;
+      height: 40px;
       border-radius: 6px;
       border: 1px solid #d5dbe3;
-      padding: 9px 12px;
+      padding: 8px 11px;
       background: #ffffff;
       font-size: 14px;
       line-height: 1.35;
@@ -451,7 +455,11 @@
          gap: 16px;
       }
       .field-grid {
-         gap: 18px 20px;
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+         gap: 12px 14px;
+      }
+      .personal-card .field-grid {
+         width: min(100%, 1120px);
       }
    }
    @media (min-width: 992px) and (max-width: 1320px) {
@@ -459,7 +467,10 @@
          grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr);
       }
       .field-grid {
-         gap: 14px;
+         gap: 10px 12px;
+      }
+      .personal-card .field-grid {
+         width: min(100%, 900px);
       }
    }
    @media (max-width: 1199px) {
@@ -489,6 +500,9 @@
       .field-grid {
          grid-template-columns: repeat(2, minmax(0, 1fr));
          gap: 14px;
+      }
+      .personal-card .field-grid {
+         width: 100%;
       }
       .profile-heading h2 {
          font-size: 36px;
