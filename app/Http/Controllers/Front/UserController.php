@@ -819,6 +819,9 @@ class UserController extends Controller
         }
 
         $activeTopTab = !empty($baseEnquiry->enquiry_detail_id) ? 'oppdrag' : 'meldinger';
+        $threadStatus = (int)($baseEnquiry->status ?? 1);
+        $isConversationClosed = $threadStatus !== 1;
+        $isAssignmentConversation = !empty($baseEnquiry->enquiry_detail_id);
         $conversationSubtitle = !empty($baseEnquiry->enquiry_detail_id)
             ? 'Melding i dette oppdraget mellom deg og leverandør.'
             : 'Direkte melding mellom deg og leverandør.';
@@ -830,7 +833,7 @@ class UserController extends Controller
         }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
-        return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','conversationVendorName','conversationVendorUrl','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel'));
+        return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','conversationVendorName','conversationVendorUrl','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel','threadStatus','isConversationClosed','isAssignmentConversation'));
     }
 
     public function userEnquiryOverview($enqid){
@@ -1001,6 +1004,14 @@ class UserController extends Controller
                         return response()->json(['status'=>false,'message'=>'Not allowed'],403);
                     }
                     return redirect()->back()->with('error_message','Not allowed');
+                }
+
+                if((int)($enquiry->status ?? 1) !== 1){
+                    $closedMessage = 'Samtalen er avsluttet og kan ikke motta nye meldinger.';
+                    if($request->ajax()){
+                        return response()->json(['status'=>false,'message'=>$closedMessage],403);
+                    }
+                    return redirect()->back()->with('error_message',$closedMessage);
                 }
 
                 $response = new EnquiriesResponse;

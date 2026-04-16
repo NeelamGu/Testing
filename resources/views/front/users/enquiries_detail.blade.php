@@ -200,6 +200,22 @@ $messagesCountCustomer = messagesCountCustomer();
       position: relative;
       z-index: 2;
    }
+   .composer-closed-note {
+      border-top: 1px solid rgba(225, 214, 196, 0.5);
+      background: linear-gradient(180deg, rgba(248, 252, 255, 0.92), rgba(244, 249, 254, 0.9));
+      padding: 9px 10px;
+      display: grid;
+      gap: 4px;
+      color: #5e6f82;
+      font-size: 13px;
+      line-height: 1.35;
+      flex-shrink: 0;
+   }
+   .composer-closed-note strong {
+      color: #2e455f;
+      font-size: 13px;
+      font-weight: 700;
+   }
    .composer-form {
       margin: 0;
    }
@@ -386,6 +402,11 @@ $messagesCountCustomer = messagesCountCustomer();
          padding-bottom: calc(6px + env(safe-area-inset-bottom));
       }
 
+      .composer-closed-note {
+         padding: 8px;
+         font-size: 12px;
+      }
+
       .composer-input-row {
          gap: 6px;
       }
@@ -494,22 +515,33 @@ $messagesCountCustomer = messagesCountCustomer();
                         @endforeach
                      </div>
                   </div>
-                  <div class="send-reply composer-wrap">
-                     <form id="replyEnquiryForm" class="composer-form" method="post" action="{{ url('user/enquiry/response') }}" enctype="multipart/form-data">@csrf
-                        <input type="hidden" name="enquiry_id" value="{{ $enquiry_id }}">
-                        <div class="composer-input-row">
-                           <button type="button" id="composerAttachBtn" class="composer-attach-btn" aria-label="Legg til bilder">
-                              <i class="fa fa-image" aria-hidden="true"></i>
-                           </button>
-                           <textarea class="composer-input" name="message" rows="1" placeholder="Skriv melding til leverandøren"></textarea>
-                           <input id="composerFileInput" class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
-                           <button type="submit" class="r-btn">Send</button>
-                        </div>
-                        <div class="image-preview-wrap" id="imagePreviewWrap">
-                           <div class="image-preview-list" id="imagePreviewList"></div>
-                        </div>
-                     </form>
-                  </div>
+                  @if(($threadStatus ?? 1) === 1)
+                     <div class="send-reply composer-wrap">
+                        <form id="replyEnquiryForm" class="composer-form" method="post" action="{{ url('user/enquiry/response') }}" enctype="multipart/form-data">@csrf
+                           <input type="hidden" name="enquiry_id" value="{{ $enquiry_id }}">
+                           <div class="composer-input-row">
+                              <button type="button" id="composerAttachBtn" class="composer-attach-btn" aria-label="Legg til bilder">
+                                 <i class="fa fa-image" aria-hidden="true"></i>
+                              </button>
+                              <textarea class="composer-input" name="message" rows="1" placeholder="Skriv melding til leverandøren"></textarea>
+                              <input id="composerFileInput" class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
+                              <button type="submit" class="r-btn">Send</button>
+                           </div>
+                           <div class="image-preview-wrap" id="imagePreviewWrap">
+                              <div class="image-preview-list" id="imagePreviewList"></div>
+                           </div>
+                        </form>
+                     </div>
+                  @else
+                     <div class="composer-closed-note">
+                        @if(!empty($isAssignmentConversation))
+                           <strong>Oppdraget er fullført.</strong>
+                        @else
+                           <strong>Samtalen er avsluttet.</strong>
+                        @endif
+                        <span>Du kan ikke sende nye meldinger i en fullført samtale.</span>
+                     </div>
+                  @endif
                </div>
             </div>
             </div>

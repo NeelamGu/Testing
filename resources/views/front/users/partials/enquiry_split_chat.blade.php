@@ -44,22 +44,33 @@
             @endforeach
          </div>
 
-         <div class="split-chat-composer">
-            <form id="splitReplyEnquiryForm" method="post" action="{{ $conversation['send_url'] ?? '' }}" enctype="multipart/form-data">@csrf
-               <input type="hidden" name="enquiry_id" value="{{ (int)($conversation['thread_id'] ?? 0) }}">
-               <div class="split-chat-input-row">
-                  <button type="button" id="splitComposerAttachBtn" class="split-chat-attach" aria-label="Legg til bilder">
-                     <i class="fa fa-image" aria-hidden="true"></i>
-                  </button>
-                  <textarea class="split-chat-input" name="message" rows="1" placeholder="Skriv melding..."></textarea>
-                  <input id="splitComposerFileInput" class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
-                  <button type="submit" class="split-chat-send">Send</button>
-               </div>
-               <div class="image-preview-wrap" id="splitImagePreviewWrap">
-                  <div class="image-preview-list" id="splitImagePreviewList"></div>
-               </div>
-            </form>
-         </div>
+         @if((int)($conversation['thread_status'] ?? 1) === 1)
+            <div class="split-chat-composer">
+               <form id="splitReplyEnquiryForm" method="post" action="{{ $conversation['send_url'] ?? '' }}" enctype="multipart/form-data">@csrf
+                  <input type="hidden" name="enquiry_id" value="{{ (int)($conversation['thread_id'] ?? 0) }}">
+                  <div class="split-chat-input-row">
+                     <button type="button" id="splitComposerAttachBtn" class="split-chat-attach" aria-label="Legg til bilder">
+                        <i class="fa fa-image" aria-hidden="true"></i>
+                     </button>
+                     <textarea class="split-chat-input" name="message" rows="1" placeholder="Skriv melding..."></textarea>
+                     <input id="splitComposerFileInput" class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
+                     <button type="submit" class="split-chat-send">Send</button>
+                  </div>
+                  <div class="image-preview-wrap" id="splitImagePreviewWrap">
+                     <div class="image-preview-list" id="splitImagePreviewList"></div>
+                  </div>
+               </form>
+            </div>
+         @else
+            <div class="split-chat-closed-note">
+               @if(!empty($conversation['is_assignment']))
+                  <strong>Oppdraget er fullført.</strong>
+               @else
+                  <strong>Samtalen er avsluttet.</strong>
+               @endif
+               <span>Du kan ikke sende nye meldinger i en fullført samtale.</span>
+            </div>
+         @endif
       </div>
    @endif
 </div>

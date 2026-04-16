@@ -279,6 +279,23 @@
       flex-shrink: 0;
       margin-top: auto;
    }
+   .split-chat-closed-note {
+      border-top: 1px solid #e5dfd4;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 11px 12px;
+      display: grid;
+      gap: 3px;
+      color: #6f6456;
+      font-size: 12px;
+      line-height: 1.35;
+      flex-shrink: 0;
+      margin-top: auto;
+   }
+   .split-chat-closed-note strong {
+      color: #3f3529;
+      font-size: 12px;
+      font-weight: 700;
+   }
    .split-chat-input-row {
       display: flex;
       align-items: flex-end;
@@ -1180,6 +1197,11 @@
          e.preventDefault();
          var form = this;
          var $form = $(form);
+         var threadStatus = parseInt($('#splitChatPane .split-chat-card').attr('data-thread-status') || '1', 10) || 1;
+         if (threadStatus !== 1) {
+            alert('Samtalen er avsluttet og kan ikke motta nye meldinger.');
+            return;
+         }
          var $messageInput = $form.find("textarea[name='message']");
          var messageText = $.trim($messageInput.val() || '');
          var $fileInput = $('#splitComposerFileInput');
