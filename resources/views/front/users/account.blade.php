@@ -73,7 +73,7 @@
    }
    .personal-card {
       margin-bottom: 14px;
-      padding: 14px;
+      padding: 12px;
    }
    .card-icon-title {
       margin: 0 0 10px;
@@ -89,18 +89,12 @@
    }
    .field-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-   }
-   .field-wrap {
-      border: 1px solid #e2d5c2;
-      border-radius: 12px;
-      background: #f8f4ed;
-      padding: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px 12px;
    }
    .field-wrap label {
       display: block;
-      margin: 0 0 6px;
+      margin: 0 0 5px;
       color: #2f2516;
       font-size: 11px;
       text-transform: uppercase;
@@ -109,14 +103,18 @@
    }
    .field-wrap input {
       width: 100%;
-      height: 40px;
+      height: 38px;
       border-radius: 10px;
       border: 1px solid #d8cbb7;
-      padding: 9px 12px;
+      padding: 8px 11px;
       background: #fffdf9;
       font-size: 14px;
       color: #1f1b16;
       font-weight: 600;
+   }
+   .field-wrap input[readonly] {
+      background: #f3eee4;
+      color: #5b4d3c;
    }
    .field-wrap input:focus {
       border-color: #b56908;
@@ -124,11 +122,14 @@
       box-shadow: 0 0 0 3px rgba(181, 105, 8, 0.14);
    }
    .field-wrap p {
-      margin: 5px 0 0;
-      min-height: 16px;
+      margin: 4px 0 0;
+      min-height: 0;
       font-size: 12px;
       line-height: 1.2;
       color: #9f2b1b;
+   }
+   .field-wrap p:empty {
+      display: none;
    }
    .visual-card {
       margin-top: 2px;
@@ -474,9 +475,6 @@
       }
       .personal-card {
          padding: 12px;
-      }
-      .field-wrap {
-         padding: 9px;
       }
       .visual-row {
          grid-template-columns: 1fr;
