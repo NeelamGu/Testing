@@ -73,6 +73,7 @@
    }
    .personal-card {
       margin-bottom: 14px;
+      padding: 14px;
    }
    .card-icon-title {
       margin: 0 0 10px;
@@ -88,27 +89,34 @@
    }
    .field-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 6px 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+   }
+   .field-wrap {
+      border: 1px solid #e2d5c2;
+      border-radius: 12px;
+      background: #f8f4ed;
+      padding: 10px;
    }
    .field-wrap label {
       display: block;
-      margin: 0 0 4px;
-      color: #000;
-      font-size: 10px;
+      margin: 0 0 6px;
+      color: #2f2516;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       font-weight: 700;
    }
    .field-wrap input {
       width: 100%;
-      height: 34px;
+      height: 40px;
       border-radius: 10px;
-      border: 1px solid #ddd0bb;
-      padding: 7px 10px;
-      background: #f8f4ed;
-      font-size: 13px;
-      color: #000;
+      border: 1px solid #d8cbb7;
+      padding: 9px 12px;
+      background: #fffdf9;
+      font-size: 14px;
+      color: #1f1b16;
+      font-weight: 600;
    }
    .field-wrap input:focus {
       border-color: #b56908;
@@ -116,11 +124,11 @@
       box-shadow: 0 0 0 3px rgba(181, 105, 8, 0.14);
    }
    .field-wrap p {
-      margin: 3px 0 0;
-      min-height: 0;
+      margin: 5px 0 0;
+      min-height: 16px;
       font-size: 12px;
       line-height: 1.2;
-      color: #000;
+      color: #9f2b1b;
    }
    .visual-card {
       margin-top: 2px;
@@ -462,6 +470,13 @@
       }
       .field-grid {
          grid-template-columns: 1fr;
+         gap: 10px;
+      }
+      .personal-card {
+         padding: 12px;
+      }
+      .field-wrap {
+         padding: 9px;
       }
       .visual-row {
          grid-template-columns: 1fr;
@@ -558,9 +573,14 @@
                                  <h4 class="card-icon-title"><i class="fa fa-user"></i> Personlig Informasjon</h4>
                                  <div class="field-grid">
                                     <div class="field-wrap">
-                                       <label>Fullt navn</label>
+                                       <label>Fornavn</label>
                                        <input type="text" id="user-first_name" name="first_name" value="{{ Auth::user()->first_name }}">
                                        <p id="account-first_name"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Etternavn</label>
+                                       <input type="text" id="user-last_name" name="last_name" value="{{ Auth::user()->last_name }}">
+                                       <p id="account-last_name"></p>
                                     </div>
                                     <div class="field-wrap">
                                        <label>E-postadresse</label>
@@ -577,9 +597,9 @@
                                        <p id="account-address"></p>
                                     </div>
                                     <div class="field-wrap">
-                                       <label>Etternavn</label>
-                                       <input type="text" id="user-last_name" name="last_name" value="{{ Auth::user()->last_name }}">
-                                       <p id="account-last_name"></p>
+                                       <label>Postnummer</label>
+                                       <input type="text" id="user-pincode" name="pincode" value="{{ Auth::user()->pincode }}">
+                                       <p id="account-pincode"></p>
                                     </div>
                                     <div class="field-wrap">
                                        <label>Poststed</label>
@@ -590,11 +610,6 @@
                                        <label>Fylke</label>
                                        <input type="text" id="user-state" name="state" value="{{ Auth::user()->state }}">
                                        <p id="account-state"></p>
-                                    </div>
-                                    <div class="field-wrap">
-                                       <label>Postnummer</label>
-                                       <input type="text" id="user-pincode" name="pincode" value="{{ Auth::user()->pincode }}">
-                                       <p id="account-pincode"></p>
                                     </div>
                                  </div>
                               </div>
