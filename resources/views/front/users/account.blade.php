@@ -1,4 +1,4 @@
-@extends('front.layout.layout')
+﻿@extends('front.layout.layout')
 @section('content')
 @include('front.users.partials.topbar', ['activeTopTab' => 'profile'])
 <style>
@@ -21,6 +21,8 @@
       display: flex;
       flex-direction: column;
       color: #000;
+      --profile-small-text: clamp(13px, 0.18vw + 11px, 15px);
+      --profile-micro-text: clamp(12px, 0.12vw + 10px, 14px);
    }
    .profile-heading {
       margin-bottom: 10px;
@@ -118,9 +120,9 @@
       display: block;
       margin: 0;
       color: #556176;
-      font-size: 10px;
+      font-size: var(--profile-micro-text);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       font-weight: 700;
       line-height: 1.2;
    }
@@ -138,8 +140,19 @@
       display: block;
    }
    .field-wrap input[readonly] {
-      background: #fbfdff;
-      color: #334a64;
+      background: #eef2f6;
+      color: #5b6775;
+      border-color: #c9d1db;
+   }
+   .field-wrap input.readonly-email {
+      background: #e9edf2;
+      color: #505c6a;
+      border-color: #c2cad6;
+      cursor: not-allowed;
+   }
+   .field-wrap input.readonly-email:focus {
+      border-color: #c2cad6;
+      box-shadow: none;
    }
    .field-wrap input:focus {
       border-color: #b56908;
@@ -149,7 +162,7 @@
    .field-wrap p {
       margin: 0;
       min-height: 0;
-      font-size: 11px;
+      font-size: var(--profile-small-text);
       line-height: 1.3;
       color: #aa2f1f;
    }
@@ -173,7 +186,7 @@
    .visual-row p {
       margin: 0;
       color: #000;
-      font-size: 13px;
+      font-size: var(--profile-small-text);
    }
    .color-row {
       display: flex;
@@ -231,7 +244,7 @@
    .security-help {
       margin-top: 10px;
       margin-bottom: 4px;
-      font-size: 13px;
+      font-size: var(--profile-small-text);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -292,7 +305,7 @@
    .profile-summary p {
       margin: 5px 0 0;
       color: #000;
-      font-size: 12px;
+      font-size: var(--profile-small-text);
    }
    .timeline-title {
       margin: 0;
@@ -310,7 +323,7 @@
    .timeline-subtitle {
       margin: 6px 0 8px;
       color: #000;
-      font-size: 12px;
+      font-size: var(--profile-small-text);
       line-height: 1.35;
    }
    .timeline-list {
@@ -330,14 +343,14 @@
    }
    .timeline-icon {
       position: static;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border: 1px solid transparent;
-      font-size: 10px;
+      font-size: var(--profile-micro-text);
    }
    .timeline-icon.new {
       background: #f8e8cf;
@@ -366,15 +379,15 @@
       font-weight: 700;
    }
    .timeline-count {
-      min-width: 18px;
-      height: 18px;
+      min-width: 20px;
+      height: 20px;
       border-radius: 999px;
       background: #ede3d6;
       color: #000;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: var(--profile-micro-text);
       font-weight: 700;
       padding: 0 5px;
    }
@@ -390,7 +403,7 @@
    .timeline-time {
       margin: 2px 0 0;
       color: #000;
-      font-size: 11px;
+      font-size: var(--profile-small-text);
       line-height: 1.35;
    }
    .profile-side-actions {
@@ -430,7 +443,24 @@
    #account-success,
    #account-error {
       margin: 0 0 8px;
-      font-size: 12px;
+      font-size: var(--profile-small-text);
+   }
+   @media (min-width: 1600px) {
+      .profile-grid {
+         grid-template-columns: minmax(0, 1.8fr) minmax(360px, 0.9fr);
+         gap: 16px;
+      }
+      .field-grid {
+         gap: 18px 20px;
+      }
+   }
+   @media (min-width: 992px) and (max-width: 1320px) {
+      .profile-grid {
+         grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr);
+      }
+      .field-grid {
+         gap: 14px;
+      }
    }
    @media (max-width: 1199px) {
       .profile-heading h2 {
@@ -543,7 +573,7 @@
                                     </div>
                                     <div class="field-wrap">
                                        <label>E-postadresse</label>
-                                       <input type="text" value="{{ Auth::user()->email }}" readonly>
+                                       <input type="text" value="{{ Auth::user()->email }}" readonly class="readonly-email" aria-readonly="true">
                                     </div>
                                     <div class="field-wrap">
                                        <label>Telefon</label>
