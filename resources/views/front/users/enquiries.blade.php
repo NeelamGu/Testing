@@ -12,7 +12,13 @@
       border-radius: 0;
       padding: 0;
       margin-top: 4px;
-      height: calc(100% - 4px);
+      height: clamp(560px, calc(100vh - 150px), 920px);
+      min-height: 0;
+   }
+   @supports (height: 100dvh) {
+      .messages-shell {
+         height: clamp(560px, calc(100dvh - 150px), 920px);
+      }
    }
    .messages-panel {
       background: #fff;
@@ -21,6 +27,7 @@
       box-shadow: 0 10px 26px rgba(67, 47, 20, 0.08);
       overflow: hidden;
       height: 100%;
+      min-height: 0;
       display: flex;
       flex-direction: column;
    }

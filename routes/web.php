@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 use App\Models\Section;
 use App\Models\Category;
 use App\Models\CmsPage;
@@ -190,42 +189,21 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/enquiry-done','IndexController@enquiryDone')->name('enquirydone');
 
     // Listing/Section Routes
-    $catUrls = [];
-    try {
-        if (Schema::hasTable('sections')) {
-            $catUrls = Section::select('url')->where('status',1)->pluck('url')->toArray();
-        }
-    } catch (\Throwable $e) {
-        $catUrls = [];
-    }
+    $catUrls = Section::select('url')->where('status',1)->get()->pluck('url')->toArray();
     /*dd($catUrls); die;*/
     foreach ($catUrls as $key => $url) {
         Route::match(['get','post'],'/'.$url,'ProductsController@listing');
     }
 
     // Listing/Categories Routes
-    $catUrls = [];
-    try {
-        if (Schema::hasTable('categories')) {
-            $catUrls = Category::select('url')->where('status',1)->pluck('url')->toArray();
-        }
-    } catch (\Throwable $e) {
-        $catUrls = [];
-    }
+    $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
     /*dd($catUrls); die;*/
     foreach ($catUrls as $key => $url) {
         Route::match(['get','post'],'/'.$url,'ProductsController@listing');
     }
 
     // CMS Pages Routes
-    $cmsUrls = [];
-    try {
-        if (Schema::hasTable('cms_pages')) {
-            $cmsUrls = CmsPage::select('url')->where('status',1)->pluck('url')->toArray();
-        }
-    } catch (\Throwable $e) {
-        $cmsUrls = [];
-    }
+    $cmsUrls = CmsPage::select('url')->where('status',1)->get()->pluck('url')->toArray();
     foreach($cmsUrls as $url){
         Route::get($url,'CmsController@cmsPage');
     }
