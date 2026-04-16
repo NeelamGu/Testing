@@ -118,7 +118,7 @@
       overflow: visible;
    }
    .field-wrap.field-wrap-wide {
-      grid-column: 1 / -1;
+      grid-column: auto;
    }
    .field-wrap label {
       display: block;
