@@ -10,11 +10,11 @@
       overflow: hidden;
    }
    .profile-main {
-      background: #f7f3ec;
-      border: 1px solid #e8dbc7;
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 14px 26px rgba(49, 37, 20, 0.07);
+      background: #f7f1e7;
+      border: 1px solid #dfd0bc;
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 10px 20px rgba(49, 37, 20, 0.06);
       min-height: calc(100dvh - 124px);
       height: auto;
       overflow: visible;
@@ -23,7 +23,7 @@
       color: #000;
    }
    .profile-heading {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       flex-shrink: 0;
    }
    .profile-heading h2 {
@@ -43,8 +43,8 @@
    }
    .profile-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
-      gap: 12px;
+      grid-template-columns: minmax(0, 1.8fr) minmax(340px, 0.92fr);
+      gap: 10px;
       margin-top: 8px;
       align-items: start;
       flex: 1;
@@ -53,7 +53,7 @@
    .profile-left-stack,
    .profile-right-stack {
       display: grid;
-      gap: 12px;
+      gap: 10px;
       align-content: start;
       min-width: 0;
    }
@@ -63,21 +63,21 @@
       height: auto;
    }
    .card-soft {
-      border: 1px solid #e9dcc8;
-      border-radius: 16px;
-      background: #f1ebe2;
-      padding: 16px;
+      border: 1px solid #e1d3bf;
+      border-radius: 14px;
+      background: #f4ede4;
+      padding: 14px;
       position: relative;
       overflow: hidden;
       color: #000;
    }
    .personal-card {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
    }
    .card-icon-title {
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       color: #000;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -89,43 +89,32 @@
    .field-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px 20px;
-   }
-   .field-wrap {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-height: 104px;
-   }
-   .field-wrap.field-wrap-wide {
-      grid-column: span 2;
-      min-height: 108px;
+      gap: 12px 14px;
    }
    .field-wrap label {
       display: block;
-      margin: 0;
-      color: #3d2d16;
+      margin: 0 0 6px;
+      color: #6d5231;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       font-weight: 700;
-      line-height: 1.25;
+      line-height: 1.2;
    }
    .field-wrap input {
       width: 100%;
-      height: 48px;
+      height: 40px;
       border-radius: 10px;
-      border: 1px solid #d7c8b2;
-      padding: 10px 12px;
-      background: #fbf8f2;
-      font-size: 15px;
-      color: #20190f;
+      border: 1px solid #d7c9b5;
+      padding: 8px 12px;
+      background: #fffdf9;
+      font-size: 14px;
+      color: #1f1b16;
       box-sizing: border-box;
    }
    .field-wrap input[readonly] {
-      background: #f1eadf;
-      color: #6b5a46;
+      background: #f5f0e7;
+      color: #5c4c3a;
    }
    .field-wrap input:focus {
       border-color: #b56908;
@@ -134,7 +123,7 @@
    }
    .field-wrap p {
       margin: 0;
-      min-height: 18px;
+      min-height: 0;
       font-size: 11px;
       line-height: 1.35;
       color: #9f2b1b;
@@ -393,7 +382,7 @@
       z-index: 2;
       padding: 8px 10px 4px;
       border-radius: 14px;
-      background: linear-gradient(180deg, rgba(247, 243, 236, 0), rgba(247, 243, 236, 0.96) 34px);
+      background: linear-gradient(180deg, rgba(247, 241, 231, 0), rgba(247, 241, 231, 0.96) 34px);
    }
    .profile-side-actions .save-btn {
       border: 0;
@@ -444,7 +433,7 @@
       }
       .field-grid {
          grid-template-columns: repeat(2, minmax(0, 1fr));
-         gap: 18px 16px;
+         gap: 12px;
       }
       .profile-heading h2 {
          font-size: 36px;
@@ -460,12 +449,11 @@
       .field-grid {
          grid-template-columns: 1fr;
       }
-      .field-wrap.field-wrap-wide {
-         grid-column: auto;
-         min-height: 0;
-      }
       .field-wrap {
          min-height: 0;
+      }
+      .field-wrap.field-wrap-wide {
+         grid-column: auto;
       }
       .profile-side-actions .save-btn {
          width: 100%;
@@ -522,14 +510,9 @@
                                  <h4 class="card-icon-title"><i class="fa fa-user"></i> Personlig Informasjon</h4>
                                  <div class="field-grid">
                                     <div class="field-wrap">
-                                       <label>Fornavn</label>
+                                       <label>Fullt navn</label>
                                        <input type="text" id="user-first_name" name="first_name" value="{{ Auth::user()->first_name }}">
                                        <p id="account-first_name"></p>
-                                    </div>
-                                    <div class="field-wrap">
-                                       <label>Etternavn</label>
-                                       <input type="text" id="user-last_name" name="last_name" value="{{ Auth::user()->last_name }}">
-                                       <p id="account-last_name"></p>
                                     </div>
                                     <div class="field-wrap">
                                        <label>E-postadresse</label>
@@ -540,15 +523,15 @@
                                        <input type="text" id="user-mobile" name="mobile" value="{{ Auth::user()->mobile }}">
                                        <p id="account-mobile"></p>
                                     </div>
-                                    <div class="field-wrap field-wrap-wide">
+                                    <div class="field-wrap">
                                        <label>Adresse</label>
                                        <input type="text" id="user-address" name="address" value="{{ Auth::user()->address }}">
                                        <p id="account-address"></p>
                                     </div>
                                     <div class="field-wrap">
-                                       <label>Postnummer</label>
-                                       <input type="text" id="user-pincode" name="pincode" value="{{ Auth::user()->pincode }}">
-                                       <p id="account-pincode"></p>
+                                       <label>Etternavn</label>
+                                       <input type="text" id="user-last_name" name="last_name" value="{{ Auth::user()->last_name }}">
+                                       <p id="account-last_name"></p>
                                     </div>
                                     <div class="field-wrap">
                                        <label>Poststed</label>
@@ -559,6 +542,11 @@
                                        <label>Fylke</label>
                                        <input type="text" id="user-state" name="state" value="{{ Auth::user()->state }}">
                                        <p id="account-state"></p>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Postnummer</label>
+                                       <input type="text" id="user-pincode" name="pincode" value="{{ Auth::user()->pincode }}">
+                                       <p id="account-pincode"></p>
                                     </div>
                                  </div>
                               </div>
@@ -619,29 +607,29 @@
                               @endphp
                               <div class="timeline-list">
                                  @forelse($newMessageUpdates as $timeline)
-                                    @php
+                                       <label>Fornavn</label>
                                        $timelineName = $timeline['product']['product_name'] ?? 'Oppdrag';
                                        $timelineDate = !empty($timeline['last_message_at']) ? date('d.m.y H:i', strtotime($timeline['last_message_at'])) : (!empty($timeline['updated_at']) ? date('d.m.y H:i', strtotime($timeline['updated_at'])) : '');
                                        $timelineUnread = (int)($timeline['unread_vendor'] ?? 0);
-                                    @endphp
-                                    <div class="timeline-item">
-                                       <div class="timeline-item-top">
-                                          <span class="timeline-icon new"><i class="fa fa-commenting-o"></i></span>
-                                          <strong>Ny melding</strong>
-                                          <span class="timeline-count">{{ $timelineUnread }}</span>
-                                       </div>
-                                       <a class="timeline-link" href="{{ url('user/enquiries/'.$timeline['id']) }}">{{ $timelineName }}</a>
-                                       <p class="timeline-time">Mottatt {{ $timelineDate }}</p>
-                                    </div>
-                                 @empty
-                                    <div class="timeline-item">
-                                       <span class="timeline-icon neutral"><i class="fa fa-info"></i></span>
-                                       <div class="timeline-item-top"><strong>Ingen nye meldinger</strong></div>
                                     </div>
                                  @endforelse
                               </div>
                            </div>
 
+                                    <div class="field-wrap">
+                                       <label>E-postadresse</label>
+                                       <input type="text" value="{{ Auth::user()->email }}" readonly>
+                                    </div>
+                                    <div class="field-wrap">
+                                       <label>Telefon</label>
+                                       <input type="text" id="user-mobile" name="mobile" value="{{ Auth::user()->mobile }}">
+                                       <p id="account-mobile"></p>
+                                    </div>
+                                    <div class="field-wrap field-wrap-wide">
+                                       <label>Adresse</label>
+                                       <input type="text" id="user-address" name="address" value="{{ Auth::user()->address }}">
+                                       <p id="account-address"></p>
+                                    </div>
                            <div class="card-soft profile-summary">
                               @php
                                  $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
