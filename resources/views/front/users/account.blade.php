@@ -66,7 +66,7 @@
       border: 1px solid #e9dcc8;
       border-radius: 16px;
       background: #f1ebe2;
-      padding: 14px;
+      padding: 16px;
       position: relative;
       overflow: hidden;
       color: #000;
@@ -89,36 +89,37 @@
    .field-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px 18px;
+      gap: 22px 20px;
    }
    .field-wrap {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      min-height: 78px;
+      gap: 8px;
+      min-height: 104px;
    }
    .field-wrap.field-wrap-wide {
       grid-column: span 2;
+      min-height: 108px;
    }
    .field-wrap label {
       display: block;
       margin: 0;
       color: #3d2d16;
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.25;
    }
    .field-wrap input {
       width: 100%;
-      height: 44px;
+      height: 48px;
       border-radius: 10px;
       border: 1px solid #d7c8b2;
-      padding: 9px 12px;
+      padding: 10px 12px;
       background: #fbf8f2;
-      font-size: 14px;
+      font-size: 15px;
       color: #20190f;
       box-sizing: border-box;
    }
@@ -133,8 +134,8 @@
    }
    .field-wrap p {
       margin: 0;
-      min-height: 16px;
-      font-size: 12px;
+      min-height: 18px;
+      font-size: 11px;
       line-height: 1.35;
       color: #9f2b1b;
    }
@@ -443,7 +444,7 @@
       }
       .field-grid {
          grid-template-columns: repeat(2, minmax(0, 1fr));
-         gap: 14px;
+         gap: 18px 16px;
       }
       .profile-heading h2 {
          font-size: 36px;
@@ -461,6 +462,7 @@
       }
       .field-wrap.field-wrap-wide {
          grid-column: auto;
+         min-height: 0;
       }
       .field-wrap {
          min-height: 0;
