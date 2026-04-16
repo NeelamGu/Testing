@@ -75,11 +75,11 @@
    }
    .personal-card {
       margin-bottom: 14px;
-      padding: 14px;
+      padding: 12px;
       background: #f4f0ea;
    }
    .personal-card .card-icon-title {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       padding-bottom: 10px;
       border-bottom: 1px solid #ddd6cb;
       color: #1f2b3d;
@@ -102,19 +102,19 @@
    }
    .field-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px 14px;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 10px 12px;
       align-items: start;
    }
    .personal-card .field-grid {
-      width: min(100%, 980px);
+      width: min(100%, 900px);
       margin-right: auto;
    }
    .field-wrap {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
       overflow: visible;
    }
    .field-wrap.field-wrap-wide {
@@ -126,16 +126,16 @@
       color: #556176;
       font-size: var(--profile-micro-text);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.06em;
       font-weight: 700;
       line-height: 1.2;
    }
    .field-wrap input {
       width: 100%;
-      height: 40px;
+      height: 38px;
       border-radius: 6px;
       border: 1px solid #d5dbe3;
-      padding: 8px 11px;
+      padding: 7px 10px;
       background: #ffffff;
       font-size: 14px;
       line-height: 1.35;
@@ -454,12 +454,8 @@
          grid-template-columns: minmax(0, 1.8fr) minmax(360px, 0.9fr);
          gap: 16px;
       }
-      .field-grid {
-         grid-template-columns: repeat(3, minmax(0, 1fr));
-         gap: 12px 14px;
-      }
       .personal-card .field-grid {
-         width: min(100%, 1120px);
+         width: min(100%, 940px);
       }
    }
    @media (min-width: 992px) and (max-width: 1320px) {
@@ -467,10 +463,10 @@
          grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr);
       }
       .field-grid {
-         gap: 10px 12px;
+         gap: 9px 10px;
       }
       .personal-card .field-grid {
-         width: min(100%, 900px);
+         width: min(100%, 860px);
       }
    }
    @media (max-width: 1199px) {
@@ -499,7 +495,7 @@
       }
       .field-grid {
          grid-template-columns: repeat(2, minmax(0, 1fr));
-         gap: 14px;
+         gap: 10px;
       }
       .personal-card .field-grid {
          width: 100%;
