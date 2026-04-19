@@ -103,6 +103,16 @@ use App\Models\Category;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+   }
+   .favorite-remove:hover {
+      transform: scale(1.03);
+   }
+   .favorite-remove.is-hollow {
+      background: #fff;
+      color: var(--customer-panel-accent) !important;
+      border-color: var(--customer-panel-accent);
    }
    .favorite-card-body {
       padding: 14px 14px 12px;
@@ -257,8 +267,8 @@ use App\Models\Category;
                                        @if(!empty($categoryName))
                                           <span class="favorite-chip">{{ $categoryName }}</span>
                                        @endif
-                                       <a onclick="return confirm('Er du sikker på at du vil fjerne favoritten?')" href="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" class="favorite-remove" title="Fjern favoritt">
-                                          <i class="fa fa-trash" aria-hidden="true"></i>
+                                       <a href="#" class="favorite-remove" title="Favoritt" aria-pressed="false">
+                                          <i class="fa fa-heart" aria-hidden="true"></i>
                                        </a>
                                     </div>
                                     <div class="favorite-card-body">
@@ -295,4 +305,30 @@ use App\Models\Category;
       </div>
    </div>
 </div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+      var favoriteButtons = document.querySelectorAll('.favorite-remove');
+
+      favoriteButtons.forEach(function (button) {
+         button.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            if (button.classList.contains('is-hollow')) {
+               return;
+            }
+
+            button.classList.add('is-hollow');
+            button.setAttribute('aria-pressed', 'true');
+            button.setAttribute('title', 'Ikke favoritt (midlertidig)');
+
+            var icon = button.querySelector('i');
+            if (icon) {
+               icon.classList.remove('fa-heart');
+               icon.classList.add('fa-heart-o');
+            }
+         });
+      });
+   });
+</script>
 @endsection
