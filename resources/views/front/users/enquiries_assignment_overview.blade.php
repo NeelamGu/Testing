@@ -429,7 +429,7 @@
                                     @endif
                                  </div>
                                  <div class="assignment-description">
-                                    <p class="assignment-info-label">Det du skrev i oppdraget</p>
+                                    <p class="assignment-info-label">Beskrivelse</p>
                                     <p class="assignment-info-value">{{ !empty($assignmentText) ? $assignmentText : 'Ingen beskrivelse registrert på dette oppdraget.' }}</p>
                                  </div>
                               </div>
