@@ -73,6 +73,11 @@ use App\Models\Category;
       height: 100%;
       object-fit: cover;
    }
+   .favorite-thumb > a:not(.favorite-remove) {
+      display: block;
+      width: 100%;
+      height: 100%;
+   }
    .favorite-chip {
       position: absolute;
       left: 10px;
@@ -97,22 +102,28 @@ use App\Models\Category;
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: var(--customer-panel-accent);
+      background: var(--customer-panel-accent, #d84c4c);
       color: var(--customer-panel-accent-contrast, #ffffff) !important;
-      border: 1px solid var(--customer-panel-accent);
+      border: 1px solid var(--customer-panel-accent, #d84c4c);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      z-index: 3;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
       transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+   }
+   .favorite-remove i {
+      pointer-events: none;
    }
    .favorite-remove:hover {
       transform: scale(1.03);
    }
    .favorite-remove.is-hollow {
       background: #fff;
-      color: var(--customer-panel-accent) !important;
-      border-color: var(--customer-panel-accent);
+      color: var(--customer-panel-accent, #d84c4c) !important;
+      border-color: var(--customer-panel-accent, #d84c4c);
    }
    .favorite-card-body {
       padding: 14px 14px 12px;
@@ -267,7 +278,7 @@ use App\Models\Category;
                                        @if(!empty($categoryName))
                                           <span class="favorite-chip">{{ $categoryName }}</span>
                                        @endif
-                                       <a href="#" class="favorite-remove" title="Favoritt" aria-pressed="false">
+                                       <a href="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" class="favorite-remove" data-remove-url="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" title="Favoritt" aria-pressed="false">
                                           <i class="fa fa-heart" aria-hidden="true"></i>
                                        </a>
                                     </div>
@@ -307,28 +318,56 @@ use App\Models\Category;
 </div>
 
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
-      var favoriteButtons = document.querySelectorAll('.favorite-remove');
+   document.addEventListener('click', function (event) {
+      var button = event.target.closest('.favorite-remove');
+      if (!button) {
+         return;
+      }
 
-      favoriteButtons.forEach(function (button) {
-         button.addEventListener('click', function (event) {
-            event.preventDefault();
+      event.preventDefault();
+      event.stopPropagation();
 
-            if (button.classList.contains('is-hollow')) {
-               return;
+      if (button.classList.contains('is-processing') || button.classList.contains('is-hollow')) {
+         return;
+      }
+
+      var removeUrl = button.getAttribute('data-remove-url') || button.getAttribute('href');
+      if (!removeUrl || removeUrl === '#') {
+         return;
+      }
+
+      button.classList.add('is-processing', 'is-hollow');
+      button.setAttribute('aria-pressed', 'true');
+      button.setAttribute('title', 'Ikke favoritt');
+
+      var icon = button.querySelector('i');
+      if (icon) {
+         icon.classList.remove('fa-heart');
+         icon.classList.add('fa-heart-o');
+      }
+
+      fetch(removeUrl, {
+         method: 'GET',
+         credentials: 'same-origin',
+         headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+         }
+      })
+         .then(function (response) {
+            if (!response.ok) {
+               throw new Error('Request failed');
             }
-
-            button.classList.add('is-hollow');
-            button.setAttribute('aria-pressed', 'true');
-            button.setAttribute('title', 'Ikke favoritt (midlertidig)');
-
-            var icon = button.querySelector('i');
+            button.classList.remove('is-processing');
+         })
+         .catch(function () {
+            button.classList.remove('is-processing', 'is-hollow');
+            button.setAttribute('aria-pressed', 'false');
+            button.setAttribute('title', 'Favoritt');
             if (icon) {
-               icon.classList.remove('fa-heart');
-               icon.classList.add('fa-heart-o');
+               icon.classList.remove('fa-heart-o');
+               icon.classList.add('fa-heart');
             }
          });
-      });
-   });
+   }, { passive: false });
 </script>
 @endsection
