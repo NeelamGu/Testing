@@ -713,6 +713,12 @@
          $('.enquiry-row-menu-trigger[aria-expanded="true"]').attr('aria-expanded', 'false');
       }
 
+      var lastMenuTouchAt = 0;
+
+      function isSyntheticMenuClick(e) {
+         return e.type === 'click' && (Date.now() - lastMenuTouchAt) < 550;
+      }
+
       function closeEnquiryThread(threadId) {
          threadId = parseInt(threadId || '0', 10) || 0;
          if (threadId <= 0) {
@@ -1065,8 +1071,19 @@
 
       function toggleEnquiryRowMenu(e, triggerEl) {
          if (e.type === 'touchstart') {
-            e.preventDefault();
+            lastMenuTouchAt = Date.now();
          }
+
+         if (isSyntheticMenuClick(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof e.stopImmediatePropagation === 'function') {
+               e.stopImmediatePropagation();
+            }
+            return;
+         }
+
+         e.preventDefault();
          e.stopPropagation();
          if (typeof e.stopImmediatePropagation === 'function') {
             e.stopImmediatePropagation();
@@ -1087,8 +1104,19 @@
 
       function handleEnquiryCloseAction(e, actionEl) {
          if (e.type === 'touchstart') {
-            e.preventDefault();
+            lastMenuTouchAt = Date.now();
          }
+
+         if (isSyntheticMenuClick(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof e.stopImmediatePropagation === 'function') {
+               e.stopImmediatePropagation();
+            }
+            return;
+         }
+
+         e.preventDefault();
          e.stopPropagation();
          if (typeof e.stopImmediatePropagation === 'function') {
             e.stopImmediatePropagation();

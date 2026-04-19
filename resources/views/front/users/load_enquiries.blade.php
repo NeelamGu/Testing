@@ -866,7 +866,8 @@ use App\Models\Category;
       position: absolute;
       top: 12px;
       right: 12px;
-      z-index: 5;
+      z-index: 8;
+      pointer-events: auto;
    }
 
    .enquiry-row-menu-trigger {
@@ -884,6 +885,8 @@ use App\Models\Category;
       transition: transform 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
+      position: relative;
+      z-index: 9;
    }
 
    .enquiry-row-menu-trigger:hover {
