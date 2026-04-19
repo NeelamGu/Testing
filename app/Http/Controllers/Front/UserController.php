@@ -578,8 +578,20 @@ class UserController extends Controller
         $check = Wishlist::where(['user_id'=>Auth::user()->id,'id'=>$wishid])->first();
         if($check){
             Wishlist::where('id',$wishid)->delete();
+            if(request()->ajax()){
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Wishlist item has been deleted successfully'
+                ]);
+            }
             return redirect()->back()->with('flash_message_success','Wishlist item has been deleted successfully');
         }else{
+            if(request()->ajax()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Something Went Wrong'
+                ], 404);
+            }
             return redirect()->back()->with('flash_message_error','Something Went Wrong');
         }
     }

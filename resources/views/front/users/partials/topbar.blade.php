@@ -398,7 +398,7 @@
          try {
             var parsedUrl = new URL(urlValue, window.location.origin);
             var normalizedPath = normalizePath(parsedUrl.pathname);
-            return normalizedPath === '/user/enquiries';
+            return normalizedPath === '/user/enquiries' || normalizedPath === '/user/wishlist';
          } catch (error) {
             return false;
          }
@@ -553,6 +553,20 @@
          });
       }
 
+      function invalidatePanelCacheForTab(tabType) {
+         if (!tabType) {
+            return;
+         }
+
+         var cacheKeys = Array.from(panelHtmlCache.keys());
+         for (var i = 0; i < cacheKeys.length; i++) {
+            var key = cacheKeys[i];
+            if (getTabTypeFromUrl(key) === tabType) {
+               panelHtmlCache.delete(key);
+            }
+         }
+      }
+
       function setActiveNavigation(tabType) {
          if (!tabType) {
             return;
@@ -682,9 +696,115 @@
          });
       }
 
+      function initFavoriteRemoveHandler() {
+         if (window.__customerFavoriteRemoveBound) {
+            return;
+         }
+
+         window.__customerFavoriteRemoveBound = true;
+         var lastFavoriteTouchAt = 0;
+         var syntheticFavoriteClickWindowMs = 550;
+
+         function resolveFavoriteButton(event) {
+            var target = event && event.target;
+            if (!target || typeof target.closest !== 'function') {
+               return null;
+            }
+
+            return target.closest('.favorite-remove');
+         }
+
+         function setFavoriteButtonState(button, isHollow) {
+            button.classList.toggle('is-hollow', isHollow);
+            button.setAttribute('aria-pressed', isHollow ? 'true' : 'false');
+            button.setAttribute('title', isHollow ? 'Ikke favoritt' : 'Favoritt');
+
+            var icon = button.querySelector('i');
+            if (!icon) {
+               return;
+            }
+
+            icon.classList.toggle('fa-heart', !isHollow);
+            icon.classList.toggle('fa-heart-o', isHollow);
+         }
+
+         function removeFavorite(button) {
+            if (!button || button.classList.contains('is-processing') || button.classList.contains('is-hollow')) {
+               return;
+            }
+
+            var removeUrl = button.getAttribute('data-remove-url') || button.getAttribute('href');
+            if (!removeUrl || removeUrl === '#') {
+               return;
+            }
+
+            button.classList.add('is-processing');
+            setFavoriteButtonState(button, true);
+
+            fetch(removeUrl, {
+               method: 'GET',
+               credentials: 'same-origin',
+               headers: {
+                  'X-Requested-With': 'XMLHttpRequest',
+                  'Accept': 'application/json'
+               }
+            })
+               .then(function (response) {
+                  if (!response.ok) {
+                     throw new Error('Request failed');
+                  }
+
+                  return response.json().catch(function () {
+                     return { status: true };
+                  });
+               })
+               .then(function (payload) {
+                  if (payload && payload.status === false) {
+                     throw new Error(payload.message || 'Request failed');
+                  }
+
+                  button.classList.remove('is-processing');
+                  invalidatePanelCacheForTab('favorites');
+               })
+               .catch(function () {
+                  button.classList.remove('is-processing');
+                  setFavoriteButtonState(button, false);
+               });
+         }
+
+         document.addEventListener('touchend', function (event) {
+            var button = resolveFavoriteButton(event);
+            if (!button) {
+               return;
+            }
+
+            lastFavoriteTouchAt = Date.now();
+            event.preventDefault();
+            event.stopPropagation();
+            removeFavorite(button);
+         }, { passive: false });
+
+         document.addEventListener('click', function (event) {
+            var button = resolveFavoriteButton(event);
+            if (!button) {
+               return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            if ((Date.now() - lastFavoriteTouchAt) < syntheticFavoriteClickWindowMs) {
+               return;
+            }
+
+            removeFavorite(button);
+         }, { passive: false });
+      }
+
       function initPanelEnhancements() {
          initReplyModalFix();
          initAccountColorPreview();
+         initFavoriteRemoveHandler();
          syncAccountTimelinePosition();
       }
 
