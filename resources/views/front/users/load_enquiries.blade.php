@@ -913,6 +913,11 @@ use App\Models\Category;
       gap: 4px;
    }
 
+   .enquiry-row-menu-wrap:focus-within .enquiry-row-menu-panel {
+      display: grid;
+      gap: 4px;
+   }
+
    .enquiry-row-menu-item {
       width: 100%;
       border: 0;

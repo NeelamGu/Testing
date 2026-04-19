@@ -434,6 +434,35 @@
          return '';
       }
 
+      function enforceTopbarLinkOrder() {
+         var nav = document.querySelector('.customer-topbar .center-nav');
+         if (!nav) {
+            return;
+         }
+
+         var preferredOrder = ['favorites', 'assignments', 'messages', 'profile'];
+         var topLinks = nav.querySelectorAll('.js-customer-panel-link');
+         if (!topLinks.length) {
+            return;
+         }
+
+         var linkByType = {};
+         for (var i = 0; i < topLinks.length; i++) {
+            var link = topLinks[i];
+            var type = getTabTypeFromUrl(link.href || '');
+            if (type && !linkByType[type]) {
+               linkByType[type] = link;
+            }
+         }
+
+         for (var j = 0; j < preferredOrder.length; j++) {
+            var tabType = preferredOrder[j];
+            if (linkByType[tabType]) {
+               nav.appendChild(linkByType[tabType]);
+            }
+         }
+      }
+
       function getCurrentPanelTabType() {
          var activeTopLink = document.querySelector('.customer-topbar .js-customer-panel-link.is-active');
          if (activeTopLink && activeTopLink.href) {
@@ -528,6 +557,8 @@
          if (!tabType) {
             return;
          }
+
+         enforceTopbarLinkOrder();
 
          var topLinks = document.querySelectorAll('.customer-topbar .js-customer-panel-link');
          for (var i = 0; i < topLinks.length; i++) {

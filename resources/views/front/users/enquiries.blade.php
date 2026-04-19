@@ -1136,6 +1136,9 @@
       });
 
       $(document).on('click touchstart', function(e){
+         if (isSyntheticMenuClick(e)) {
+            return;
+         }
          if ($(e.target).closest('.enquiry-row-menu-wrap').length) {
             return;
          }
