@@ -1063,11 +1063,17 @@
          setEmptySplitPaneState();
       });
 
-      $(document).on('click', '.enquiry-row-menu-trigger', function(e){
-         e.preventDefault();
+      function toggleEnquiryRowMenu(e, triggerEl) {
+         if (e.type === 'touchstart') {
+            e.preventDefault();
+         }
          e.stopPropagation();
+         if (typeof e.stopImmediatePropagation === 'function') {
+            e.stopImmediatePropagation();
+         }
 
-         var $wrap = $(this).closest('.enquiry-row-menu-wrap');
+         var $trigger = $(triggerEl);
+         var $wrap = $trigger.closest('.enquiry-row-menu-wrap');
          var $panel = $wrap.find('.enquiry-row-menu-panel').first();
          var isOpen = $panel.hasClass('is-open');
 
@@ -1075,19 +1081,36 @@
 
          if (!isOpen) {
             $panel.addClass('is-open').attr('aria-hidden', 'false');
-            $(this).attr('aria-expanded', 'true');
+            $trigger.attr('aria-expanded', 'true');
          }
-      });
+      }
 
-      $(document).on('click', '.enquiry-row-close-action', function(e){
-         e.preventDefault();
+      function handleEnquiryCloseAction(e, actionEl) {
+         if (e.type === 'touchstart') {
+            e.preventDefault();
+         }
          e.stopPropagation();
+         if (typeof e.stopImmediatePropagation === 'function') {
+            e.stopImmediatePropagation();
+         }
 
-         var threadId = parseInt($(this).attr('data-thread-id') || $(this).closest('.enquiry-row-shell').attr('data-thread-id') || '0', 10) || 0;
+         var $action = $(actionEl);
+         var threadId = parseInt($action.attr('data-thread-id') || $action.closest('.enquiry-row-shell').attr('data-thread-id') || '0', 10) || 0;
          closeEnquiryThread(threadId);
+      }
+
+      $(document).on('click touchstart', '.enquiry-row-menu-trigger', function(e){
+         toggleEnquiryRowMenu(e, this);
       });
 
-      $(document).on('click', function(){
+      $(document).on('click touchstart', '.enquiry-row-close-action', function(e){
+         handleEnquiryCloseAction(e, this);
+      });
+
+      $(document).on('click touchstart', function(e){
+         if ($(e.target).closest('.enquiry-row-menu-wrap').length) {
+            return;
+         }
          hideEnquiryRowMenus();
       });
 

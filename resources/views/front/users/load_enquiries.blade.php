@@ -882,6 +882,8 @@ use App\Models\Category;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(61, 46, 24, 0.08);
       transition: transform 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
    }
 
    .enquiry-row-menu-trigger:hover {
@@ -921,6 +923,8 @@ use App\Models\Category;
       text-align: left;
       cursor: pointer;
       transition: background-color 0.14s ease, transform 0.14s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
    }
 
    .enquiry-row-menu-item:hover {
