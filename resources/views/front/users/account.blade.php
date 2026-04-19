@@ -486,19 +486,52 @@
       }
    }
    @media (max-width: 991px) {
+      .contact-section.account-page .column.pull-left {
+         overflow: visible;
+      }
+      .profile-shell,
+      .profile-main,
+      .profile-grid,
+      .profile-left-stack,
+      .profile-right-stack,
+      .card-soft,
+      .personal-card,
+      .visual-card,
+      .timeline-card,
+      .profile-summary,
+      .profile-side-actions {
+         width: 100%;
+         max-width: 100%;
+         min-width: 0;
+         box-sizing: border-box;
+      }
       .profile-grid {
          grid-template-columns: 1fr;
       }
       .profile-main {
          height: auto;
-         overflow: visible;
+         overflow-x: hidden;
+         overflow-y: visible;
       }
       .field-grid {
-         grid-template-columns: repeat(2, minmax(0, 1fr));
+         grid-template-columns: minmax(0, 1fr);
          gap: 10px;
       }
       .personal-card .field-grid {
          width: 100%;
+         max-width: 100%;
+      }
+      .field-wrap.field-wrap-wide {
+         grid-column: auto;
+      }
+      .visual-row {
+         grid-template-columns: 1fr;
+         align-items: start;
+      }
+      .color-row {
+         flex-wrap: wrap;
+         max-width: 100%;
+         gap: 6px;
       }
       .profile-heading h2 {
          font-size: 36px;
@@ -510,12 +543,6 @@
       }
       .profile-heading p {
          font-size: 14px;
-      }
-      .field-grid {
-         grid-template-columns: 1fr;
-      }
-      .field-wrap.field-wrap-wide {
-         grid-column: auto;
       }
       .profile-side-actions .save-btn {
          width: 100%;
