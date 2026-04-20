@@ -278,7 +278,7 @@ use App\Models\Category;
                                        @if(!empty($categoryName))
                                           <span class="favorite-chip">{{ $categoryName }}</span>
                                        @endif
-                                       <a href="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" class="favorite-remove" data-remove-url="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" title="Favoritt" aria-pressed="false">
+                                       <a href="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" class="favorite-remove" data-remove-url="{{ url('user/remove-wishlist/'.$wishlist['id']) }}" data-toggle-url="{{ url('/add-to-wishlist') }}" data-product-id="{{ (int)$productId }}" title="Fjern favoritt" aria-pressed="true">
                                           <i class="fa fa-heart" aria-hidden="true"></i>
                                        </a>
                                     </div>

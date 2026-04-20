@@ -715,9 +715,10 @@
          }
 
          function setFavoriteButtonState(button, isHollow) {
+            var isFavorite = !isHollow;
             button.classList.toggle('is-hollow', isHollow);
-            button.setAttribute('aria-pressed', isHollow ? 'true' : 'false');
-            button.setAttribute('title', isHollow ? 'Ikke favoritt' : 'Favoritt');
+            button.setAttribute('aria-pressed', isFavorite ? 'true' : 'false');
+            button.setAttribute('title', isFavorite ? 'Fjern favoritt' : 'Legg til favoritt');
 
             var icon = button.querySelector('i');
             if (!icon) {
@@ -728,39 +729,59 @@
             icon.classList.toggle('fa-heart-o', isHollow);
          }
 
-         function removeFavorite(button) {
-            if (!button || button.classList.contains('is-processing') || button.classList.contains('is-hollow')) {
-               return;
+         function requestFavoriteToggle(button) {
+            var productId = parseInt(button.getAttribute('data-product-id') || '0', 10) || 0;
+            if (productId <= 0) {
+               return Promise.reject(new Error('Missing product id'));
             }
 
-            var removeUrl = button.getAttribute('data-remove-url') || button.getAttribute('href');
-            if (!removeUrl || removeUrl === '#') {
-               return;
+            var toggleUrl = button.getAttribute('data-toggle-url') || '/add-to-wishlist';
+            var csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            var csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
+            var payload = new URLSearchParams();
+            if (csrfToken) {
+               payload.append('_token', csrfToken);
             }
+            payload.append('proid', String(productId));
 
-            button.classList.add('is-processing');
-            setFavoriteButtonState(button, true);
-
-            fetch(removeUrl, {
-               method: 'GET',
+            return fetch(toggleUrl, {
+               method: 'POST',
                credentials: 'same-origin',
                headers: {
                   'X-Requested-With': 'XMLHttpRequest',
-                  'Accept': 'application/json'
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+               },
+               body: payload.toString()
+            }).then(function (response) {
+               if (!response.ok) {
+                  throw new Error('Request failed');
                }
-            })
+
+               return response.json();
+            });
+         }
+
+         function removeFavorite(button) {
+            if (!button || button.classList.contains('is-processing')) {
+               return;
+            }
+
+            var wasHollow = button.classList.contains('is-hollow');
+
+            button.classList.add('is-processing');
+            setFavoriteButtonState(button, !wasHollow);
+
+            requestFavoriteToggle(button)
                .then(function (response) {
-                  if (!response.ok) {
+                  if (!response || response.status !== true) {
                      throw new Error('Request failed');
                   }
 
-                  return response.json().catch(function () {
-                     return { status: true };
-                  });
-               })
-               .then(function (payload) {
-                  if (payload && payload.status === false) {
-                     throw new Error(payload.message || 'Request failed');
+                  if (response.message === 'set') {
+                     setFavoriteButtonState(button, false);
+                  } else if (response.message === 'unset') {
+                     setFavoriteButtonState(button, true);
                   }
 
                   button.classList.remove('is-processing');
@@ -768,7 +789,7 @@
                })
                .catch(function () {
                   button.classList.remove('is-processing');
-                  setFavoriteButtonState(button, false);
+                  setFavoriteButtonState(button, wasHollow);
                });
          }
 
