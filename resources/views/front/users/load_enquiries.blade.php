@@ -859,7 +859,7 @@ use App\Models\Category;
    }
 
    .enquiry-row-shell.has-menu .enquiry-row-link {
-      padding-right: 56px;
+      padding-right: 68px;
    }
 
    .enquiry-row-menu-wrap {
@@ -868,6 +868,8 @@ use App\Models\Category;
       right: 12px;
       z-index: 8;
       pointer-events: auto;
+      width: 44px;
+      height: 44px;
    }
 
    .enquiry-row-menu-wrap[open] {
@@ -875,8 +877,8 @@ use App\Models\Category;
    }
 
    .enquiry-row-menu-trigger {
-      width: 32px;
-      height: 32px;
+      width: 44px;
+      height: 44px;
       border-radius: 999px;
       border: 1px solid #e2d5c2;
       background: #fff7eb;
@@ -892,6 +894,12 @@ use App\Models\Category;
       position: relative;
       z-index: 9;
       list-style: none;
+      line-height: 1;
+   }
+
+   .enquiry-row-menu-trigger i {
+      font-size: 18px;
+      pointer-events: none;
    }
 
    .enquiry-row-menu-trigger::-webkit-details-marker {
@@ -910,7 +918,7 @@ use App\Models\Category;
 
    .enquiry-row-menu-panel {
       position: absolute;
-      top: 38px;
+      top: 46px;
       right: 0;
       min-width: 180px;
       padding: 6px;
@@ -1273,16 +1281,16 @@ use App\Models\Category;
       }
 
       .enquiry-row-shell.has-menu .enquiry-row-link {
-         padding-right: 52px;
+         padding-right: 64px;
       }
 
       .enquiry-row-menu-wrap {
-         top: 10px;
-         right: 10px;
+         top: 8px;
+         right: 8px;
       }
 
       .enquiry-row-menu-panel {
-         top: 36px;
+         top: 46px;
          right: 0;
          min-width: 168px;
       }
