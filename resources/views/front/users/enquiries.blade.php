@@ -709,6 +709,7 @@
       }
 
       function hideEnquiryRowMenus() {
+         $('.enquiry-row-menu-wrap[open]').removeAttr('open');
          $('.enquiry-row-menu-panel.is-open').removeClass('is-open').attr('aria-hidden', 'true');
          $('.enquiry-row-menu-trigger[aria-expanded="true"]').attr('aria-expanded', 'false');
       }
@@ -1092,11 +1093,15 @@
          var $trigger = $(triggerEl);
          var $wrap = $trigger.closest('.enquiry-row-menu-wrap');
          var $panel = $wrap.find('.enquiry-row-menu-panel').first();
-         var isOpen = $panel.hasClass('is-open');
+         var isDetailsWrap = $wrap.length && String($wrap.prop('tagName') || '').toLowerCase() === 'details';
+         var isOpen = $panel.hasClass('is-open') || (isDetailsWrap && $wrap.prop('open'));
 
          hideEnquiryRowMenus();
 
          if (!isOpen) {
+            if (isDetailsWrap) {
+               $wrap.attr('open', 'open');
+            }
             $panel.addClass('is-open').attr('aria-hidden', 'false');
             $trigger.attr('aria-expanded', 'true');
          }

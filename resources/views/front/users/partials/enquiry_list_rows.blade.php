@@ -127,14 +127,19 @@
       </a>
 
       @if($isAssignment)
-         <div class="enquiry-row-menu-wrap">
-            <button type="button" class="enquiry-row-menu-trigger" aria-label="Flere valg for oppdraget" aria-expanded="false">
+         <details class="enquiry-row-menu-wrap" data-thread-id="{{ (int)($enquiry['id'] ?? 0) }}">
+            <summary class="enquiry-row-menu-trigger" aria-label="Flere valg for oppdraget" aria-expanded="false">
                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </button>
+            </summary>
             <div class="enquiry-row-menu-panel" role="menu" aria-hidden="true">
-               <button type="button" class="enquiry-row-menu-item enquiry-row-close-action" data-thread-id="{{ (int)($enquiry['id'] ?? 0) }}">Avslutt oppdrag</button>
+               <form method="POST" action="{{ url('update-enquiry-status') }}" class="enquiry-row-close-form">
+                  @csrf
+                  <input type="hidden" name="status" value="Active">
+                  <input type="hidden" name="enquiry_id" value="{{ (int)($enquiry['id'] ?? 0) }}">
+                  <button type="submit" class="enquiry-row-menu-item enquiry-row-close-action" data-thread-id="{{ (int)($enquiry['id'] ?? 0) }}">Avslutt oppdrag</button>
+               </form>
             </div>
-         </div>
+         </details>
       @endif
    </div>
 @empty

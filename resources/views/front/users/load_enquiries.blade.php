@@ -870,6 +870,10 @@ use App\Models\Category;
       pointer-events: auto;
    }
 
+   .enquiry-row-menu-wrap[open] {
+      overflow: visible;
+   }
+
    .enquiry-row-menu-trigger {
       width: 32px;
       height: 32px;
@@ -887,6 +891,15 @@ use App\Models\Category;
       -webkit-tap-highlight-color: transparent;
       position: relative;
       z-index: 9;
+      list-style: none;
+   }
+
+   .enquiry-row-menu-trigger::-webkit-details-marker {
+      display: none;
+   }
+
+   .enquiry-row-menu-trigger::marker {
+      content: '';
    }
 
    .enquiry-row-menu-trigger:hover {
@@ -913,9 +926,19 @@ use App\Models\Category;
       gap: 4px;
    }
 
+   .enquiry-row-menu-wrap[open] .enquiry-row-menu-panel {
+      display: grid;
+      gap: 4px;
+   }
+
    .enquiry-row-menu-wrap:focus-within .enquiry-row-menu-panel {
       display: grid;
       gap: 4px;
+   }
+
+   .enquiry-row-close-form {
+      margin: 0;
+      display: grid;
    }
 
    .enquiry-row-menu-item {

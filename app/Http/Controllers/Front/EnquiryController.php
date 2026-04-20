@@ -450,17 +450,45 @@ class EnquiryController extends Controller
     }
 
     public function updateEnquiryStatus(Request $request){
-        if($request->ajax()){
-            $data = $request->all();
-            /*echo "<pre>"; print_r($data); die;*/
-            if($data['status']=="Active"){
-                $status = 0;
-            }else{
-                $status = 1;
+        $data = $request->all();
+        $enquiryId = (int)($data['enquiry_id'] ?? 0);
+
+        if($enquiryId <= 0){
+            if($request->ajax()){
+                return response()->json(['status'=>false,'message'=>'Oppdraget ble ikke funnet.'], 404);
             }
-            ProductsEnquiry::where('id',$data['enquiry_id'])->update(['status'=>$status]);
-            return response()->json(['status'=>$status,'enquiry_id'=>$data['enquiry_id']]);
+            return redirect()->back()->with('flash_message_error','Oppdraget ble ikke funnet.');
         }
+
+        $enquiry = ProductsEnquiry::where('id',$enquiryId)
+            ->where('user_id',Auth::id())
+            ->first();
+
+        if(!$enquiry){
+            if($request->ajax()){
+                return response()->json(['status'=>false,'message'=>'Oppdraget ble ikke funnet.'], 404);
+            }
+            return redirect()->back()->with('flash_message_error','Oppdraget ble ikke funnet.');
+        }
+
+        if(($data['status'] ?? '')=="Active"){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+
+        $enquiry->status = $status;
+        $enquiry->save();
+
+        if($request->ajax()){
+            return response()->json(['status'=>$status,'enquiry_id'=>$enquiryId]);
+        }
+
+        if($status === 0){
+            return redirect()->back()->with('flash_message_success','Oppdraget er avsluttet.');
+        }
+
+        return redirect()->back()->with('flash_message_success','Oppdraget er aktivt igjen.');
     }
 
     public function updatePinStatus(Request $request){
