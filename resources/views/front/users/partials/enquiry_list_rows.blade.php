@@ -104,10 +104,12 @@
 
             <div class="enquiry-row-meta">
                <span class="meta-item">
-                  @if(!empty($categoryImage))
-                     <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
-                  @else
-                     <i class="fa fa-tag"></i>
+                  @if(!$isAssignment)
+                     @if(!empty($categoryImage))
+                        <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
+                     @else
+                        <i class="fa fa-tag"></i>
+                     @endif
                   @endif
                   {{ $categoryName }}
                </span>
