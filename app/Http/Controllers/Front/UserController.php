@@ -887,9 +887,9 @@ class UserController extends Controller
                 ->where('is_unread',1)
                 ->count();
 
-            $vendorImg = $thread->vendor->image ?? '';
-            $vendorImgUrl = !empty($vendorImg)
-                ? asset('admin/images/photos/'.$vendorImg)
+            $productMainImg = $thread->product->product_image ?? '';
+            $vendorImgUrl = !empty($productMainImg)
+                ? asset('front/images/product_images/small/'.$productMainImg)
                 : asset('front/images/profile.png');
 
             $threads[] = [

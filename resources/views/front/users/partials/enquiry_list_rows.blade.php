@@ -65,9 +65,9 @@
       $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
       $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
       $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
-      $vendorImage = $enquiry['vendor']['image'] ?? '';
-      $vendorImageUrl = !empty($vendorImage) ? asset('admin/images/photos/'.$vendorImage) : asset('front/images/profile.png');
-      $avatarUrl = $isAssignment ? $categoryImageUrl : $vendorImageUrl;
+      $productMainImage = $enquiry['product']['product_image'] ?? '';
+      $productMainImageUrl = !empty($productMainImage) ? asset('front/images/product_images/small/'.$productMainImage) : asset('front/images/profile.png');
+      $avatarUrl = $isAssignment ? $categoryImageUrl : $productMainImageUrl;
       $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : ($isAssignment ? '' : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
       $previewText = !empty($previewSource) ? \Illuminate\Support\Str::limit(strip_tags($previewSource), 95) : '';
       $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
