@@ -13,12 +13,12 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 18765
+          port: ${{ secrets.SG_SSH_PORT }}
           script: |
-            cd ${{ secrets.DEPLOY_PATH }}
+            cd ${{ secrets.SG_DEPLOY_PATH }}
             git pull origin master
             composer install --no-dev --optimize-autoloader
             php artisan config:cache
