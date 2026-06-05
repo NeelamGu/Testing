@@ -887,9 +887,15 @@ class UserController extends Controller
                 ->where('is_unread',1)
                 ->count();
 
+            $vendorImg = $thread->vendor->image ?? '';
+            $vendorImgUrl = !empty($vendorImg)
+                ? asset('admin/images/photos/'.$vendorImg)
+                : asset('front/images/profile.png');
+
             $threads[] = [
                 'id' => $thread->id,
                 'title' => $thread->product->product_name ?? 'Ukjent leverandør',
+                'vendor_image_url' => $vendorImgUrl,
                 'city' => $thread->product->city ?? '',
                 'status' => (int)$thread->status,
                 'has_vendor_message' => $vendorMessagesCount > 0,

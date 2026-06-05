@@ -132,6 +132,14 @@
       line-height: 1.5;
       font-weight: 500;
    }
+   .thread-vendor-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid #e8d8c0;
+   }
    .thread-item {
       border: 1px solid #ece3d7;
       border-radius: 12px;
@@ -439,6 +447,7 @@
                               @if(!empty($threads) && count($threads) > 0)
                                  @foreach($threads as $thread)
                                     <div class="thread-item {{ ($thread['status'] ?? 0) == 0 ? 'is-completed' : '' }}">
+                                       <img src="{{ $thread['vendor_image_url'] ?? asset('front/images/profile.png') }}" alt="{{ $thread['title'] ?? '' }}" class="thread-vendor-avatar">
                                        <div class="thread-main">
                                           <div class="thread-head">
                                              <h4 class="thread-title">{{ $thread['title'] ?? 'Ukjent leverandør' }}</h4>

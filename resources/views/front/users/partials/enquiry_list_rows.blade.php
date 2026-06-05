@@ -65,6 +65,9 @@
       $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
       $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
       $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
+      $vendorImage = $enquiry['vendor']['image'] ?? '';
+      $vendorImageUrl = !empty($vendorImage) ? asset('admin/images/photos/'.$vendorImage) : asset('front/images/profile.png');
+      $avatarUrl = $isAssignment ? $categoryImageUrl : $vendorImageUrl;
       $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : ($isAssignment ? '' : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
       $previewText = !empty($previewSource) ? \Illuminate\Support\Str::limit(strip_tags($previewSource), 95) : '';
       $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
@@ -80,7 +83,7 @@
    <div class="enquiry-row-shell {{ $isAssignment ? 'has-menu' : '' }}">
       <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
          <div class="enquiry-row-avatar">
-            <img src="{{ $categoryImageUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image">
+            <img src="{{ $avatarUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image">
          </div>
 
          <div class="enquiry-row-main">
