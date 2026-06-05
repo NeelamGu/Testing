@@ -10,7 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p ${{ secrets.SG_SSH_PORT }} ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Sync files to SiteGround
+        run: |
+          rsync -az --delete \
+            --exclude='.git' \
+            --exclude='.env' \
+            --exclude='node_modules' \
+            --exclude='vendor' \
+            --exclude='storage/*.key' \
+            --exclude='public/storage' \
+            -e "ssh -p ${{ secrets.SG_SSH_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.SG_DEPLOY_PATH }}/
+
+      - name: Run post-deploy commands
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -18,18 +40,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SG_SSH_PORT }}
           script: |
-            echo "=== WORKING DIR ==="
-            pwd
-            echo "=== DEPLOY PATH ==="
             cd ${{ secrets.SG_DEPLOY_PATH }}
-            pwd
-            echo "=== BEFORE PULL ==="
-            git log -1 --oneline
-            git pull origin master
-            echo "=== AFTER PULL ==="
-            git log -1 --oneline
-            echo "=== CHANGED FILES ==="
-            git diff HEAD~1 --name-only
             composer install --no-dev --optimize-autoloader
             php artisan config:clear
             php artisan cache:clear
@@ -38,4 +49,4 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            echo "=== DONE ==="
+            echo "Deploy done"
