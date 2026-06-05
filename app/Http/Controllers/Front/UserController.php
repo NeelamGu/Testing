@@ -889,8 +889,8 @@ class UserController extends Controller
 
             $productMainImg = $thread->product->product_image ?? '';
             $vendorImgUrl = !empty($productMainImg)
-                ? asset('front/images/product_images/small/'.$productMainImg)
-                : asset('front/images/profile.png');
+                ? asset('front/images/product_images/large/'.$productMainImg)
+                : asset('front/images/product_images/large/no-image.png');
 
             $threads[] = [
                 'id' => $thread->id,
