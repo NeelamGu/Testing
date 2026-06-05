@@ -64,9 +64,13 @@
       }
       $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
       $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
-      $categoryImageUrl = !empty($categoryImage) ? asset('front/images/category_images/'.$categoryImage) : asset('front/images/profile.png');
+      $categoryImageUrl = (!empty($categoryImage) && file_exists(public_path('front/images/category_images/'.$categoryImage)))
+         ? asset('front/images/category_images/'.$categoryImage)
+         : asset('front/images/profile.png');
       $productMainImage = $enquiry['product']['product_image'] ?? '';
-      $productMainImageUrl = !empty($productMainImage) ? asset('front/images/product_images/large/'.$productMainImage) : asset('front/images/product_images/large/no-image.png');
+      $productMainImageUrl = (!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage)))
+         ? asset('front/images/product_images/large/'.$productMainImage)
+         : asset('front/images/product_images/large/no-image.png');
       $avatarUrl = $isAssignment ? $categoryImageUrl : $productMainImageUrl;
       $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : ($isAssignment ? '' : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
       $previewText = !empty($previewSource) ? \Illuminate\Support\Str::limit(strip_tags($previewSource), 95) : '';
@@ -83,7 +87,7 @@
    <div class="enquiry-row-shell {{ $isAssignment ? 'has-menu' : '' }}">
       <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
          <div class="enquiry-row-avatar">
-            <img src="{{ $avatarUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image">
+            <img src="{{ $avatarUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
          </div>
 
          <div class="enquiry-row-main">
@@ -105,8 +109,8 @@
             <div class="enquiry-row-meta">
                <span class="meta-item">
                   @if(!$isAssignment)
-                     @if(!empty($categoryImage))
-                        <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}">
+                     @if(!empty($categoryImage) && file_exists(public_path('front/images/category_images/'.$categoryImage)))
+                        <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}" onerror="this.style.display='none';">
                      @else
                         <i class="fa fa-tag"></i>
                      @endif

@@ -487,7 +487,7 @@
          }
          $threadPreviewSource = !empty($assignmentThread['response']) ? $assignmentThread['response'] : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
          $threadProductImage = $assignmentThread['product']['product_image'] ?? '';
-         $threadAvatar = !empty($threadProductImage)
+         $threadAvatar = (!empty($threadProductImage) && file_exists(public_path('front/images/product_images/large/'.$threadProductImage)))
             ? asset('front/images/product_images/large/'.$threadProductImage)
             : asset('front/images/product_images/large/no-image.png');
 
@@ -860,7 +860,7 @@
 
             var rowHtml = ''
                + '<a href="' + threadUrl + '" class="assignment-thread-row js-thread-link' + selectedClass + '" data-enquiry-id="' + threadId + '">'
-               + '  <div class="assignment-thread-avatar"><img src="' + avatar + '" alt="Leverandør"></div>'
+               + '  <div class="assignment-thread-avatar"><img src="' + avatar + '" alt="Leverandør" onerror="this.onerror=null;this.src=\'{{ asset('front/images/product_images/large/no-image.png') }}\';"></div>'
                + '  <div>'
                + '    <h5 class="assignment-thread-name">' + name + '</h5>'
                + '    <p class="assignment-thread-preview">' + preview + '</p>'
