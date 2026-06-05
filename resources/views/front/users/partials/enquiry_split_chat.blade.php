@@ -1,0 +1,76 @@
+@php
+   $conversation = $selectedConversation ?? null;
+@endphp
+
+<div class="split-chat-shell">
+   @if(empty($conversation))
+      <div class="split-chat-empty">
+         <h4>Ingen tråd valgt</h4>
+         <p>Velg en melding fra listen til venstre for å se samtalen her.</p>
+      </div>
+   @else
+      @php
+         $messages = $conversation['messages'] ?? [];
+         $lastMessageId = count($messages) > 0 ? (int)$messages[count($messages)-1]['id'] : 0;
+      @endphp
+      <div class="split-chat-card" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-thread-status="{{ (int)($conversation['thread_status'] ?? 1) }}" data-assignment-id="{{ (int)($conversation['assignment_id'] ?? 0) }}" data-poll-url="{{ $conversation['poll_url'] ?? '' }}">
+         <div class="split-chat-head">
+            <div class="split-chat-title-wrap">
+               <h4 class="split-chat-title">
+                  @if(!empty($conversation['vendor_url']))
+                     <a href="{{ $conversation['vendor_url'] }}">{{ $conversation['vendor_name'] ?? 'Leverandør' }}</a>
+                  @else
+                     <span>{{ $conversation['vendor_name'] ?? 'Leverandør' }}</span>
+                  @endif
+               </h4>
+               <div class="split-chat-meta">
+                  @if(!empty($conversation['is_assignment']))
+                     <p class="split-chat-subtitle">Oppdrag · {{ !empty($conversation['thread_count']) ? $conversation['thread_count'] . ' samtale' . ($conversation['thread_count'] != 1 ? 'r' : '') : 'samtale' }}</p>
+                  @else
+                     <p class="split-chat-subtitle">Direkte melding</p>
+                  @endif
+               </div>
+            </div>
+            @if(empty($conversation['is_assignment']) && (int)($conversation['thread_status'] ?? 1) === 1)
+               <div class="split-chat-head-actions">
+                  <a href="javascript:void(0)" class="split-chat-close-link" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-item-type="conversation" data-current-status="Active">Avslutt samtale</a>
+               </div>
+            @endif
+         </div>
+
+         <div class="split-chat-messages" id="splitChatMessages" data-last-id="{{ $lastMessageId }}">
+            @foreach($messages as $enquiry)
+               @include('front.users.partials.enquiry_message', ['enquiry' => $enquiry, 'vendorLabel' => ($conversation['vendor_label'] ?? '')])
+            @endforeach
+         </div>
+
+         @if((int)($conversation['thread_status'] ?? 1) === 1)
+            <div class="split-chat-composer">
+               <form id="splitReplyEnquiryForm" method="post" action="{{ $conversation['send_url'] ?? '' }}" enctype="multipart/form-data">@csrf
+                  <input type="hidden" name="enquiry_id" value="{{ (int)($conversation['thread_id'] ?? 0) }}">
+                  <div class="split-chat-input-row">
+                     <button type="button" id="splitComposerAttachBtn" class="split-chat-attach" aria-label="Legg til bilder">
+                        <i class="fa fa-image" aria-hidden="true"></i>
+                     </button>
+                     <textarea class="split-chat-input" name="message" rows="1" placeholder="Skriv melding..."></textarea>
+                     <input id="splitComposerFileInput" class="upload-file-area" type="file" name="images[]" accept="image/*" multiple>
+                     <button type="submit" class="split-chat-send">Send</button>
+                  </div>
+                  <div class="image-preview-wrap" id="splitImagePreviewWrap">
+                     <div class="image-preview-list" id="splitImagePreviewList"></div>
+                  </div>
+               </form>
+            </div>
+         @else
+            <div class="split-chat-closed-note">
+               @if(!empty($conversation['is_assignment']))
+                  <strong>Oppdraget er fullført.</strong>
+               @else
+                  <strong>Samtalen er avsluttet.</strong>
+               @endif
+               <span>Du kan ikke sende nye meldinger i en fullført samtale.</span>
+            </div>
+         @endif
+      </div>
+   @endif
+</div>
