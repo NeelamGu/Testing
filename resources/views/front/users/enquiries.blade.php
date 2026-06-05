@@ -486,13 +486,10 @@
             }
          }
          $threadPreviewSource = !empty($assignmentThread['response']) ? $assignmentThread['response'] : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
-         $categoryImageName = '';
-         if(!empty($assignmentThread['product']['category_id'])){
-            $categoryImageName = (string)(\App\Models\Category::getCategoryImage($assignmentThread['product']['category_id']) ?? '');
-         }
-         $threadAvatar = $categoryImageName !== ''
-            ? asset('front/images/category_images/'.$categoryImageName)
-            : asset('front/images/profile.png');
+         $threadProductImage = $assignmentThread['product']['product_image'] ?? '';
+         $threadAvatar = !empty($threadProductImage)
+            ? asset('front/images/product_images/large/'.$threadProductImage)
+            : asset('front/images/product_images/large/no-image.png');
 
          $assignmentThreadMap[$assignmentDetailId][] = [
             'id' => (int)($assignmentThread['id'] ?? 0),
