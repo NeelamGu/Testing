@@ -18,8 +18,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SG_SSH_PORT }}
           script: |
+            echo "=== WORKING DIR ==="
+            pwd
+            echo "=== DEPLOY PATH ==="
             cd ${{ secrets.SG_DEPLOY_PATH }}
+            pwd
+            echo "=== BEFORE PULL ==="
+            git log -1 --oneline
             git pull origin master
+            echo "=== AFTER PULL ==="
+            git log -1 --oneline
+            echo "=== CHANGED FILES ==="
+            git diff HEAD~1 --name-only
             composer install --no-dev --optimize-autoloader
             php artisan config:clear
             php artisan cache:clear
@@ -28,4 +38,4 @@ jobs:
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
-            echo "Deploy done: $(git log -1 --oneline)"
+            echo "=== DONE ==="
