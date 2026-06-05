@@ -62,8 +62,13 @@
       if($isMobileList){
          $cardPrimaryUrl .= (str_contains($cardPrimaryUrl, '?') ? '&' : '?').'ui=mobile';
       }
-      $categoryName = $enquiry['product']['category']['category_name'] ?? 'Kategori';
-      $categoryImage = !empty($enquiry['product']['category_id']) ? \App\Models\Category::getCategoryImage($enquiry['product']['category_id']) : '';
+      $assignmentCategoryId = (int)($enquiry['enquiry_detail']['category_id'] ?? 0);
+      $productCategoryId = (int)($enquiry['product']['category_id'] ?? 0);
+      $effectiveCategoryId = ($isAssignment && $assignmentCategoryId > 0) ? $assignmentCategoryId : $productCategoryId;
+      $categoryName = ($isAssignment && $assignmentCategoryId > 0)
+         ? (\App\Models\Category::getCategoryName($effectiveCategoryId) ?: ($enquiry['product']['category']['category_name'] ?? 'Kategori'))
+         : ($enquiry['product']['category']['category_name'] ?? 'Kategori');
+      $categoryImage = $effectiveCategoryId > 0 ? \App\Models\Category::getCategoryImage($effectiveCategoryId) : '';
       $categoryImageUrl = (!empty($categoryImage) && file_exists(public_path('front/images/category_images/'.$categoryImage)))
          ? asset('front/images/category_images/'.$categoryImage)
          : asset('front/images/profile.png');
