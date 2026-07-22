@@ -36,7 +36,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 22px;
-      padding: 24px 26px;
+      padding: 24px 150px 24px 26px;
       margin-bottom: 14px;
       flex-shrink: 0;
       color: var(--profile-accent-contrast);
@@ -47,18 +47,19 @@
          var(--profile-accent);
       box-shadow: 0 18px 34px rgba(64, 46, 22, 0.22);
    }
-   .profile-heading::after {
-      content: "\f007";
-      font-family: FontAwesome;
+   .hero-avatar {
       position: absolute;
-      right: 18px;
+      right: 26px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 108px;
-      line-height: 1;
-      opacity: 0.14;
-      color: #fff;
-      pointer-events: none;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.75);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+      background: #fff;
+      z-index: 1;
    }
    .profile-heading .hero-eyebrow {
       display: inline-flex;
@@ -426,23 +427,12 @@
    /* ---------- Profile summary card ---------- */
    .profile-summary {
       text-align: center;
-      padding: 0 !important;
-      overflow: hidden;
-   }
-   .profile-summary-banner {
-      height: 74px;
-      background:
-         radial-gradient(circle at 82% -40%, rgba(255, 255, 255, 0.4), transparent 55%),
-         linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0.08)),
-         var(--profile-accent);
-   }
-   .profile-summary-body {
-      padding: 0 16px 18px;
+      padding: 22px 16px 20px !important;
    }
    .profile-avatar-wrap {
       width: 92px;
       height: 92px;
-      margin: -46px auto 10px;
+      margin: 0 auto 12px;
       position: relative;
    }
    .profile-summary img {
@@ -533,6 +523,7 @@
       align-items: center;
       justify-content: center;
       gap: 9px;
+      background: var(--profile-accent) !important;
       box-shadow: 0 10px 20px rgba(70, 43, 12, 0.24);
    }
    .profile-side-actions .save-btn:hover {
@@ -640,6 +631,9 @@
       .profile-heading p {
          font-size: 14px;
       }
+      .hero-avatar {
+         display: none;
+      }
       .profile-side-actions .save-btn {
          width: 100%;
          min-width: 0;
@@ -649,10 +643,6 @@
       }
       .profile-heading h2 {
          font-size: 30px;
-      }
-      .profile-heading::after {
-         font-size: 76px;
-         opacity: 0.1;
       }
       .timeline-card.is-mobile-top {
          margin-bottom: 12px;
@@ -670,10 +660,18 @@
             <div class="col-md-9 col-sm-9 col-xs-12 column pull-left">
                <div class="profile-shell">
                   <div class="profile-main">
+                     @php
+                        $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
+                        $profileImageAbsolutePath = public_path($profileImageRelativePath);
+                        $profileImageUrl = file_exists($profileImageAbsolutePath)
+                           ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
+                           : asset('front/images/profile.png');
+                     @endphp
                      <div class="profile-heading">
                         <span class="hero-eyebrow"><i class="fa fa-user-circle" aria-hidden="true"></i> Min konto</span>
                         <h2>Min Profil</h2>
                         <p class="profile-note">{{ $profileNoteMessage ?? 'Velkommen tilbake! Klar for å planlegge noe hyggelig?' }}</p>
+                        <img class="hero-avatar" src="{{ $profileImageUrl }}" alt="Profil" onerror="this.onerror=null;this.src='{{ asset('front/images/profile.png') }}';">
                      </div>
 
                      @if(Session::has('success_message'))
@@ -820,23 +818,13 @@
                            </div>
 
                            <div class="card-soft profile-summary">
-                              @php
-                                 $profileImageRelativePath = 'front/images/user_images/profile-'.Auth::user()->id.'.jpg';
-                                 $profileImageAbsolutePath = public_path($profileImageRelativePath);
-                                 $profileImageUrl = file_exists($profileImageAbsolutePath)
-                                    ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
-                                    : asset('front/images/profile.png');
-                              @endphp
-                              <div class="profile-summary-banner"></div>
-                              <div class="profile-summary-body">
-                                 <div class="profile-avatar-wrap">
-                                    <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
-                                    <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
-                                    <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
-                                 </div>
-                                 <h4>{{ Auth::user()->name }}</h4>
-                                 <p class="member-since"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
+                              <div class="profile-avatar-wrap">
+                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
+                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
+                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
                               </div>
+                              <h4>{{ Auth::user()->name }}</h4>
+                              <p class="member-since"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
                            </div>
 
                            <div class="profile-side-actions">
