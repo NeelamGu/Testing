@@ -428,6 +428,10 @@
    .profile-summary {
       text-align: center;
       padding: 22px 16px 20px !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
    }
    /* Override the global panel theme so this card matches the other white cards. */
    .contact-section.account-page .profile-main .profile-summary {
@@ -507,10 +511,8 @@
       align-items: center;
       gap: 12px;
       justify-content: flex-end;
-      margin-top: 12px;
+      margin-top: 0;
       width: 100%;
-      position: sticky;
-      bottom: 8px;
       z-index: 2;
       padding: 12px 14px;
       border-radius: 16px;
@@ -899,6 +901,8 @@
    (function () {
       var timelineCard = document.querySelector('.timeline-card');
       var personalCard = document.querySelector('.personal-card');
+      var visualCard = document.querySelector('.visual-card');
+      var summaryCard = document.querySelector('.profile-summary');
       var leftStack = document.querySelector('.profile-left-stack');
       var rightStack = document.querySelector('.profile-right-stack');
 
@@ -910,10 +914,20 @@
          var isMobile = window.matchMedia('(max-width: 767px)').matches;
          if (isMobile || !personalCard || timelineCard.parentNode !== rightStack) {
             timelineCard.style.minHeight = '';
+            if (summaryCard) {
+               summaryCard.style.minHeight = '';
+            }
             return;
          }
 
          timelineCard.style.minHeight = Math.ceil(personalCard.getBoundingClientRect().height) + 'px';
+
+         if (visualCard && summaryCard) {
+            summaryCard.style.minHeight = '';
+            var visualHeight = Math.ceil(visualCard.getBoundingClientRect().height);
+            var summaryHeight = Math.ceil(summaryCard.getBoundingClientRect().height);
+            summaryCard.style.minHeight = Math.max(visualHeight, summaryHeight) + 'px';
+         }
       }
 
       function placeTimelineForViewport() {
