@@ -1,4 +1,4 @@
-﻿@extends('front.layout.layout')
+@extends('front.layout.layout')
 @section('content')
 @include('front.users.partials.topbar', ['activeTopTab' => 'profile'])
 <style>
@@ -10,44 +10,95 @@
       overflow: hidden;
    }
    .profile-main {
-      background: #f7f3ec;
-      border: 1px solid #e8dbc7;
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: 0 14px 26px rgba(49, 37, 20, 0.07);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 2px;
+      box-shadow: none;
       min-height: calc(100dvh - 124px);
       height: auto;
       overflow: visible;
       display: flex;
       flex-direction: column;
-      color: #000;
+      color: #241a12;
+      --profile-accent: var(--customer-panel-accent, #e78002);
+      --profile-accent-contrast: var(--customer-panel-accent-contrast, #ffffff);
+      --profile-ink: #241a12;
+      --profile-muted: #7c6a52;
+      --profile-line: #ece2d2;
+      --profile-card: #ffffff;
       --profile-small-text: clamp(13px, 0.18vw + 11px, 15px);
       --profile-micro-text: clamp(12px, 0.12vw + 10px, 14px);
    }
+
+   /* ---------- Hero ---------- */
    .profile-heading {
-      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 24px 26px;
+      margin-bottom: 14px;
       flex-shrink: 0;
+      color: var(--profile-accent-contrast);
+      background:
+         radial-gradient(circle at 86% -30%, rgba(255, 255, 255, 0.38), transparent 46%),
+         radial-gradient(circle at 6% 140%, rgba(0, 0, 0, 0.22), transparent 48%),
+         linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.05)),
+         var(--profile-accent);
+      box-shadow: 0 18px 34px rgba(64, 46, 22, 0.22);
+   }
+   .profile-heading::after {
+      content: "\f007";
+      font-family: FontAwesome;
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 108px;
+      line-height: 1;
+      opacity: 0.14;
+      color: #fff;
+      pointer-events: none;
+   }
+   .profile-heading .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      color: var(--profile-accent-contrast);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
    }
    .profile-heading h2 {
       margin: 0;
-      font-size: 48px;
-      line-height: 0.98;
-      color: #000;
+      font-size: 44px;
+      line-height: 1.02;
+      color: var(--profile-accent-contrast);
       font-weight: 800;
       letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
    }
    .profile-heading p {
-      margin: 8px 0 0;
-      color: #000;
+      margin: 9px 0 0;
+      color: var(--profile-accent-contrast);
+      opacity: 0.94;
       font-size: 15px;
-      max-width: 680px;
-      line-height: 1.35;
+      max-width: 640px;
+      line-height: 1.4;
+      position: relative;
+      z-index: 1;
    }
+
    .profile-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
-      gap: 12px;
-      margin-top: 8px;
+      gap: 14px;
+      margin-top: 4px;
       align-items: start;
       flex: 1;
       min-height: 0;
@@ -55,7 +106,7 @@
    .profile-left-stack,
    .profile-right-stack {
       display: grid;
-      gap: 12px;
+      gap: 14px;
       align-content: start;
       min-width: 0;
    }
@@ -64,138 +115,147 @@
       flex-direction: column;
       height: auto;
    }
+
+   /* ---------- Cards ---------- */
    .card-soft {
-      border: 1px solid #e9dcc8;
-      border-radius: 16px;
-      background: #f1ebe2;
-      padding: 12px;
+      border: 1px solid var(--profile-line);
+      border-radius: 18px;
+      background: var(--profile-card);
+      padding: 16px 18px;
       position: relative;
       overflow: hidden;
-      color: #000;
+      color: var(--profile-ink);
+      box-shadow: 0 10px 26px rgba(64, 46, 22, 0.08);
    }
    .personal-card {
       margin-bottom: 14px;
-      padding: 12px;
-      background: #f4f0ea;
-   }
-   .personal-card .card-icon-title {
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #ddd6cb;
-      color: #1f2b3d;
-   }
-   .personal-card .card-icon-title i {
-      color: #1f2b3d;
-      font-size: 16px;
    }
    .card-icon-title {
-      margin: 0 0 10px;
-      color: #000;
+      margin: 0 0 15px;
+      padding-bottom: 13px;
+      border-bottom: 2px solid #f2e9db;
+      color: var(--profile-ink);
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 11px;
+      letter-spacing: -0.2px;
    }
    .card-icon-title i {
-      color: #000;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)), var(--profile-accent);
+      color: var(--profile-accent-contrast);
+      font-size: 16px;
+      box-shadow: 0 7px 15px rgba(64, 46, 22, 0.2);
    }
+
+   /* ---------- Fields ---------- */
    .field-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-      gap: 10px 12px;
+      gap: 12px 14px;
       align-items: start;
-   }
-   .personal-card .field-grid {
-      width: min(100%, 900px);
-      margin-right: auto;
    }
    .field-wrap {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 5px;
       overflow: visible;
-   }
-   .field-wrap.field-wrap-wide {
-      grid-column: auto;
    }
    .field-wrap label {
       display: block;
       margin: 0;
-      color: #556176;
+      color: var(--profile-muted);
       font-size: var(--profile-micro-text);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 700;
+      letter-spacing: 0.07em;
+      font-weight: 800;
       line-height: 1.2;
    }
    .field-wrap input {
       width: 100%;
-      height: 38px;
-      border-radius: 6px;
-      border: 1px solid #d5dbe3;
-      padding: 7px 10px;
-      background: #ffffff;
-      font-size: 14px;
+      height: 44px;
+      border-radius: 11px;
+      border: 1.5px solid #e5dac8;
+      padding: 9px 12px;
+      background: #fdfbf8;
+      font-size: 14.5px;
       line-height: 1.35;
-      color: #1f2b3d;
+      color: #2a2016;
       box-sizing: border-box;
       display: block;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
    }
-   .field-wrap input[readonly] {
-      background: #eef2f6;
-      color: #5b6775;
-      border-color: #c9d1db;
+   .field-wrap input::placeholder {
+      color: #b3a894;
    }
+   .field-wrap input[readonly],
    .field-wrap input.readonly-email {
-      background: #e9edf2;
-      color: #505c6a;
-      border-color: #c2cad6;
+      background: #f1ece3;
+      color: #7a6a52;
+      border-color: #e0d5c3;
+      border-style: dashed;
       cursor: not-allowed;
    }
    .field-wrap input.readonly-email:focus {
-      border-color: #c2cad6;
+      border-color: #e0d5c3;
       box-shadow: none;
    }
    .field-wrap input:focus {
-      border-color: #b56908;
+      border-color: var(--profile-accent);
       outline: none;
-      box-shadow: 0 0 0 3px rgba(181, 105, 8, 0.14);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
    }
    .field-wrap p {
       margin: 0;
       min-height: 0;
       font-size: var(--profile-small-text);
       line-height: 1.3;
-      color: #aa2f1f;
+      color: #c23d28;
+      font-weight: 600;
    }
    .field-wrap p:empty {
       display: none;
    }
-   .visual-card {
-      margin-top: 2px;
-   }
+
+   /* ---------- Visual preferences ---------- */
    .visual-row {
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      background: #faf6ef;
+      border: 1px solid #f0e7d8;
       margin-bottom: 10px;
    }
+   .visual-row:last-of-type {
+      margin-bottom: 0;
+   }
    .visual-row strong {
-      font-size: 16px;
-      color: #000;
+      font-size: 15.5px;
+      color: var(--profile-ink);
+      font-weight: 800;
    }
    .visual-row p {
-      margin: 0;
-      color: #000;
+      margin: 3px 0 0;
+      color: var(--profile-muted);
       font-size: var(--profile-small-text);
+      line-height: 1.3;
    }
    .color-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
    }
    .color-row input[type="color"] {
       position: absolute;
@@ -213,10 +273,16 @@
       width: 30px;
       height: 30px;
       border-radius: 50%;
-      border: 1px solid rgba(0, 0, 0, 0.18);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.12);
       cursor: pointer;
       background: #fff;
       display: inline-block;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+   }
+   .preset-dot:hover {
+      transform: translateY(-2px) scale(1.08);
+      box-shadow: 0 0 0 2px var(--profile-accent), 0 6px 12px rgba(0, 0, 0, 0.18);
    }
    .custom-color-dot {
       width: 34px;
@@ -224,7 +290,7 @@
       position: relative;
       overflow: hidden;
       border: 2px solid #ffffff;
-      box-shadow: 0 0 0 1px #c8b79f;
+      box-shadow: 0 0 0 1px #c8b79f, 0 3px 6px rgba(0, 0, 0, 0.12);
       background:
          conic-gradient(
             #ff003c 0deg,
@@ -245,244 +311,282 @@
       background: rgba(255, 255, 255, 0.12);
       pointer-events: none;
    }
-   .security-help {
-      margin-top: 10px;
-      margin-bottom: 4px;
-      font-size: var(--profile-small-text);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #000;
-      text-decoration: none;
-      display: inline-block;
+
+   /* ---------- Recent updates / timeline ---------- */
+   .timeline-title {
+      margin: 0 0 4px;
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--profile-ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.2px;
    }
-   .security-help:hover {
-      color: #000;
-   }
-   .profile-summary {
-      text-align: center;
-      padding: 12px 10px;
-      background: #f8f5ef;
-   }
-   .profile-avatar-wrap {
-      width: 74px;
-      height: 74px;
-      margin: 0 auto 8px;
-      position: relative;
-   }
-   .profile-summary img {
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      box-shadow: 0 8px 18px rgba(30, 23, 13, 0.2);
-      object-fit: cover;
-   }
-   .profile-edit-dot {
-      position: absolute;
-      right: -2px;
-      bottom: 0;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: #a65f03;
-      color: #fff;
-      border: 2px solid #fff;
+   .timeline-title i {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      cursor: pointer;
-      padding: 0;
-      line-height: 1;
-   }
-   .profile-edit-dot:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(166, 95, 3, 0.2);
-   }
-   .profile-summary h4 {
-      margin: 0;
-      color: #000;
-      font-size: 21px;
-      font-weight: 700;
-   }
-   .profile-summary p {
-      margin: 5px 0 0;
-      color: #000;
-      font-size: var(--profile-small-text);
-   }
-   .timeline-title {
-      margin: 0;
-      font-size: 21px;
-      font-weight: 700;
-      color: #000;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-   }
-   .timeline-title i {
-      color: #b26407;
-      font-size: 17px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0)), var(--profile-accent);
+      color: var(--profile-accent-contrast);
+      font-size: 15px;
+      box-shadow: 0 7px 15px rgba(64, 46, 22, 0.2);
    }
    .timeline-subtitle {
-      margin: 6px 0 8px;
-      color: #000;
+      margin: 8px 0 12px;
+      color: var(--profile-muted);
       font-size: var(--profile-small-text);
       line-height: 1.35;
    }
    .timeline-list {
       display: grid;
-      gap: 8px;
+      gap: 9px;
    }
    .timeline-item {
       position: relative;
-      padding: 8px 10px;
-      min-height: 0;
-      border: 1px solid #e6d8c4;
-      border-radius: 12px;
-      background: #f8f4ed;
+      padding: 11px 12px;
+      border: 1px solid #efe4d3;
+      border-left: 4px solid var(--profile-accent);
+      border-radius: 13px;
+      background: #fdfaf5;
    }
-   .timeline-item:after {
-      display: none;
+   .timeline-item-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+   }
+   .timeline-item-top strong {
+      font-size: 14px;
+      color: var(--profile-ink);
+      font-weight: 800;
    }
    .timeline-icon {
-      position: static;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border: 1px solid transparent;
       font-size: var(--profile-micro-text);
+      flex-shrink: 0;
    }
    .timeline-icon.new {
-      background: #f8e8cf;
+      background: #fbe8cd;
       color: #8a520a;
-      border-color: #ebc68e;
+      border-color: #eec288;
    }
    .timeline-icon.done {
-      background: #edf4ef;
-      color: #547060;
-      border-color: #cfdfd1;
+      background: #e4f2e8;
+      color: #3f7355;
+      border-color: #c3ddca;
    }
    .timeline-icon.neutral {
-      background: #eef1f4;
-      color: #667687;
-      border-color: #d5dde6;
-   }
-   .timeline-item-top {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 2px;
-   }
-   .timeline-item-top strong {
-      font-size: 14px;
-      color: #000;
-      font-weight: 700;
+      background: #eaeef2;
+      color: #5b6b7c;
+      border-color: #d2dae3;
    }
    .timeline-count {
-      min-width: 20px;
-      height: 20px;
+      min-width: 22px;
+      height: 22px;
       border-radius: 999px;
-      background: #ede3d6;
-      color: #000;
+      background: var(--profile-accent);
+      color: var(--profile-accent-contrast);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: var(--profile-micro-text);
-      font-weight: 700;
-      padding: 0 5px;
+      font-weight: 800;
+      padding: 0 6px;
+      margin-left: auto;
    }
    .timeline-link {
       display: inline-block;
-      font-size: 14px;
-      color: #000;
-      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--profile-ink);
+      font-weight: 700;
       text-decoration: none;
       line-height: 1.25;
-      margin-bottom: 0;
+   }
+   .timeline-link:hover {
+      color: var(--profile-accent);
+      text-decoration: underline;
    }
    .timeline-time {
-      margin: 2px 0 0;
-      color: #000;
+      margin: 3px 0 0;
+      color: var(--profile-muted);
       font-size: var(--profile-small-text);
       line-height: 1.35;
    }
+
+   /* ---------- Profile summary card ---------- */
+   .profile-summary {
+      text-align: center;
+      padding: 0 !important;
+      overflow: hidden;
+   }
+   .profile-summary-banner {
+      height: 74px;
+      background:
+         radial-gradient(circle at 82% -40%, rgba(255, 255, 255, 0.4), transparent 55%),
+         linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0.08)),
+         var(--profile-accent);
+   }
+   .profile-summary-body {
+      padding: 0 16px 18px;
+   }
+   .profile-avatar-wrap {
+      width: 92px;
+      height: 92px;
+      margin: -46px auto 10px;
+      position: relative;
+   }
+   .profile-summary img {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 10px 22px rgba(30, 23, 13, 0.24);
+      object-fit: cover;
+      background: #fff;
+   }
+   .profile-edit-dot {
+      position: absolute;
+      right: -2px;
+      bottom: 2px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--profile-accent);
+      color: var(--profile-accent-contrast);
+      border: 3px solid #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      box-shadow: 0 4px 10px rgba(64, 46, 22, 0.28);
+      transition: transform 0.14s ease;
+   }
+   .profile-edit-dot:hover {
+      transform: scale(1.08);
+   }
+   .profile-edit-dot:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.14);
+   }
+   .profile-summary h4 {
+      margin: 0;
+      color: var(--profile-ink);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+   }
+   .profile-summary .member-since {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #f4ede2;
+      color: #6f6049;
+      font-size: var(--profile-small-text);
+      font-weight: 700;
+   }
+   .profile-summary .member-since i {
+      color: var(--profile-accent);
+   }
+
+   /* ---------- Actions ---------- */
    .profile-side-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
       justify-content: flex-end;
-      margin-top: 10px;
-      margin-left: 0;
+      margin-top: 12px;
       width: 100%;
       position: sticky;
-      bottom: 10px;
+      bottom: 8px;
       z-index: 2;
-      padding: 8px 10px 4px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(247, 243, 236, 0), rgba(247, 243, 236, 0.96) 34px);
+      padding: 10px 12px 6px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 40px);
    }
    .profile-side-actions .save-btn {
       border: 0;
       border-radius: 14px;
-      min-height: 48px;
+      min-height: 50px;
       width: auto;
       min-width: 230px;
-      padding: 0 18px;
+      padding: 0 22px;
       font-size: 17px;
-      font-weight: 700;
+      font-weight: 800;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 8px 16px rgba(70, 43, 12, 0.2);
+      gap: 9px;
+      box-shadow: 0 10px 20px rgba(70, 43, 12, 0.24);
    }
    .profile-side-actions .save-btn:hover {
-      filter: brightness(0.96);
+      filter: brightness(0.97);
+      transform: translateY(-1px);
    }
-   #account-success,
+   .security-help {
+      font-size: var(--profile-small-text);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--profile-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+   }
+   .security-help:hover {
+      color: var(--profile-accent);
+   }
+   #account-success {
+      margin: 0 0 8px;
+      font-size: var(--profile-small-text);
+      color: #2f7a45;
+      font-weight: 700;
+   }
    #account-error {
       margin: 0 0 8px;
       font-size: var(--profile-small-text);
+      color: #c23d28;
+      font-weight: 700;
    }
+   .alert {
+      border-radius: 12px;
+   }
+
+   /* ---------- Responsive ---------- */
    @media (min-width: 1600px) {
       .profile-grid {
          grid-template-columns: minmax(0, 1.8fr) minmax(360px, 0.9fr);
-         gap: 16px;
-      }
-      .personal-card .field-grid {
-         width: min(100%, 940px);
+         gap: 18px;
       }
    }
    @media (min-width: 992px) and (max-width: 1320px) {
       .profile-grid {
          grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr);
       }
-      .field-grid {
-         gap: 9px 10px;
-      }
-      .personal-card .field-grid {
-         width: min(100%, 860px);
-      }
    }
    @media (max-width: 1199px) {
       .profile-heading h2 {
-         font-size: 42px;
+         font-size: 40px;
       }
       .profile-grid {
          grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
-      }
-      .profile-note {
-         margin: 8px 0 0;
-         color: #6b5d4a;
-         font-size: 15px;
-         font-weight: 600;
-         max-width: 680px;
-         line-height: 1.35;
       }
    }
    @media (max-width: 991px) {
@@ -515,14 +619,6 @@
       }
       .field-grid {
          grid-template-columns: minmax(0, 1fr);
-         gap: 10px;
-      }
-      .personal-card .field-grid {
-         width: 100%;
-         max-width: 100%;
-      }
-      .field-wrap.field-wrap-wide {
-         grid-column: auto;
       }
       .visual-row {
          grid-template-columns: 1fr;
@@ -531,15 +627,15 @@
       .color-row {
          flex-wrap: wrap;
          max-width: 100%;
-         gap: 6px;
+         gap: 8px;
       }
       .profile-heading h2 {
-         font-size: 36px;
+         font-size: 34px;
       }
    }
    @media (max-width: 767px) {
-      .profile-main {
-         padding: 10px;
+      .profile-heading {
+         padding: 20px;
       }
       .profile-heading p {
          font-size: 14px;
@@ -549,14 +645,14 @@
          min-width: 0;
       }
       .profile-side-actions {
-         width: 100%;
-         margin-left: 0;
+         justify-content: center;
       }
       .profile-heading h2 {
-         font-size: 32px;
+         font-size: 30px;
       }
-      .timeline-title {
-         font-size: 21px;
+      .profile-heading::after {
+         font-size: 76px;
+         opacity: 0.1;
       }
       .timeline-card.is-mobile-top {
          margin-bottom: 12px;
@@ -575,6 +671,7 @@
                <div class="profile-shell">
                   <div class="profile-main">
                      <div class="profile-heading">
+                        <span class="hero-eyebrow"><i class="fa fa-user-circle" aria-hidden="true"></i> Min konto</span>
                         <h2>Min Profil</h2>
                         <p class="profile-note">{{ $profileNoteMessage ?? 'Velkommen tilbake! Klar for å planlegge noe hyggelig?' }}</p>
                      </div>
@@ -660,7 +757,7 @@
                                        </label>
                                     </div>
                                  </div>
-                                 <div class="visual-row" style="margin-bottom:0;">
+                                 <div class="visual-row">
                                     <div>
                                        <strong>Aksentfarge</strong>
                                        <p>Hovedfarge for knapper og aktive elementer</p>
@@ -712,8 +809,11 @@
                                     </div>
                                  @empty
                                     <div class="timeline-item">
-                                       <span class="timeline-icon neutral"><i class="fa fa-info"></i></span>
-                                       <div class="timeline-item-top"><strong>Ingen nye meldinger</strong></div>
+                                       <div class="timeline-item-top">
+                                          <span class="timeline-icon neutral"><i class="fa fa-info"></i></span>
+                                          <strong>Ingen nye meldinger</strong>
+                                       </div>
+                                       <p class="timeline-time">Vi gir deg beskjed her så snart en leverandør svarer.</p>
                                     </div>
                                  @endforelse
                               </div>
@@ -727,18 +827,21 @@
                                     ? asset($profileImageRelativePath).'?v='.filemtime($profileImageAbsolutePath)
                                     : asset('front/images/profile.png');
                               @endphp
-                              <div class="profile-avatar-wrap">
-                                 <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
-                                 <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
-                                 <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
+                              <div class="profile-summary-banner"></div>
+                              <div class="profile-summary-body">
+                                 <div class="profile-avatar-wrap">
+                                    <img id="profileAvatarImage" src="{{ $profileImageUrl }}" alt="Profil">
+                                    <button type="button" class="profile-edit-dot" id="profileImageTrigger" aria-label="Endre profilbilde"><i class="fa fa-pencil"></i></button>
+                                    <input type="file" id="profileImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none;">
+                                 </div>
+                                 <h4>{{ Auth::user()->name }}</h4>
+                                 <p class="member-since"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
                               </div>
-                              <h4>{{ Auth::user()->name }}</h4>
-                              <p>Medlem siden {{ date('Y', strtotime(Auth::user()->created_at ?? now())) }}</p>
                            </div>
 
                            <div class="profile-side-actions">
                               <button class="save-btn" type="submit" form="accountForm"><i class="fa fa-save"></i> Lagre endringer</button>
-                              <a class="security-help" href="{{ url('user/update-password') }}">Glemt passord?</a>
+                              <a class="security-help" href="{{ url('user/update-password') }}"><i class="fa fa-key" aria-hidden="true"></i> Glemt passord?</a>
                            </div>
                         </div>
                      </div>
