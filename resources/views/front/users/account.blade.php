@@ -506,9 +506,11 @@
       position: sticky;
       bottom: 8px;
       z-index: 2;
-      padding: 10px 12px 6px;
+      padding: 12px 14px;
       border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 40px);
+      background: #ffffff;
+      border: 1px solid var(--profile-line);
+      box-shadow: 0 10px 26px rgba(64, 46, 22, 0.08);
    }
    .profile-side-actions .save-btn {
       border: 0;
