@@ -132,6 +132,24 @@
    .split-chat-head-actions {
       margin-left: auto;
    }
+   .split-chat-head-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+   }
+   .split-chat-avatar {
+      flex-shrink: 0;
+   }
+   .split-chat-avatar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      object-fit: cover;
+      display: block;
+      border: 1px solid #e5dfd4;
+      background: #fff;
+   }
    .split-chat-title {
       margin: 0;
       font-size: 16px;

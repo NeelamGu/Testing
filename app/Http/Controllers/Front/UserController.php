@@ -821,12 +821,17 @@ class UserController extends Controller
         $conversationTitle = 'Samtale med';
         $conversationVendorName = 'Leverandør';
         $conversationVendorUrl = '';
+        $conversationVendorImage = asset('front/images/product_images/large/no-image.png');
         if(!empty($baseEnquiry->product) && !empty($baseEnquiry->product->product_name)){
             $conversationVendorName = $baseEnquiry->product->product_name;
             $conversationTitle = 'Samtale med '.$conversationVendorName;
             $productSlug = Product::productURL($conversationVendorName);
             if(!empty($productSlug) && !empty($baseEnquiry->product->id)){
                 $conversationVendorUrl = url('product/'.$productSlug.'/'.$baseEnquiry->product->id);
+            }
+            $productMainImage = $baseEnquiry->product->product_image ?? '';
+            if(!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage))){
+                $conversationVendorImage = asset('front/images/product_images/large/'.$productMainImage);
             }
         }
 
@@ -845,7 +850,7 @@ class UserController extends Controller
         }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
-        return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','conversationVendorName','conversationVendorUrl','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel','threadStatus','isConversationClosed','isAssignmentConversation'));
+        return view('front.users.enquiries_detail')->with(compact('enquiries','enquiry_id','conversationTitle','conversationVendorName','conversationVendorUrl','conversationVendorImage','activeTopTab','conversationSubtitle','backUrl','customerLabel','vendorLabel','threadStatus','isConversationClosed','isAssignmentConversation'));
     }
 
     public function userEnquiryOverview($enqid){
@@ -1475,11 +1480,16 @@ class UserController extends Controller
 
         $conversationVendorName = 'Leverandør';
         $conversationVendorUrl = '';
+        $conversationVendorImage = asset('front/images/product_images/large/no-image.png');
         if(!empty($baseEnquiry->product) && !empty($baseEnquiry->product->product_name)){
             $conversationVendorName = $baseEnquiry->product->product_name;
             $productSlug = Product::productURL($conversationVendorName);
             if(!empty($productSlug) && !empty($baseEnquiry->product->id)){
                 $conversationVendorUrl = url('product/'.$productSlug.'/'.$baseEnquiry->product->id);
+            }
+            $productMainImage = $baseEnquiry->product->product_image ?? '';
+            if(!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage))){
+                $conversationVendorImage = asset('front/images/product_images/large/'.$productMainImage);
             }
         }
 
@@ -1523,6 +1533,7 @@ class UserController extends Controller
             'messages' => $messages,
             'vendor_name' => $conversationVendorName,
             'vendor_url' => $conversationVendorUrl,
+            'vendor_image' => $conversationVendorImage,
             'customer_label' => $customerLabel,
             'vendor_label' => $vendorLabel,
             'assignment_details' => $assignmentDetails,

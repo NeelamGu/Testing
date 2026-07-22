@@ -44,6 +44,24 @@ $messagesCountCustomer = messagesCountCustomer();
       background: linear-gradient(120deg, rgba(242, 255, 244, 0.72), rgba(246, 251, 255, 0.72));
       padding: 12px 16px;
    }
+   .conversation-head-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+   }
+   .conversation-head-avatar {
+      flex-shrink: 0;
+   }
+   .conversation-head-avatar img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      border: 1px solid rgba(225, 214, 196, 0.55);
+      background: #fff;
+   }
    .conversation-title {
       margin: 0;
       font-size: 18px;
@@ -346,6 +364,16 @@ $messagesCountCustomer = messagesCountCustomer();
          padding: 7px 9px;
       }
 
+      .conversation-head-info {
+         gap: 8px;
+      }
+
+      .conversation-head-avatar img {
+         width: 36px;
+         height: 36px;
+         border-radius: 8px;
+      }
+
       .conversation-title {
          font-size: 16px;
       }
@@ -489,7 +517,19 @@ $messagesCountCustomer = messagesCountCustomer();
                   </div>
                @endif
                 <div class="conversation-head">
-                   <div>
+                   <div class="conversation-head-info">
+                      @php
+                         $conversationVendorImage = $conversationVendorImage ?? asset('front/images/product_images/large/no-image.png');
+                      @endphp
+                      <div class="conversation-head-avatar">
+                         @if(!empty($conversationVendorUrl))
+                            <a href="{{ $conversationVendorUrl }}">
+                               <img src="{{ $conversationVendorImage }}" alt="{{ $conversationVendorName ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                            </a>
+                         @else
+                            <img src="{{ $conversationVendorImage }}" alt="{{ $conversationVendorName ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                         @endif
+                      </div>
                       <h3 class="conversation-title">
                          Samtale med
                          @if(!empty($conversationVendorUrl))
