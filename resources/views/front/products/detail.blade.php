@@ -41,6 +41,45 @@
       color: #000;
       cursor: pointer;
    }
+
+
+   /* Gallery image title fix: title wraps below image without changing image width */
+   .list-group.gallery.six-images .gslidebox {
+      position: relative;
+   }
+
+   .list-group.gallery.six-images .gslidebox > a.glightbox {
+      position: relative;
+      display: block;
+      padding-bottom: 58px !important;
+   }
+
+   .list-group.gallery.six-images .galleryimg-title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% - 58px);
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      margin-top: 8px !important;
+      display: block !important;
+      white-space: normal !important;
+      overflow: visible !important;
+      text-align: left;
+      line-height: 1.25;
+      border-radius: 0 !important;
+   }
+
+   .list-group.gallery.six-images .galleryimg-title small {
+      display: block;
+      white-space: normal !important;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow: visible !important;
+      line-height: 1.25;
+      max-height: none !important;
+   }
 </style>
 <div class="enquire-form">
    <!--Enquire Form Modal  Start Here-->

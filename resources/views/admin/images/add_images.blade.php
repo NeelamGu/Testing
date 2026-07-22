@@ -226,13 +226,17 @@ input {
                         <span style="float:left; width:110px; padding: 5px; margin: 5px;">
                           <a target="_blank" href="{{ url('front/images/product_images/large/'.$image['image']) }}"><img style="width:100px;" src="{{ url('front/images/product_images/small/'.$image['image']) }}"></a><br>
                           <input type="hidden" name="image[]" value="{{ $image['image'] }}">
-                          <input style="width:100px;" type="text" placeholder="Bildetekst" name="title[]" value="{{ $image['title'] }}"><br>
+                          <input style="width:100px;" type="text" placeholder="Bildetekst" name="title[]" maxlength="30" value="{{ $image['title'] }}"><br>
                           <a href="javascript:void(0)" class="confirmDelete" module="image" moduleid="{{ $image['id'] }}">Slett</a>
                         </span>
                       @endforeach
+                      <div style="clear: both; padding-top: 0px; padding-bottom: 5px;">
+                        <small style="color:#ff6600;">
+                            (Bildetekst kan være maksimalt 30 tegn)
+                        </small>
+                       </div>
                     </div>
                     @endif
-
                     <!-- <button type="submit" class="btn btn-primary mr-2" style="margin-top:-15px;">Legg til bildetekster</button><br><br> -->
                     <div class="form-group">
                       <!-- <label for="product_video" style="float:left;">Video-galleri (Anbefalt størrelse:  Maks 5 MB)</label> -->
