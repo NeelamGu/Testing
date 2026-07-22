@@ -505,7 +505,7 @@
          }
          $threadPreviewSource = !empty($assignmentThread['response']) ? $assignmentThread['response'] : 'Ingen ny melding ennå, åpne dialogen for detaljer.';
          $threadProductImage = $assignmentThread['product']['product_image'] ?? '';
-         $threadAvatar = (!empty($threadProductImage) && file_exists(public_path('front/images/product_images/large/'.$threadProductImage)))
+         $threadAvatar = !empty($threadProductImage)
             ? asset('front/images/product_images/large/'.$threadProductImage)
             : asset('front/images/no-image.png');
 

@@ -830,7 +830,7 @@ class UserController extends Controller
                 $conversationVendorUrl = url('product/'.$productSlug.'/'.$baseEnquiry->product->id);
             }
             $productMainImage = $baseEnquiry->product->product_image ?? '';
-            if(!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage))){
+            if(!empty($productMainImage)){
                 $conversationVendorImage = asset('front/images/product_images/large/'.$productMainImage);
             }
         }
@@ -893,7 +893,7 @@ class UserController extends Controller
                 ->count();
 
             $productMainImg = $thread->product->product_image ?? '';
-            $vendorImgUrl = (!empty($productMainImg) && file_exists(public_path('front/images/product_images/large/'.$productMainImg)))
+            $vendorImgUrl = !empty($productMainImg)
                 ? asset('front/images/product_images/large/'.$productMainImg)
                 : asset('front/images/no-image.png');
 
@@ -1488,7 +1488,7 @@ class UserController extends Controller
                 $conversationVendorUrl = url('product/'.$productSlug.'/'.$baseEnquiry->product->id);
             }
             $productMainImage = $baseEnquiry->product->product_image ?? '';
-            if(!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage))){
+            if(!empty($productMainImage)){
                 $conversationVendorImage = asset('front/images/product_images/large/'.$productMainImage);
             }
         }

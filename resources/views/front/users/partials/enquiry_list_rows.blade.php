@@ -80,7 +80,9 @@
          ? asset('front/images/category_images/'.$assignmentCategoryImage)
          : asset('front/images/no-image.png');
       $productMainImage = $enquiry['product']['product_image'] ?? '';
-      $productMainImageUrl = (!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage)))
+      // Rendered directly (no file_exists guard, which can fail on the server's runtime image dir)
+      // with the <img> onerror as the fallback, same approach as the category icon above.
+      $productMainImageUrl = !empty($productMainImage)
          ? asset('front/images/product_images/large/'.$productMainImage)
          : asset('front/images/no-image.png');
       // Direct conversations show the vendor's listing (annonse) image; assignments show the oppdrag category image.
@@ -126,7 +128,7 @@
             <div class="enquiry-row-meta">
                <span class="meta-item">
                   @if(!$isAssignment)
-                     @if(!empty($categoryImage) && file_exists(public_path('front/images/category_images/'.$categoryImage)))
+                     @if(!empty($categoryImage))
                         <img class="message-category-icon" src="{{ asset('front/images/category_images/'.$categoryImage) }}" alt="{{ $categoryName }}" onerror="this.style.display='none';">
                      @else
                         <i class="fa fa-tag"></i>
