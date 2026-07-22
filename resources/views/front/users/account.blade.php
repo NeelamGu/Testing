@@ -429,6 +429,12 @@
       text-align: center;
       padding: 22px 16px 20px !important;
    }
+   /* Override the global panel theme so this card matches the other white cards. */
+   .contact-section.account-page .profile-main .profile-summary {
+      background: var(--profile-card) !important;
+      border: 1px solid var(--profile-line) !important;
+      box-shadow: 0 10px 26px rgba(64, 46, 22, 0.08) !important;
+   }
    .profile-avatar-wrap {
       width: 92px;
       height: 92px;
