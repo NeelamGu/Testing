@@ -447,7 +447,7 @@
                               @if(!empty($threads) && count($threads) > 0)
                                  @foreach($threads as $thread)
                                     <div class="thread-item {{ ($thread['status'] ?? 0) == 0 ? 'is-completed' : '' }}">
-                                       <img src="{{ $thread['vendor_image_url'] ?? asset('front/images/profile.png') }}" alt="{{ $thread['title'] ?? '' }}" class="thread-vendor-avatar" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                                       <img src="{{ $thread['vendor_image_url'] ?? asset('front/images/no-image.png') }}" alt="{{ $thread['title'] ?? '' }}" class="thread-vendor-avatar" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
                                        <div class="thread-main">
                                           <div class="thread-head">
                                              <h4 class="thread-title">{{ $thread['title'] ?? 'Ukjent leverandør' }}</h4>

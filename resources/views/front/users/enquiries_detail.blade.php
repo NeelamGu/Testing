@@ -519,15 +519,15 @@ $messagesCountCustomer = messagesCountCustomer();
                 <div class="conversation-head">
                    <div class="conversation-head-info">
                       @php
-                         $conversationVendorImage = $conversationVendorImage ?? asset('front/images/product_images/large/no-image.png');
+                         $conversationVendorImage = $conversationVendorImage ?? asset('front/images/no-image.png');
                       @endphp
                       <div class="conversation-head-avatar">
                          @if(!empty($conversationVendorUrl))
                             <a href="{{ $conversationVendorUrl }}">
-                               <img src="{{ $conversationVendorImage }}" alt="{{ $conversationVendorName ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                               <img src="{{ $conversationVendorImage }}" alt="{{ $conversationVendorName ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
                             </a>
                          @else
-                            <img src="{{ $conversationVendorImage }}" alt="{{ $conversationVendorName ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                            <img src="{{ $conversationVendorImage }}" alt="{{ $conversationVendorName ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
                          @endif
                       </div>
                       <h3 class="conversation-title">

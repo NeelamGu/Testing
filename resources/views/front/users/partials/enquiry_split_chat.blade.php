@@ -15,17 +15,17 @@
       @endphp
       <div class="split-chat-card" data-thread-id="{{ (int)($conversation['thread_id'] ?? 0) }}" data-thread-status="{{ (int)($conversation['thread_status'] ?? 1) }}" data-assignment-id="{{ (int)($conversation['assignment_id'] ?? 0) }}" data-poll-url="{{ $conversation['poll_url'] ?? '' }}">
          @php
-            $splitVendorImage = $conversation['vendor_image'] ?? asset('front/images/product_images/large/no-image.png');
+            $splitVendorImage = $conversation['vendor_image'] ?? asset('front/images/no-image.png');
          @endphp
          <div class="split-chat-head">
             <div class="split-chat-head-info">
                <div class="split-chat-avatar">
                   @if(!empty($conversation['vendor_url']))
                      <a href="{{ $conversation['vendor_url'] }}">
-                        <img src="{{ $splitVendorImage }}" alt="{{ $conversation['vendor_name'] ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                        <img src="{{ $splitVendorImage }}" alt="{{ $conversation['vendor_name'] ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
                      </a>
                   @else
-                     <img src="{{ $splitVendorImage }}" alt="{{ $conversation['vendor_name'] ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+                     <img src="{{ $splitVendorImage }}" alt="{{ $conversation['vendor_name'] ?? 'Leverandør' }}" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
                   @endif
                </div>
                <div class="split-chat-title-wrap">

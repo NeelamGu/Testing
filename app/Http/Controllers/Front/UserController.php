@@ -821,7 +821,7 @@ class UserController extends Controller
         $conversationTitle = 'Samtale med';
         $conversationVendorName = 'Leverandør';
         $conversationVendorUrl = '';
-        $conversationVendorImage = asset('front/images/product_images/large/no-image.png');
+        $conversationVendorImage = asset('front/images/no-image.png');
         if(!empty($baseEnquiry->product) && !empty($baseEnquiry->product->product_name)){
             $conversationVendorName = $baseEnquiry->product->product_name;
             $conversationTitle = 'Samtale med '.$conversationVendorName;
@@ -895,7 +895,7 @@ class UserController extends Controller
             $productMainImg = $thread->product->product_image ?? '';
             $vendorImgUrl = (!empty($productMainImg) && file_exists(public_path('front/images/product_images/large/'.$productMainImg)))
                 ? asset('front/images/product_images/large/'.$productMainImg)
-                : asset('front/images/product_images/large/no-image.png');
+                : asset('front/images/no-image.png');
 
             $threads[] = [
                 'id' => $thread->id,
@@ -1480,7 +1480,7 @@ class UserController extends Controller
 
         $conversationVendorName = 'Leverandør';
         $conversationVendorUrl = '';
-        $conversationVendorImage = asset('front/images/product_images/large/no-image.png');
+        $conversationVendorImage = asset('front/images/no-image.png');
         if(!empty($baseEnquiry->product) && !empty($baseEnquiry->product->product_name)){
             $conversationVendorName = $baseEnquiry->product->product_name;
             $productSlug = Product::productURL($conversationVendorName);

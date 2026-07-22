@@ -75,12 +75,17 @@
       $productMainImage = $enquiry['product']['product_image'] ?? '';
       $productMainImageUrl = (!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage)))
          ? asset('front/images/product_images/large/'.$productMainImage)
-         : asset('front/images/product_images/large/no-image.png');
+         : asset('front/images/no-image.png');
+      // Direct conversations show the vendor's listing (annonse) image; assignments show the oppdrag category image.
       $avatarUrl = $isAssignment ? $categoryImageUrl : $productMainImageUrl;
       $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : ($isAssignment ? '' : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
       $previewText = !empty($previewSource) ? \Illuminate\Support\Str::limit(strip_tags($previewSource), 95) : '';
       $vendorResponseCount = (int)($enquiry['vendorResponseCount'] ?? 0);
-      $rowTitle = $enquiry['groupTitle'] ?? ($enquiry['product']['product_name'] ?? 'Ukjent leverandør');
+      $rowTitle = $enquiry['groupTitle']
+         ?? ($isAssignment
+            ? ($enquiry['enquiry_detail']['title'] ?? ($enquiry['product']['product_name'] ?? 'Oppdrag'))
+            : ($enquiry['product']['product_name'] ?? 'Ukjent leverandør'));
+      $avatarAlt = $isAssignment ? $categoryName : $rowTitle;
       $isSelected = !$isMobileList && (int)($selectedEnquiryId ?? 0) === (int)($enquiry['id'] ?? 0);
       $isCompleted = (int)($enquiry['status'] ?? 0) === 0;
       $unreadCount = (int)($enquiry['unreadCount'] ?? 0);
@@ -92,7 +97,7 @@
    <div class="enquiry-row-shell {{ $isAssignment ? 'has-menu' : '' }}">
       <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
          <div class="enquiry-row-avatar">
-            <img src="{{ $avatarUrl }}" alt="{{ $categoryName }}" class="enquiry-avatar-image" onerror="this.onerror=null;this.src='{{ asset('front/images/product_images/large/no-image.png') }}';">
+            <img src="{{ $avatarUrl }}" alt="{{ $avatarAlt }}" class="enquiry-avatar-image" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
          </div>
 
          <div class="enquiry-row-main">

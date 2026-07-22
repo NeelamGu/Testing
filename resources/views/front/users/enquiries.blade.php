@@ -507,7 +507,7 @@
          $threadProductImage = $assignmentThread['product']['product_image'] ?? '';
          $threadAvatar = (!empty($threadProductImage) && file_exists(public_path('front/images/product_images/large/'.$threadProductImage)))
             ? asset('front/images/product_images/large/'.$threadProductImage)
-            : asset('front/images/product_images/large/no-image.png');
+            : asset('front/images/no-image.png');
 
          $assignmentThreadMap[$assignmentDetailId][] = [
             'id' => (int)($assignmentThread['id'] ?? 0),
@@ -878,7 +878,7 @@
 
             var rowHtml = ''
                + '<a href="' + threadUrl + '" class="assignment-thread-row js-thread-link' + selectedClass + '" data-enquiry-id="' + threadId + '">'
-               + '  <div class="assignment-thread-avatar"><img src="' + avatar + '" alt="Leverandør" onerror="this.onerror=null;this.src=\'{{ asset('front/images/product_images/large/no-image.png') }}\';"></div>'
+               + '  <div class="assignment-thread-avatar"><img src="' + avatar + '" alt="Leverandør" onerror="this.onerror=null;this.src=\'{{ asset('front/images/no-image.png') }}\';"></div>'
                + '  <div>'
                + '    <h5 class="assignment-thread-name">' + name + '</h5>'
                + '    <p class="assignment-thread-preview">' + preview + '</p>'
