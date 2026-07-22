@@ -76,15 +76,17 @@
       if($isAssignment && $effectiveCategoryId > 0 && empty($assignmentCategoryImage)){
          $assignmentCategoryImage = \App\Models\Category::getMainCategoryImage($effectiveCategoryId);
       }
+      // Oppdrag fall back to a neutral grey avatar; direct messages to a no-image placeholder.
+      $avatarFallbackUrl = $isAssignment ? asset('front/images/profile.png') : asset('front/images/no-image.png');
       $categoryImageUrl = !empty($assignmentCategoryImage)
          ? asset('front/images/category_images/'.$assignmentCategoryImage)
-         : asset('front/images/no-image.png');
+         : $avatarFallbackUrl;
       $productMainImage = $enquiry['product']['product_image'] ?? '';
       // Rendered directly (no file_exists guard, which can fail on the server's runtime image dir)
       // with the <img> onerror as the fallback, same approach as the category icon above.
       $productMainImageUrl = !empty($productMainImage)
          ? asset('front/images/product_images/large/'.$productMainImage)
-         : asset('front/images/no-image.png');
+         : $avatarFallbackUrl;
       // Direct conversations show the vendor's listing (annonse) image; assignments show the oppdrag category image.
       $avatarUrl = $isAssignment ? $categoryImageUrl : $productMainImageUrl;
       $previewSource = !empty($enquiry['response']) ? $enquiry['response'] : ($isAssignment ? '' : 'Ingen ny melding ennå, åpne dialogen for detaljer.');
@@ -106,7 +108,7 @@
    <div class="enquiry-row-shell {{ $isAssignment ? 'has-menu' : '' }}">
       <a href="{{ $cardPrimaryUrl }}" class="enquiry-row-link js-thread-link {{ $isAssignment ? 'is-assignment' : 'is-direct' }} {{ $isCompleted ? 'is-completed' : '' }} {{ $isSelected ? 'is-selected' : '' }}" data-enquiry-id="{{ (int)($enquiry['id'] ?? 0) }}" data-desktop-url="{{ $desktopSelectUrl }}" data-assignment-id="{{ $assignmentId }}" data-is-grouped-assignment="{{ $isGroupedAssignment ? 1 : 0 }}" data-thread-ids="{{ $threadIdsCsv }}">
          <div class="enquiry-row-avatar">
-            <img src="{{ $avatarUrl }}" alt="{{ $avatarAlt }}" class="enquiry-avatar-image" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
+            <img src="{{ $avatarUrl }}" alt="{{ $avatarAlt }}" class="enquiry-avatar-image" onerror="this.onerror=null;this.src='{{ $avatarFallbackUrl }}';">
          </div>
 
          <div class="enquiry-row-main">
