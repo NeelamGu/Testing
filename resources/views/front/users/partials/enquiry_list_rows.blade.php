@@ -69,9 +69,16 @@
          ? (\App\Models\Category::getCategoryName($effectiveCategoryId) ?: ($enquiry['product']['category']['category_name'] ?? 'Kategori'))
          : ($enquiry['product']['category']['category_name'] ?? 'Kategori');
       $categoryImage = $effectiveCategoryId > 0 ? \App\Models\Category::getCategoryImage($effectiveCategoryId) : '';
-      $categoryImageUrl = (!empty($categoryImage) && file_exists(public_path('front/images/category_images/'.$categoryImage)))
-         ? asset('front/images/category_images/'.$categoryImage)
-         : asset('front/images/profile.png');
+      // Oppdrag avatar uses the category icon, walking up to the main/parent category when the
+      // leaf category has no icon of its own. Rendered directly (like the category icons on the
+      // homepage) with the <img> onerror as the safety net, since the file lives in a runtime dir.
+      $assignmentCategoryImage = $categoryImage;
+      if($isAssignment && $effectiveCategoryId > 0 && empty($assignmentCategoryImage)){
+         $assignmentCategoryImage = \App\Models\Category::getMainCategoryImage($effectiveCategoryId);
+      }
+      $categoryImageUrl = !empty($assignmentCategoryImage)
+         ? asset('front/images/category_images/'.$assignmentCategoryImage)
+         : asset('front/images/no-image.png');
       $productMainImage = $enquiry['product']['product_image'] ?? '';
       $productMainImageUrl = (!empty($productMainImage) && file_exists(public_path('front/images/product_images/large/'.$productMainImage)))
          ? asset('front/images/product_images/large/'.$productMainImage)
