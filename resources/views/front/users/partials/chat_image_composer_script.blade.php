@@ -127,9 +127,10 @@
          return null;
       }
 
-      var store = [];       // File[] – ferdig komprimerte bilder
+      var store = [];       // File[] – ferdig komprimerte bilder (fasit for utvalget)
       var objectUrls = [];  // for opprydding
-      var busyCount = 0;
+      var busyCount = 0;    // antall bilder som komprimeres akkurat nå
+      var pending = 0;      // bilder i kø/komprimering (for maks-grensen)
       var statusEl = null;
 
       function ensureStatusEl() {
@@ -201,7 +202,6 @@
             remove.innerHTML = '&times;';
             remove.addEventListener('click', function () {
                store.splice(index, 1);
-               syncInput();
                render();
             });
 
@@ -218,47 +218,60 @@
          previewWrap.style.display = store.length > 0 || busyCount > 0 ? 'block' : 'none';
       }
 
-      function alreadyStored(file) {
-         return store.some(function (existing) {
-            return existing.name === file.name &&
-               existing.size === file.size &&
-               existing.lastModified === file.lastModified;
-         });
+      function sourceSignature(file) {
+         return (file.name || '') + '|' + (file.size || 0) + '|' + (file.lastModified || 0);
+      }
+
+      function hasSource(sig) {
+         return store.some(function (existing) { return existing._srcSig === sig; });
       }
 
       function addFiles(fileList) {
          var files = Array.prototype.slice.call(fileList || []);
          if (!files.length) { return; }
 
+         var reachedLimit = false;
+
          files.forEach(function (file) {
             if (!file || !/^image\//.test(file.type || '')) {
                return;
             }
-            if (store.length >= opts.maxFiles) {
+            var sig = sourceSignature(file);
+            // Ikke legg til samme bilde to ganger (men lar deg legge det til igjen
+            // etter at det er fjernet fra listen).
+            if (hasSource(sig)) {
+               return;
+            }
+            if (store.length + pending >= opts.maxFiles) {
+               reachedLimit = true;
                return;
             }
 
+            pending++;
             setBusy(1);
             compressImage(file, opts).then(function (result) {
-               if (store.length >= opts.maxFiles) {
+               if (store.length >= opts.maxFiles || hasSource(sig)) {
                   return;
                }
                if (result.size > opts.maxBytes) {
                   window.alert('Bildet «' + (file.name || 'bilde') + '» er for stort til å sendes. Prøv et mindre bilde.');
                   return;
                }
-               if (!alreadyStored(result)) {
-                  store.push(result);
-                  syncInput();
-                  render();
-               }
+               try { result._srcSig = sig; } catch (e) { /* File tillater egne felt */ }
+               store.push(result);
+               render();
             }).catch(function () {
                // Ignorer enkeltbilder som feiler; resten sendes.
             }).then(function () {
+               pending = Math.max(0, pending - 1);
                setBusy(-1);
                render();
             });
          });
+
+         if (reachedLimit) {
+            window.alert('Du kan sende inntil ' + opts.maxFiles + ' bilder per melding.');
+         }
       }
 
       // ---- Hendelser ----
@@ -270,11 +283,25 @@
       }
 
       fileInput.addEventListener('change', function () {
-         // addFiles kopierer FileList-en synkront, komprimerer asynkront og
-         // skriver det ferdige utvalget tilbake til input.files via syncInput().
-         // Å fjerne et bilde tømmer input-feltet igjen, så samme fil kan velges på nytt.
+         // addFiles kopierer FileList-en synkront og legger bildene til i `store`.
+         // Deretter tømmes selve input-feltet slik at du kan trykke på bilde-knappen
+         // igjen og legge til flere bilder (også nøyaktig samme fil) uten at et nytt
+         // valg overskriver de forrige. Utvalget skrives tilbake til feltet først når
+         // skjemaet sendes (se submit-lytteren under).
          addFiles(fileInput.files);
+         try { fileInput.value = ''; } catch (e) { /* noop */ }
       });
+
+      // Skriv det akkumulerte utvalget tilbake til fil-feltet rett før skjemaet
+      // sendes, slik at FormData får med alle bildene. Capture-lytteren på skjemaet
+      // kjører før de eksisterende submit-håndtererne, og forsvinner sammen med
+      // skjemaet når panelet lastes på nytt.
+      var ownerForm = fileInput.form || (fileInput.closest ? fileInput.closest('form') : null);
+      if (ownerForm) {
+         ownerForm.addEventListener('submit', function () {
+            syncInput();
+         }, true);
+      }
 
       if (opts.allowPaste) {
          var pasteTarget = opts.pasteTarget
@@ -300,6 +327,8 @@
 
       function clear() {
          store = [];
+         pending = 0;
+         busyCount = 0;
          revokeUrls();
          previewList.innerHTML = '';
          previewWrap.style.display = 'none';
