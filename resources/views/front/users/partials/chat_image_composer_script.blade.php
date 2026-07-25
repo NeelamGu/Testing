@@ -5,7 +5,7 @@
    'use strict';
 
    if (window.ChatImageComposer) {
-      return; // allerede definert (unngå dobbel-definering ved flere @include)
+      return; // allerede definert (unngaa dobbel-definering ved flere inkluderinger)
    }
 
    var DEFAULTS = {
