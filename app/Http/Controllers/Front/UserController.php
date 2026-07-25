@@ -846,7 +846,10 @@ class UserController extends Controller
             ? url('user/enquiries/'.$baseEnquiry->id.'/overview')
             : url('user/enquiries/');
         if ((request()->get('ui') === 'mobile' || request()->get('return_to') === 'messages') && !empty($baseEnquiry->enquiry_detail_id)) {
-            $backUrl = url('user/enquiries');
+            // Før tilbake til fanen brukeren kom fra (oppdrag hvis eksplisitt angitt, ellers meldinger).
+            $backUrl = request()->get('from') === 'assignment'
+                ? url('user/enquiries?message_type=assignment')
+                : url('user/enquiries');
         }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
@@ -878,6 +881,15 @@ class UserController extends Controller
 
         $threads = [];
         $isMobileUi = request()->get('ui') === 'mobile';
+        $fromTab = request()->get('from');
+        $threadQuery = [];
+        if($isMobileUi){
+            $threadQuery['ui'] = 'mobile';
+        }
+        if(!empty($fromTab)){
+            $threadQuery['from'] = $fromTab;
+        }
+        $threadQueryString = !empty($threadQuery) ? '?'.http_build_query($threadQuery) : '';
         foreach($allAssignmentThreads as $thread){
             $lastMessage = EnquiriesResponse::where('enquiry_id',$thread->id)
                 ->orderBy('id','Desc')
@@ -911,7 +923,7 @@ class UserController extends Controller
                 'last_date' => $lastMessage
                     ? date('d.m.y, H:i', strtotime($lastMessage->created_at))
                     : date('d.m.y, H:i', strtotime($thread->updated_at ?? $thread->created_at)),
-                'message_url' => url('user/enquiries/'.$thread->id).($isMobileUi ? '?ui=mobile' : ''),
+                'message_url' => url('user/enquiries/'.$thread->id).$threadQueryString,
             ];
         }
 
@@ -939,8 +951,13 @@ class UserController extends Controller
             $assignmentTitle = $baseEnquiry->enquiryDetail->title;
         }
 
+        // «Tilbake» skal føre til fanen brukeren kom fra (meldinger eller oppdrag).
+        $backUrl = $fromTab === 'messages'
+            ? url('user/enquiries')
+            : url('user/enquiries?message_type=assignment');
+
         return view('front.users.enquiries_assignment_overview')
-            ->with(compact('threads','assignmentTitle','baseEnquiry'));
+            ->with(compact('threads','assignmentTitle','baseEnquiry','backUrl'));
     }
 
     public function userEnquiryMessages(Request $request, $enqid){

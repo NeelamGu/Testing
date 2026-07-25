@@ -61,6 +61,9 @@
          : $desktopSelectUrl;
       if($isMobileList){
          $cardPrimaryUrl .= (str_contains($cardPrimaryUrl, '?') ? '&' : '?').'ui=mobile';
+         // Husk hvilken fane brukeren kom fra, slik at «Tilbake» fører dit igjen.
+         $originTab = (isset($message_type) && $message_type === 'assignment') ? 'assignment' : 'messages';
+         $cardPrimaryUrl .= '&from='.$originTab;
       }
       $assignmentCategoryId = (int)($enquiry['enquiry_detail']['category_id'] ?? 0);
       $productCategoryId = (int)($enquiry['product']['category_id'] ?? 0);

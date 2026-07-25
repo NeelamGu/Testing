@@ -396,7 +396,7 @@
                         <div>
                            <h3 class="assignment-title">{{ $assignmentTitle }}</h3>
                         </div>
-                        <a class="assignment-back-link" href="{{ url('user/enquiries?message_type=assignment') }}"><i class="fa fa-arrow-left" style="margin-right:6px;"></i>Tilbake til oversikt</a>
+                        <a class="assignment-back-link" href="{{ $backUrl ?? url('user/enquiries?message_type=assignment') }}"><i class="fa fa-arrow-left" style="margin-right:6px;"></i>Tilbake til oversikt</a>
                      </div>
                      <div class="assignment-body">
                         <div class="assignment-layout">
