@@ -835,17 +835,24 @@ class UserController extends Controller
             }
         }
 
-        $activeTopTab = !empty($baseEnquiry->enquiry_detail_id) ? 'oppdrag' : 'meldinger';
+        // En direkte melding får også en enquiry_detail_id (uten tittel/dato). Den er kun
+        // et ekte oppdrag når den koblede oppdragsraden faktisk har tittel eller dato –
+        // ellers er det en frittstående direkte samtale som ikke er knyttet til et oppdrag.
+        $assignmentTitle = trim((string)($baseEnquiry->enquiryDetail->title ?? ''));
+        $assignmentDate = trim((string)($baseEnquiry->enquiryDetail->assignment_date ?? ''));
+        $isAssignmentConversation = !empty($baseEnquiry->enquiry_detail_id)
+            && ($assignmentTitle !== '' || $assignmentDate !== '');
+
+        $activeTopTab = $isAssignmentConversation ? 'oppdrag' : 'meldinger';
         $threadStatus = (int)($baseEnquiry->status ?? 1);
         $isConversationClosed = $threadStatus !== 1;
-        $isAssignmentConversation = !empty($baseEnquiry->enquiry_detail_id);
-        $conversationSubtitle = !empty($baseEnquiry->enquiry_detail_id)
+        $conversationSubtitle = $isAssignmentConversation
             ? 'Melding i dette oppdraget mellom deg og leverandør.'
             : 'Direkte melding mellom deg og leverandør.';
-        $backUrl = !empty($baseEnquiry->enquiry_detail_id)
+        $backUrl = $isAssignmentConversation
             ? url('user/enquiries/'.$baseEnquiry->id.'/overview')
             : url('user/enquiries/');
-        if ((request()->get('ui') === 'mobile' || request()->get('return_to') === 'messages') && !empty($baseEnquiry->enquiry_detail_id)) {
+        if ((request()->get('ui') === 'mobile' || request()->get('return_to') === 'messages') && $isAssignmentConversation) {
             // Ut av en melding i et oppdrag skal føre tilbake til selve oppdraget (oversikten),
             // ikke til hovedfanen. Bevar ui/from slik at oversiktens egen «Tilbake» treffer riktig fane.
             $overviewQuery = [];
@@ -874,9 +881,21 @@ class UserController extends Controller
             abort(404);
         }
 
-        // Direct enquiries do not have assignment overviews.
-        if(empty($baseEnquiry->enquiry_detail_id)){
-            return redirect()->to(url('user/enquiries/'.$baseEnquiry->id));
+        // Direkte meldinger (ingen oppdragstittel/-dato) har ingen oppdrags-oversikt –
+        // send dem til sin egen samtale i stedet, med ui/from bevart.
+        $overviewAssignmentTitle = trim((string)($baseEnquiry->enquiryDetail->title ?? ''));
+        $overviewAssignmentDate = trim((string)($baseEnquiry->enquiryDetail->assignment_date ?? ''));
+        $isRealAssignment = !empty($baseEnquiry->enquiry_detail_id)
+            && ($overviewAssignmentTitle !== '' || $overviewAssignmentDate !== '');
+        if(!$isRealAssignment){
+            $detailQuery = [];
+            if(request()->get('ui') === 'mobile'){
+                $detailQuery['ui'] = 'mobile';
+            }
+            if(!empty(request()->get('from'))){
+                $detailQuery['from'] = request()->get('from');
+            }
+            return redirect()->to(url('user/enquiries/'.$baseEnquiry->id).(!empty($detailQuery) ? '?'.http_build_query($detailQuery) : ''));
         }
 
         $allAssignmentThreads = ProductsEnquiry::with(['product','vendor'])
