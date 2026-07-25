@@ -1,17 +1,12 @@
-/**
- * Delt bildekomponist for chatten i kundepanelet.
- *
- * Brukes både av desktop split-chatten og mobil-detaljsiden. Håndterer:
- *  - Nedskalering + JPEG-komprimering av bilder på klienten (før opplasting),
- *    slik at store mobilbilder ikke blir avvist av serveren og lastes raskere.
- *  - Forhåndsvisning med fjern-knapp per bilde.
- *  - Å legge til flere bilder i flere omganger uten å miste tidligere valg.
- *  - Lim inn bilder fra utklippstavlen (skjermbilder).
- *
- * Ren vanilla-JS – ingen jQuery-avhengighet.
- */
+{{-- Delt bildekomponist for chatten i kundepanelet. Inlines direkte i siden slik
+     at den alltid er tilgjengelig (ingen ekstern fil som kan mangle/caches feil). --}}
+<script>
 (function (window, document) {
    'use strict';
+
+   if (window.ChatImageComposer) {
+      return; // allerede definert (unngå dobbel-definering ved flere @include)
+   }
 
    var DEFAULTS = {
       maxFiles: 8,          // maks antall bilder per melding
@@ -177,6 +172,13 @@
          objectUrls = [];
       }
 
+      function formatSize(bytes) {
+         if (bytes >= 1024 * 1024) {
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+         }
+         return Math.max(1, Math.round(bytes / 1024)) + ' KB';
+      }
+
       function render() {
          revokeUrls();
          previewList.innerHTML = '';
@@ -214,13 +216,6 @@
          });
 
          previewWrap.style.display = store.length > 0 || busyCount > 0 ? 'block' : 'none';
-      }
-
-      function formatSize(bytes) {
-         if (bytes >= 1024 * 1024) {
-            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-         }
-         return Math.max(1, Math.round(bytes / 1024)) + ' KB';
       }
 
       function alreadyStored(file) {
@@ -268,7 +263,10 @@
 
       // ---- Hendelser ----
       if (attachBtn) {
-         attachBtn.addEventListener('click', function () { fileInput.click(); });
+         attachBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            fileInput.click();
+         });
       }
 
       fileInput.addEventListener('change', function () {
@@ -323,3 +321,4 @@
       compressImage: compressImage
    };
 })(window, document);
+</script>

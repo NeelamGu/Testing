@@ -640,7 +640,7 @@
 @endsection
 
 @section('javascript')
-<script src="{{ url('front/js/chat-image-composer.js') }}?v={{ @filemtime(public_path('front/js/chat-image-composer.js')) }}"></script>
+@include('front.users.partials.chat_image_composer_script')
 <script>
    window.currentMessageType = @json($message_type ?? '');
    window.assignmentThreadMap = @json($assignmentThreadMap);
