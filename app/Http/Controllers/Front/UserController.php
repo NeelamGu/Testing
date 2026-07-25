@@ -989,10 +989,11 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                     'enquiry_id' => 'required|integer',
                     'message' => 'nullable|string|max:2000',
-                    'images.*' => 'mimes:jpeg,jpg,png|max:1024',
+                    'images.*' => 'mimes:jpeg,jpg,png|max:5120',
                 ],
                 [
-                    'images.*.mimes' => 'Error: Image must be of type jpeg, jpg or png',
+                    'images.*.mimes' => 'Bildet må være av typen jpeg, jpg eller png.',
+                    'images.*.max' => 'Bildet er for stort. Maks størrelse er 5 MB.',
                 ]
             );
 

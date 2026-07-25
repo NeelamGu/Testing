@@ -342,6 +342,73 @@
    .upload-file-area {
       display: none !important;
    }
+   .image-preview-wrap {
+      margin-top: 8px;
+      display: none;
+      border: 1px solid #d5e0ec;
+      border-radius: 12px;
+      padding: 8px;
+      background: #f3f8fd;
+   }
+   .image-preview-status {
+      display: none;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #2f6f4a;
+   }
+   .image-preview-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+   }
+   .image-preview-item {
+      position: relative;
+      width: 74px;
+      text-align: center;
+   }
+   .image-preview-item img {
+      width: 74px;
+      height: 74px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #c7d6e6;
+      display: block;
+      background: #fff;
+   }
+   .image-preview-remove {
+      position: absolute;
+      top: -7px;
+      right: -7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid #e2b4ac;
+      background: #fff;
+      color: #b3382a;
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(42, 58, 79, 0.18);
+      padding: 0;
+   }
+   .image-preview-remove:hover {
+      background: #ffe8e4;
+      color: #7f1f12;
+   }
+   .image-preview-meta {
+      display: block;
+      margin-top: 4px;
+      font-size: 10px;
+      color: #54687d;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
    .split-chat-send {
       min-height: 36px;
       border-radius: 999px;
@@ -573,6 +640,7 @@
 @endsection
 
 @section('javascript')
+<script src="{{ url('front/js/chat-image-composer.js') }}?v={{ @filemtime(public_path('front/js/chat-image-composer.js')) }}"></script>
 <script>
    window.currentMessageType = @json($message_type ?? '');
    window.assignmentThreadMap = @json($assignmentThreadMap);
@@ -1010,6 +1078,7 @@
             autoResizeSplitInput();
             forceSplitChatBottomDeferred();
             startSplitChatPolling();
+            initSplitImageComposer();
 
             if (shouldPushState) {
                window.history.pushState({ splitChatUrl: url }, '', url);
@@ -1235,37 +1304,27 @@
          autoResizeSplitInput();
       });
 
-      $(document).on('click', '#splitComposerAttachBtn', function(){
-         $('#splitComposerFileInput').trigger('click');
-      });
+      var splitComposer = null;
 
-      $(document).on('change', '#splitComposerFileInput', function(){
-         var $previewWrap = $('#splitImagePreviewWrap');
-         var $previewList = $('#splitImagePreviewList');
-         $previewList.empty();
-         var files = this.files || [];
-         if (!files.length) {
-            $previewWrap.hide();
+      function initSplitImageComposer() {
+         if (splitComposer) {
+            splitComposer.clear();
+            splitComposer = null;
+         }
+         if (!window.ChatImageComposer || !document.getElementById('splitComposerFileInput')) {
             return;
          }
-
-         Array.prototype.forEach.call(files, function(file){
-            if (!file || !file.type || file.type.indexOf('image/') !== 0) {
-               return;
-            }
-            var url = URL.createObjectURL(file);
-            var $item = $('<div class="image-preview-item"></div>');
-            $item.append($('<img>').attr('src', url).attr('alt', 'Bildepreview'));
-            $item.append($('<span class="image-preview-meta"></span>').text(file.name || 'Bilde'));
-            $previewList.append($item);
+         splitComposer = window.ChatImageComposer.init({
+            fileInput: '#splitComposerFileInput',
+            attachBtn: '#splitComposerAttachBtn',
+            previewWrap: '#splitImagePreviewWrap',
+            previewList: '#splitImagePreviewList',
+            submitBtn: "#splitReplyEnquiryForm button[type='submit']",
+            pasteTarget: '#splitReplyEnquiryForm'
          });
+      }
 
-         if ($previewList.children().length > 0) {
-            $previewWrap.show();
-         } else {
-            $previewWrap.hide();
-         }
-      });
+      initSplitImageComposer();
 
       $(document).on('submit', '#splitReplyEnquiryForm', function(e){
          e.preventDefault();
@@ -1299,8 +1358,9 @@
             success: function(resp){
                if (resp && resp.status) {
                   form.reset();
-                  $('#splitImagePreviewList').empty();
-                  $('#splitImagePreviewWrap').hide();
+                  if (splitComposer) {
+                     splitComposer.clear();
+                  }
                   appendSplitMessages(resp.message_html || '', resp.message_id || 0);
                   autoResizeSplitInput();
                   forceSplitChatBottomDeferred();

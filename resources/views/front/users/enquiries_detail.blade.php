@@ -294,7 +294,15 @@ $messagesCountCustomer = messagesCountCustomer();
       flex-wrap: wrap;
       gap: 8px;
    }
+   .image-preview-status {
+      display: none;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #2f6f4a;
+   }
    .image-preview-item {
+      position: relative;
       width: 74px;
       text-align: center;
    }
@@ -306,6 +314,30 @@ $messagesCountCustomer = messagesCountCustomer();
       border: 1px solid #c7d6e6;
       display: block;
       background: #fff;
+   }
+   .image-preview-remove {
+      position: absolute;
+      top: -7px;
+      right: -7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid #e2b4ac;
+      background: #fff;
+      color: #b3382a;
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(42, 58, 79, 0.18);
+      padding: 0;
+   }
+   .image-preview-remove:hover {
+      background: #ffe8e4;
+      color: #7f1f12;
    }
    .image-preview-meta {
       display: block;
@@ -594,6 +626,7 @@ $messagesCountCustomer = messagesCountCustomer();
 
 @section('javascript')
 
+<script src="{{ url('front/js/chat-image-composer.js') }}?v={{ @filemtime(public_path('front/js/chat-image-composer.js')) }}"></script>
 <script>
     $(document).ready(function () {
       var enquiryId = "{{ $enquiry_id }}";
@@ -612,46 +645,29 @@ $messagesCountCustomer = messagesCountCustomer();
       var lastMessageId = parseInt($chatMessages.data("last-id"), 10) || 0;
       var shouldStickToBottom = true;
 
-      function clearImagePreview() {
-         previewObjectUrls.forEach(function (url) {
-            URL.revokeObjectURL(url);
+      var detailComposer = null;
+      if (window.ChatImageComposer) {
+         detailComposer = window.ChatImageComposer.init({
+            fileInput: '#composerFileInput',
+            attachBtn: '#composerAttachBtn',
+            previewWrap: '#imagePreviewWrap',
+            previewList: '#imagePreviewList',
+            submitBtn: "#replyEnquiryForm button[type='submit']",
+            pasteTarget: '#replyEnquiryForm'
          });
-         previewObjectUrls = [];
-         $imagePreviewList.empty();
-         $imagePreviewWrap.hide();
       }
 
       function hasSelectedImage() {
+         if (detailComposer) {
+            return detailComposer.count() > 0;
+         }
          var input = $fileInput.get(0);
          return !!(input && input.files && input.files.length > 0);
       }
 
-      function renderImagePreview() {
-         clearImagePreview();
-
-         var input = $fileInput.get(0);
-         if (!input || !input.files || !input.files.length) {
-            return;
-         }
-
-         Array.prototype.forEach.call(input.files, function (file) {
-            if (!file || !file.type || file.type.indexOf("image/") !== 0) {
-               return;
-            }
-
-            var previewUrl = URL.createObjectURL(file);
-            previewObjectUrls.push(previewUrl);
-
-            var $item = $('<div class="image-preview-item"></div>');
-            var $img = $("<img>").attr("src", previewUrl).attr("alt", "Bildepreview");
-            var $meta = $('<span class="image-preview-meta"></span>').text(file.name || "Bilde");
-
-            $item.append($img).append($meta);
-            $imagePreviewList.append($item);
-         });
-
-         if ($imagePreviewList.children().length > 0) {
-            $imagePreviewWrap.show();
+      function clearImagePreview() {
+         if (detailComposer) {
+            detailComposer.clear();
          }
       }
 
@@ -837,15 +853,6 @@ $messagesCountCustomer = messagesCountCustomer();
             pollNewMessages(false);
          }
       }, 4000);
-
-       $attachBtn.on("click", function () {
-          $fileInput.trigger("click");
-       });
-
-       $fileInput.on("change", function () {
-          renderImagePreview();
-          autoResizeMessageInput();
-       });
 
        $messageInput.on("input", function () {
           autoResizeMessageInput();
