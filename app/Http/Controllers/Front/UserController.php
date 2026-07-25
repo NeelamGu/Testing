@@ -846,10 +846,17 @@ class UserController extends Controller
             ? url('user/enquiries/'.$baseEnquiry->id.'/overview')
             : url('user/enquiries/');
         if ((request()->get('ui') === 'mobile' || request()->get('return_to') === 'messages') && !empty($baseEnquiry->enquiry_detail_id)) {
-            // Før tilbake til fanen brukeren kom fra (oppdrag hvis eksplisitt angitt, ellers meldinger).
-            $backUrl = request()->get('from') === 'assignment'
-                ? url('user/enquiries?message_type=assignment')
-                : url('user/enquiries');
+            // Ut av en melding i et oppdrag skal føre tilbake til selve oppdraget (oversikten),
+            // ikke til hovedfanen. Bevar ui/from slik at oversiktens egen «Tilbake» treffer riktig fane.
+            $overviewQuery = [];
+            if(request()->get('ui') === 'mobile'){
+                $overviewQuery['ui'] = 'mobile';
+            }
+            if(!empty(request()->get('from'))){
+                $overviewQuery['from'] = request()->get('from');
+            }
+            $backUrl = url('user/enquiries/'.$baseEnquiry->id.'/overview')
+                .(!empty($overviewQuery) ? '?'.http_build_query($overviewQuery) : '');
         }
         [$customerLabel, $vendorLabel] = $this->getChatParticipantLabels($baseEnquiry);
 
