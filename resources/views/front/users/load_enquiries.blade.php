@@ -176,8 +176,9 @@ use App\Models\Category;
       border-color: var(--customer-panel-accent) !important;
       color: var(--customer-panel-accent-contrast, #ffffff) !important;
    }
-   /* Mobil-linje: skjult på desktop, vist i mobil-blokken lenger ned */
-   .category-filter-bar {
+   /* Mobil-verktøylinje (status + kategori): skjult på desktop, vist i mobil-blokken */
+   .category-filter-bar,
+   .mobile-filter-toolbar {
       display: none;
    }
    .message-list {
@@ -1373,7 +1374,7 @@ use App\Models\Category;
          gap: 0;
          border: none;
          background: transparent;
-         padding: 0;
+         padding: 0 0 calc(env(safe-area-inset-bottom) + 8px);
          overflow: visible;
       }
 
@@ -1574,11 +1575,68 @@ use App\Models\Category;
          color: #8a7c68;
       }
 
-      /* Kategori-filter som vannrett, sveipbar pille-linje over lista på mobil.
+      /* App-stil filter-verktøylinje */
+      .mobile-filter-toolbar {
+         display: block;
+         padding: 4px 0 6px;
+      }
+
+      /* Segmentkontroll for status (Alle / Aktive / Fullførte) */
+      .mobile-status-segments {
+         display: flex;
+         gap: 4px;
+         background: #efe7d8;
+         border-radius: 13px;
+         padding: 4px;
+         margin: 0 0 10px;
+      }
+
+      .mobile-status-segments .status-filter-btn {
+         flex: 1;
+         min-height: 38px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         gap: 6px;
+         border: none;
+         border-radius: 10px;
+         background: transparent;
+         color: #6d5f4a;
+         font-size: 13px;
+         font-weight: 700;
+         text-decoration: none !important;
+         padding: 0 4px;
+         white-space: nowrap;
+      }
+
+      .contact-section.account-page .mobile-status-segments .status-filter-btn.is-active {
+         background: #fff !important;
+         border: none !important;
+         color: #2b2418 !important;
+         box-shadow: 0 2px 6px rgba(60, 45, 24, 0.14);
+      }
+
+      .mobile-status-segments .seg-count {
+         font-size: 11px;
+         font-weight: 700;
+         color: #9a8a72;
+         background: rgba(90, 70, 40, 0.09);
+         border-radius: 999px;
+         min-width: 18px;
+         padding: 1px 6px;
+         text-align: center;
+      }
+
+      .contact-section.account-page .mobile-status-segments .status-filter-btn.is-active .seg-count {
+         color: var(--customer-panel-accent, #e78002);
+         background: rgba(231, 128, 2, 0.13);
+      }
+
+      /* Kategori-filter som vannrett, sveipbar pille-linje.
          Strekker seg ut til panelkanten slik at pillene kan dras helt ut. */
       .category-filter-bar {
          display: block;
-         margin: 0 -12px 12px;
+         margin: 0 -12px 0;
          max-width: none;
       }
 
@@ -1628,16 +1686,27 @@ use App\Models\Category;
 
 <div class="message-hub">
    <input type="hidden" id="selectedEnquiryId" value="{{ (int)($selectedEnquiryId ?? 0) }}">
-   @if(!empty($allcategories))
-      <div class="category-filter-bar">
-         <div class="category-filter-track">
-            <a href="javascript:void(0)" class="category-chip {{ empty($enqCat) ? 'is-active' : '' }}" data-cat="">Alle kategorier</a>
-            @foreach($allcategories as $cat)
-               <a href="javascript:void(0)" class="category-chip {{ (isset($enqCat) && (string)$enqCat === (string)$cat) ? 'is-active' : '' }}" data-cat="{{ $cat }}">{{ $cat }}</a>
-            @endforeach
-         </div>
+
+   {{-- App-stil filter-verktøylinje (kun mobil) --}}
+   <div class="mobile-filter-toolbar">
+      <div class="mobile-status-segments">
+         <a href="javascript:void(0)" class="status-filter-btn {{ ($active_close === '' || $active_close === null) ? 'is-active' : '' }}" data-status="">Alle <span class="seg-count">{{ (int)($totalAssignments ?? 0) }}</span></a>
+         <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '1' ? 'is-active' : '' }}" data-status="1">Aktive <span class="seg-count">{{ (int)($activeAssignments ?? 0) }}</span></a>
+         <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '0' ? 'is-active' : '' }}" data-status="0">Fullførte <span class="seg-count">{{ (int)($completedAssignments ?? 0) }}</span></a>
       </div>
-   @endif
+
+      @if(!empty($allcategories))
+         <div class="category-filter-bar">
+            <div class="category-filter-track">
+               <a href="javascript:void(0)" class="category-chip {{ empty($enqCat) ? 'is-active' : '' }}" data-cat="">Alle kategorier</a>
+               @foreach($allcategories as $cat)
+                  <a href="javascript:void(0)" class="category-chip {{ (isset($enqCat) && (string)$enqCat === (string)$cat) ? 'is-active' : '' }}" data-cat="{{ $cat }}">{{ $cat }}</a>
+               @endforeach
+            </div>
+         </div>
+      @endif
+   </div>
+
    <div class="message-body-layout">
       <div class="message-filter-shell">
          <div class="status-filter-panel">
