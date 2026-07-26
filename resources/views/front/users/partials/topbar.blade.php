@@ -136,34 +136,33 @@
       background: #f7efe2;
       color: #b26407;
    }
+   /* Transform-basert overgang (ingen opacity-fade) slik at bakgrunnen aldri
+      vises mellom panelene – unngår den hvite blinken ved fanebytte. */
    .contact-section.account-page.customer-panel-switch-out {
-      opacity: 0;
-      transform: translateY(6px) scale(0.995);
-      transition: opacity 0.11s cubic-bezier(0.22, 1, 0.36, 1), transform 0.11s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform;
+      transform: translateY(4px) scale(0.996);
+      transition: transform 0.11s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
    }
    .contact-section.account-page.customer-panel-switch-in {
-      opacity: 0;
-      transform: translateY(6px) scale(0.995);
-      will-change: opacity, transform;
+      transform: translateY(7px);
+      will-change: transform;
    }
    .contact-section.account-page.customer-panel-switch-in.customer-panel-switch-ready {
-      opacity: 1;
       transform: translateY(0);
-      transition: opacity 0.16s cubic-bezier(0.22, 1, 0.36, 1), transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
    }
    .contact-section.account-page.customer-panel-switch-out-lite {
-      opacity: 0;
-      transition: opacity 0.09s ease-out;
-      will-change: opacity;
+      transform: scale(0.997);
+      transition: transform 0.09s ease-out;
+      will-change: transform;
    }
    .contact-section.account-page.customer-panel-switch-in-lite {
-      opacity: 0;
-      will-change: opacity;
+      transform: translateY(5px);
+      will-change: transform;
    }
    .contact-section.account-page.customer-panel-switch-in-lite.customer-panel-switch-ready {
-      opacity: 1;
-      transition: opacity 0.12s ease-out;
+      transform: translateY(0);
+      transition: transform 0.12s ease-out;
    }
    .contact-section.account-page.customer-panel-loading {
       pointer-events: none;
@@ -177,6 +176,49 @@
       .contact-section.account-page.customer-panel-switch-in-lite.customer-panel-switch-ready {
          transition: none !important;
          transform: none !important;
+      }
+   }
+
+   /* ===== Slide-overgang mellom kundepanel-sider (åpne/lukke samtale og oppdrag).
+      Cross-document View Transitions: siden glir inn fra høyre når du åpner en
+      samtale/oppdrag, og ut igjen når du går tilbake – ingen hvit blink.
+      Faller elegant tilbake til vanlig navigasjon der det ikke støttes. ===== */
+   @view-transition {
+      navigation: auto;
+   }
+   ::view-transition-group(root) {
+      animation-duration: 0.3s;
+      animation-timing-function: cubic-bezier(0.3, 0.7, 0.4, 1);
+   }
+   html:active-view-transition-type(cp-nav-forward)::view-transition-old(root) {
+      animation-name: cp-slide-out-left;
+   }
+   html:active-view-transition-type(cp-nav-forward)::view-transition-new(root) {
+      animation-name: cp-slide-in-right;
+   }
+   html:active-view-transition-type(cp-nav-back)::view-transition-old(root) {
+      animation-name: cp-slide-out-right;
+   }
+   html:active-view-transition-type(cp-nav-back)::view-transition-new(root) {
+      animation-name: cp-slide-in-left;
+   }
+   @keyframes cp-slide-in-right {
+      from { transform: translateX(100%); }
+   }
+   @keyframes cp-slide-out-left {
+      to { transform: translateX(-100%); }
+   }
+   @keyframes cp-slide-in-left {
+      from { transform: translateX(-100%); }
+   }
+   @keyframes cp-slide-out-right {
+      to { transform: translateX(100%); }
+   }
+   @media (prefers-reduced-motion: reduce) {
+      ::view-transition-group(root),
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+         animation-duration: 0.001ms !important;
       }
    }
    @media (max-width: 991px) {
@@ -1125,6 +1167,63 @@
       if (!window.__customerPanelResizeBound) {
          window.__customerPanelResizeBound = true;
          window.addEventListener('resize', syncAccountTimelinePosition);
+      }
+
+      // ---- Retningsbestemt slide ved full sidenavigasjon (samtaler/oppdrag) ----
+      // Bruker cross-document View Transitions. Dybde: liste = 0, oversikt = 1,
+      // samtale = 2. Går man dypere -> slide framover, grunnere -> slide tilbake.
+      function cpPanelDepth(pathname) {
+         var p = String(pathname || '').replace(/\/+$/, '');
+         var m = p.match(/^\/user\/enquiries(?:\/(\d+)(\/overview)?)?$/);
+         if (m) {
+            if (!m[1]) { return 0; }
+            if (m[2]) { return 1; }
+            return 2;
+         }
+         return 0;
+      }
+
+      function cpUrlPath(url) {
+         try {
+            return new URL(url, window.location.origin).pathname;
+         } catch (e) {
+            return '';
+         }
+      }
+
+      function cpApplyNavType(viewTransition, fromPath, toPath) {
+         if (!viewTransition || !viewTransition.types || typeof viewTransition.types.add !== 'function') {
+            return;
+         }
+         try {
+            var delta = cpPanelDepth(toPath) - cpPanelDepth(fromPath);
+            if (delta > 0) {
+               viewTransition.types.add('cp-nav-forward');
+            } else if (delta < 0) {
+               viewTransition.types.add('cp-nav-back');
+            }
+         } catch (e) { /* ignorer – faller tilbake til standard overgang */ }
+      }
+
+      if (!window.__customerPanelViewTransitionsBound) {
+         window.__customerPanelViewTransitionsBound = true;
+
+         window.addEventListener('pageswap', function (e) {
+            try { sessionStorage.setItem('cpPrevPath', window.location.pathname); } catch (err) {}
+            if (!e || !e.viewTransition) { return; }
+            var toUrl = (e.activation && e.activation.entry && e.activation.entry.url) || '';
+            cpApplyNavType(e.viewTransition, window.location.pathname, cpUrlPath(toUrl));
+         });
+
+         window.addEventListener('pagereveal', function (e) {
+            if (!e || !e.viewTransition) { return; }
+            var fromPath = '';
+            try { fromPath = sessionStorage.getItem('cpPrevPath') || ''; } catch (err) {}
+            if (!fromPath && window.navigation && window.navigation.activation && window.navigation.activation.from) {
+               fromPath = cpUrlPath(window.navigation.activation.from.url);
+            }
+            cpApplyNavType(e.viewTransition, fromPath, window.location.pathname);
+         });
       }
 
       setActiveNavigation(getTabTypeFromUrl(window.location.href));
