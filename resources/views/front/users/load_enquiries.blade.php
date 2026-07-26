@@ -1322,6 +1322,234 @@ use App\Models\Category;
          font-size: 10px;
       }
    }
+
+   /* ============================================================
+      Mobil innboks – makeover (kun kundepanelet, kun mobil-listen).
+      Scopet under .message-list-mobile, så desktop er urørt.
+      ============================================================ */
+   @media (max-width: 767px) {
+      .message-list-mobile {
+         display: grid;
+         gap: 11px;
+         border: none;
+         background: transparent;
+         padding: 2px 1px 4px;
+         overflow: visible;
+      }
+
+      .message-list-mobile .enquiry-row-shell {
+         border-radius: 18px;
+      }
+
+      .message-list-mobile .enquiry-row-link {
+         position: relative;
+         display: grid;
+         grid-template-columns: 52px minmax(0, 1fr);
+         align-items: start;
+         column-gap: 13px;
+         row-gap: 9px;
+         padding: 14px 15px 14px 22px;
+         margin: 0;
+         border: 1px solid #ece3d5;
+         border-radius: 18px;
+         background: #fff;
+         box-shadow: 0 7px 18px rgba(60, 45, 24, 0.08);
+         overflow: hidden;
+         transition: transform 0.14s ease, box-shadow 0.14s ease;
+      }
+
+      .message-list-mobile .enquiry-row-link:active {
+         transform: scale(0.988);
+         box-shadow: 0 4px 12px rgba(60, 45, 24, 0.1);
+      }
+
+      /* Fargeaksent til venstre etter type/status */
+      .message-list-mobile .enquiry-row-link::before {
+         content: "";
+         position: absolute;
+         left: 0;
+         top: 0;
+         bottom: 0;
+         width: 6px;
+         background: linear-gradient(180deg, #4f7fb0, #35608f);
+      }
+
+      .message-list-mobile .enquiry-row-link.is-assignment::before {
+         background: linear-gradient(180deg, #f4ab4b, #e07d02);
+      }
+
+      .message-list-mobile .enquiry-row-link.is-completed::before {
+         background: linear-gradient(180deg, #6bc191, #3f9c68);
+      }
+
+      .message-list-mobile .enquiry-row-link.is-selected {
+         border-color: var(--customer-panel-accent, #e78002);
+         box-shadow: 0 0 0 2px rgba(231, 128, 2, 0.18), 0 7px 18px rgba(60, 45, 24, 0.08);
+      }
+
+      /* Avatar – litt større, avrundet firkant, sentrert vertikalt */
+      .message-list-mobile .enquiry-row-avatar {
+         grid-column: 1;
+         grid-row: 1 / -1;
+         align-self: center;
+         width: 52px;
+         height: 52px;
+         border-radius: 15px;
+         border: 1px solid #e6dccc;
+         box-shadow: 0 3px 8px rgba(46, 32, 15, 0.1);
+      }
+
+      .message-list-mobile .enquiry-row-main {
+         grid-column: 2;
+         grid-row: 1;
+         display: grid;
+         gap: 3px;
+      }
+
+      .message-list-mobile .enquiry-row-top {
+         display: flex;
+         align-items: baseline;
+         justify-content: space-between;
+         gap: 8px;
+      }
+
+      .message-list-mobile .enquiry-row-title {
+         font-size: 16px;
+         font-weight: 700;
+         color: #2b2418;
+         line-height: 1.25;
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+
+      .message-list-mobile .enquiry-row-date {
+         flex-shrink: 0;
+         font-size: 11px;
+         font-weight: 600;
+         color: #a89a86;
+      }
+
+      .message-list-mobile .enquiry-row-preview {
+         margin: 1px 0 0;
+         font-size: 13px;
+         line-height: 1.4;
+         color: #857866;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 1;
+         overflow: hidden;
+      }
+
+      .message-list-mobile .enquiry-row-link.is-completed .enquiry-row-title {
+         color: #33613f;
+      }
+
+      /* «N samtaler» gir ikke mening per rad på mobil – skjul den */
+      .message-list-mobile .enquiry-row-submeta {
+         display: none;
+      }
+
+      /* Kategori som en diskret chip */
+      .message-list-mobile .enquiry-row-meta {
+         margin-top: 5px;
+      }
+
+      .message-list-mobile .enquiry-row-meta .meta-item {
+         display: inline-flex;
+         align-items: center;
+         gap: 5px;
+         max-width: 100%;
+         padding: 3px 10px;
+         border-radius: 999px;
+         background: #f5efe4;
+         color: #86765d;
+         font-size: 11px;
+         font-weight: 600;
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
+      }
+
+      .message-list-mobile .enquiry-row-meta .message-category-icon {
+         width: 13px;
+         height: 13px;
+      }
+
+      .message-list-mobile .enquiry-row-meta i {
+         font-size: 11px;
+         color: #b98a3f;
+      }
+
+      /* Status/ulest-rad under innholdet – unngår kollisjon med meny-knappen */
+      .message-list-mobile .enquiry-row-side {
+         grid-column: 2;
+         grid-row: 2;
+         display: flex;
+         flex-direction: row;
+         flex-wrap: wrap;
+         align-items: center;
+         justify-content: flex-start;
+         gap: 7px;
+         min-width: 0;
+      }
+
+      .message-list-mobile .enquiry-row-side:empty {
+         display: none;
+      }
+
+      .message-list-mobile .enquiry-row-side .type-chip.assignment {
+         font-size: 10px;
+         letter-spacing: 0.04em;
+         padding: 4px 10px;
+         background: #ffe9cc;
+         color: #98530a;
+         border-color: #f2c283;
+      }
+
+      .message-list-mobile .enquiry-row-side .badge-fullfort {
+         height: 22px;
+         padding: 0 10px;
+         font-size: 10px;
+         background: #eef6f0;
+         color: #2f7a49;
+      }
+
+      .message-list-mobile .enquiry-row-side .badge-unread {
+         margin-left: auto;
+         min-width: 22px;
+         height: 22px;
+         font-size: 11px;
+         background: var(--customer-panel-accent, #e78002);
+         box-shadow: 0 2px 6px rgba(231, 128, 2, 0.35);
+      }
+
+      /* Plass til «tre prikker»-menyen oppe til høyre på oppdrag */
+      .message-list-mobile .enquiry-row-shell.has-menu .enquiry-row-link {
+         padding-right: 52px;
+      }
+
+      .message-list-mobile .enquiry-row-menu-wrap {
+         top: 12px;
+         right: 10px;
+         width: 38px;
+         height: 38px;
+      }
+
+      .message-list-mobile .enquiry-row-menu-trigger {
+         width: 38px;
+         height: 38px;
+      }
+
+      /* Tom-tilstand */
+      .message-list-mobile .enquiry-empty-state {
+         border: 1px dashed #e0cba6;
+         border-radius: 16px;
+         background: #fffaf2;
+         padding: 26px 18px;
+         color: #8a7c68;
+      }
+   }
 </style>
 
 @php

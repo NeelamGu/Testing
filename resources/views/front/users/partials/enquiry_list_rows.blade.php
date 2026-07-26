@@ -127,7 +127,7 @@
             @endif
 
             @if($isAssignment)
-               <p class="enquiry-row-submeta">{{ $vendorResponseCount }} samtaler</p>
+               <p class="enquiry-row-submeta">{{ $vendorResponseCount }} {{ (int)$vendorResponseCount === 1 ? 'samtale' : 'samtaler' }}</p>
             @endif
 
             <div class="enquiry-row-meta">
@@ -144,19 +144,9 @@
             </div>
          </div>
 
-         <div class="enquiry-row-side">
-            @if($isAssignment)
-               <span class="type-chip assignment">Oppdrag</span>
-            @endif
-
-            @if($isCompleted)
-               <span class="badge-fullfort">Fullført</span>
-            @endif
-
-            @if($unreadCount > 0)
-               <span class="badge-unread">{{ $unreadCount }}</span>
-            @endif
-         </div>
+         @if($isAssignment || $isCompleted || $unreadCount > 0)
+            <div class="enquiry-row-side">@if($isAssignment)<span class="type-chip assignment">Oppdrag</span>@endif@if($isCompleted)<span class="badge-fullfort">Fullført</span>@endif@if($unreadCount > 0)<span class="badge-unread">{{ $unreadCount }}</span>@endif</div>
+         @endif
       </a>
 
       @if($isAssignment)
