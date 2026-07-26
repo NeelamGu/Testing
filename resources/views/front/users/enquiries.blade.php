@@ -470,21 +470,22 @@
    }
    @media (max-width: 767px) {
       .messages-shell {
-         padding: 8px;
+         padding: 0;
          margin-top: 6px;
          height: auto;
          overflow: visible;
       }
 
       .messages-panel {
-         border-radius: 14px;
+         border-radius: 0;
          min-height: calc(100dvh - 168px);
          overflow: visible;
-         background: #f1eadd;
+         background: #fff;
+         box-shadow: none;
       }
 
       .messages-panel-head {
-         padding: 12px;
+         padding: 12px 12px 6px;
          background: transparent;
       }
 
@@ -499,6 +500,15 @@
          min-height: 0;
          height: auto;
          overflow: visible !important;
+      }
+
+      /* Bootstrap .table-responsive legger en 1px-kant rundt lista på mobil – fjern den */
+      .messages-left-pane {
+         border: none !important;
+      }
+
+      .messages-panel-body {
+         padding: 0 12px 10px;
       }
 
       .messages-main-split {

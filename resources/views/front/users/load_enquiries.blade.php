@@ -1330,17 +1330,18 @@ use App\Models\Category;
    @media (max-width: 767px) {
       .message-list-mobile {
          display: grid;
-         gap: 11px;
+         gap: 0;
          border: none;
          background: transparent;
-         padding: 2px 1px 4px;
+         padding: 0;
          overflow: visible;
       }
 
       .message-list-mobile .enquiry-row-shell {
-         border-radius: 18px;
+         border-radius: 0;
       }
 
+      /* Flat liste: ingen boks/sidekanter, kun en tydelig skillelinje mellom samtaler */
       .message-list-mobile .enquiry-row-link {
          position: relative;
          display: grid;
@@ -1348,42 +1349,26 @@ use App\Models\Category;
          align-items: start;
          column-gap: 13px;
          row-gap: 9px;
-         padding: 14px 15px 14px 22px;
+         padding: 15px 4px;
          margin: 0;
          border: none;
-         border-radius: 18px;
-         background: #fff;
+         border-bottom: 1px solid #e7ddcd;
+         border-radius: 0;
+         background: transparent;
          box-shadow: none;
-         overflow: hidden;
-         transition: transform 0.14s ease;
+         transition: background-color 0.14s ease;
+      }
+
+      .message-list-mobile .enquiry-row-shell:last-child .enquiry-row-link {
+         border-bottom: none;
+      }
+
+      .message-list-mobile .enquiry-row-link::before {
+         display: none;
       }
 
       .message-list-mobile .enquiry-row-link:active {
-         transform: scale(0.988);
-         box-shadow: 0 4px 12px rgba(60, 45, 24, 0.1);
-      }
-
-      /* Fargeaksent til venstre etter type/status */
-      .message-list-mobile .enquiry-row-link::before {
-         content: "";
-         position: absolute;
-         left: 0;
-         top: 0;
-         bottom: 0;
-         width: 6px;
-         background: linear-gradient(180deg, #4f7fb0, #35608f);
-      }
-
-      .message-list-mobile .enquiry-row-link.is-assignment::before {
-         background: linear-gradient(180deg, #f4ab4b, #e07d02);
-      }
-
-      .message-list-mobile .enquiry-row-link.is-completed::before {
-         background: linear-gradient(180deg, #6bc191, #3f9c68);
-      }
-
-      .message-list-mobile .enquiry-row-link.is-selected {
-         box-shadow: 0 0 0 2px rgba(231, 128, 2, 0.22), 0 8px 20px rgba(60, 45, 24, 0.1);
+         background-color: rgba(231, 128, 2, 0.05);
       }
 
       /* Avatar – litt større, avrundet firkant, sentrert vertikalt */
