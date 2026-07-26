@@ -1371,7 +1371,7 @@ use App\Models\Category;
    @media (max-width: 767px) {
       .message-list-mobile {
          display: grid;
-         gap: 10px;
+         gap: 13px;
          border: none;
          background: transparent;
          padding: 2px 0 calc(env(safe-area-inset-bottom) + 10px);
@@ -1395,7 +1395,7 @@ use App\Models\Category;
          border: none;
          border-radius: 16px;
          background: #ffffff;
-         box-shadow: 0 3px 8px rgba(60, 45, 24, 0.06), 0 1px 2px rgba(60, 45, 24, 0.04);
+         box-shadow: 0 6px 16px rgba(60, 45, 24, 0.13), 0 2px 5px rgba(60, 45, 24, 0.08);
          transition: transform 0.12s ease, box-shadow 0.12s ease;
       }
 
