@@ -4,30 +4,48 @@
    .assignment-shell {
       background: transparent;
       border: none;
-      border-radius: 0;
       padding: 0;
       margin-top: 4px;
    }
-   .assignment-card {
+   .assignment-panel {
       background: #fff;
       border-radius: 12px;
-      border: 1px solid #efe1ce;
-      box-shadow: 0 12px 28px rgba(67, 47, 20, 0.08);
+      border: none;
+      box-shadow: 0 10px 26px rgba(67, 47, 20, 0.08);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
    }
-   .assignment-head {
+   .assignment-panel-head {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      border-bottom: 1px solid #f0e4d3;
-      background: linear-gradient(120deg, #fff6e8, #fff);
       padding: 16px 18px;
+      background: linear-gradient(120deg, #fff6e8, #fff);
+   }
+   .assignment-back-btn {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid #e6d8c1;
+      background: #fff;
+      color: #7a6347;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none !important;
+      font-size: 17px;
+      transition: background-color 0.14s ease, transform 0.14s ease;
+   }
+   .assignment-back-btn:hover {
+      background: #f4ead9;
+      color: #7a6347;
+      transform: translateX(-1px);
+   }
+   .assignment-head-titles {
+      min-width: 0;
    }
    .assignment-kicker {
-      margin: 0 0 4px;
+      margin: 0 0 2px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
@@ -36,141 +54,172 @@
    }
    .assignment-title {
       margin: 0;
-      color: #2f2516;
-      font-size: 22px;
+      color: #2b2418;
+      font-size: 20px;
       font-weight: 700;
       line-height: 1.2;
-   }
-   .assignment-subtitle {
-      margin: 6px 0 0;
-      color: #746652;
-      font-size: 13px;
-   }
-   .assignment-back-link {
-      border: 1px solid var(--customer-panel-accent);
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-weight: 700;
-      color: var(--customer-panel-accent-contrast, #ffffff) !important;
-      text-decoration: none !important;
-      background: var(--customer-panel-accent);
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
    }
-   .assignment-back-link:hover {
-      background: var(--customer-panel-accent);
-      color: var(--customer-panel-accent-contrast, #ffffff) !important;
-      opacity: 0.94;
-   }
    .assignment-body {
-      padding: 12px;
+      padding: 14px;
    }
    .assignment-layout {
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 10px;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 14px;
       align-items: start;
    }
+
+   /* Oppdragsinfo-kort */
    .assignment-sidebar {
       position: sticky;
-      top: 0;
+      top: 12px;
       align-self: start;
-   }
-   .assignment-threads {
-      display: grid;
-      gap: 10px;
       min-width: 0;
    }
-   .assignment-info {
-      border: 1px solid #d9c3a2;
-      border-radius: 14px;
-      background: #f7f1e8;
-      padding: 12px;
+   .assignment-info-card {
+      background: #fff;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(60, 45, 24, 0.13), 0 2px 5px rgba(60, 45, 24, 0.08);
+      padding: 16px;
    }
    .assignment-info-title {
-      margin: 0 0 6px;
-      font-size: 20px;
-      font-weight: 700;
-      color: #2f2416;
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #2b2418;
    }
-   .assignment-info-grid {
+   .assignment-info-rows {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
    }
-   .assignment-info-item {
-      border: 1px solid #d9c3a1;
-      border-radius: 10px;
-      background: #fffdf9;
-      padding: 10px 12px;
+   .info-row {
+      display: grid;
+      gap: 2px;
+      padding: 10px 0;
+      border-top: 1px solid #f1e8db;
    }
-   .assignment-info-label {
-      margin: 0 0 6px;
+   .info-row:first-child {
+      border-top: none;
+      padding-top: 2px;
+   }
+   .info-label {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #745431;
+      letter-spacing: 0.06em;
+      color: #9a8a72;
    }
-   .assignment-info-value {
-      margin: 0;
-      color: #2b2115;
-      font-size: 18px;
-      line-height: 1.45;
+   .info-value {
+      font-size: 15px;
+      color: #2b2418;
+      line-height: 1.4;
       font-weight: 600;
       word-break: break-word;
    }
-   .assignment-description {
-      margin-top: 6px;
-      border: 1px solid #d9c3a1;
-      border-radius: 10px;
-      background: #fffdf9;
-      padding: 10px 12px;
-   }
-   .assignment-description .assignment-info-value {
-      white-space: pre-wrap;
-      font-size: 16px;
-      line-height: 1.5;
+   .info-row-block .info-value {
       font-weight: 500;
+      white-space: pre-wrap;
    }
-   .thread-vendor-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      border: 2px solid #e8d8c0;
+
+   /* Samtaler (tråder) */
+   .assignment-threads-wrap {
+      min-width: 0;
    }
-   .thread-item {
-      border: 1px solid #ece3d7;
-      border-radius: 12px;
-      background: #f7f3ec;
-      padding: 12px;
-      display: flex;
+   .assignment-threads-title {
+      margin: 2px 2px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #6d5f4a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+   }
+   .assignment-threads {
+      display: grid;
+      gap: 13px;
+      min-width: 0;
+   }
+   .thread-card {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 13px;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      background: #fff;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(60, 45, 24, 0.13), 0 2px 5px rgba(60, 45, 24, 0.08);
+      padding: 14px;
+      text-decoration: none !important;
+      color: inherit;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
    }
-   .thread-item.is-completed {
-      background: #edf7ef;
-      border-color: #bcdcc3;
+   .thread-card:hover {
+      color: inherit;
+   }
+   .thread-card:active {
+      transform: scale(0.99);
+      box-shadow: 0 1px 3px rgba(60, 45, 24, 0.08);
+   }
+   .thread-card.is-completed {
+      background: #f5faf6;
+   }
+   .thread-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      object-fit: cover;
+      border: 1px solid #e6dccc;
+      box-shadow: 0 3px 8px rgba(46, 32, 15, 0.1);
+      background: #fff;
    }
    .thread-main {
       min-width: 0;
-      flex: 1;
+      display: grid;
+      gap: 3px;
    }
-   .thread-head {
+   .thread-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+   }
+   .thread-name {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2b2418;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+   .thread-card.is-completed .thread-name {
+      color: #33613f;
+   }
+   .thread-date {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 600;
+      color: #a89a86;
+   }
+   .thread-preview {
+      margin: 1px 0 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #857866;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+   }
+   .thread-chips {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 5px;
-   }
-   .thread-title {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 700;
-      color: #2f2516;
-      line-height: 1.2;
+      gap: 7px;
+      margin-top: 5px;
    }
    .thread-status {
       display: inline-flex;
@@ -179,199 +228,85 @@
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 4px 8px;
-      border: 1px solid transparent;
+      letter-spacing: 0.04em;
+      padding: 4px 9px;
    }
    .thread-status.open {
-      background: #edf4ff;
-      border-color: #d5e4f6;
-      color: #5e7397;
+      background: #e9f2fb;
+      color: #3b6ea8;
    }
    .thread-status.closed {
-      background: #f3efea;
-      border-color: #e4d8c8;
-      color: #877766;
+      background: #eef6f0;
+      color: #2f7a49;
+   }
+   .thread-loc {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #9a8a72;
+   }
+   .thread-loc i {
+      color: #b98a3f;
    }
    .thread-unread {
-      min-width: 20px;
-      height: 20px;
+      margin-left: auto;
+      min-width: 22px;
+      height: 22px;
       border-radius: 999px;
-      background: var(--customer-panel-accent);
+      background: var(--customer-panel-accent, #e78002);
       color: var(--customer-panel-accent-contrast, #ffffff);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
       font-weight: 700;
-   }
-   .thread-preview {
-      margin: 0;
-      font-size: 15px;
-      color: #615443;
-      line-height: 1.35;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 760px;
-   }
-   .thread-meta {
-      margin-top: 7px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 12px;
-      color: #978675;
-   }
-   .thread-open-link {
-      min-height: 40px;
-      border-radius: 10px;
-      padding: 9px 16px;
-      border: 1px solid var(--customer-panel-accent);
-      background: var(--customer-panel-accent);
-      color: var(--customer-panel-accent-contrast, #ffffff) !important;
-      text-decoration: none !important;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-   }
-   .thread-open-link:hover {
-      opacity: 0.95;
-      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(231, 128, 2, 0.35);
    }
    .overview-empty {
-      border: 1px dashed #dcc5a4;
-      border-radius: 10px;
-      padding: 22px;
+      border: 1px dashed #e0cba6;
+      border-radius: 16px;
+      padding: 26px 18px;
       text-align: center;
-      color: #746652;
-      background: #fffaf3;
+      color: #8a7c68;
+      background: #fffaf2;
    }
+
    @media (max-width: 767px) {
       .assignment-shell {
-         padding: 10px;
+         padding: 0;
          margin-top: 6px;
       }
-
-      .assignment-head {
-         flex-direction: column;
-         align-items: flex-start;
+      .assignment-panel {
+         border-radius: 0;
+         box-shadow: none;
+         background: #f1eadd;
+      }
+      .assignment-panel-head {
          padding: 12px;
+         background: transparent;
       }
-
       .assignment-title {
-         font-size: 20px;
+         font-size: 19px;
       }
-
-      .assignment-back-link {
-         width: 100%;
-         justify-content: center;
-         display: inline-flex;
-      }
-
-      .assignment-card {
-         border-radius: 16px;
-      }
-
-      .assignment-head {
-         position: sticky;
-         top: calc(8px + env(safe-area-inset-top));
-         z-index: 3;
-         border-radius: 14px 14px 0 0;
-         box-shadow: 0 8px 18px rgba(67, 47, 20, 0.08);
-      }
-
       .assignment-body {
-         padding: 10px;
+         padding: 0 12px calc(env(safe-area-inset-bottom) + 12px);
       }
-
       .assignment-layout {
          grid-template-columns: 1fr;
-         gap: 10px;
+         gap: 13px;
       }
-
       .assignment-sidebar {
-         position: sticky;
-         top: calc(76px + env(safe-area-inset-top));
-         z-index: 2;
+         position: static;
       }
-
-      .assignment-info {
-         padding: 9px;
+      .assignment-info-card {
+         padding: 14px;
       }
-
-      .assignment-info-title {
-         font-size: 18px;
+      .thread-card {
+         align-items: start;
       }
-
-      .assignment-info-item {
-         padding: 9px 10px;
-      }
-
-      .assignment-info-label {
-         font-size: 10px;
-         margin-bottom: 5px;
-      }
-
-      .assignment-info-value {
-         font-size: 16px;
-      }
-
-      .assignment-description .assignment-info-value {
-         font-size: 15px;
-      }
-
-      .assignment-threads {
-         gap: 12px;
-      }
-
-      .thread-item {
-         flex-direction: column;
-         align-items: flex-start;
-         gap: 8px;
-         padding: 12px;
-         border-radius: 16px;
-         box-shadow: 0 8px 18px rgba(60, 45, 24, 0.06);
-      }
-
-      .thread-head {
-         gap: 6px;
-      }
-
-      .thread-title {
-         font-size: 18px;
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-      }
-
-      .thread-status,
-      .thread-unread {
-         flex-shrink: 0;
-      }
-
       .thread-preview {
-         white-space: normal;
-         font-size: 13px;
-         display: -webkit-box;
-         -webkit-box-orient: vertical;
          -webkit-line-clamp: 3;
-         overflow: hidden;
-         max-width: 100%;
-      }
-
-      .thread-meta {
-         gap: 8px;
-         font-size: 11px;
-      }
-
-      .thread-open-link {
-         width: 100%;
-         min-height: 38px;
-         padding: 8px 12px;
       }
    }
 </style>
@@ -382,6 +317,16 @@
       $assignmentDetails = $baseEnquiry->enquiryDetail ?? null;
       $assignmentText = trim((string) data_get($assignmentDetails, 'description', ''));
       $assignmentPrice = data_get($assignmentDetails, 'desired_price');
+      $addressText = trim((string) data_get($assignmentDetails, 'address', ''));
+      $cityText = trim((string) data_get($assignmentDetails, 'city', ''));
+      $pincodeText = trim((string) data_get($assignmentDetails, 'pincode', ''));
+      $locationParts = array_filter([$addressText, $cityText]);
+      $locationText = implode(', ', $locationParts);
+      if($locationText !== '' && $pincodeText !== ''){
+         $locationText .= ' ('.$pincodeText.')';
+      }
+      $threadCount = !empty($threads) ? count($threads) : 0;
+      $backUrl = $backUrl ?? url('user/enquiries?message_type=assignment');
    @endphp
    <div class="contact-section account-page">
       <div class="auto-container">
@@ -391,85 +336,89 @@
             </div>
             <div class="col-md-9 col-sm-9 col-xs-12 column pull-left">
                <div class="assignment-shell">
-                  <div class="assignment-card">
-                     <div class="assignment-head">
-                        <div>
+                  <div class="assignment-panel">
+                     <div class="assignment-panel-head">
+                        <a class="assignment-back-btn" href="{{ $backUrl }}" aria-label="Tilbake">
+                           <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </a>
+                        <div class="assignment-head-titles">
+                           <p class="assignment-kicker">Oppdrag</p>
                            <h3 class="assignment-title">{{ $assignmentTitle }}</h3>
                         </div>
-                        <a class="assignment-back-link" href="{{ $backUrl ?? url('user/enquiries?message_type=assignment') }}"><i class="fa fa-arrow-left" style="margin-right:6px;"></i>Tilbake til oversikt</a>
                      </div>
+
                      <div class="assignment-body">
                         <div class="assignment-layout">
                            <aside class="assignment-sidebar">
-                              <div class="assignment-info">
+                              <div class="assignment-info-card">
                                  <h4 class="assignment-info-title">Oppdragsinformasjon</h4>
-                                 <div class="assignment-info-grid">
+                                 <div class="assignment-info-rows">
                                     @if(!empty(data_get($assignmentDetails, 'title')))
-                                       <div class="assignment-info-item">
-                                          <p class="assignment-info-label">Tittel</p>
-                                          <p class="assignment-info-value">{{ data_get($assignmentDetails, 'title') }}</p>
+                                       <div class="info-row">
+                                          <span class="info-label">Tittel</span>
+                                          <span class="info-value">{{ data_get($assignmentDetails, 'title') }}</span>
                                        </div>
                                     @endif
+
                                     @if(!empty(data_get($assignmentDetails, 'assignment_date')))
-                                       <div class="assignment-info-item">
-                                          <p class="assignment-info-label">Oppdragsdato</p>
-                                          <p class="assignment-info-value">{{ data_get($assignmentDetails, 'assignment_date') }}</p>
+                                       <div class="info-row">
+                                          <span class="info-label">Oppdragsdato</span>
+                                          <span class="info-value">{{ data_get($assignmentDetails, 'assignment_date') }}</span>
                                        </div>
                                     @endif
-                                    @if(!empty(data_get($assignmentDetails, 'address')) || !empty(data_get($assignmentDetails, 'city')))
-                                       <div class="assignment-info-item">
-                                          <p class="assignment-info-label">Sted</p>
-                                          <p class="assignment-info-value">
-                                             {{ data_get($assignmentDetails, 'address', '') }}
-                                             @if(!empty(data_get($assignmentDetails, 'address')) && !empty(data_get($assignmentDetails, 'city'))), @endif
-                                             {{ data_get($assignmentDetails, 'city', '') }}
-                                             @if(!empty(data_get($assignmentDetails, 'pincode')))
-                                                ({{ data_get($assignmentDetails, 'pincode') }})
-                                             @endif
-                                          </p>
+
+                                    @if($locationText !== '')
+                                       <div class="info-row">
+                                          <span class="info-label">Sted</span>
+                                          <span class="info-value">{{ $locationText }}</span>
                                        </div>
                                     @endif
+
                                     @if(!empty($assignmentPrice) && (float)$assignmentPrice > 0)
-                                       <div class="assignment-info-item">
-                                          <p class="assignment-info-label">Ønsket pris</p>
-                                          <p class="assignment-info-value">{{ $assignmentPrice }}</p>
+                                       <div class="info-row">
+                                          <span class="info-label">Ønsket pris</span>
+                                          <span class="info-value">{{ $assignmentPrice }}</span>
                                        </div>
                                     @endif
-                                 </div>
-                                 <div class="assignment-description">
-                                    <p class="assignment-info-label">Beskrivelse</p>
-                                    <p class="assignment-info-value">{{ !empty($assignmentText) ? $assignmentText : 'Ingen beskrivelse registrert på dette oppdraget.' }}</p>
+
+                                    <div class="info-row info-row-block">
+                                       <span class="info-label">Beskrivelse</span>
+                                       <p class="info-value">{{ !empty($assignmentText) ? $assignmentText : 'Ingen beskrivelse registrert på dette oppdraget.' }}</p>
+                                    </div>
                                  </div>
                               </div>
                            </aside>
 
-                           <div class="assignment-threads">
-                              @if(!empty($threads) && count($threads) > 0)
-                                 @foreach($threads as $thread)
-                                    <div class="thread-item {{ ($thread['status'] ?? 0) == 0 ? 'is-completed' : '' }}">
-                                       <img src="{{ $thread['vendor_image_url'] ?? asset('front/images/no-image.png') }}" alt="{{ $thread['title'] ?? '' }}" class="thread-vendor-avatar" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
-                                       <div class="thread-main">
-                                          <div class="thread-head">
-                                             <h4 class="thread-title">{{ $thread['title'] ?? 'Ukjent leverandør' }}</h4>
-                                             <span class="thread-status {{ ($thread['status'] ?? 0) == 1 ? 'open' : 'closed' }}">{{ ($thread['status'] ?? 0) == 1 ? 'Aktiv' : 'Lukket' }}</span>
-                                             @if(!empty($thread['unread_count']) && (int)$thread['unread_count'] > 0)
-                                                <span class="thread-unread">{{ (int)$thread['unread_count'] }}</span>
-                                             @endif
+                           <div class="assignment-threads-wrap">
+                              <p class="assignment-threads-title">{{ $threadCount > 0 ? 'Samtaler med leverandører ('.$threadCount.')' : 'Samtaler med leverandører' }}</p>
+                              <div class="assignment-threads">
+                                 @if($threadCount > 0)
+                                    @foreach($threads as $thread)
+                                       @php $threadCompleted = ($thread['status'] ?? 0) == 0; @endphp
+                                       <a class="thread-card thread-open-link {{ $threadCompleted ? 'is-completed' : '' }}" href="{{ $thread['message_url'] ?? '#' }}">
+                                          <img src="{{ $thread['vendor_image_url'] ?? asset('front/images/no-image.png') }}" alt="{{ $thread['title'] ?? '' }}" class="thread-avatar" onerror="this.onerror=null;this.src='{{ asset('front/images/no-image.png') }}';">
+                                          <div class="thread-main">
+                                             <div class="thread-top">
+                                                <h4 class="thread-name">{{ $thread['title'] ?? 'Ukjent leverandør' }}</h4>
+                                                <span class="thread-date">{{ $thread['last_date'] ?? '' }}</span>
+                                             </div>
+                                             <p class="thread-preview">{{ $thread['preview'] ?? '' }}</p>
+                                             <div class="thread-chips">
+                                                <span class="thread-status {{ $threadCompleted ? 'closed' : 'open' }}">{{ $threadCompleted ? 'Fullført' : 'Aktiv' }}</span>
+                                                @if(!empty($thread['city']))
+                                                   <span class="thread-loc"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ ucfirst(strtolower($thread['city'])) }}</span>
+                                                @endif
+                                                @if(!empty($thread['unread_count']) && (int)$thread['unread_count'] > 0)
+                                                   <span class="thread-unread">{{ (int)$thread['unread_count'] }}</span>
+                                                @endif
+                                             </div>
                                           </div>
-                                          <p class="thread-preview">{{ $thread['preview'] ?? '' }}</p>
-                                          <div class="thread-meta">
-                                             @if(!empty($thread['city']))
-                                                <span><i class="fa fa-map-marker"></i> {{ ucfirst(strtolower($thread['city'])) }}</span>
-                                             @endif
-                                             <span><i class="fa fa-calendar"></i> {{ $thread['last_date'] ?? '-' }}</span>
-                                          </div>
-                                       </div>
-                                       <a class="thread-open-link" href="{{ $thread['message_url'] ?? '#' }}">Se melding</a>
-                                    </div>
-                                 @endforeach
-                              @else
-                                 <div class="overview-empty">Ingen meldinger fra leverandører på dette oppdraget ennå.</div>
-                              @endif
+                                       </a>
+                                    @endforeach
+                                 @else
+                                    <div class="overview-empty">Ingen meldinger fra leverandører på dette oppdraget ennå.</div>
+                                 @endif
+                              </div>
                            </div>
                         </div>
                      </div>
