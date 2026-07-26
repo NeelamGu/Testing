@@ -1350,10 +1350,10 @@ use App\Models\Category;
          row-gap: 9px;
          padding: 14px 15px 14px 22px;
          margin: 0;
-         border: 1px solid #ece3d5;
+         border: none;
          border-radius: 18px;
          background: #fff;
-         box-shadow: 0 7px 18px rgba(60, 45, 24, 0.08);
+         box-shadow: 0 8px 20px rgba(60, 45, 24, 0.1);
          overflow: hidden;
          transition: transform 0.14s ease, box-shadow 0.14s ease;
       }
@@ -1383,8 +1383,7 @@ use App\Models\Category;
       }
 
       .message-list-mobile .enquiry-row-link.is-selected {
-         border-color: var(--customer-panel-accent, #e78002);
-         box-shadow: 0 0 0 2px rgba(231, 128, 2, 0.18), 0 7px 18px rgba(60, 45, 24, 0.08);
+         box-shadow: 0 0 0 2px rgba(231, 128, 2, 0.22), 0 8px 20px rgba(60, 45, 24, 0.1);
       }
 
       /* Avatar – litt større, avrundet firkant, sentrert vertikalt */
