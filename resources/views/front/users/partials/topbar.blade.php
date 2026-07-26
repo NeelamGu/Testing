@@ -139,7 +139,7 @@
    .contact-section.account-page.customer-panel-switch-out {
       opacity: 0;
       transform: translateY(6px) scale(0.995);
-      transition: opacity 0.18s cubic-bezier(0.22, 1, 0.36, 1), transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 0.11s cubic-bezier(0.22, 1, 0.36, 1), transform 0.11s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: opacity, transform;
    }
    .contact-section.account-page.customer-panel-switch-in {
@@ -150,11 +150,11 @@
    .contact-section.account-page.customer-panel-switch-in.customer-panel-switch-ready {
       opacity: 1;
       transform: translateY(0);
-      transition: opacity 0.26s cubic-bezier(0.22, 1, 0.36, 1), transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 0.16s cubic-bezier(0.22, 1, 0.36, 1), transform 0.16s cubic-bezier(0.22, 1, 0.36, 1);
    }
    .contact-section.account-page.customer-panel-switch-out-lite {
       opacity: 0;
-      transition: opacity 0.14s ease-out;
+      transition: opacity 0.09s ease-out;
       will-change: opacity;
    }
    .contact-section.account-page.customer-panel-switch-in-lite {
@@ -163,7 +163,7 @@
    }
    .contact-section.account-page.customer-panel-switch-in-lite.customer-panel-switch-ready {
       opacity: 1;
-      transition: opacity 0.18s ease-out;
+      transition: opacity 0.12s ease-out;
    }
    .contact-section.account-page.customer-panel-loading {
       pointer-events: none;
@@ -971,7 +971,7 @@
                finishInTransition();
             });
 
-            window.setTimeout(finishInTransition, useLightweightTransition ? 240 : 340);
+            window.setTimeout(finishInTransition, useLightweightTransition ? 150 : 200);
          }
 
          currentPanel.classList.add(useLightweightTransition ? 'customer-panel-switch-out-lite' : 'customer-panel-switch-out');
@@ -983,7 +983,7 @@
             startInTransition();
          });
 
-         window.setTimeout(startInTransition, useLightweightTransition ? 150 : 220);
+         window.setTimeout(startInTransition, useLightweightTransition ? 95 : 130);
       }
 
       function navigatePanel(urlValue, pushHistory) {

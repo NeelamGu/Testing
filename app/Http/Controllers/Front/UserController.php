@@ -1390,32 +1390,42 @@ class UserController extends Controller
     }
 
     private function attachEnquiryConversationMeta(array $enquiries){
+        if(empty($enquiries)){
+            return $enquiries;
+        }
+
+        $enquiryIds = array_values(array_unique(array_filter(array_map(function($enquiry){
+            return (int)($enquiry['id'] ?? 0);
+        }, $enquiries))));
+
+        // Hent alle svar for disse henvendelsene i ÉN spørring, og beregn statistikken
+        // i PHP. Erstatter ~7 spørringer per henvendelse (N+1) som gjorde meldings-/
+        // oppdragsfanen treg.
+        $responsesByEnquiry = collect();
+        if(!empty($enquiryIds)){
+            $responsesByEnquiry = EnquiriesResponse::whereIn('enquiry_id',$enquiryIds)
+                ->orderBy('id','asc')
+                ->get(['id','enquiry_id','sender_id','sender_type','message','is_unread','created_at'])
+                ->groupBy('enquiry_id');
+        }
+
         foreach ($enquiries as $key => $enquiry) {
-            $responseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->count();
-            $vendorResponseCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->where('sender_type','Vendor')
-                ->select('sender_id')
-                ->distinct()
-                ->count('sender_id');
-            $unreadVendorCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->where('sender_type','Vendor')
-                ->where('is_unread',1)
-                ->select('sender_id')
-                ->distinct()
-                ->count('sender_id');
-            $senderStats = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->where('sender_type','Vendor')
-                ->select('sender_id', DB::raw('COUNT(*) as total_count'), DB::raw('SUM(CASE WHEN is_unread = 1 THEN 1 ELSE 0 END) as unread_count'))
-                ->groupBy('sender_id')
-                ->get();
+            $eid = (int)($enquiry['id'] ?? 0);
+            $rows = $responsesByEnquiry->get($eid) ?? collect();
+            $vendorRows = $rows->where('sender_type','Vendor');
+            $unreadVendorRows = $vendorRows->where('is_unread',1);
+
+            $vendorResponseCount = $vendorRows->pluck('sender_id')->unique()->count();
+            $unreadVendorCount = $unreadVendorRows->pluck('sender_id')->unique()->count();
+
             $newVendorCount = 0;
             $newMessageCount = 0;
-            foreach($senderStats as $senderStat){
-                $senderUnread = (int)($senderStat->unread_count ?? 0);
+            foreach($vendorRows->groupBy('sender_id') as $senderRows){
+                $senderUnread = $senderRows->where('is_unread',1)->count();
                 if($senderUnread <= 0){
                     continue;
                 }
-                $senderTotal = (int)($senderStat->total_count ?? 0);
+                $senderTotal = $senderRows->count();
                 if($senderTotal === $senderUnread){
                     $newVendorCount++;
                 }else{
@@ -1423,22 +1433,12 @@ class UserController extends Controller
                 }
             }
 
-            $latestResponse = EnquiriesResponse::where('enquiry_id',$enquiry['id'])
-                ->orderBy('id','Desc')
-                ->first();
+            $latestResponse = $rows->last(); // stigende på id → siste = nyeste
+            $enquiries[$key]['response'] = ($latestResponse && !empty($latestResponse->message)) ? $latestResponse->message : "";
+            $enquiries[$key]['last_message_at'] = $latestResponse ? $latestResponse->created_at : null;
 
-            if(!empty($latestResponse) && !empty($latestResponse->message)){
-                $enquiries[$key]['response'] = $latestResponse->message;
-            }else{
-                $enquiries[$key]['response'] = "";
-            }
-
-            $enquiries[$key]['last_message_at'] = !empty($latestResponse) ? $latestResponse->created_at : null;
-
-            $totalMessagesCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->count();
-            $enquiries[$key]['hasMessages'] = $totalMessagesCount > 0;
-            $unreadCount = EnquiriesResponse::where('enquiry_id',$enquiry['id'])->where('sender_type','Vendor')->where('is_unread',1)->count();
-            $enquiries[$key]['unreadCount'] = $unreadCount;
+            $enquiries[$key]['hasMessages'] = $rows->count() > 0;
+            $enquiries[$key]['unreadCount'] = $unreadVendorRows->count();
             $enquiries[$key]['vendorResponseCount'] = $vendorResponseCount;
             $enquiries[$key]['unreadVendorCount'] = $unreadVendorCount;
             $enquiries[$key]['newVendorCount'] = $newVendorCount;
