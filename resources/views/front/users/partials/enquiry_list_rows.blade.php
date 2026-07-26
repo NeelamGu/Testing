@@ -145,7 +145,7 @@
          </div>
 
          @if($isAssignment || $isCompleted || $unreadCount > 0)
-            <div class="enquiry-row-side">@if($isAssignment)<span class="type-chip assignment">Oppdrag</span>@endif@if($isCompleted)<span class="badge-fullfort">Fullført</span>@endif@if($unreadCount > 0)<span class="badge-unread">{{ $unreadCount }}</span>@endif</div>
+            <div class="enquiry-row-side">@if($isAssignment)<span class="type-chip assignment">Oppdrag</span>@endif @if($isCompleted)<span class="badge-fullfort">Fullført</span>@endif @if($unreadCount > 0)<span class="badge-unread">{{ $unreadCount }}</span>@endif</div>
          @endif
       </a>
 
