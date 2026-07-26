@@ -1371,18 +1371,18 @@ use App\Models\Category;
    @media (max-width: 767px) {
       .message-list-mobile {
          display: grid;
-         gap: 0;
+         gap: 10px;
          border: none;
          background: transparent;
-         padding: 0 0 calc(env(safe-area-inset-bottom) + 8px);
+         padding: 2px 0 calc(env(safe-area-inset-bottom) + 10px);
          overflow: visible;
       }
 
       .message-list-mobile .enquiry-row-shell {
-         border-radius: 0;
+         border-radius: 16px;
       }
 
-      /* Flat liste: ingen boks/sidekanter, kun en tydelig skillelinje mellom samtaler */
+      /* Avrundede, klikkbare kort med tydelig mellomrom (skiller seg ut mot tonet panel) */
       .message-list-mobile .enquiry-row-link {
          position: relative;
          display: grid;
@@ -1390,18 +1390,13 @@ use App\Models\Category;
          align-items: start;
          column-gap: 13px;
          row-gap: 9px;
-         padding: 15px 4px;
+         padding: 14px 14px;
          margin: 0;
          border: none;
-         border-bottom: 1px solid #e7ddcd;
-         border-radius: 0;
-         background: transparent;
-         box-shadow: none;
-         transition: background-color 0.14s ease;
-      }
-
-      .message-list-mobile .enquiry-row-shell:last-child .enquiry-row-link {
-         border-bottom: none;
+         border-radius: 16px;
+         background: #ffffff;
+         box-shadow: 0 3px 8px rgba(60, 45, 24, 0.06), 0 1px 2px rgba(60, 45, 24, 0.04);
+         transition: transform 0.12s ease, box-shadow 0.12s ease;
       }
 
       .message-list-mobile .enquiry-row-link::before {
@@ -1409,7 +1404,8 @@ use App\Models\Category;
       }
 
       .message-list-mobile .enquiry-row-link:active {
-         background-color: rgba(231, 128, 2, 0.05);
+         transform: scale(0.985);
+         box-shadow: 0 1px 3px rgba(60, 45, 24, 0.08);
       }
 
       /* Avatar – litt større, avrundet firkant, sentrert vertikalt */
@@ -1584,28 +1580,36 @@ use App\Models\Category;
       /* Segmentkontroll for status (Alle / Aktive / Fullførte) */
       .mobile-status-segments {
          display: flex;
-         gap: 4px;
-         background: #efe7d8;
+         gap: 3px;
+         background: #e6dcc6;
          border-radius: 13px;
-         padding: 4px;
+         padding: 3px;
          margin: 0 0 10px;
       }
 
       .mobile-status-segments .status-filter-btn {
-         flex: 1;
+         flex: 1 1 0;
+         min-width: 0;
          min-height: 38px;
          display: flex;
          align-items: center;
          justify-content: center;
-         gap: 6px;
+         gap: 5px;
          border: none;
          border-radius: 10px;
          background: transparent;
          color: #6d5f4a;
-         font-size: 13px;
+         font-size: 12.5px;
          font-weight: 700;
          text-decoration: none !important;
          padding: 0 4px;
+         overflow: hidden;
+      }
+
+      .mobile-status-segments .seg-label {
+         min-width: 0;
+         overflow: hidden;
+         text-overflow: ellipsis;
          white-space: nowrap;
       }
 
@@ -1617,13 +1621,14 @@ use App\Models\Category;
       }
 
       .mobile-status-segments .seg-count {
-         font-size: 11px;
+         flex-shrink: 0;
+         font-size: 10.5px;
          font-weight: 700;
          color: #9a8a72;
          background: rgba(90, 70, 40, 0.09);
          border-radius: 999px;
-         min-width: 18px;
-         padding: 1px 6px;
+         min-width: 17px;
+         padding: 1px 5px;
          text-align: center;
       }
 
@@ -1690,9 +1695,9 @@ use App\Models\Category;
    {{-- App-stil filter-verktøylinje (kun mobil) --}}
    <div class="mobile-filter-toolbar">
       <div class="mobile-status-segments">
-         <a href="javascript:void(0)" class="status-filter-btn {{ ($active_close === '' || $active_close === null) ? 'is-active' : '' }}" data-status="">Alle <span class="seg-count">{{ (int)($totalAssignments ?? 0) }}</span></a>
-         <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '1' ? 'is-active' : '' }}" data-status="1">Aktive <span class="seg-count">{{ (int)($activeAssignments ?? 0) }}</span></a>
-         <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '0' ? 'is-active' : '' }}" data-status="0">Fullførte <span class="seg-count">{{ (int)($completedAssignments ?? 0) }}</span></a>
+         <a href="javascript:void(0)" class="status-filter-btn {{ ($active_close === '' || $active_close === null) ? 'is-active' : '' }}" data-status=""><span class="seg-label">Alle</span><span class="seg-count">{{ (int)($totalAssignments ?? 0) }}</span></a>
+         <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '1' ? 'is-active' : '' }}" data-status="1"><span class="seg-label">Aktive</span><span class="seg-count">{{ (int)($activeAssignments ?? 0) }}</span></a>
+         <a href="javascript:void(0)" class="status-filter-btn {{ (string)$active_close === '0' ? 'is-active' : '' }}" data-status="0"><span class="seg-label">Fullførte</span><span class="seg-count">{{ (int)($completedAssignments ?? 0) }}</span></a>
       </div>
 
       @if(!empty($allcategories))

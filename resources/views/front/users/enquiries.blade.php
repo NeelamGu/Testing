@@ -480,7 +480,7 @@
          border-radius: 0;
          min-height: calc(100dvh - 168px);
          overflow: visible;
-         background: #fff;
+         background: #f1eadd;
          box-shadow: none;
       }
 
