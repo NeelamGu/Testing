@@ -1574,19 +1574,26 @@ use App\Models\Category;
          color: #8a7c68;
       }
 
-      /* Kategori-filter som vannrett pille-linje over lista på mobil */
+      /* Kategori-filter som vannrett, sveipbar pille-linje over lista på mobil.
+         Strekker seg ut til panelkanten slik at pillene kan dras helt ut. */
       .category-filter-bar {
          display: block;
-         margin: 0 0 12px;
+         margin: 0 -12px 12px;
+         max-width: none;
       }
 
       .category-filter-track {
          display: flex;
+         flex-wrap: nowrap;
          gap: 8px;
+         padding: 0 12px 2px;
          overflow-x: auto;
+         overflow-y: hidden;
          -webkit-overflow-scrolling: touch;
+         touch-action: pan-x;
+         overscroll-behavior-x: contain;
+         scroll-snap-type: x proximity;
          scrollbar-width: none;
-         padding-bottom: 2px;
       }
 
       .category-filter-track::-webkit-scrollbar {
@@ -1595,6 +1602,7 @@ use App\Models\Category;
 
       .category-filter-bar .category-chip {
          flex: 0 0 auto;
+         scroll-snap-align: start;
          min-height: 34px;
          font-size: 12.5px;
       }
