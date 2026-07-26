@@ -274,6 +274,16 @@ $(document).ready(function(){
 		reloadUserEnquiriesList();
 	});
 
+	// Category filter pills for enquiries page
+	$(document).on('click', '.category-chip', function(e){
+		e.preventDefault();
+		var cat = $(this).attr('data-cat') || '';
+		$("#selcatenq").val(cat);
+		$('.category-chip').removeClass('is-active');
+		$(this).addClass('is-active');
+		reloadUserEnquiriesList();
+	});
+
 	$(document).on('click', '.status-filter-toggle', function(e){
 		if (!window.matchMedia('(max-width: 767px)').matches) {
 			return;

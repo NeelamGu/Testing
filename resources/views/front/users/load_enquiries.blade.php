@@ -140,6 +140,46 @@ use App\Models\Category;
    .filter-hidden {
       display: none !important;
    }
+   /* --- Kategori-filter (piller) --- */
+   .category-filter-section {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #ece1d0;
+   }
+   .category-filter-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+   }
+   .category-chip {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #e2d5c1;
+      border-radius: 999px;
+      background: #fffaf2;
+      color: #6a5c48;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 7px 12px;
+      min-height: 32px;
+      text-decoration: none !important;
+      white-space: nowrap;
+      transition: background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+   }
+   .category-chip:hover {
+      background: #f4ead9;
+      color: #6a5c48;
+   }
+   .contact-section.account-page .category-chip.is-active {
+      background: var(--customer-panel-accent) !important;
+      border-color: var(--customer-panel-accent) !important;
+      color: var(--customer-panel-accent-contrast, #ffffff) !important;
+   }
+   /* Mobil-linje: skjult på desktop, vist i mobil-blokken lenger ned */
+   .category-filter-bar {
+      display: none;
+   }
    .message-list {
       padding: 0;
       display: grid;
@@ -1533,6 +1573,31 @@ use App\Models\Category;
          padding: 26px 18px;
          color: #8a7c68;
       }
+
+      /* Kategori-filter som vannrett pille-linje over lista på mobil */
+      .category-filter-bar {
+         display: block;
+         margin: 0 0 12px;
+      }
+
+      .category-filter-track {
+         display: flex;
+         gap: 8px;
+         overflow-x: auto;
+         -webkit-overflow-scrolling: touch;
+         scrollbar-width: none;
+         padding-bottom: 2px;
+      }
+
+      .category-filter-track::-webkit-scrollbar {
+         display: none;
+      }
+
+      .category-filter-bar .category-chip {
+         flex: 0 0 auto;
+         min-height: 34px;
+         font-size: 12.5px;
+      }
    }
 </style>
 
@@ -1555,6 +1620,16 @@ use App\Models\Category;
 
 <div class="message-hub">
    <input type="hidden" id="selectedEnquiryId" value="{{ (int)($selectedEnquiryId ?? 0) }}">
+   @if(!empty($allcategories))
+      <div class="category-filter-bar">
+         <div class="category-filter-track">
+            <a href="javascript:void(0)" class="category-chip {{ empty($enqCat) ? 'is-active' : '' }}" data-cat="">Alle kategorier</a>
+            @foreach($allcategories as $cat)
+               <a href="javascript:void(0)" class="category-chip {{ (isset($enqCat) && (string)$enqCat === (string)$cat) ? 'is-active' : '' }}" data-cat="{{ $cat }}">{{ $cat }}</a>
+            @endforeach
+         </div>
+      </div>
+   @endif
    <div class="message-body-layout">
       <div class="message-filter-shell">
          <div class="status-filter-panel">
@@ -1578,6 +1653,18 @@ use App\Models\Category;
                      <span class="count">{{ (int)($completedAssignments ?? 0) }}</span>
                   </a>
                </div>
+
+               @if(!empty($allcategories))
+                  <div class="category-filter-section">
+                     <p class="status-filter-title">Kategori</p>
+                     <div class="category-filter-list">
+                        <a href="javascript:void(0)" class="category-chip {{ empty($enqCat) ? 'is-active' : '' }}" data-cat="">Alle kategorier</a>
+                        @foreach($allcategories as $cat)
+                           <a href="javascript:void(0)" class="category-chip {{ (isset($enqCat) && (string)$enqCat === (string)$cat) ? 'is-active' : '' }}" data-cat="{{ $cat }}">{{ $cat }}</a>
+                        @endforeach
+                     </div>
+                  </div>
+               @endif
 
                @if($isAssignmentTab)
                   <div class="status-filter-actions">

@@ -603,15 +603,8 @@ class UserController extends Controller
         $enqCat = $request->get('cat', '');
         $enquiries = ProductsEnquiry::query()->where('user_id',Auth::user()->id);
 
-        if($enqCat!=""){
-            $catIds = Category::select('id')->where('category_name',$enqCat)->get()->pluck('id');
-            $productIds = Product::select('id')->whereIn('category_id',$catIds)->get()->pluck('id');
-            $enquiries = $enquiries->with(['product'=>function($query)use($productIds){
-                $query->whereIn('id',$productIds);
-            },'user','vendor','enquiryDetail']);
-        }else{
-            $enquiries = $enquiries->with(['product','user','vendor','enquiryDetail']);
-        }
+        // Kategori-filteret bruker effektiv kategori og settes på i PHP lenger ned.
+        $enquiries = $enquiries->with(['product','user','vendor','enquiryDetail']);
 
         $enquiries = $enquiries
             ->orderBy('status','Desc')
@@ -635,6 +628,13 @@ class UserController extends Controller
         }else{
             $enquiries = array_values(array_filter($enquiries,function($enquiry){
                 return !empty($enquiry['hasMessages']);
+            }));
+        }
+
+        // Kategori-filter på effektiv kategori (samme som lista viser)
+        if($enqCat !== ""){
+            $enquiries = array_values(array_filter($enquiries, function($enquiry) use ($enqCat){
+                return $this->resolveEnquiryCategoryName($enquiry) === $enqCat;
             }));
         }
 
@@ -669,17 +669,9 @@ class UserController extends Controller
         $selectedEnquiryId = $this->resolveSelectedEnquiryId($desktopEnquiries, $request->get('selected_enquiry_id', ''));
         $selectedConversation = $this->buildSelectedConversationPayload($selectedEnquiryId);
 
-        $catenquiries = ProductsEnquiry::with('product')->where('user_id',Auth::user()->id)->orderBy('id','Desc')->get()->toArray();
-        $allcategories = array();
-        foreach($catenquiries as $key => $enq){
-            if(isset($enq['product']['category']['category_name'])){
-                $allcategories[] = $enq['product']['category']['category_name'];    
-            }
-        }
-        $allcategories = array_values(array_unique($allcategories));
-        sort($allcategories, SORT_NATURAL | SORT_FLAG_CASE);
+        $allcategories = $this->getConversationCategories($message_type);
 
-        return view('front.users.enquiries')->with(compact('enquiries','desktopEnquiries','selectedEnquiryId','selectedConversation','allcategories','message_type','active_close','enqCat','totalAssignments','activeAssignments','completedAssignments'));    
+        return view('front.users.enquiries')->with(compact('enquiries','desktopEnquiries','selectedEnquiryId','selectedConversation','allcategories','message_type','active_close','enqCat','totalAssignments','activeAssignments','completedAssignments'));
     }
 
     public function getUserEnquiries(Request $request){
@@ -699,20 +691,9 @@ class UserController extends Controller
                 $active_close = "";
             }
 
-            // Get Category User Enquiries
-            if(isset($data['cat'])&&$data['cat']!=""){
-                $enqCat = $data['cat'];
-                $catIds = Category::select('id')->where('category_name',$data['cat'])->get()->pluck('id');
-                /*dd($catIds);*/
-                $productIds = Product::select('id')->whereIn('category_id',$catIds)->get()->pluck('id');
-                /*dd($productIds);*/
-                $enquiries = $enquiries->with(['product'=>function($query)use($productIds){
-                    $query->whereIn('id',$productIds);
-                },'user','vendor','enquiryDetail'])->get()->toArray();
-            }else{
-                $enqCat = "";
-                $enquiries = $enquiries->with(['product','user','vendor','enquiryDetail'])->get()->toArray();    
-            }
+            // Kategori-filteret bruker effektiv kategori og settes på i PHP lenger ned.
+            $enqCat = (isset($data['cat']) && $data['cat'] !== "") ? $data['cat'] : "";
+            $enquiries = $enquiries->with(['product','user','vendor','enquiryDetail'])->get()->toArray();
 
             if(isset($data['message_type'])&&$data['message_type']!=""){
                 $message_type = strtolower(trim((string)$data['message_type']));
@@ -737,6 +718,13 @@ class UserController extends Controller
                 // Messages tab should contain only actual conversations.
                 $enquiries = array_values(array_filter($enquiries,function($enquiry){
                     return !empty($enquiry['hasMessages']);
+                }));
+            }
+
+            // Kategori-filter på effektiv kategori (samme som lista viser)
+            if($enqCat !== ""){
+                $enquiries = array_values(array_filter($enquiries, function($enquiry) use ($enqCat){
+                    return $this->resolveEnquiryCategoryName($enquiry) === $enqCat;
                 }));
             }
 
@@ -771,16 +759,7 @@ class UserController extends Controller
             $desktopEnquiries = $this->buildDesktopGroupedEnquiries($enquiries);
             $selectedEnquiryId = $this->resolveSelectedEnquiryId($desktopEnquiries, $data['selected_enquiry_id'] ?? '');
             /*dd($enquiries);*/
-            $catenquiries = ProductsEnquiry::with('product')->where('user_id',Auth::user()->id)->orderBy('id','Desc')->get()->toArray();
-            $allcategories = array();
-            foreach($catenquiries as $key => $enq){
-                if(isset($enq['product']['category']['category_name'])){
-                    $allcategories[] = $enq['product']['category']['category_name'];
-                }
-            }
-            $allcategories = array_values(array_unique($allcategories));
-            sort($allcategories, SORT_NATURAL | SORT_FLAG_CASE);
-            /*dd($allcategories);*/
+            $allcategories = $this->getConversationCategories($message_type);
 
             // Return the Updated Cart Item via Ajax
             return response()->json([
@@ -1330,6 +1309,84 @@ class UserController extends Controller
         Auth::logout();
         Session::flush();
         return redirect('/');
+    }
+
+    /**
+     * Effektivt kategorinavn for en samtale – samme logikk som lista viser:
+     * oppdragets kategori for oppdrag, ellers produktets kategori. For direkte
+     * meldinger er enquiry_detail.category_id satt lik produktets kategori, så
+     * enquiry_detail.category_id fungerer som felles kilde for begge.
+     */
+    private $categoryNameCache = [];
+
+    private function categoryNameById($categoryId){
+        $categoryId = (int)$categoryId;
+        if($categoryId <= 0){
+            return '';
+        }
+        if(!array_key_exists($categoryId, $this->categoryNameCache)){
+            $this->categoryNameCache[$categoryId] = (string)(\App\Models\Category::where('id',$categoryId)->value('category_name') ?? '');
+        }
+        return $this->categoryNameCache[$categoryId];
+    }
+
+    private function resolveEnquiryCategoryName(array $enquiry){
+        $detailCatId = (int)($enquiry['enquiry_detail']['category_id'] ?? 0);
+        $name = $this->categoryNameById($detailCatId);
+        if($name !== ''){
+            return $name;
+        }
+        $name = $this->categoryNameById((int)($enquiry['product']['category_id'] ?? 0));
+        if($name !== ''){
+            return $name;
+        }
+        return (string)($enquiry['product']['category']['category_name'] ?? '');
+    }
+
+    /**
+     * Kategoriene kunden faktisk har samtaler i (minst én melding).
+     * Fane-bevisst: på oppdragsfanen tas kun ekte oppdrag med.
+     */
+    private function getConversationCategories($messageType){
+        $userId = Auth::id();
+        $userEnquiryIds = ProductsEnquiry::where('user_id',$userId)->pluck('id');
+        if($userEnquiryIds->isEmpty()){
+            return [];
+        }
+
+        $enquiryIdsWithMessages = EnquiriesResponse::whereIn('enquiry_id',$userEnquiryIds)
+            ->distinct()
+            ->pluck('enquiry_id');
+        if($enquiryIdsWithMessages->isEmpty()){
+            return [];
+        }
+
+        $rows = ProductsEnquiry::with(['product','enquiryDetail'])
+            ->where('user_id',$userId)
+            ->whereIn('id',$enquiryIdsWithMessages)
+            ->get()
+            ->toArray();
+
+        $isAssignmentTab = in_array(strtolower((string)$messageType), ['assignment','oppdrag'], true);
+        $categories = [];
+        foreach($rows as $row){
+            if($isAssignmentTab){
+                $title = trim((string)($row['enquiry_detail']['title'] ?? ''));
+                $assignmentDate = trim((string)($row['enquiry_detail']['assignment_date'] ?? ''));
+                $isRealAssignment = !empty($row['enquiry_detail_id']) && ($title !== '' || $assignmentDate !== '');
+                if(!$isRealAssignment){
+                    continue;
+                }
+            }
+            $categoryName = $this->resolveEnquiryCategoryName($row);
+            if($categoryName !== ''){
+                $categories[] = $categoryName;
+            }
+        }
+
+        $categories = array_values(array_unique($categories));
+        sort($categories, SORT_NATURAL | SORT_FLAG_CASE);
+        return $categories;
     }
 
     private function attachEnquiryConversationMeta(array $enquiries){
