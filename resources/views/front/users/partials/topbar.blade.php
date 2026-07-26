@@ -7,6 +7,30 @@
       : asset('front/images/profile.png');
 @endphp
 
+{{-- Kjøres tidlig (før panelet rendres): setter retningen på slide-inn-animasjonen
+     ut fra om vi går dypere (samtale/oppdrag) eller tilbake i kundepanelet. --}}
+<script>
+   (function () {
+      try {
+         var cpDepth = function (pathname) {
+            var p = String(pathname || '').replace(/\/+$/, '');
+            var m = p.match(/^\/user\/enquiries(?:\/(\d+)(\/overview)?)?$/);
+            if (m) { if (!m[1]) { return 0; } if (m[2]) { return 1; } return 2; }
+            return 0;
+         };
+         var path = window.location.pathname;
+         var prev = null;
+         try { prev = sessionStorage.getItem('cpNavPath'); } catch (e) {}
+         if (prev && prev !== path) {
+            var delta = cpDepth(path) - cpDepth(prev);
+            if (delta > 0) { document.documentElement.classList.add('cp-enter-forward'); }
+            else if (delta < 0) { document.documentElement.classList.add('cp-enter-back'); }
+         }
+         try { sessionStorage.setItem('cpNavPath', path); } catch (e) {}
+      } catch (e) {}
+   })();
+</script>
+
 <style>
    .customer-topbar {
        border-bottom: none;
@@ -179,46 +203,41 @@
       }
    }
 
-   /* ===== Slide-overgang mellom kundepanel-sider (åpne/lukke samtale og oppdrag).
-      Cross-document View Transitions: siden glir inn fra høyre når du åpner en
-      samtale/oppdrag, og ut igjen når du går tilbake – ingen hvit blink.
-      Faller elegant tilbake til vanlig navigasjon der det ikke støttes. ===== */
-   @view-transition {
-      navigation: auto;
+   /* ===== Slide mellom kundepanel-sider (åpne/lukke samtale og oppdrag).
+      Virker på ALLE nettlesere: panelet glir inn ved sidelast, og retningen
+      bestemmes av «dybde» i URL-en (liste 0 / oversikt 1 / samtale 2). Bakgrunnen
+      holdes ikke-hvit slik at det aldri blinker hvitt mens neste side lastes. ===== */
+   html,
+   body {
+      background-color: var(--customer-panel-bg, #f1eadd);
    }
-   ::view-transition-group(root) {
+   html.cp-enter-forward .contact-section.account-page,
+   html.cp-enter-back .contact-section.account-page {
       animation-duration: 0.3s;
-      animation-timing-function: cubic-bezier(0.3, 0.7, 0.4, 1);
+      animation-timing-function: cubic-bezier(0.3, 0.72, 0.35, 1);
+      animation-fill-mode: both;
+      will-change: transform;
    }
-   html:active-view-transition-type(cp-nav-forward)::view-transition-old(root) {
-      animation-name: cp-slide-out-left;
+   html.cp-enter-forward .contact-section.account-page {
+      animation-name: cp-page-in-right;
    }
-   html:active-view-transition-type(cp-nav-forward)::view-transition-new(root) {
-      animation-name: cp-slide-in-right;
+   html.cp-enter-back .contact-section.account-page {
+      animation-name: cp-page-in-left;
    }
-   html:active-view-transition-type(cp-nav-back)::view-transition-old(root) {
-      animation-name: cp-slide-out-right;
+   html.cp-enter-forward,
+   html.cp-enter-back {
+      overflow-x: clip;
    }
-   html:active-view-transition-type(cp-nav-back)::view-transition-new(root) {
-      animation-name: cp-slide-in-left;
-   }
-   @keyframes cp-slide-in-right {
+   @keyframes cp-page-in-right {
       from { transform: translateX(100%); }
    }
-   @keyframes cp-slide-out-left {
-      to { transform: translateX(-100%); }
-   }
-   @keyframes cp-slide-in-left {
+   @keyframes cp-page-in-left {
       from { transform: translateX(-100%); }
    }
-   @keyframes cp-slide-out-right {
-      to { transform: translateX(100%); }
-   }
    @media (prefers-reduced-motion: reduce) {
-      ::view-transition-group(root),
-      ::view-transition-old(root),
-      ::view-transition-new(root) {
-         animation-duration: 0.001ms !important;
+      html.cp-enter-forward .contact-section.account-page,
+      html.cp-enter-back .contact-section.account-page {
+         animation: none !important;
       }
    }
    @media (max-width: 991px) {
@@ -1049,6 +1068,9 @@
          isNavigating = true;
          setActiveNavigation(tabType);
 
+         // SPA-fanebytte har sin egen overgang – ikke la slide-inn-klassen henge igjen.
+         document.documentElement.classList.remove('cp-enter-forward', 'cp-enter-back');
+
          var panelBeforeLoad = document.querySelector('.contact-section.account-page');
          var useLightweightTransition = shouldUseLightweightTransition(panelBeforeLoad, currentTabType, tabType);
          if (panelBeforeLoad) {
@@ -1077,6 +1099,12 @@
                   if (pushHistory) {
                      window.history.pushState({ customerPanel: true }, '', urlValue);
                   }
+
+                  // Hold sporet av gjeldende sti så retningen blir riktig ved neste
+                  // fulle sidenavigasjon (f.eks. inn i en samtale).
+                  try {
+                     sessionStorage.setItem('cpNavPath', new URL(urlValue, window.location.origin).pathname);
+                  } catch (e) {}
 
                   if (tabType === 'assignments') {
                      window.currentMessageType = 'assignment';
@@ -1169,62 +1197,11 @@
          window.addEventListener('resize', syncAccountTimelinePosition);
       }
 
-      // ---- Retningsbestemt slide ved full sidenavigasjon (samtaler/oppdrag) ----
-      // Bruker cross-document View Transitions. Dybde: liste = 0, oversikt = 1,
-      // samtale = 2. Går man dypere -> slide framover, grunnere -> slide tilbake.
-      function cpPanelDepth(pathname) {
-         var p = String(pathname || '').replace(/\/+$/, '');
-         var m = p.match(/^\/user\/enquiries(?:\/(\d+)(\/overview)?)?$/);
-         if (m) {
-            if (!m[1]) { return 0; }
-            if (m[2]) { return 1; }
-            return 2;
-         }
-         return 0;
-      }
-
-      function cpUrlPath(url) {
-         try {
-            return new URL(url, window.location.origin).pathname;
-         } catch (e) {
-            return '';
-         }
-      }
-
-      function cpApplyNavType(viewTransition, fromPath, toPath) {
-         if (!viewTransition || !viewTransition.types || typeof viewTransition.types.add !== 'function') {
-            return;
-         }
-         try {
-            var delta = cpPanelDepth(toPath) - cpPanelDepth(fromPath);
-            if (delta > 0) {
-               viewTransition.types.add('cp-nav-forward');
-            } else if (delta < 0) {
-               viewTransition.types.add('cp-nav-back');
-            }
-         } catch (e) { /* ignorer – faller tilbake til standard overgang */ }
-      }
-
-      if (!window.__customerPanelViewTransitionsBound) {
-         window.__customerPanelViewTransitionsBound = true;
-
-         window.addEventListener('pageswap', function (e) {
-            try { sessionStorage.setItem('cpPrevPath', window.location.pathname); } catch (err) {}
-            if (!e || !e.viewTransition) { return; }
-            var toUrl = (e.activation && e.activation.entry && e.activation.entry.url) || '';
-            cpApplyNavType(e.viewTransition, window.location.pathname, cpUrlPath(toUrl));
-         });
-
-         window.addEventListener('pagereveal', function (e) {
-            if (!e || !e.viewTransition) { return; }
-            var fromPath = '';
-            try { fromPath = sessionStorage.getItem('cpPrevPath') || ''; } catch (err) {}
-            if (!fromPath && window.navigation && window.navigation.activation && window.navigation.activation.from) {
-               fromPath = cpUrlPath(window.navigation.activation.from.url);
-            }
-            cpApplyNavType(e.viewTransition, fromPath, window.location.pathname);
-         });
-      }
+      // Fjern slide-inn-klassen så snart panelet er på plass, slik at senere
+      // SPA-fanebytter ikke arver den (de har sin egen overgang).
+      window.setTimeout(function () {
+         document.documentElement.classList.remove('cp-enter-forward', 'cp-enter-back');
+      }, 420);
 
       setActiveNavigation(getTabTypeFromUrl(window.location.href));
       initPanelEnhancements();
