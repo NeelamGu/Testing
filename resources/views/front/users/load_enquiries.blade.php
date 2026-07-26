@@ -1353,9 +1353,9 @@ use App\Models\Category;
          border: none;
          border-radius: 18px;
          background: #fff;
-         box-shadow: 0 8px 20px rgba(60, 45, 24, 0.1);
+         box-shadow: none;
          overflow: hidden;
-         transition: transform 0.14s ease, box-shadow 0.14s ease;
+         transition: transform 0.14s ease;
       }
 
       .message-list-mobile .enquiry-row-link:active {

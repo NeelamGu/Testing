@@ -480,10 +480,12 @@
          border-radius: 14px;
          min-height: calc(100dvh - 168px);
          overflow: visible;
+         background: #f1eadd;
       }
 
       .messages-panel-head {
          padding: 12px;
+         background: transparent;
       }
 
       .messages-panel-title {
