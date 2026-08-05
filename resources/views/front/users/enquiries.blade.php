@@ -210,6 +210,58 @@
          radial-gradient(circle at 1px 1px, rgba(72, 96, 123, 0.028) 1px, transparent 0) 0 0/16px 16px,
          linear-gradient(180deg, rgba(244, 248, 252, 0.85) 0%, rgba(238, 244, 251, 0.8) 100%);
    }
+   /* Oppdragsinformasjon i høyre panel (desktop split-visning) */
+   .split-info-card {
+      max-width: 760px;
+      margin: 0 auto;
+      background: linear-gradient(150deg, #fff6e6 0%, #ffe9c9 100%);
+      border: 1px solid #f0d5a8;
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(120, 80, 20, 0.12);
+      padding: 16px 18px 6px;
+   }
+   .split-info-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #5a3410;
+   }
+   .split-info-title i {
+      font-size: 15px;
+      color: #c96f0c;
+   }
+   .split-info-row {
+      display: grid;
+      gap: 3px;
+      padding: 11px 0;
+      border-top: 1px solid rgba(150, 105, 40, 0.22);
+   }
+   .split-info-row:first-of-type {
+      border-top: none;
+      padding-top: 2px;
+   }
+   .split-info-label {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #a05a12;
+   }
+   .split-info-value {
+      margin: 0;
+      font-size: 15.5px;
+      color: #2a1c0c;
+      line-height: 1.45;
+      font-weight: 600;
+      word-break: break-word;
+   }
+   .split-info-block .split-info-value {
+      font-weight: 500;
+      white-space: pre-wrap;
+   }
    .split-chat-messages .chat-item {
       margin-bottom: 10px;
       display: flex;
@@ -869,31 +921,43 @@
             return $('<div>').text(String(value || '')).html();
          };
 
+         var titleText = String(details.title || assignmentTitle || '').trim();
+         var descriptionText = String(details.assignment_text || '').trim();
+
+         var infoRow = function(label, value){
+            return '<div class="split-info-row"><span class="split-info-label">' + esc(label) + '</span><span class="split-info-value">' + esc(value) + '</span></div>';
+         };
+
          var detailRows = '';
+         if (titleText !== '') {
+            detailRows += infoRow('Tittel', titleText);
+         }
          if (dateText !== '') {
-            detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Oppdragsdato</strong><span style="font-size:14px;color:#1f2937;">' + esc(dateText) + '</span></div>';
+            detailRows += infoRow('Oppdragsdato', dateText);
          }
          if (locationText !== '') {
-            detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Sted</strong><span style="font-size:14px;color:#1f2937;">' + esc(locationText) + '</span></div>';
+            detailRows += infoRow('Sted', locationText);
          }
          if (desiredPriceText !== '') {
-            detailRows += '<div style="padding:8px 0;border-bottom:1px solid #ece7de;"><strong style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;">Ønsket pris</strong><span style="font-size:14px;color:#1f2937;">' + esc(desiredPriceText) + '</span></div>';
+            detailRows += infoRow('Ønsket pris', desiredPriceText);
          }
-         if (detailRows === '') {
-            detailRows = '<div style="padding:8px 0;"><span style="font-size:14px;color:#6b7280;">Ingen oppdragsdetaljer registrert.</span></div>';
-         }
+         detailRows += '<div class="split-info-row split-info-block"><span class="split-info-label">Beskrivelse</span><p class="split-info-value">'
+            + esc(descriptionText !== '' ? descriptionText : 'Ingen beskrivelse registrert på dette oppdraget.')
+            + '</p></div>';
 
+         var threadLabel = threadCount + (threadCount === 1 ? ' samtale' : ' samtaler');
          var paneHtml = ''
             + '<div class="split-chat-shell">'
             + '  <div class="split-chat-card">'
             + '    <div class="split-chat-head">'
             + '      <div class="split-chat-title-wrap">'
             + '        <h4 class="split-chat-title">' + esc(assignmentTitle) + '</h4>'
-            + '        <div class="split-chat-meta"><p class="split-chat-subtitle">Oppdrag · ' + esc(threadCount + ' samtaler') + '</p></div>'
+            + '        <div class="split-chat-meta"><p class="split-chat-subtitle">Oppdrag · ' + esc(threadLabel) + '</p></div>'
             + '      </div>'
             + '    </div>'
-            + '    <div class="split-chat-messages" style="padding:14px;background:#f7fafc;">'
-            + '      <div style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e5dfd4;border-radius:10px;padding:12px;">'
+            + '    <div class="split-chat-messages" style="padding:16px;">'
+            + '      <div class="split-info-card">'
+            + '        <h5 class="split-info-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Oppdragsinformasjon</h5>'
             +            detailRows
             + '      </div>'
             + '    </div>'
