@@ -1466,9 +1466,23 @@ use App\Models\Category;
          color: #33613f;
       }
 
-      /* «N samtaler» gir ikke mening per rad på mobil – skjul den */
+      /* Antall samtaler i oppdraget – vist som en tydelig pille på oppdrags-kort.
+         Radene er nå gruppert per oppdrag, så tallet er korrekt. */
       .message-list-mobile .enquiry-row-submeta {
-         display: none;
+         display: inline-flex;
+         align-items: center;
+         gap: 5px;
+         margin: 4px 0 0;
+         padding: 3px 10px;
+         border-radius: 999px;
+         background: #eef3fb;
+         color: #3b6ea8;
+         font-size: 11.5px;
+         font-weight: 700;
+         width: fit-content;
+      }
+      .message-list-mobile .enquiry-row-submeta i {
+         font-size: 11px;
       }
 
       /* Kategori som en diskret chip */
@@ -1677,7 +1691,9 @@ use App\Models\Category;
    $isMessagesTab = !$isAssignmentTab;
    $allItemsLabel = $isAssignmentTab ? 'Alle oppdrag' : 'Alle meldinger';
    $desktopRows = $desktopEnquiries ?? $enquiries;
-   $mobileRows = $enquiries;
+   // Mobil bruker samme grupperte rader som desktop, slik at hvert oppdrag vises
+   // som ETT kort med antall samtaler (i stedet for én rad per samtale-tråd).
+   $mobileRows = $desktopEnquiries ?? $enquiries;
 
    if($isAssignmentTab){
       $desktopRows = array_values(array_filter($desktopRows, function($row){

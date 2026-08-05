@@ -127,7 +127,7 @@
             @endif
 
             @if($isAssignment)
-               <p class="enquiry-row-submeta">{{ $vendorResponseCount }} {{ (int)$vendorResponseCount === 1 ? 'samtale' : 'samtaler' }}</p>
+               <p class="enquiry-row-submeta"><i class="fa fa-comments" aria-hidden="true"></i> {{ $vendorResponseCount }} {{ (int)$vendorResponseCount === 1 ? 'samtale' : 'samtaler' }}</p>
             @endif
 
             <div class="enquiry-row-meta">
