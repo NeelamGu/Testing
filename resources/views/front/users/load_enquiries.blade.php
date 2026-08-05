@@ -1567,6 +1567,18 @@ use App\Models\Category;
          box-shadow: 0 2px 6px rgba(231, 128, 2, 0.35);
       }
 
+      /* Direkte chat med «Fullført»: legg statuschip på samme linje som kategorien,
+         nede til høyre på kortet (i stedet for på en egen linje under). */
+      .message-list-mobile .enquiry-row-link.is-direct .enquiry-row-side {
+         grid-row: 1;
+         grid-column: 2;
+         align-self: end;
+         justify-self: end;
+         width: auto;
+         margin: 0;
+         padding-bottom: 1px;
+      }
+
       /* Plass til «tre prikker»-menyen oppe til høyre på oppdrag */
       .message-list-mobile .enquiry-row-shell.has-menu .enquiry-row-link {
          padding-right: 52px;
