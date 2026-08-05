@@ -1534,12 +1534,20 @@ use App\Models\Category;
       }
 
       .message-list-mobile .enquiry-row-side .type-chip.assignment {
+         order: 3;
+         margin-left: auto;
          font-size: 10px;
          letter-spacing: 0.04em;
          padding: 4px 10px;
          background: #ffe9cc;
          color: #98530a;
          border-color: #f2c283;
+      }
+
+      /* På oppdrags-kort: hold ulest til venstre så den ikke krasjer med OPPDRAG til høyre */
+      .message-list-mobile .enquiry-row-link.is-assignment .badge-unread {
+         order: 1;
+         margin-left: 0;
       }
 
       .message-list-mobile .enquiry-row-side .badge-fullfort {
