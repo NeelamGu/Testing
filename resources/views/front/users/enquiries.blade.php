@@ -262,6 +262,11 @@
       font-weight: 500;
       white-space: pre-wrap;
    }
+   .split-info-value.is-empty {
+      color: #a98a5e;
+      font-weight: 500;
+      font-style: italic;
+   }
    .split-chat-messages .chat-item {
       margin-bottom: 10px;
       display: flex;
@@ -925,25 +930,20 @@
          var descriptionText = String(details.assignment_text || '').trim();
 
          var infoRow = function(label, value){
-            return '<div class="split-info-row"><span class="split-info-label">' + esc(label) + '</span><span class="split-info-value">' + esc(value) + '</span></div>';
+            var v = String(value || '').trim();
+            var empty = v === '';
+            return '<div class="split-info-row"><span class="split-info-label">' + esc(label) + '</span>'
+               + '<span class="split-info-value' + (empty ? ' is-empty' : '') + '">' + esc(empty ? 'Ikke oppgitt' : v) + '</span></div>';
          };
 
          var detailRows = '';
-         if (titleText !== '') {
-            detailRows += infoRow('Tittel', titleText);
-         }
-         if (dateText !== '') {
-            detailRows += infoRow('Oppdragsdato', dateText);
-         }
-         if (locationText !== '') {
-            detailRows += infoRow('Sted', locationText);
-         }
-         if (desiredPriceText !== '') {
-            detailRows += infoRow('Ønsket pris', desiredPriceText);
-         }
-         detailRows += '<div class="split-info-row split-info-block"><span class="split-info-label">Beskrivelse</span><p class="split-info-value">'
-            + esc(descriptionText !== '' ? descriptionText : 'Ingen beskrivelse registrert på dette oppdraget.')
-            + '</p></div>';
+         detailRows += infoRow('Tittel', titleText);
+         detailRows += infoRow('Oppdragsdato', dateText);
+         detailRows += infoRow('Sted', locationText);
+         detailRows += infoRow('Ønsket pris', desiredPriceText);
+         var descEmpty = descriptionText === '';
+         detailRows += '<div class="split-info-row split-info-block"><span class="split-info-label">Beskrivelse</span>'
+            + '<p class="split-info-value' + (descEmpty ? ' is-empty' : '') + '">' + esc(descEmpty ? 'Ikke oppgitt' : descriptionText) + '</p></div>';
 
          var threadLabel = threadCount + (threadCount === 1 ? ' samtale' : ' samtaler');
          var paneHtml = ''

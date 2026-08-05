@@ -130,6 +130,11 @@
       font-weight: 500;
       white-space: pre-wrap;
    }
+   .info-value.is-empty {
+      color: #a98a5e;
+      font-weight: 500;
+      font-style: italic;
+   }
 
    /* Samtaler (tråder) */
    .assignment-threads-wrap {
@@ -366,38 +371,35 @@
                            <aside class="assignment-sidebar">
                               <div class="assignment-info-card">
                                  <h4 class="assignment-info-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Oppdragsinformasjon</h4>
+                                 @php
+                                    $titleVal = trim((string) data_get($assignmentDetails, 'title', ''));
+                                    $dateVal = trim((string) data_get($assignmentDetails, 'assignment_date', ''));
+                                    $priceVal = (!empty($assignmentPrice) && (float)$assignmentPrice > 0) ? (string)$assignmentPrice : '';
+                                 @endphp
                                  <div class="assignment-info-rows">
-                                    @if(!empty(data_get($assignmentDetails, 'title')))
-                                       <div class="info-row">
-                                          <span class="info-label">Tittel</span>
-                                          <span class="info-value">{{ data_get($assignmentDetails, 'title') }}</span>
-                                       </div>
-                                    @endif
+                                    <div class="info-row">
+                                       <span class="info-label">Tittel</span>
+                                       <span class="info-value {{ $titleVal === '' ? 'is-empty' : '' }}">{{ $titleVal !== '' ? $titleVal : 'Ikke oppgitt' }}</span>
+                                    </div>
 
-                                    @if(!empty(data_get($assignmentDetails, 'assignment_date')))
-                                       <div class="info-row">
-                                          <span class="info-label">Oppdragsdato</span>
-                                          <span class="info-value">{{ data_get($assignmentDetails, 'assignment_date') }}</span>
-                                       </div>
-                                    @endif
+                                    <div class="info-row">
+                                       <span class="info-label">Oppdragsdato</span>
+                                       <span class="info-value {{ $dateVal === '' ? 'is-empty' : '' }}">{{ $dateVal !== '' ? $dateVal : 'Ikke oppgitt' }}</span>
+                                    </div>
 
-                                    @if($locationText !== '')
-                                       <div class="info-row">
-                                          <span class="info-label">Sted</span>
-                                          <span class="info-value">{{ $locationText }}</span>
-                                       </div>
-                                    @endif
+                                    <div class="info-row">
+                                       <span class="info-label">Sted</span>
+                                       <span class="info-value {{ $locationText === '' ? 'is-empty' : '' }}">{{ $locationText !== '' ? $locationText : 'Ikke oppgitt' }}</span>
+                                    </div>
 
-                                    @if(!empty($assignmentPrice) && (float)$assignmentPrice > 0)
-                                       <div class="info-row">
-                                          <span class="info-label">Ønsket pris</span>
-                                          <span class="info-value">{{ $assignmentPrice }}</span>
-                                       </div>
-                                    @endif
+                                    <div class="info-row">
+                                       <span class="info-label">Ønsket pris</span>
+                                       <span class="info-value {{ $priceVal === '' ? 'is-empty' : '' }}">{{ $priceVal !== '' ? $priceVal : 'Ikke oppgitt' }}</span>
+                                    </div>
 
                                     <div class="info-row info-row-block">
                                        <span class="info-label">Beskrivelse</span>
-                                       <p class="info-value">{{ !empty($assignmentText) ? $assignmentText : 'Ingen beskrivelse registrert på dette oppdraget.' }}</p>
+                                       <p class="info-value {{ $assignmentText === '' ? 'is-empty' : '' }}">{{ $assignmentText !== '' ? $assignmentText : 'Ikke oppgitt' }}</p>
                                     </div>
                                  </div>
                               </div>
