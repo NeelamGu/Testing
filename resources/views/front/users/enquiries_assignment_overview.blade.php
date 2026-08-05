@@ -80,42 +80,49 @@
       min-width: 0;
    }
    .assignment-info-card {
-      background: #fff;
-      border: none;
+      background: linear-gradient(150deg, #fff6e6 0%, #ffe9c9 100%);
+      border: 1px solid #f0d5a8;
       border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(60, 45, 24, 0.13), 0 2px 5px rgba(60, 45, 24, 0.08);
-      padding: 16px;
+      box-shadow: 0 6px 16px rgba(120, 80, 20, 0.12);
+      padding: 16px 16px 6px;
    }
    .assignment-info-title {
-      margin: 0 0 8px;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 6px;
+      font-size: 19px;
       font-weight: 800;
-      color: #2b2418;
+      color: #5a3410;
+   }
+   .assignment-info-title i {
+      font-size: 16px;
+      color: #c96f0c;
    }
    .assignment-info-rows {
       display: grid;
    }
    .info-row {
       display: grid;
-      gap: 2px;
-      padding: 10px 0;
-      border-top: 1px solid #f1e8db;
+      gap: 3px;
+      padding: 11px 0;
+      border-top: 1px solid rgba(150, 105, 40, 0.22);
    }
    .info-row:first-child {
       border-top: none;
       padding-top: 2px;
    }
    .info-label {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 11.5px;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #9a8a72;
+      color: #a05a12;
    }
    .info-value {
-      font-size: 15px;
-      color: #2b2418;
-      line-height: 1.4;
+      font-size: 15.5px;
+      color: #2a1c0c;
+      line-height: 1.45;
       font-weight: 600;
       word-break: break-word;
    }
@@ -129,12 +136,19 @@
       min-width: 0;
    }
    .assignment-threads-title {
-      margin: 2px 2px 10px;
-      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 4px 2px 11px;
+      font-size: 14px;
       font-weight: 800;
-      color: #6d5f4a;
+      color: #43331f;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
+   }
+   .assignment-threads-title i {
+      font-size: 13px;
+      color: #c96f0c;
    }
    .assignment-threads {
       display: grid;
@@ -300,7 +314,7 @@
          position: static;
       }
       .assignment-info-card {
-         padding: 14px;
+         padding: 14px 14px 4px;
       }
       .thread-card {
          align-items: start;
@@ -351,7 +365,7 @@
                         <div class="assignment-layout">
                            <aside class="assignment-sidebar">
                               <div class="assignment-info-card">
-                                 <h4 class="assignment-info-title">Oppdragsinformasjon</h4>
+                                 <h4 class="assignment-info-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Oppdragsinformasjon</h4>
                                  <div class="assignment-info-rows">
                                     @if(!empty(data_get($assignmentDetails, 'title')))
                                        <div class="info-row">
@@ -390,7 +404,7 @@
                            </aside>
 
                            <div class="assignment-threads-wrap">
-                              <p class="assignment-threads-title">{{ $threadCount > 0 ? 'Samtaler med leverandører ('.$threadCount.')' : 'Samtaler med leverandører' }}</p>
+                              <p class="assignment-threads-title"><i class="fa fa-comments" aria-hidden="true"></i> {{ $threadCount > 0 ? 'Samtaler med leverandører ('.$threadCount.')' : 'Samtaler med leverandører' }}</p>
                               <div class="assignment-threads">
                                  @if($threadCount > 0)
                                     @foreach($threads as $thread)
